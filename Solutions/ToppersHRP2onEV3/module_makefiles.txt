@@ -1,0 +1,285 @@
+#
+# Makefile for a workspace of EV3 Platform.
+#
+
+# Configuration
+SRCLANG := c
+KERNEL := hrp2
+
+#
+# Functions
+#
+get_relpath = $(shell perl -MFile::Spec -e "print File::Spec->abs2rel(q($1),q($2))")
+
+#
+# Paths
+#
+KERNELDIR    := $(PWD)/..
+OBJDIR       := $(PWD)/OBJ
+LIBKERNELDIR := $(KERNELDIR)
+TARGETDIR    := $(KERNELDIR)/target/ev3_gcc
+
+# Object files
+OBJFILENAME := $(KERNEL)
+ifneq (, $(findstring CYGWIN, $(shell uname)))
+    OBJFILENAME := $(OBJFILENAME).exe
+endif
+OBJBINARY := $(OBJDIR)/$(KERNEL).bin
+
+#
+# Target for an application module (dynamic)
+#
+ifdef mod
+
+APPLDIR := $(PWD)/$(mod)
+MKFILENAME := Makefile.appmod
+
+include $(APPLDIR)/Makefile.inc
+
+appmod: clean $(APPLDIR)
+	@mkdir -p $(OBJDIR)
+	@cd $(OBJDIR) && \
+	$(KERNELDIR)/configure -T ev3_gcc -A app \
+		-a $(call get_relpath,$(APPLDIR),$(OBJDIR)) \
+		-t $(call get_relpath,$(APPLDIR),$(OBJDIR)) \
+		-D $(call get_relpath,$(KERNELDIR),$(OBJDIR)) \
+		-l $(SRCLANG) \
+		-m $(MKFILENAME) -o "-DBUILD_MODULE" \
+		-U "$(APPLOBJS)" && \
+	mv $(MKFILENAME) Makefile && \
+	make clean && \
+	make module_cfg.h && \
+	make -j8 && \
+	cp app $(PWD)
+
+endif
+
+---
+
+#
+# Makefile for a Loadable User Module (LEGO Mindstorms EV3)
+#
+
+# Specify the directory of HRP2 source
+KERNELDIR = @(SRCDIR)
+TARGETDIR = $(KERNELDIR)/target/ev3_gcc
+LOADERDIR = $(KERNELDIR)/target/ev3_gcc/dmloader
+SRCDIRS = @(APPLDIR) $(KERNELDIR)/target/ev3_gcc/api/src $(KERNELDIR)/target/ev3_gcc/TLSF-2.4.6/src
+
+# Compiler options
+COPTS += @(COPTS)
+GCC_TARGET = arm-none-eabi
+INCLUDES += -I@(APPLDIR) \
+			-I@(APPLDIR)/../common \
+			-I$(LOADERDIR)/app \
+			-I$(KERNELDIR)/target/ev3_gcc \
+		   	-I$(KERNELDIR)/target/ev3_gcc/api/include \
+			-I$(KERNELDIR)/target/ev3_gcc/drivers/common/include \
+			-I$(KERNELDIR)/arch/arm_gcc/am1808 \
+			-I$(KERNELDIR)/arch/arm_gcc/common \
+		   	-I$(KERNELDIR)/target/ev3_gcc/TLSF-2.4.6/include \
+		   	-I$(KERNELDIR)/target/ev3_gcc/platform/include \
+		   	-I$(KERNELDIR)/target/ev3_gcc/pil/include
+
+
+OBJNAME = app
+
+OBJFILE = $(OBJNAME)
+
+all: $(OBJFILE)
+
+MODOBJS += t_perror.o strerror.o vasyslog.o tlsf.o
+
+MODCFG = @(APPLDIR)/app.cfg
+
+MODDIR = $(PWD)
+
+OMIT_DEBUG_INFO = 1
+
+#
+# Include common part
+#
+BUILD_LOADABLE_MODULE = 1
+CONFIG_EV3RT_APPLICATION = 1
+WORKSPACE_LIB_DIR := ../common/lib
+include @(APPLDIR)/Makefile.inc
+ifeq ($(SRCLANG),c++)
+  USE_CXX = true
+  APPL_CXXOBJS += app.o @(APPLOBJS)
+  CXXLIBS = -lstdc++ -lc -lm -lgcc
+  #CXXRTS = crtbegin.o crtend.o
+  #CXXRTS = cxxrt.o newlibrt.o
+else
+  MODOBJS += app.o @(APPLOBJS)
+endif
+include $(KERNELDIR)/target/ev3_gcc/api/Makefile
+MODOBJS += $(APPL_COBJS)
+
+include $(LOADERDIR)/app/Makefile.lum
+
+---
+
+#
+#  Makefile for EV3 API for C language
+#
+
+APPL_COBJS += ev3api.o \
+	ev3api_cfg.o \
+	ev3api_battery.o \
+	ev3api_brick.o \
+	ev3api_fs.o \
+	ev3api_speaker.o \
+	ev3api_lcd.o \
+	ev3api_motor.o \
+	ev3api_newlib.o \
+	ev3api_sensor.o
+
+INCLUDES += -I$(TARGETDIR)/api
+
+CFG_TABS += --api-table $(TARGETDIR)/api/ev3api.csv
+
+---
+
+#
+# Makefile for a Loadable User Module (Common Part)
+#
+# Input:
+# $(GCC_TARGET)
+# $(MODCFG)
+# $(MODDIR)
+# $(MODOBJS)
+# $(KERNELDIR)
+# $(SRCDIRS)
+# $(LOADERDIR)
+# $(COPTS)
+#
+
+#
+# Tools
+#
+AR := $(GCC_TARGET)-ar
+CFG := $(KERNELDIR)/cfg/cfg/cfg
+CFGLINK := $(GCC_TARGET)-gcc -nostartfiles
+NM := $(GCC_TARGET)-nm
+OBJCOPY := $(GCC_TARGET)-objcopy
+
+#
+# Process configuration files
+#
+
+CFG_TABS := --api-table $(LOADERDIR)/app/common/module_api.csv \
+			--cfg1-def-table $(LOADERDIR)/app/common/module_def.csv $(CFG_TABS)
+
+CFG1_OUT = cfg1_out
+
+cfg1_out.o: $(MODCFG)
+	$(CFG) --pass 1 --kernel hrp2 $(INCLUDES) $(CFG_TABS) $<
+	$(CFGLINK) $(CFLAGS) -nostartfiles cfg1_out.c -o cfg1_out.o
+
+CFG2_OUT_SRCS := kernel_cfg.h kernel_cfg.c kernel_mem2.c $(CFG2_OUT_SRCS)
+
+$(CFG2_OUT_SRCS): $(MODCFG) \
+						$(START_OBJS) cfg1_out.o $(END_OBJS) $(HIDDEN_OBJS)
+	$(CFGLINK) $(CFLAGS) $(CFG1_OUT_LDFLAGS) -o $(CFG1_OUT) \
+						$(START_OBJS) cfg1_out.o $(END_OBJS)
+	$(NM) -n $(CFG1_OUT) > cfg1_out.syms
+	$(OBJCOPY) -O srec -S $(CFG1_OUT) cfg1_out.srec
+	$(CFG) --pass 2 --kernel hrp2 $(INCLUDES) \
+				-T $(KERNELDIR)/kernel/kernel.tf $(CFG_TABS) $<
+	touch -r kernel_cfg.c kernel_cfg.timestamp
+
+CFG_OUT_SRCS := module_cfg.h module_cfg.c
+$(CFG_OUT_SRCS): $(MODCFG)
+	$(call print_cmd, "CFG[1]", $@)
+	@$(CFG) --pass 1 --kernel hrp2 $(INCLUDES) $(CFG_TABS) $<
+	@$(CFGLINK) $(CFLAGS) -Wl,-Ttext,0x00000000 -Wl,-e,0 -o cfg1_out.o cfg1_out.c
+	@$(CFGLINK) $(CFLAGS) $(CFG1_OUT_LDFLAGS) -Wl,-e,0 -o $(CFG1_OUT) cfg1_out.o
+	@$(NM) -n $(CFG1_OUT) > cfg1_out.syms
+	@$(OBJCOPY) -O srec -S $(CFG1_OUT) cfg1_out.srec
+	$(call print_cmd, "CFG[2]", $@)
+	@$(CFG) --pass 2 --kernel hrp2 $(INCLUDES) \
+	   -I$(TARGETDIR)/api -I $(LOADERDIR)/app/common \
+				-T $(LOADERDIR)/app/common/module.tf $(CFG_TABS) $<
+
+CLEAN_FILES += $(CFG1_OUT) cfg1_out.o cfg1_out.c cfg1_out.syms cfg1_out.srec $(CFG_OUT_SRCS)
+
+#CC = arm-none-eabi-gcc -fPIC -nostdlib -std=c99 -nostartfiles -fno-strict-aliasing -mcpu=arm926ej-s -mlittle-endian -D__TARGET_ARCH_ARM=5
+#LINK = arm-none-eabi-ld -nostdlib -nostartfiles
+#CC = arm-none-eabi-gcc -shared -fPIC -nostdlib -std=c99 -fno-strict-aliasing -mcpu=arm926ej-s -mlittle-endian -D__TARGET_ARCH_ARM=5
+CC = arm-none-eabi-gcc -fPIC -mno-pic-data-is-text-relative -nostdlib -std=gnu99 -fno-strict-aliasing -mcpu=arm926ej-s -mlittle-endian -D__TARGET_ARCH_ARM=5
+CXX = arm-none-eabi-g++ -fPIC -mno-pic-data-is-text-relative -nostdlib -std=gnu++11 -fno-strict-aliasing -mcpu=arm926ej-s -mlittle-endian -D__TARGET_ARCH_ARM=5
+#LINK = arm-none-eabi-ld -nostdlib -shared -fPIC
+
+# -n to make file size small
+#LINK = arm-none-eabi-ld -n -pie
+LINK = arm-none-eabi-gcc -Wl,-nmagic -nostdlib -pie
+
+LDSCRIPT = $(LOADERDIR)/app/app.ld
+
+#
+#  共通コンパイルオプションの定義
+#
+ifdef TEXT_START_ADDRESS
+  LDFLAGS := $(LDFLAGS) -Wl,-Ttext,$(TEXT_START_ADDRESS)
+  CFG1_OUT_LDFLAGS := $(CFG1_OUT_LDFLAGS) -Wl,-Ttext,$(TEXT_START_ADDRESS)
+endif
+ifdef DATA_START_ADDRESS
+  LDFLAGS := $(LDFLAGS) -Wl,-Tdata,$(DATA_START_ADDRESS)
+  CFG1_OUT_LDFLAGS := $(CFG1_OUT_LDFLAGS) -Wl,-Tdata,$(DATA_START_ADDRESS)
+endif
+ifdef LDSCRIPT
+  LDFLAGS := $(LDFLAGS) -T $(LDSCRIPT)
+  #CFG1_OUT_LDFLAGS := $(CFG1_OUT_LDFLAGS) -T $(LDSCRIPT)
+endif
+ifndef OMIT_DEBUG_INFO
+COPTS += -g
+endif
+ifndef OMIT_WARNING_ALL
+  COPTS := $(COPTS) -Wall
+endif
+ifndef OMIT_OPTIMIZATION
+  COPTS := $(COPTS) -O2
+endif
+CDEFS := $(CDEFS)
+INCLUDES += -I. -I$(KERNELDIR)/include -I$(KERNELDIR)/arch -I$(KERNELDIR) -I$(PWD)/include
+LDFLAGS := $(LDFLAGS)
+CFG1_OUT_LDFLAGS := $(CFG1_OUT_LDFLAGS)
+LIBS := $(LIBS) $(CXXLIBS)
+CFLAGS = $(COPTS) $(CDEFS) $(INCLUDES)
+
+#
+# Include source files
+#
+SRCDIRS += $(KERNELDIR)/library
+vpath %.c $(SRCDIRS)
+vpath %.cpp $(SRCDIRS)
+
+#
+# Object file
+#
+ALL_OBJS += module_cfg.o $(MODOBJS)
+ALL_CXXOBJS += $(APPL_CXXOBJS)
+ALL_LIBS += $(LIBS) $(APPL_LIBS)
+$(OBJFILE): $(CFG_OUT_SRCS) $(ALL_OBJS) $(ALL_CXXOBJS) $(WORKSPACE_LIB_TO_BUILD)
+	$(call print_cmd, "LD", $@)
+	@$(LINK) $(LDFLAGS) -o $(OBJFILE) $(ALL_OBJS) $(ALL_CXXOBJS) $(ALL_LIBS) -lm -lc -lgcc
+#arm-none-eabi-strip -K _module_cfg_entry_num -K _module_cfg_tab -K _module_pil_version --strip-all app
+    
+#
+# Function definitions
+#
+define print_cmd
+  @printf "  %-7s %s\n" $1 $2
+endef
+
+$(ALL_OBJS): %.o: %.c
+	$(call print_cmd, "CC", $<)
+	@$(CC) -c $(CFLAGS) $<
+
+$(ALL_CXXOBJS): %.o: %.cpp
+	$(call print_cmd, "CXX", $<)
+	@$(CXX) -c $(CFLAGS) $<
+
+.PHONY: clean
+clean:
+	rm -f $(CLEAN_FILES) \#* *~ *.o

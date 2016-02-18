@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <Project  xmlns="http://schemas.microsoft.com/developer/msbuild/2003"  ToolsVersion="4.0">
+
 
   <PropertyGroup>
     <BuildToolName>GCC</BuildToolName>
@@ -13,10 +13,11 @@
     <TARGETCURRENT>$(SPO_BUILD)\$(INSTRUCTION_SET)\$(TARGETLOCATION)\$(OLD_FLAVOR)\$(TARGETPLATFORM)\bin</TARGETCURRENT>
 
     <!-- GNU Tools - Assumes that the Path is already set up to these tools (the default) -->
+
+    
     <CC>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-gcc.exe"</CC>
     <TCC>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-gcc.exe"</TCC>
     <CPP>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-gcc.exe"</CPP>
-    <CXX>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-g++.exe"</CXX>
     <TCPP>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-gcc.exe"</TCPP>
     <AS>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-as.exe"</AS>
     <LINK>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-ld.exe"</LINK>
@@ -58,7 +59,8 @@
     <CREATESYMDEF_ALT>$(SPOCLIENT)\TOOLS\BIN\CreateSymdef.exe</CREATESYMDEF_ALT>
   </PropertyGroup>
 
-  <!-- based on cpu type, setup compiler-->
+  <!-- based on cpu type, setup compiler-->  
+  
   <PropertyGroup>
     <!-- We need to convert the RVDS CPU type to its GCC equivalent if needed-->
     <ARM_TYPE_FLAGS Condition="'$(DEVICE_TYPE)' == 'arm926EJ-S'">arm926ej-s</ARM_TYPE_FLAGS>
@@ -100,6 +102,7 @@
     <AS_CC_CPP_COMMON_FLAGS Condition="'$(ENDIANNESS)'=='le'">$(AS_CC_CPP_COMMON_FLAGS) -mlittle-endian</AS_CC_CPP_COMMON_FLAGS>
     <AS_CC_CPP_COMMON_FLAGS Condition="'$(ENDIANNESS)'=='be'">$(AS_CC_CPP_COMMON_FLAGS) -mbig-endian</AS_CC_CPP_COMMON_FLAGS>
   </PropertyGroup>
+
 
   <!-- Assembler flags -->
   <PropertyGroup>
@@ -148,16 +151,11 @@
     <CC_CPP_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Debug'"        >$(CC_CPP_TARGETTYPE_FLAGS) -DDEBUG  -D_DEBUG </CC_CPP_TARGETTYPE_FLAGS>
     <CC_CPP_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Instrumented'" >$(CC_CPP_TARGETTYPE_FLAGS) -DDEBUG  -D_DEBUG </CC_CPP_TARGETTYPE_FLAGS>
     <CC_CPP_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Release'"      >$(CC_CPP_TARGETTYPE_FLAGS) -DNDEBUG</CC_CPP_TARGETTYPE_FLAGS>
-	<!--
-    <CC_CPP_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='RTM'"          >$(CC_CPP_TARGETTYPE_FLAGS) -DBUILD_MODULE -DBUILD_RTM -finline-functions</CC_CPP_TARGETTYPE_FLAGS>
-    <CC_CPP_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Debug'"        >$(CC_CPP_TARGETTYPE_FLAGS) -DBUILD_MODULE -DDEBUG  -D_DEBUG </CC_CPP_TARGETTYPE_FLAGS>
-    <CC_CPP_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Instrumented'" >$(CC_CPP_TARGETTYPE_FLAGS) -DBUILD_MODULE -DDEBUG  -D_DEBUG </CC_CPP_TARGETTYPE_FLAGS>
-    <CC_CPP_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Release'"      >$(CC_CPP_TARGETTYPE_FLAGS) -DBUILD_MODULE -DNDEBUG</CC_CPP_TARGETTYPE_FLAGS>
-	-->
 
     <CPP_FLAGS Condition="'$(FLAVOR)'=='Release'">$(CPP_FLAGS) -fno-default-inline</CPP_FLAGS>
 
     <CC_CPP_COMMON_FLAGS Condition="'$(TCP_IP_STACK)'=='LWIP'">$(CC_CPP_COMMON_FLAGS) -DTCPIP_LWIP</CC_CPP_COMMON_FLAGS>
+	<CC_CPP_COMMON_FLAGS Condition="'$(TCP_IP_STACK)'=='LWIP_1_4_1_OS'">$(CC_CPP_COMMON_FLAGS) -DTCPIP_LWIP_OS</CC_CPP_COMMON_FLAGS>
 
     <CC_CPP_COMMON_FLAGS Condition="'$(reducesize)'=='true'" >$(CC_CPP_COMMON_FLAGS) -DHAL_REDUCESIZE</CC_CPP_COMMON_FLAGS>
     <CC_CPP_COMMON_FLAGS Condition="'$(timewarp)'=='true'"   >$(CC_CPP_COMMON_FLAGS) -DHAL_TIMEWARP</CC_CPP_COMMON_FLAGS>
@@ -170,7 +168,7 @@
     <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='thumb' and '$(COMPILER_TOOL)'!='GCCOP'"   >$(CC_CPP_COMMON_FLAGS) -mthumb-interwork -DCOMPILE_THUMB </CC_CPP_COMMON_FLAGS>
     <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='thumb2'"  >$(CC_CPP_COMMON_FLAGS) -DCOMPILE_THUMB2 </CC_CPP_COMMON_FLAGS>
     <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='thumb2fp'">$(CC_CPP_COMMON_FLAGS) -DCOMPILE_THUMB2 </CC_CPP_COMMON_FLAGS>
-    <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='thumb' and '$(ARMBUILD_ONLY)'!='true' "   >$(CC_CPP_COMMON_FLAGS) -mthumb </CC_CPP_COMMON_FLAGS>
+    <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='thumb' and '$(ARMBUILD_ONLY)'!='true' "   >$(CC_CPP_COMMON_FLAGS) -mthumb </CC_CPP_COMMON_FLAGS>    
 
     <CC_CPP_COMMON_FLAGS Condition="'$(FLAVOR)'=='Instrumented' and '$(NATIVE_PROFILE_CLR)'!=''">$(CC_CPP_COMMON_FLAGS) -DNATIVE_PROFILE_CLR=$(NATIVE_PROFILE_CLR)</CC_CPP_COMMON_FLAGS>
     <CC_CPP_COMMON_FLAGS Condition="'$(FLAVOR)'=='Instrumented' and '$(NATIVE_PROFILE_PAL)'!=''">$(CC_CPP_COMMON_FLAGS) -DNATIVE_PROFILE_PAL=$(NATIVE_PROFILE_PAL)</CC_CPP_COMMON_FLAGS>
@@ -178,6 +176,7 @@
 
     <!-- BUILD VERSIONS -->
     <CC_CPP_COMMON_FLAGS>$(CC_CPP_COMMON_FLAGS) -DVERSION_MAJOR=$(MajorVersion) -DVERSION_MINOR=$(MinorVersion) -DVERSION_BUILD=$(BuildNumber) -DVERSION_REVISION=$(RevisionNumber) -DOEMSYSTEMINFOSTRING="\"$(OemSystemInfoString)\""</CC_CPP_COMMON_FLAGS>
+
     <CC_CPP_COMMON_FLAGS>$(CC_CPP_COMMON_FLAGS) -DPLATFORM_ARM_$(TARGETPROCESSOR) -DPLATFORM_ARM_$(TARGETPLATFORM) -DTARGETLOCATION_$(TARGETLOCATION)</CC_CPP_COMMON_FLAGS>
 
     <CC_CPP_COMMON_FLAGS Condition="'$(ENDIANNESS)'=='le'">$(CC_CPP_COMMON_FLAGS) -DLITTLE_ENDIAN</CC_CPP_COMMON_FLAGS>
@@ -286,6 +285,7 @@
 
 
   <!-- item group  -->
+
   <ItemGroup>
     <MakeAXFInputs Include="$(MakeAXFInputs)"/>
     <FastCompileFile Condition="'$(ENABLE_FASTCOMPILE)'=='true'" Include="@(FastCompileCFile)"/>
@@ -310,6 +310,7 @@
   </ItemGroup>
 
   <!-- target group for compile,assembler,linker, librarian, loader -->
+
   <Target Name="ArmCompileCPP" Condition="'@(CPPFiles)'!='' or '@(FastCompileCPPFile)'!=''" Inputs="@(FastCompileCPPFile);@(CPPFiles);@(HFiles)" Outputs="@(ObjFiles)">
     <Exec Condition="Exists('%(FastCompileCPPFile.FullPath)') and '@(FastCompileCPPFile)'!='' and '$(ENABLE_FASTCOMPILE)'=='true'" Command="$(ADS_WRAPPER) $(CPP) $(CPP_FLAGS) $(POS_DEPENDENT) -o $(OBJ_DIR)\%(FastCompileCPPFile.Filename).$(OBJ_EXT) -c %(FastCompileCPPFile.FullPath) "/>
     <Exec Condition="Exists('%(CPPFiles.FullPath)')           and '@(CPPFiles)'!=''and ('$(ENABLE_FASTCOMPILE)'!='true' or '@(FastCompileCPPFile)'=='')" Command="$(ADS_WRAPPER) $(CPP) $(CPP_FLAGS) $(POS_DEPENDENT) -o $(OBJ_DIR)\%(CPPFiles.Filename).$(OBJ_EXT) -c %(CPPFiles.FullPath)  "/>
@@ -321,14 +322,14 @@
   </Target>
 
   <Target Name="ArmAssemble" Condition="'@(AssemblyFiles)'!=''" Inputs="@(AssemblyFiles)" Outputs="@(AssemblyFiles->'$(OBJ_DIR)\%(FileName).$(OBJ_EXT)')">
-    <Exec Condition="Exists('%(AssemblyFiles.FullPath)')" Command="del /q  $(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT)" ContinueOnError="true" />
+    <Delete Condition="Exists('$(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT)')" Files="$(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT)" ContinueOnError="true" />
     <Exec Condition="Exists('%(AssemblyFiles.FullPath)')" Command="$(AS) $(AS_FLAGS) -a=$(OBJ_DIR)\%(AssemblyFiles.Filename).txt -o $(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT) %(AssemblyFiles.FullPath)"/>
   </Target>
 
   <Target Name="DelBuildLib" Condition="'$(OutputType)'=='Library'" Inputs="@(FastCompileCPPFile);@(CPPFiles);@(FastCompileCFile);@(CFiles);@(AssemblyFiles);@(HFiles)" Outputs="@(TargetLib)">
-    <Exec Condition="'@(FilesExist)'!='' " Command="del /q  @(TargetLib)" ContinueOnError="true" />
-    <Exec Condition="'@(FilesExist)'!='' " Command="del /q  @(TargetLib->'%(FullPath).manifest', ' ')" ContinueOnError="true" />
-  </Target>
+    <Delete Condition="EXISTS(@(TargetLib->'%(FullPath)', ' '))" Files="@(TargetLib->'%(FullPath)', ' ')" ContinueOnError="true" />
+    <Delete Condition="EXISTS(@(TargetLib->'%(FullPath).manifest', ' '))" Files="@(TargetLib->'%(FullPath).manifest', ' ')" ContinueOnError="true" />
+ </Target>
 
   <Target Name="ArmBuildLib" Condition="'$(OutputType)'=='Library'" DependsOnTargets="FindCompileFilesExistence;FindFastCompileFilesExistence;DelBuildLib;ArmCompileC;ArmCompileCPP;ArmAssemble;CreateLibManifest;$(ExtraTargets);" Inputs="@(ObjFiles)" Outputs="@(TargetLib);@(TargetLib->'%(FullPath).manifest')">
     <Exec WorkingDirectory="$(OBJ_DIR)" Condition="'@(FilesExist)'!=''" Command="$(AR) $(ARFLAGS) @(TargetLib) @(ObjFiles->'%(FileName)%(Extension)',' ') "/>
