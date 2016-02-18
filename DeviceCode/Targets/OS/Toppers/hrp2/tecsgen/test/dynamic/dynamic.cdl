@@ -1,0 +1,65 @@
+import_C( "cygwin_tecs.h" );
+import( <cygwin_kernel.cdl> );
+
+////// Signature Description //////
+signature sHello {
+	void  hello(void);
+};
+
+signature sTalkerSelector {
+	void  getTalker([out]Descriptor(sHello) *talker);
+	void  getNTalker([out]int_t *n);
+};
+
+////// Celltype Description //////
+celltype tMain {
+	entry sTaskBody eMain;
+	[ref_desc]
+		call sHello cDefaultTalker;
+	[dynamic]
+		call sHello cTalker;
+	call sTalkerSelector cTalkerSelector;
+};
+
+celltype tTalkerSelector {
+	entry sTalkerSelector eTalkerSelector;
+	[ref_desc]
+		call  sHello  cHello[];
+	attr {
+		char_t *name = C_EXP( "\"$id$\"" );
+	};
+};
+
+celltype tTalker {
+	entry sHello eHello;
+};
+
+////// Build Description //////
+cell tTask Task {
+	cBody = Main.eMain;
+	priority = 11;
+	taskAttribute = C_EXP( "TA_ACT" );
+	stackSize = 256;
+};
+
+cell tMain Main{
+	cDefaultTalker = Talker0.eHello;
+	cTalker = Talker0.eHello;
+	cTalkerSelector = Selector.eTalkerSelector;
+};
+
+cell tTalkerSelector Selector {
+	cHello[] = Talker0.eHello;
+	cHello[] = Talker1.eHello;
+	cHello[] = Talker2.eHello;
+	cHello[] = Talker3.eHello;
+	cHello[] = Talker4.eHello;
+	
+};
+
+cell tTalker Talker0 {};
+cell tTalker Talker1 {};
+cell tTalker Talker2 {};
+cell tTalker Talker3 {};
+cell tTalker Talker4 {};
+

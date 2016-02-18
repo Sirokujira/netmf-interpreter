@@ -1,0 +1,5 @@
+import_C("tEV3Platform.h");
+
+celltype tEV3Platform{
+	entry sTaskBody eTaskBody;
+};

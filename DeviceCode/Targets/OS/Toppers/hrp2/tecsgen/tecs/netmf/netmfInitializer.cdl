@@ -1,0 +1,20 @@
+
+namespace nNETMF{
+
+	signature sInitializeBridge {
+		void initializeBridge( [in]const netmf_state *netmf );
+	};
+
+	signature sInitializeTECSBridge {
+		void initializeBridge( [inout]netmf_state *netmf, [inout]struct RClass *TECS );
+	};
+
+	// tTECSInitializer creates classes under "TECS" module in mruby VM
+	celltype tTECSInitializer {
+		entry sInitializeBridge eInitialize;
+		call  sInitializeTECSBridge cInitialize[];
+		var{
+			struct RClass *TECS = 0;
+		};
+	};
+};

@@ -1,0 +1,31 @@
+rm -rf /home/T_O/ev3rt-beta5-release/hrp2/workspace/OBJ
+make[1]: ディレクトリ '/home/T_O/ev3rt-beta5-release/hrp2/workspace/OBJ' に入ります
+rm -f cfg1_out cfg1_out.o cfg1_out.c cfg1_out.syms cfg1_out.srec module_cfg.h module_cfg.c \#* *~ *.o
+make[1]: ディレクトリ '/home/T_O/ev3rt-beta5-release/hrp2/workspace/OBJ' から出ます
+make[1]: ディレクトリ '/home/T_O/ev3rt-beta5-release/hrp2/workspace/OBJ' に入ります
+  CFG[1]  module_cfg.h
+  CFG[2]  module_cfg.h
+
+make[1]: ディレクトリ '/home/T_O/ev3rt-beta5-release/hrp2/workspace/OBJ' から出ます
+make[1]: ディレクトリ '/home/T_O/ev3rt-beta5-release/hrp2/workspace/OBJ' に入ります
+  CC      module_cfg.c
+  CC      ../../library/t_perror.c
+  CC      ../../library/strerror.c
+  CC      ../../library/vasyslog.c
+  CC      ../../target/ev3_gcc/TLSF-2.4.6/src/tlsf.c
+  CC      ../helloev3/cli_main.c
+  CC      app.c
+  CC      ../helloev3/cli_sensor.c
+  CC      ../helloev3/cli_motor.c
+  CC      ../../target/ev3_gcc/api/src/ev3api.c
+  CC      ev3api_cfg.c
+  CC      ../../target/ev3_gcc/api/src/ev3api_battery.c
+  CC      ../../target/ev3_gcc/api/src/ev3api_brick.c
+  CC      ../../target/ev3_gcc/api/src/ev3api_fs.c
+  CC      ../../target/ev3_gcc/api/src/ev3api_speaker.c
+  CC      ../../target/ev3_gcc/api/src/ev3api_lcd.c
+  CC      ../../target/ev3_gcc/api/src/ev3api_motor.c
+  CC      ../../target/ev3_gcc/api/src/ev3api_newlib.c
+  CC      ../../target/ev3_gcc/api/src/ev3api_sensor.c
+  LD      app
+make[1]: ディレクトリ '/home/T_O/ev3rt-beta5-release/hrp2/workspace/OBJ' から出ます

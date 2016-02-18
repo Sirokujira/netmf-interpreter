@@ -1,0 +1,659 @@
+<Project  xmlns="http://schemas.microsoft.com/developer/msbuild/2003"  ToolsVersion="4.0">
+
+  <!-- Possibly propagated properties from enclosing or dependent projects -->
+  <PropertyGroup>
+    <_PLATFORM              Condition="'$(_PLATFORM)'==''"              >WINDOWS2</_PLATFORM>
+    <FLAVOR                 Condition="'$(FLAVOR)'==''"                 >$(_FLAVOR)</FLAVOR>
+    <PLATFORM               Condition="'$(PLATFORM)'==''"               >$(_PLATFORM)</PLATFORM>
+    <PLATFORMS              Condition="'$(PLATFORMS)'==''"              >$(_PLATFORMS)</PLATFORMS>
+    <MEMORY                 Condition="'$(MEMORY)'==''"                 >$(_MEMORY)</MEMORY>
+    <TARGETLOCATION         Condition="'$(TARGETLOCATION)'==''"         >$(_TARGETLOCATION)</TARGETLOCATION>
+    <MFSettingsFile         Condition="'$(MFSettingsFile)'==''"         >$(_MFSettingsFile)</MFSettingsFile>
+    <SolutionRoot           Condition="'$(SolutionRoot)'==''"           >$(_SolutionRoot)</SolutionRoot>
+    <CLEAN_INDEPENDENT_ONLY Condition="'$(CLEAN_INDEPENDENT_ONLY)'==''" >$(_CLEAN_INDEPENDENT_ONLY)</CLEAN_INDEPENDENT_ONLY>
+    <Configuration          Condition="'$(Configuration)'==''"          >$(_Configuration)</Configuration>
+    <TinyCLR_Platform       Condition="'$(TinyCLR_Platform)'==''"       >$(_TinyCLR_Platform)</TinyCLR_Platform>
+    <BuildNumber            Condition="'$(BuildNumber)'==''"            >$(_BuildNumber)</BuildNumber>
+    <RevisionNumber         Condition="'$(RevisionNumber)'==''"         >$(_RevisionNumber)</RevisionNumber>
+    <SignBuild              Condition="'$(SignBuild)'==''"              >$(_SignBuild)</SignBuild>
+  </PropertyGroup>
+  <PropertyGroup>
+    <!-- Toppers Depends -->
+    <!-- makefile : http://minus9d.hatenablog.com/entry/20140203/1391436293 -->
+    <!-- http://www.ie.u-ryukyu.ac.jp/~e085739/c.makefile.tuts.html -->
+    <!-- ./Configure Check -->
+    <SD_DIR                 Condition="'$(SD_DIR)'==''"                 >$(_SD_DIR)</SD_DIR>
+    <!-- <SD_DIR                 Condition="'$(SD_DIR)'==''"                 >G:\MicroFrameworkPK_v4_3\DeviceCode\Targets\OS\Toppers\hrp2</SD_DIR> -->
+    <SRCDIR>G:\MicroFrameworkPK_v4_3\DeviceCode\Targets\OS\Toppers\hrp2</SRCDIR>
+    <MRUBY_SRC_DIR          Condition="'$(MRUBY_SRC_DIR)'==''"          >G:\MicroFrameworkPK_v4_3\DeviceCode\Targets\OS\Toppers\mruby</MRUBY_SRC_DIR>
+	<MRUBY_LIB              Condition="'$(MRUBY_LIB)'==''"              >$(_MRUBY_LIB)</MRUBY_LIB>
+	<MRBC                   Condition="'$(MRBC)'==''"                   >$(_MRBC)</MRBC>
+	<EXE                    Condition="'$(EXE)'==''"                    >$(_EXE)</EXE>
+	<OBJEXT                 Condition="'$(OBJEXT)'==''"                 ></OBJEXT>
+	<DBGENV                 Condition="'$(DBGENV)'==''"                 ></DBGENV>
+	<KERNEL_LIB             Condition="'$(KERNEL_LIB)'==''"             >$(SRCDIR)</KERNEL_LIB>
+	<KERNEL_FUNCOBJS        Condition="'$(KERNEL_FUNCOBJS)'==''"        ></KERNEL_FUNCOBJS>
+	<ENABLE_TRACE           Condition="'$(ENABLE_TRACE)'==''"           ></ENABLE_TRACE>
+	<PERL                   Condition="'$(PERL)'==''"                   >G:\strawberry\perl\bin</PERL>
+	<RUBY                   Condition="'$(RUBY)'==''"                   >C:\Ruby200-x64\bin</RUBY>
+	<CFG                    Condition="'$(CFG)'==''"                    >$(SRCDIR)/cfg/cfg/cfg.exe</CFG>
+	<KERNELDIR              Condition="'$(KERNELDIR)'==''">$(SRCDIR)</KERNELDIR>
+	<TARGETDIR              Condition="'$(TARGETDIR)'==''">$(KERNELDIR)/target/ev3_gcc</TARGETDIR>
+	<LOADERDIR              Condition="'$(LOADERDIR)'==''">$(KERNELDIR)/target/ev3_gcc/dmloader</LOADERDIR>
+
+	<OBJDIR                 Condition="'$(OBJDIR)'==''">$(SRCDIR)\workspace\obj</OBJDIR>
+	<LIBKERNELDIR           Condition="'$(LIBKERNELDIR)'==''">$(SRCDIR)</LIBKERNELDIR>
+	<TARGETNAME             Condition="'$(TARGETNAME)'==''">ev3_gcc</TARGETNAME>
+	<TARGETDIR              Condition="'$(TARGETDIR)'==''">$(SRCDIR)/target/$(TARGETNAME)</TARGETDIR>
+	<!-- <APPLNAME               Condition="'$(APPLNAME)'==''">$(SRCDIR)\sample\sample1</APPLNAME> -->
+	<APPLNAME               Condition="'$(APPLNAME)'==''">$(SRCDIR)\workspace\helloev3onnetmf\app</APPLNAME>
+	<CFGINCLUDE             Condition="'$(CFGINCLUDE)'==''">-I$(SRCDIR) -I$(SRCDIR)\arch -I$(SRCDIR)\include -I$(SRCDIR)\kernel -I$(SRCDIR)\workspace\common -I$(SRCDIR)\target\include -I$(SRCDIR)\arch\arm_gcc\am1808 -I$(SRCDIR)\arch\arm_gcc\common -I$(SRCDIR)\target\ev3_gcc -I$(SRCDIR)\target\ev3_gcc\api -I$(SRCDIR)\target\ev3_gcc\api\include -I$(SRCDIR)\target\ev3_gcc\drivers\common\include -I$(SRCDIR)\target\ev3_gcc\TLSF-2.4.6\include -I$(SRCDIR)\target\ev3_gcc\platform\include -I$(SRCDIR)\target\ev3_gcc\pil\include</CFGINCLUDE>
+	<CFG1COMPILEINCLUDE     Condition="'$(CFG1COMPILEINCLUDE)'==''">-I$(SRCDIR) -I$(SRCDIR)\arch -I$(SRCDIR)\include -I$(SRCDIR)\kernel -I$(SRCDIR)\workspace\common -I$(SRCDIR)\arch\arm_gcc\am1808 -I$(SRCDIR)\arch\arm_gcc\common -I$(SRCDIR)\target\ev3_gcc -I$(SRCDIR)\target\ev3_gcc\api -I$(SRCDIR)\target\ev3_gcc\api\include -I$(SRCDIR)\target\ev3_gcc\drivers\common\include -I$(SRCDIR)\target\ev3_gcc\TLSF-2.4.6\include -I$(SRCDIR)\target\ev3_gcc\platform\include -I$(SRCDIR)\target\ev3_gcc\pil\include -I$(SRCDIR)\target\ev3_gcc\dmloader\app -I$(SRCDIR)\target\ev3_gcc\drivers\common\include -I$(SRCDIR)\target\ev3_gcc\drivers\platform\include -I$(SRCDIR)\target\ev3_gcc\drivers\linux\arch\arm\mach-davinci\include -I$(SRCDIR)\target\ev3_gcc\drivers\linux\arch\arm\include -I$(SRCDIR)\target\ev3_gcc\drivers\linux\include -I$(SRCDIR)\target\ev3_gcc\drivers\common\virtual-linux-kernel\include -I$(SRCDIR)\target\ev3_gcc\drivers -I$(SRCDIR)\target\ev3_gcc\drivers\common\include -I$(SRCDIR)\target\ev3_gcc\drivers\gpio\include -I$(SRCDIR)\target\ev3_gcc\drivers\brick\include -I$(SRCDIR)\target\ev3_gcc\drivers\common\include -I$(SRCDIR)\target\ev3_gcc\drivers\console\include -I$(SRCDIR)\target\ev3_gcc\drivers\fatfs\include  -I$(SRCDIR)\target\ev3_gcc\drivers\lcd\include -I$(SRCDIR)\target\ev3_gcc\drivers\motor\include -I$(SRCDIR)\target\ev3_gcc\drivers\newlib\include -I$(SRCDIR)\target\ev3_gcc\drivers\sensor\include -I$(SRCDIR)\target\ev3_gcc\drivers\soc\include -I$(SRCDIR)\target\ev3_gcc\drivers\sound\include -I$(SRCDIR)\target\ev3_gcc\drivers\soc\AM1808_StarterWare_1_00_03_03\include -I$(SRCDIR)\target\ev3_gcc\drivers\soc\AM1808_StarterWare_1_00_03_03\include\hw -I$(SRCDIR)\target\ev3_gcc\drivers\soc\AM1808_StarterWare_1_00_03_03\include -I$(SRCDIR)\target\ev3_gcc\drivers\sensor\analog\include -I$(SRCDIR)\target\ev3_gcc\drivers\sensor\uart\include -I$(SRCDIR)\target\ev3_gcc\drivers\bluetooth\include -I$(SRCDIR)\target\ev3_gcc\api -I$(SRCDIR)\workspace\helloev3onnetmf</CFG1COMPILEINCLUDE>
+
+	<!-- module Parameters -->
+	<MODCFG                 Condition="'$(MODCFG)'==''">$(SRCDIR)\workspace\obj</MODCFG>
+	<MODDIR                 Condition="'$(MODDIR)'==''">$(SRCDIR)\workspace\obj</MODDIR>
+	<MODOBJS                Condition="'$(MODOBJS)'==''">cli_main.o cli_sensor.o cli_motor.o </MODOBJS>
+	<!-- <LOADERDIR              Condition="'$(LOADERDIR)'==''">$(SRCDIR)\workspace\obj</LOADERDIR> -->
+
+	<ALL_LIBS></ALL_LIBS>
+
+	<!-- defines -->
+	<!-- text Segment StartAddress Define -->
+	<!-- kernel? -->
+	<!-- 
+	<TEXT_START_ADDRESS>0xC0008000</TEXT_START_ADDRESS>
+	<DATA_START_ADDRESS>0xC0108000</DATA_START_ADDRESS>
+	-->
+	<!-- module -->
+	<OMIT_DEBUG_INFO>1</OMIT_DEBUG_INFO>
+	<BUILD_LOADABLE_MODULE>1</BUILD_LOADABLE_MODULE>
+	<BUILD_MODULE>1</BUILD_MODULE>
+
+	<!-- Both -->
+	<CONFIG_EV3RT_APPLICATION>1</CONFIG_EV3RT_APPLICATION>
+	<!-- <LDSCRIPT>$(LOADERDIR)/app/app.ld</LDSCRIPT> -->
+
+	<!-- mkimage Setting -->
+	<!-- WINDOWS Case -->
+	<MKIMAGE                Condition="'$(MKIMAGE)'==''"  >$(SRCDIR)/../bin/mkimage.exe</MKIMAGE>
+	<PRE_TECSGEN_TARGET     Condition="'$(PRE_TECSGEN_TARGET)'==''" ></PRE_TECSGEN_TARGET>
+	<POST_TECSGEN_TARGET    Condition="'$(POST_TECSGEN_TARGET)'==''"></POST_TECSGEN_TARGET>
+
+	<!-- Configuration Defines -->
+	<!-- kernel -->
+	<CFG_KERNEL_TABS>--api-table=$(SRCDIR)/kernel/kernel_api.csv --cfg1-def-table=$(SRCDIR)/kernel/kernel_def.csv --cfg1-def-table=$(SRCDIR)/arch\arm_gcc\am1808/chip_def.csv --cfg1-def-table=$(SRCDIR)/arch\arm_gcc\common/core_def.csv --api-table=$(SRCDIR)/target\ev3_gcc\api/ev3api.csv</CFG_KERNEL_TABS>
+	<!-- module -->
+	<CFG_MODULE_TABS>--api-table=$(LOADERDIR)\app\common/module_api.csv --cfg1-def-table=$(LOADERDIR)\app\common/module_def.csv --api-table=$(TARGETDIR)/api/ev3api.csv</CFG_MODULE_TABS>
+	<CFG_COBJS>kernel_cfg.obj kernel_mem.obj $(CFG_COBJS)</CFG_COBJS>
+	<CFG_ASMOBJS>$(CFG_ASMOBJS)</CFG_ASMOBJS>
+	<CFG_OBJS>$(CFG_ASMOBJS) $(CFG_COBJS)</CFG_OBJS>
+	
+	<CFG_TABS               Condition="'$(CFG_TABS)'==''">$(CFG_MODULE_TABS)</CFG_TABS>
+
+	<CFG2_OUT_SRCS>kernel_cfg.h kernel_cfg.c kernel_mem2.c $(CFG2_OUT_SRCS)</CFG2_OUT_SRCS>
+	<CFG2_COBJS>kernel_cfg.obj kernel_mem2.obj $(CFG2_COBJS)</CFG2_COBJS>
+	<CFG2_ASMOBJS>$(CFG2_ASMOBJS)</CFG2_ASMOBJS>
+	<CFG2_OBJS>$(CFG2_ASMOBJS) $(CFG2_COBJS)</CFG2_OBJS>
+
+	<CFG3_OUT_SRCS>kernel_cfg.h kernel_cfg.c kernel_mem3.c $(CFG3_OUT_SRCS)</CFG3_OUT_SRCS>
+	<CFG3_COBJS>kernel_cfg.obj kernel_mem3.obj $(CFG3_COBJS)</CFG3_COBJS>
+	<CFG3_ASMOBJS>$(CFG3_ASMOBJS)</CFG3_ASMOBJS>
+	<CFG3_OBJS>$(CFG3_ASMOBJS) $(CFG3_COBJS)</CFG3_OBJS>
+
+	<!-- mruby -->
+	<!--
+	<LDFLAGS>$(LDFLAGS) -L $(MRUBY_SRC_DIR)/build/ARM/lib/</LDFLAGS>
+	<CFG1_OUT_LDFLAGS>$(CFG1_OUT_LDFLAGS) -L $(MRUBY_SRC_DIR)/build/ARM/lib/</CFG1_OUT_LDFLAGS>
+	<CFG2_OUT_LDFLAGS>$(CFG2_OUT_LDFLAGS) -L $(MRUBY_SRC_DIR)/build/ARM/lib/</CFG2_OUT_LDFLAGS>
+	<CFG3_OUT_LDFLAGS>$(CFG3_OUT_LDFLAGS) -L $(MRUBY_SRC_DIR)/build/ARM/lib/</CFG3_OUT_LDFLAGS>
+	-->
+	<LIBS>$(LIBS) $(CXXLIBS)</LIBS>
+	<CFLAGS>$(COPTS) $(CDEFS) $(INCLUDES)</CFLAGS>
+
+	<!-- Application Defines -->
+	<!-- # APPLDIR = ../mruby_samples -->
+	<APPLNAME Condition="'$(APPLNAME)'==''"             >$(_APPLNAME)</APPLNAME>
+	<APPLDIR Condition="'$(APPLDIR)'==''"               >$(_APPLDIR)</APPLDIR>
+
+	<APPL_CFG>$(APPLNAME).cfg</APPL_CFG>
+	<APPL_CDL>$(APPLNAME).cdl</APPL_CDL>
+
+	<APPL_DIR>$(APPLDIR) $(SRCDIR)/library</APPL_DIR>
+
+	<APPL_ASMOBJS />
+
+	<!-- SystemService Define -->
+	<SYSSVC_DIR>$(SYSSVC_DIR) $(SRCDIR)/syssvc $(SRCDIR)/library</SYSSVC_DIR>
+	<SYSSVC_ASMOBJS>$(SYSSVC_ASMOBJS)</SYSSVC_ASMOBJS>
+	<SYSSVC_COBJS>$(SYSSVC_COBJS) banner.obj syslog.obj serial.obj logtask.obj $(CXXRTS)</SYSSVC_COBJS>
+	<SYSSVC_CFLAGS>$(SYSSVC_CFLAGS) -DTOPPERS_SVC_CALL</SYSSVC_CFLAGS>
+	<SYSSVC_LIBS>$(SYSSVC_LIBS)</SYSSVC_LIBS>
+	<INCLUDES>$(INCLUDES)</INCLUDES>
+
+	<!-- Kernel Defines -->
+	<KERNEL_DIR>$(KERNEL_DIR) $(SRCDIR)/kernel $(SRCDIR)/tecs_kernel</KERNEL_DIR>
+	<KERNEL_ASMOBJS>$(KERNEL_ASMOBJS)</KERNEL_ASMOBJS>
+	<KERNEL_COBJS>$(KERNEL_COBJS) svc_table.obj</KERNEL_COBJS>
+	<KERNEL_CFLAGS>$(KERNEL_CFLAGS) -I$(SRCDIR)/kernel</KERNEL_CFLAGS>
+
+	<APPL_COBJS>$(APPL_COBJS) log_output.obj t_perror.obj strerror.obj</APPL_COBJS>
+	<APPL_CFLAGS />
+	<APPL_LIBS>$(APPL_LIBS)</APPL_LIBS>
+
+	<!-- Target File-->
+	<!-- 
+	#all: $(OBJFILE)
+	all: $(OBJNAME).bin uImage
+	#all: $(OBJNAME).srec
+	-->
+
+	<!-- Source Directory Defines -->
+	<!-- 
+	INCLUDES += $(foreach dir,$(shell find $(APPLDIR) -type d -name include),-I$(dir))
+	APPL_DIR += $(foreach dir,$(shell find $(APPLDIR) -type d -name src),$(dir))
+	vpath %.c ./gen $(KERNEL_DIR) $(SYSSVC_DIR) $(APPL_DIR) $(SRCDIR)/tecs_lib/mindstorms_ev3 $(SRCDIR)/tecsgen/tecs/mruby
+	vpath %.cpp /gen $(KERNEL_DIR) $(SYSSVC_DIR) $(APPL_DIR) 
+	vpath %.S ./gen $(KERNEL_DIR) $(SYSSVC_DIR) $(APPL_DIR)
+	vpath %.cfg ./gen $(APPL_DIR)
+	-->
+
+	<!-- Compiler Various Defines -->
+	<KERNEL_LIB_OBJS>$(KERNEL_ASMOBJS) $(KERNEL_COBJS) $(KERNEL_LCOBJS)</KERNEL_LIB_OBJS>
+	<SYSSVC_OBJS>$(SYSSVC_ASMOBJS) $(SYSSVC_COBJS)</SYSSVC_OBJS>
+	<APPL_OBJS>$(APPL_ASMOBJS) $(APPL_COBJS) $(APPL_CXXOBJS) $(MRUBY_COBJS)</APPL_OBJS>
+	<ALL2_OBJS>$(START_OBJS) $(APPL_OBJS) $(SYSSVC_OBJS) $(CFG2_OBJS) $(END_OBJS) $(HIDDEN_OBJS)</ALL2_OBJS>
+	<ALL3_OBJS>$(START_OBJS) $(APPL_OBJS) $(SYSSVC_OBJS) $(CFG3_OBJS) $(END_OBJS) $(HIDDEN_OBJS)</ALL3_OBJS>
+	<ALL_OBJS>$(START_OBJS) $(APPL_OBJS) $(SYSSVC_OBJS) $(CFG_OBJS) $(END_OBJS) $(HIDDEN_OBJS)</ALL_OBJS>
+
+	<!--  omit_svc.h Create Rules -->
+	<!-- 
+	omit_svc.h:
+		touch omit_svc.h
+	-->
+
+	<!-- Special Dependency Defines -->
+	<!-- 
+	svc_table.obj: omit_svc.h
+	svc_table.d: omit_svc.h
+	banner.obj: kernel_cfg.timestamp $(filter-out banner.obj,$(ALL2_OBJS)) $(LIBS_DEP)
+	-->
+
+	<!-- All Link(mruby) -->
+	<!--
+	$(OBJFILE): $(APPL_CFG) kernel_cfg.timestamp $(ALL_OBJS) $(LIBS_DEP)
+		<Exec Command="$(LINK) $(CFLAGS) $(LDFLAGS) -o $(OBJFILE) $(START_OBJS) $(APPL_OBJS) $(MRUBY_LIB) $(SYSSVC_OBJS) $(CFG_OBJS) $(ALL_LIBS) $(END_OBJS) "/>
+		<Exec Command="$(NM) -n $(OBJFILE) > $(OBJNAME).syms" />
+		<Choose>
+			<When Condition=" '$(USE_CFG_PASS3)'!='' ">
+				<Exec Command="diff cfg3_out.syms $(OBJNAME).syms" />
+			</When>
+			<When Condition=" '$(USE_CFG_PASS3)'=='' ">
+				<Exec Command="diff cfg2_out.syms $(OBJNAME).syms" />
+			</When>
+		</Choose>
+	-->
+
+	<!-- Configurator Rules -->
+	<!-- <ALL_CFG_COBJS>$(sort $(CFG_COBJS) $(CFG2_COBJS) $(CFG3_COBJS) cfg1_out.obj)</ALL_CFG_COBJS> -->
+	<ALL_CFG_COBJS>$(CFG_COBJS) $(CFG2_COBJS) $(CFG3_COBJS) cfg1_out.obj</ALL_CFG_COBJS>
+	<!-- <ALL_CFG_ASMOBJS>$(sort $(CFG_ASMOBJS) $(CFG2_ASMOBJS) $(CFG3_ASMOBJS))</ALL_CFG_ASMOBJS> -->
+	<ALL_CFG_ASMOBJS>$(CFG_ASMOBJS) $(CFG2_ASMOBJS) $(CFG3_ASMOBJS)</ALL_CFG_ASMOBJS>
+	<CFG_CFLAGS>$(APPL_CFLAGS) $(SYSSVC_CFLAGS) $(KERNEL_CFLAGS)</CFG_CFLAGS>
+
+	<!--
+	$(ALL_CFG_COBJS): %.obj: %.c
+		<Exec Command="$(CC) -c $(CFLAGS) $(CFG_CFLAGS) $(ALL_CFG_COBJS).obj $(ALL_CFG_COBJS).c "/>
+
+	$(ALL_CFG_COBJS:.obj=.s): %.s: %.c
+		<Exec Command="$(CC) -S $(CFLAGS) $(CFG_CFLAGS) $(ALL_CFG_COBJS).s $(ALL_CFG_COBJS).obj $(ALL_CFG_COBJS).c"/>
+
+	$(ALL_CFG_COBJS:.obj=.d): %.d: %.c
+		<Exec Command="@$(PERL) $(SRCDIR)/utils/makedep -C $(CC) $(MAKEDEP_OPTS) -O $(CFLAGS) $(CFG_CFLAGS) $(ALL_CFG_COBJS).obj >> Makefile.depend "/>
+
+	$(ALL_CFG_ASMOBJS): %.obj: %.S
+		<Exec Command="$(CC) -c $(CFLAGS) $(CFG_CFLAGS) $(ALL_CFG_ASMOBJS).obj $(ALL_CFG_ASMOBJS).S "/>
+
+	$(ALL_CFG_ASMOBJS:.obj=.d): %.d: %.S
+		<Exec Command="@$(PERL) $(SRCDIR)/utils/makedep -C $(CC) $(MAKEDEP_OPTS) -O $(CFLAGS) $(CFG_CFLAGS) $(ALL_CFG_ASMOBJS).d $(ALL_CFG_ASMOBJS).S >> Makefile.depend "/>
+	-->
+
+	<!-- Special Dependencies Defines -->
+	<!--
+	cfg1_out.depend: $(APPL_CFG)
+		<Exec Command="@$(CFG) -M cfg1_out.c $(INCLUDES) $(APPL_CFG) >> Makefile.depend "/>
+
+	makeoffset.d: makeoffset.c
+		<Exec Command="@$(PERL) $(SRCDIR)/utils/makedep -C $(CC) $(MAKEDEP_OPTS) -T makeoffset.s -O $(CFLAGS) $(KERNEL_CFLAGS) makeoffset.c >> Makefile.depend "/>
+	-->
+
+	<!--  Dependencies Files Include -->
+	<!--
+	-include Makefile.depend
+	-->
+
+	<!-- Compile Rule Defines -->
+	<KERNEL_ALL_COBJS>$(KERNEL_COBJS) $(KERNEL_AUX_COBJS)</KERNEL_ALL_COBJS>
+	<!--
+	$(KERNEL_ALL_COBJS): %.obj: %.c
+		<Exec Command="@$(CC) -c $(CFLAGS) $(KERNEL_CFLAGS) $(KERNEL_ALL_COBJS).obj $(KERNEL_ALL_COBJS).c" />
+
+	$(KERNEL_ALL_COBJS:.obj=.s): %.s: %.c
+		<Exec Command="@$(CC) -S $(CFLAGS) $(KERNEL_CFLAGS) $(KERNEL_ALL_COBJS).s $(KERNEL_ALL_COBJS).c" />
+
+	$(KERNEL_LCOBJS): %.obj:
+		<Exec Command="$(CC) -DTOPPERS_$(*F) -o $@ -c $(CFLAGS) $(KERNEL_CFLAGS) $(KERNEL_LCOBJS).obj" />
+
+	$(KERNEL_LCOBJS:.obj=.s): %.s:
+		<Exec Command="$(CC) -DTOPPERS_$(*F) -o $@ -S $(CFLAGS) $(KERNEL_CFLAGS) $(KERNEL_LCOBJS).s" />
+
+	$(KERNEL_ASMOBJS): %.obj: %.S
+		<Exec Command="$(CC) -c $(CFLAGS) $(KERNEL_CFLAGS) $(KERNEL_ASMOBJS).obj $(KERNEL_ASMOBJS).S" />
+
+	$(SYSSVC_COBJS): %.obj: %.c
+		<Exec Command="$(CC) -c $(CFLAGS) $(SYSSVC_CFLAGS) $(SYSSVC_COBJS).obj $(SYSSVC_COBJS).c" />
+
+	$(SYSSVC_COBJS:.obj=.s): %.s: %.c
+		<Exec Command="$(CC) -S $(CFLAGS) $(SYSSVC_CFLAGS) $(SYSSVC_COBJS).s $(SYSSVC_COBJS).c" />
+
+	$(SYSSVC_ASMOBJS): %.obj: %.S
+		<Exec Command="$(CC) -c $(CFLAGS) $(SYSSVC_CFLAGS) $(SYSSVC_ASMOBJS).obj $(SYSSVC_ASMOBJS).S" />
+
+	$(APPL_COBJS): %.obj: %.c
+		<Exec Command="@$(CC) -c $(CFLAGS) $(APPL_CFLAGS) $(APPL_COBJS).obj $(APPL_COBJS).c" />
+	$(APPL_COBJS:.obj=.s): %.s: %.c
+		<Exec Command="$(CC) -S $(CFLAGS) $(APPL_CFLAGS) $(APPL_COBJS).s $(APPL_COBJS).c" />
+
+	$(APPL_CXXOBJS): %.obj: %.cpp
+		<Exec Command="$(CXX) -c $(CFLAGS) $(APPL_CFLAGS) $(APPL_CXXOBJS).obj $(APPL_CXXOBJS).cpp" />
+
+	$(APPL_CXXOBJS:.obj=.s): %.s: %.cpp
+		<Exec Command="$(CXX) -S $(CFLAGS) $(APPL_CFLAGS) $(APPL_CXXOBJS).s $(APPL_CXXOBJS).cpp" />
+
+	$(APPL_ASMOBJS): %.obj: %.S
+		<Exec Command="$(CC) -c $(CFLAGS) $(APPL_CFLAGS) $(APPL_ASMOBJS).obj $(APPL_ASMOBJS).S " />
+	-->
+
+	<!-- Dependencies Rule Defines -->
+	<!--
+	$(KERNEL_COBJS:.obj=.d): %.d: %.c
+		<Exec Command="@$(PERL) $(SRCDIR)/utils/makedep -C $(CC) $(MAKEDEP_OPTS) -O $(CFLAGS) $(KERNEL_CFLAGS) $(KERNEL_COBJS.d $(KERNEL_COBJS).c >> Makefile.depend" />
+
+	$(KERNEL_LCSRCS:.c=.d): %.d: %.c
+		<Exec Command="@$(PERL) $(SRCDIR)/utils/makedep -C $(CC) $(MAKEDEP_OPTS) -T $($*) -O -DALLFUNC $(CFLAGS) $(KERNEL_CFLAGS) $(KERNEL_LCSRCS).d $(KERNEL_LCSRCS).c >> Makefile.depend" />
+
+	$(KERNEL_ASMOBJS:.obj=.d): %.d: %.S
+		<Exec Command="@$(PERL) $(SRCDIR)/utils/makedep -C $(CC) $(MAKEDEP_OPTS) -O $(CFLAGS) $(KERNEL_CFLAGS) $(KERNEL_ASMOBJS).d $(KERNEL_ASMOBJS).S >> Makefile.depend" />
+
+	$(SYSSVC_COBJS:.obj=.d): %.d: %.c
+		<Exec Command="@$(PERL) $(SRCDIR)/utils/makedep -C $(CC) $(MAKEDEP_OPTS) -O $(CFLAGS) $(SYSSVC_CFLAGS) $(SYSSVC_COBJS).d $(SYSSVC_COBJS).c >> Makefile.depend" />
+
+	$(SYSSVC_ASMOBJS:.obj=.d): %.d: %.S
+		<Exec Command="@$(PERL) $(SRCDIR)/utils/makedep -C $(CC) $(MAKEDEP_OPTS) -O $(CFLAGS) $(SYSSVC_CFLAGS) $(SYSSVC_ASMOBJS).d $(SYSSVC_ASMOBJS).S >> Makefile.depend" />
+
+	$(APPL_COBJS:.obj=.d): %.d: %.c
+		<Exec Command="@$(PERL) $(SRCDIR)/utils/makedep -C $(CC) $(MAKEDEP_OPTS) -O $(CFLAGS) $(APPL_CFLAGS) $(APPL_COBJS).d $(APPL_COBJS).c >> Makefile.depend" />
+
+	$(APPL_CXXOBJS:.obj=.d): %.d: %.cpp
+		<Exec Command="@$(PERL) $(SRCDIR)/utils/makedep -C $(CXX) $(MAKEDEP_OPTS) -O $(CFLAGS) $(APPL_CFLAGS) $(APPL_CXXOBJ).d $(APPL_CXXOBJS).cpp >> Makefile.depend" />
+
+	$(APPL_ASMOBJS:.obj=.d): %.d: %.S
+		<Exec Command="@$(PERL) $(SRCDIR)/utils/makedep -C $(CC) $(MAKEDEP_OPTS) -O $(CFLAGS) $(APPL_CFLAGS) $(APPL_ASMOBJS).d $(APPL_ASMOBJS).S >> Makefile.depend" />
+	-->
+
+	<!-- DefaultCompile Rule Override -->
+	<!-- http://www.ne.jp/asahi/hishidama/home/tech/unix/cmd/make2.html -->
+	<!--
+	%.obj: %.c
+		@echo "*** Default compile rules should not be used."
+		$(CC) -c $(CFLAGS) $
+
+	%.s: %.c
+		@echo "*** Default compile rules should not be used."
+		$(CC) -S $(CFLAGS) $
+
+	%.obj: %.cpp
+		@echo "*** Default compile rules should not be used."
+		$(CXX) -c $(CFLAGS) $
+
+	%.s: %.cpp
+		@echo "*** Default compile rules should not be used."
+		$(CXX) -S $(CFLAGS) $
+
+	%.obj: %.S
+		@echo "*** Default compile rules should not be used."
+		$(CC) -c $(CFLAGS) $
+	-->
+  </PropertyGroup>
+
+	<!-- tecs -->
+	<Choose>
+		<When Condition=" '$(USE_CXX)'!='' ">
+		<PropertyGroup>
+		  <APPL_CXXOBJS />
+		  <APPL_COBJS>$(TECS_COBJS) tecs_init.obj</APPL_COBJS>
+		  </PropertyGroup>
+		</When>
+		<When Condition=" '$(USE_CXX)'=='' ">
+		<PropertyGroup>
+	  	  <APPL_COBJS>$(TECS_COBJS) tecs_init.obj</APPL_COBJS>
+	  	  </PropertyGroup>
+	  	</When>
+	</Choose>
+
+	<Choose>
+		<When Condition=" '$(APPLDIR)'!='' ">
+			<PropertyGroup>
+				<!-- foreach -->
+				<!-- <INCLUDES>$(INCLUDES) -I$(APPLDIR)/../common $(foreach dir, $(APPLDIR), -I$(dir))</INCLUDES> -->
+			</PropertyGroup>
+		</When>
+	</Choose>
+
+	<Choose>
+		<When Condition=" '$(OMIT_MAKEOFFSET)'!='' ">
+			<PropertyGroup>
+				<OFFSET_H />
+			</PropertyGroup>
+		</When>
+		<When Condition=" '$(OMIT_MAKEOFFSET)'=='' ">
+			<PropertyGroup>
+	  			<OFFSET_H>offset.h</OFFSET_H>
+	  		</PropertyGroup>
+	  	</When>
+	</Choose>
+
+	<Choose>
+		<When Condition=" '$(OFFSET_TF)'=='' ">
+			<PropertyGroup>
+				<KERNEL_AUX_COBJS>$(KERNEL_AUX_COBJS) makeoffset.obj</KERNEL_AUX_COBJS>
+			</PropertyGroup>
+		</When>
+	</Choose>
+
+  <Choose>
+    <When Condition="'$(OBJEXT)'!='' ">
+	    <PropertyGroup>
+	  		<OBJFILE>$(OBJNAME).$(OBJEXT)</OBJFILE>
+	  		<CFG1_OUT>cfg1_out.$(OBJEXT)</CFG1_OUT>
+	  		<CFG2_OUT>cfg2_out.$(OBJEXT)</CFG2_OUT>
+	  		<CFG3_OUT>cfg3_out.$(OBJEXT)</CFG3_OUT>
+  		</PropertyGroup>
+    </When>
+    <When Condition="'$(OBJEXT)'=='' ">
+    	<PropertyGroup>
+	  		<OBJFILE>$(OBJNAME)</OBJFILE>
+	  		<CFG1_OUT>cfg1_out</CFG1_OUT>
+	  		<CFG2_OUT>cfg2_out</CFG2_OUT>
+	  		<CFG3_OUT>cfg3_out</CFG3_OUT>
+  		</PropertyGroup>
+    </When>
+  </Choose>
+
+<!-- Link objecct setting -->
+<Choose>
+	<When Condition=" '$(KERNEL_LIB)'!='' ">
+	<PropertyGroup>
+	  <ALL_LIBS>$(APPL_LIBS) $(SYSSVC_LIBS) -lkernel $(LIBS)</ALL_LIBS>
+	  <!-- <LIBS_DEP>$(filter %.a, $(ALL_LIBS)) $(KERNEL_LIB)/libkernel.a</LIBS_DEP> -->
+	  <LIBS_DEP>$(KERNEL_LIB)/libkernel.a</LIBS_DEP>
+	  <LDFLAGS>$(LDFLAGS) -L$(KERNEL_LIB)</LDFLAGS>
+	  <CFG2_OUT_LDFLAGS>$(CFG2_OUT_LDFLAGS) -L$(KERNEL_LIB)</CFG2_OUT_LDFLAGS>
+	  <CFG3_OUT_LDFLAGS>$(CFG3_OUT_LDFLAGS) -L$(KERNEL_LIB)</CFG3_OUT_LDFLAGS>
+	  <REALCLEAN_FILES>libkernel.a $(REALCLEAN_FILES)</REALCLEAN_FILES>
+	</PropertyGroup>
+	</When>
+	<When Condition=" '$(KERNEL_LIB)'=='' ">
+	<PropertyGroup>
+	  <ALL_LIBS>$(APPL_LIBS) $(SYSSVC_LIBS) libkernel.a $(LIBS)</ALL_LIBS>
+	  <!-- <LIBS_DEP>$(filter %.a,$(ALL_LIBS))</LIBS_DEP> -->
+	</PropertyGroup>
+	</When>
+</Choose>
+
+<!-- Shared Compiler Option defines -->
+<Choose>
+	<When Condition=" '$(TEXT_START_ADDRESS)'!='' ">
+		<PropertyGroup>
+			<LDFLAGS>$(LDFLAGS) -Wl,-Ttext,$(TEXT_START_ADDRESS)</LDFLAGS>
+			<CFG1_OUT_LDFLAGS>$(CFG1_OUT_LDFLAGS) -Wl,-Ttext,$(TEXT_START_ADDRESS)</CFG1_OUT_LDFLAGS>
+			<CFG2_OUT_LDFLAGS>$(CFG2_OUT_LDFLAGS) -Wl,-Ttext,$(TEXT_START_ADDRESS)</CFG2_OUT_LDFLAGS>
+			<CFG3_OUT_LDFLAGS>$(CFG3_OUT_LDFLAGS) -Wl,-Ttext,$(TEXT_START_ADDRESS)</CFG3_OUT_LDFLAGS>
+		</PropertyGroup>
+	</When>
+</Choose>
+
+<Choose>
+	<When Condition=" '$(DATA_START_ADDRESS)'!='' ">
+	<PropertyGroup>
+		<LDFLAGS>$(LDFLAGS) -Wl,-Tdata,$(DATA_START_ADDRESS)</LDFLAGS>
+		<CFG1_OUT_LDFLAGS>$(CFG1_OUT_LDFLAGS) -Wl,-Tdata,$(DATA_START_ADDRESS)</CFG1_OUT_LDFLAGS>
+		<CFG2_OUT_LDFLAGS>$(CFG2_OUT_LDFLAGS) -Wl,-Tdata,$(DATA_START_ADDRESS)</CFG2_OUT_LDFLAGS>
+		<CFG3_OUT_LDFLAGS>$(CFG3_OUT_LDFLAGS) -Wl,-Tdata,$(DATA_START_ADDRESS)</CFG3_OUT_LDFLAGS>
+	</PropertyGroup>
+	</When>
+</Choose>
+
+<Choose>
+	<When Condition=" '$(LDSCRIPT)'!='' ">
+		<PropertyGroup>
+  			<LDFLAGS>$(LDFLAGS) -T $(LDSCRIPT)</LDFLAGS>
+  			<CFG1_OUT_LDFLAGS>$(CFG1_OUT_LDFLAGS) -T $(LDSCRIPT)</CFG1_OUT_LDFLAGS>
+  		</PropertyGroup>
+	</When>
+</Choose>
+
+<Choose>
+	<When Condition="'$(OMIT_DEBUG_INFO)'!='' ">
+		<PropertyGroup>
+			<COPTS>$(COPTS) -g</COPTS>
+		</PropertyGroup>
+	</When>
+</Choose>
+<Choose>
+	<When Condition="'$(OMIT_WARNING_ALL)'!='' ">
+		<PropertyGroup>
+    	    <COPTS>$(COPTS) -Wall</COPTS>
+  		</PropertyGroup>
+	</When>
+</Choose>
+<Choose>
+	<When Condition="'$(OMIT_OPTIMIZATION)'!='' ">
+		<PropertyGroup>
+  			<COPTS>$(COPTS) -O2</COPTS>
+	  	</PropertyGroup>
+	</When>
+</Choose>
+
+<Choose>
+	<When Condition=" '$(CFG1_OUT_LDSCRIPT)'!='' ">
+		<PropertyGroup>
+			<CFG1_OUT_LDFLAGS>$(CFG1_OUT_LDFLAGS) -T $(CFG1_OUT_LDSCRIPT)</CFG1_OUT_LDFLAGS>
+		</PropertyGroup>
+	</When>
+</Choose>
+
+<Choose>
+	<When Condition=" '$(CFG2_OUT_LDSCRIPT)'!='' ">
+	<PropertyGroup>
+		<CFG2_OUT_LDFLAGS>$(CFG2_OUT_LDFLAGS) -T $(CFG2_OUT_LDSCRIPT)</CFG2_OUT_LDFLAGS>
+		</PropertyGroup>
+	</When>
+</Choose>
+
+<Choose>
+	<When Condition=" '$(CFG3_OUT_LDSCRIPT)'!='' ">
+	<PropertyGroup>
+  		<CFG3_OUT_LDFLAGS>$(CFG3_OUT_LDFLAGS) -T $(CFG3_OUT_LDSCRIPT)</CFG3_OUT_LDFLAGS>
+  		</PropertyGroup>
+	</When>
+</Choose>
+
+<!-- offset file create rules -->
+<!-- 
+<Choose>
+	<When Condition=" '$(OFFSET_TF)'!='' ">
+		offset.h: $(APPL_CFG) kernel_cfg.timestamp
+		<Exec Command="$(call print_cmd, "CFG[3]", $@) "/>
+		<Exec Command="@$(CFG) ?-pass 3 ?-kernel hrp2 $(INCLUDES) ?-rom-image cfg1_out.srec ?-symbol-table cfg1_out.syms -T $(OFFSET_TF) $(CFG_TABS) $(APPL_CFG) kernel_cfg.timestamp "/>
+	</When>
+	<When Condition=" '$(OFFSET_TF)'=='' ">
+		offset.h: makeoffset.s $(SRCDIR)/utils/genoffset
+		<Exec Command="$(PERL) $(SRCDIR)/utils/genoffset makeoffset.s > offset.h "/>
+	</When>
+</Choose>
+-->
+
+  <!-- NoEdit Zone -->
+  <!-- Environment Depend compiler options -->
+  <Choose>
+  	<When Condition=" '$(DBGENV)'!='' ">
+  		<PropertyGroup>
+  			<CDEFS>$(CDEFS) -D$(DBGENV)</CDEFS>
+  		</PropertyGroup>
+  	</When>
+  </Choose>
+
+  <!-- Kernel File Structure Defines -->
+  <Choose>
+  	<When Condition=" '$(KERNEL_FUNCOBJS)'!='' ">
+  		<PropertyGroup>
+  			<KERNEL_LCSRCS>$(KERNEL_FCSRCS)</KERNEL_LCSRCS>
+    			<KERNEL_LCOBJS>$(foreach file,$(KERNEL_FCSRCS),$($(file:.c=)))</KERNEL_LCOBJS>
+    		</PropertyGroup>
+    	</When>
+  	<When Condition=" '$(KERNEL_FUNCOBJS)'=='' ">
+  		<PropertyGroup>
+    			<KERNEL_CFLAGS>-DALLFUNC $(KERNEL_CFLAGS)</KERNEL_CFLAGS>
+    			<!-- <KERNEL_COBJS>$(KERNEL_COBJS) $(foreach file, $(KERNEL_FCSRCS),$(file:.c=.obj))</KERNEL_COBJS> -->
+    		</PropertyGroup>
+  	</When>
+  </Choose>
+
+
+  <!-- Syslog Relation Defines -->
+  <Choose>
+      <When Condition=" '$(USE_SYSLOG)'!='' ">
+      	<PropertyGroup>
+  		<APPL_COBJS>$(APPL_COBJS) vasyslog.obj </APPL_COBJS>
+  		</PropertyGroup>
+  	</When>
+  	<When Condition=" '$(USE_SYSLOG)'=='' ">
+  	<PropertyGroup>
+  			<COPTS>$(COPTS) -D TOPPERS_OMIT_SYSLOG</COPTS>
+  			</PropertyGroup>
+      </When>
+  </Choose>
+
+  <Import Project="$(SPOCLIENT)\ReleaseInfo.settings"/>
+
+  <PropertyGroup>
+    <ProjectFile>$(MSBuildProjectName)$(MSBuildProjectExtension)</ProjectFile>
+
+  <!--
+  Optional settings/overrides: (true/false)
+
+  timewarp      - Enabled the timewarp feature
+  profile       - creates a profile build
+  sampleprof    - enables build with sampling profile support
+  latencyprof   - enables build with latency profile support
+
+  Set the defaults for these if they haven't been explicitly set:
+  -->
+
+    <timewarp Condition="'$(timewarp)'==''"         >false</timewarp>
+    <profile Condition="'$(profile)'==''"           >false</profile>
+    <sampleprof Condition="'$(sampleprof)'==''"     >false</sampleprof>
+    <latencyprof Condition="'$(latencyprof)'==''"   >false</latencyprof>
+    <FLAVOR Condition="'$(FLAVOR)'==''"             >Debug</FLAVOR>
+    <MEMORY Condition="'$(MEMORY)'==''"             >FLASH</MEMORY>
+    <ENABLE_FASTCOMPILE Condition="'$(ENABLE_FASTCOMPILE)'==''"   >true</ENABLE_FASTCOMPILE>
+    <FourByteCrytoLib>false</FourByteCrytoLib>
+    <CLEAN_INDEPENDENT_ONLY Condition="'$(CLEAN_INDEPENDENT_ONLY)'==''"></CLEAN_INDEPENDENT_ONLY>
+    <Configuration Condition="'$(Configuration)'=='' And '$(FLAVOR)'=='Debug'"       >$(FLAVOR)</Configuration>
+    <Configuration Condition="'$(Configuration)'=='' And '$(FLAVOR)'=='Instrumented'">Debug</Configuration>
+    <Configuration Condition="'$(Configuration)'=='' ">Release</Configuration>
+  </PropertyGroup>
+
+
+  <!-- set up platform dependant properties, also setup the TARGETPLATFORM as capitals for set up PLATFORM_ARM_XXX flag -->
+
+  <!--  platform dependent properties are included here, based on teh path right above -->
+  <!--  the settigns file is required to be have a specifc name ! -->
+  <Import Project="$(MFSettingsFile)"                                       Condition=" EXISTS('$(MFSettingsFile)')"/>
+<!-- -->
+  <Import Project="$(MSBuildStartupDirectory)\$(PLATFORM).settings"         Condition="!EXISTS('$(MFSettingsFile)') AND  EXISTS('$(MSBuildStartupDirectory)\$(PLATFORM).settings')"/>
+  <Import Project="$(SPOCLIENT)\Solutions\$(PLATFORM)\$(PLATFORM).settings" Condition="!EXISTS('$(MFSettingsFile)') AND !EXISTS('$(MSBuildStartupDirectory)\$(PLATFORM).settings') AND EXISTS('$(SPOCLIENT)\Solutions\$(PLATFORM)\$(PLATFORM).settings')"/>
+
+<!--  <Import Project="Error: INSTRUCTION_SET is not defined" Condition="'$(INSTRUCTION_SET)'==''"/> -->
+<!-- -->
+  <PropertyGroup>
+    <!-- has to change the MEMORY property to Capital letters for TARGETLOCATION_XXX-->
+    <TARGETLOCATION Condition="'$(MEMORY)'=='FLASH'">FLASH</TARGETLOCATION>
+    <TARGETLOCATION Condition="'$(MEMORY)'=='RAM'">RAM</TARGETLOCATION>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- We explictly push the above three in recursive invocations; this makes such invocations
+         less sensitive to where the include of this rules file appears -->
+
+    <SPO_SDK Condition="'$(SPO_SDK)'==''">$(SPOCLIENT)</SPO_SDK>
+    <SPO_BUILD Condition="'$(SPO_BUILD)'==''">$(BUILD_ROOT_BASE)</SPO_BUILD>
+
+    <TOOLS_DIR>$(SPO_BUILD)\public\$(Configuration)\Server\dll</TOOLS_DIR>
+
+    <!-- TODO: finish consolidation of parallel build trees (eg, see other def'n of MainProps in Microsoft.SPOT.Build.Configuration.Settings) -->
+    <MainProps>_FLAVOR=$(FLAVOR);_PLATFORMS=$(PLATFORMS);_PLATFORM=$(PLATFORM);_TARGETLOCATION=$(TARGETLOCATION);_MEMORY=$(MEMORY);_CLEAN_INDEPENDENT_ONLY=$(CLEAN_INDEPENDENT_ONLY);_BuildNumber=$(BuildNumber);_RevisionNumber=$(RevisionNumber);_Configuration=$(Configuration);_TinyCLR_Platform=$(TinyCLR_Platform);_SignBuild=$(SignBuild);_SolutionRoot=$(SolutionRoot);_MFSettingsFile=$(MFSettingsFile);PropagatedBy=System</MainProps>
+
+    <CLRLIB>$(CLRROOT)\Tools\Libraries</CLRLIB>
+
+    <SRC_DIR>$(CLRROOT)\$(Directory)</SRC_DIR>
+
+    <!-- pedantic matching of letter case with old makefiles; makes it easier to use WinDiff to check things -->
+
+    <OLD_FLAVOR Condition="'$(FLAVOR)'=='Release'">release</OLD_FLAVOR>
+    <OLD_FLAVOR Condition="'$(FLAVOR)'=='Debug'">debug</OLD_FLAVOR>
+    <OLD_FLAVOR Condition="'$(FLAVOR)'=='RTM'">RTM</OLD_FLAVOR>
+    <OLD_FLAVOR Condition="'$(FLAVOR)'=='RTM' and '$(PLATFORM_FAMILY)'=='x86'">release</OLD_FLAVOR>
+    <OLD_FLAVOR Condition="'$(FLAVOR)'=='Instrumented'">instrumented</OLD_FLAVOR>
+
+  </PropertyGroup>
+
+  <!-- set up the base DST_DIR path base on different PLATFORM_FAMILY at the corresponding setting files -->
+  <Import Condition="'$(PLATFORM_FAMILY)'=='x86'"    Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.x86.settings"    />
+  <!-- IMPORT the COMPILER_TOOL specific settings file (if it exists).  COMPILER_TOOL is set by setenv.cmd -->
+  <Import Condition="'$(PLATFORM_FAMILY)'!='x86' and EXISTS('$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.$(COMPILER_TOOL).settings')"    Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.$(COMPILER_TOOL).settings"    />
+
+  <PropertyGroup Condition="'$(PlatformIndependentBuild)'!='true'">
+    <OBJ_DIR>$(DST_DIR)\$(OBJ_EXT)\$(Directory)</OBJ_DIR>
+    <LIB_DIR>$(DST_DIR)\$(LIB_EXT)</LIB_DIR>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(PlatformIndependentBuild)'=='true'">
+    <OBJ_DIR>$(PLATFORM_INDEPENDENT_DST_DIR)\$(OBJ_EXT)\$(Directory)</OBJ_DIR>
+    <LIB_DIR>$(PLATFORM_INDEPENDENT_DST_DIR)\$(LIB_EXT)</LIB_DIR>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IntermediateOutputPath>$(OBJ_DIR)\</IntermediateOutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <BIN_DIR Condition="'$(BIN_DIR)'==''"   >$(DST_DIR)\bin</BIN_DIR>
+    <BLD_DIR>$(DST_DIR)</BLD_DIR>
+    <PLATFORM_INDEPENDENT_OBJ_DIR           >$(PLATFORM_INDEPENDENT_DST_DIR)\$(OBJ_EXT)\$(Directory)</PLATFORM_INDEPENDENT_OBJ_DIR>
+    <PLATFORM_INDEPENDENT_LIB_DIR           >$(PLATFORM_INDEPENDENT_DST_DIR)\$(LIB_EXT)</PLATFORM_INDEPENDENT_LIB_DIR>
+  </PropertyGroup>
+
+  <!-- at the common.mk-->
+  <ItemGroup>
+    <DirectIncludePaths Include="$(PLATFORM_INDEPENDENT_LIB_DIR)" />
+    <IncludePaths Include="DeviceCode\Targets\$(TARGETCODEBASETYPE)\$(TARGETCODEBASE)\$(PLATFORM)" />
+    <IncludePaths Include="Support\Include"/>
+    <IncludePaths Include="DeviceCode\include"/>
+    <IncludePaths Include="CLR\include"/>
+    <IncludePaths Include="Crypto\inc"/>
+  </ItemGroup>
+
+  <Import Project="Microsoft.SPOT.System.HalIncludes.settings"/>
+</Project>

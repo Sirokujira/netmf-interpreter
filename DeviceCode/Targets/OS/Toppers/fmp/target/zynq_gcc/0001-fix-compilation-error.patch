@@ -1,0 +1,32 @@
+From 0c679f5c0c259f49b17ca71d23f33fcb37c60f1f Mon Sep 17 00:00:00 2001
+From: Daniel Sangorrin <daniel.sangorrin@gmail.com>
+Date: Fri, 7 Dec 2012 18:26:36 +0900
+Subject: [PATCH] fix compilation error
+
+---
+ hw/9pfs/virtio-9p-handle.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/hw/9pfs/virtio-9p-handle.c b/hw/9pfs/virtio-9p-handle.c
+index cb012c0..a2bb6a5 100644
+--- a/hw/9pfs/virtio-9p-handle.c
++++ b/hw/9pfs/virtio-9p-handle.c
+@@ -39,6 +39,15 @@
+ #ifndef BTRFS_SUPER_MAGIC
+ #define BTRFS_SUPER_MAGIC 0x9123683E
+ #endif
++#ifndef AT_REMOVEDIR
++#define AT_REMOVEDIR    0x200
++#endif
++#ifndef AT_EMPTY_PATH
++#define AT_EMPTY_PATH   0x1000  /* Allow empty relative pathname */
++#endif
++#ifndef O_PATH
++#define O_PATH    010000000
++#endif
+ 
+ struct handle_data {
+     int mountfd;
+-- 
+1.7.9.5
+

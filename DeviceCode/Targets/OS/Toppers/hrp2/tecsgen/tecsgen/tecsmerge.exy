@@ -1,0 +1,57 @@
+# $Id: tecsmerge.exy 1925 2013-01-20 05:55:58Z okuma-top $
+general: 
+  startup: tecsmerge.rb
+  core: cui 
+path: 
+  - . 
+file: 
+  tecsmerge.rb: 
+  optparse.rb: 
+  kconv.rb: 
+  jcode.rb: 
+  runit/assert.rb: 
+  runit/cui/testrunner.rb: 
+  runit/error.rb: 
+  runit/testcase.rb: 
+  runit/testresult.rb: 
+  runit/testsuite.rb: 
+  runit/topublic.rb: 
+  test/unit/assertionfailederror.rb: 
+  test/unit/assertions.rb: 
+  test/unit/autorunner.rb: 
+  test/unit/collector/dir.rb: 
+  test/unit/collector/objectspace.rb: 
+  test/unit/collector.rb: 
+  test/unit/error.rb: 
+  test/unit/failure.rb: 
+  test/unit/testcase.rb: 
+  test/unit/testresult.rb: 
+  test/unit/testsuite.rb: 
+  test/unit/ui/console/testrunner.rb: 
+  test/unit/ui/fox/testrunner.rb: 
+  test/unit/ui/gtk/testrunner.rb: 
+  test/unit/ui/gtk2/testrunner.rb: 
+  test/unit/ui/testrunnermediator.rb: 
+  test/unit/ui/testrunnerutilities.rb: 
+  test/unit/ui/tk/testrunner.rb: 
+  test/unit/util/backtracefilter.rb: 
+  test/unit/util/observable.rb: 
+  test/unit/util/procwrapper.rb: 
+  test/unit.rb: 
+  nkf.so: 
+resource: 
+  version: 
+    file_version_number   : 1.0.0.7
+    product_version_number: 1.0.0.7
+    comments              : TECS merger
+    company_name          : TOPPERS Project 
+    legal_copyright       : Copyright (C) 2008-2013 by TOPPERS Project 
+    legal_trademarks      : TOPPERS Project 
+    file_version          : 1.0.0.7
+    product_version       : 1.0.0.7
+    product_name          : TECS Generator  
+    file_description      : Generator for TOPPERS Embedded Component System 
+    internal_name         : tecsmerge.exe
+    original_filename     : tecsmerge.rb 
+    private_build         : 1.0.0.7
+    special_build         : 1.0.0.7

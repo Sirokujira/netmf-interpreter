@@ -1,0 +1,22 @@
+﻿<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Name>ToppersHRP2onEV3</Name>
+    <CpuName>Cortex-A9</CpuName>
+    <Guid>{580a712f-aa16-4f7e-95b1-146d019c5959}</Guid>
+    <Description>
+    </Description>
+    <Documentation>
+    </Documentation>
+	<ProjectPath>$(SPOCLIENT)\DeviceCode\Targets\OS\Toppers\FMP\ToppersFMP.settings</ProjectPath>
+    <PLATFORM_FAMILY>ARM</PLATFORM_FAMILY>
+    <CustomFilter>Cortex-A9;FMP;LINUX</CustomFilter>
+    <INSTRUCTION_SET Condition="'$(INSTRUCTION_SET)'==''">ARM</INSTRUCTION_SET>
+    <TARGETPROCESSOR>LINUX</TARGETPROCESSOR>
+    <TARGETCODEBASE>ToppersFMP</TARGETCODEBASE>
+    <TARGETCODEBASETYPE>OS</TARGETCODEBASETYPE>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\FMP" />
+  </ItemGroup>
+</Project>

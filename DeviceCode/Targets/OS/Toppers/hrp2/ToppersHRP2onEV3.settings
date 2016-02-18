@@ -1,0 +1,22 @@
+﻿<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Name>ToppersHRP2onEV3</Name>
+    <CpuName>arm926EJ-S</CpuName>
+    <Guid>{580a712f-aa16-4f7e-95b1-146d019c5959}</Guid>
+    <Description>
+    </Description>
+    <Documentation>
+    </Documentation>
+	<ProjectPath>$(SPOCLIENT)\DeviceCode\Targets\OS\Toppers\HRP2\ToppersHRP2onEV3.settings</ProjectPath>
+    <PLATFORM_FAMILY>ARM</PLATFORM_FAMILY>
+    <CustomFilter>ARM9;HRP2;LINUX</CustomFilter>
+    <INSTRUCTION_SET Condition="'$(INSTRUCTION_SET)'==''">ARM</INSTRUCTION_SET>
+    <TARGETPROCESSOR>LINUX</TARGETPROCESSOR>
+    <TARGETCODEBASE>ToppersHRP2onEV3</TARGETCODEBASE>
+    <TARGETCODEBASETYPE>OS</TARGETCODEBASETYPE>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\HRP2" />
+  </ItemGroup>
+</Project>

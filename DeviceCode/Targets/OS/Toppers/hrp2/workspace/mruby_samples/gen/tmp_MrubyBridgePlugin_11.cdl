@@ -1,0 +1,18 @@
+import( <mruby.cdl> );
+
+/****  Ruby => TECS Bridge Celltype (MBP500) ****/
+namespace nMruby{
+    // bridge celltype
+    [idx_is_id,active]   // not actually active, to avoid warning W1002, W1007
+    celltype tsBalancer {
+        call ::sBalancer cTECS;
+        attr {
+            [omit]
+            char_t *VMname = "VM";
+        };
+    };
+    // bridge initializer celltype
+    celltype tsBalancer_Initializer {
+        entry sInitializeTECSBridge eInitialize;
+    };
+};

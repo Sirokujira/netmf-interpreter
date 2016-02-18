@@ -1,0 +1,17 @@
+import( <posix.cdl> );
+
+/*
+ * tools/netmf/netmf.c から cInit_initializeBridge( netmf ) を呼び出すように変更したもの
+ */
+namespace nNetMF{
+	[active]
+	celltype tNetMFProc {
+	    entry nPosix::sMain eMain;
+
+		[optional]
+			call sInitializeBridge cInit;
+		var {
+			netmf_state *netmf;
+		};
+	};
+};

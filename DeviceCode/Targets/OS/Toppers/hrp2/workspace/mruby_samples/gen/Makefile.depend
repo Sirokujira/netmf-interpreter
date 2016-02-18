@@ -1,0 +1,225 @@
+# Celltype: tTask  #_MDEP_#
+$(_TECS_OBJ_DIR)tTask_tecsgen.o : tTask_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sTaskBody_tecsgen.h $(GEN_DIR)/sTaskExceptionBody_tecsgen.h $(GEN_DIR)/sTask_tecsgen.h $(GEN_DIR)/siTask_tecsgen.h $(GEN_DIR)/tTask_factory.h $(GEN_DIR)/tTask_tecsgen.h tTask_inline.h
+$(_TECS_OBJ_DIR)tTask_templ.o : tTask_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sTaskBody_tecsgen.h $(GEN_DIR)/sTaskExceptionBody_tecsgen.h $(GEN_DIR)/sTask_tecsgen.h $(GEN_DIR)/siTask_tecsgen.h $(GEN_DIR)/tTask_factory.h $(GEN_DIR)/tTask_tecsgen.h tTask_inline.h
+$(_TECS_OBJ_DIR)tTask.o : tTask.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sTaskBody_tecsgen.h $(GEN_DIR)/sTaskExceptionBody_tecsgen.h $(GEN_DIR)/sTask_tecsgen.h $(GEN_DIR)/siTask_tecsgen.h $(GEN_DIR)/tTask_factory.h $(GEN_DIR)/tTask_tecsgen.h tTask_inline.h
+
+# Celltype: tKernel  #_MDEP_#
+$(_TECS_OBJ_DIR)tKernel_tecsgen.o : tKernel_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sKernel_tecsgen.h $(GEN_DIR)/siKernel_tecsgen.h $(GEN_DIR)/tKernel_factory.h $(GEN_DIR)/tKernel_tecsgen.h tKernel_inline.h
+$(_TECS_OBJ_DIR)tKernel_templ.o : tKernel_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sKernel_tecsgen.h $(GEN_DIR)/siKernel_tecsgen.h $(GEN_DIR)/tKernel_factory.h $(GEN_DIR)/tKernel_tecsgen.h tKernel_inline.h
+$(_TECS_OBJ_DIR)tKernel.o : tKernel.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sKernel_tecsgen.h $(GEN_DIR)/siKernel_tecsgen.h $(GEN_DIR)/tKernel_factory.h $(GEN_DIR)/tKernel_tecsgen.h tKernel_inline.h
+
+# Celltype: tUltrasonicSensor  #_MDEP_#
+$(_TECS_OBJ_DIR)tUltrasonicSensor_tecsgen.o : tUltrasonicSensor_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sUltrasonicSensor_tecsgen.h $(GEN_DIR)/tUltrasonicSensor_factory.h $(GEN_DIR)/tUltrasonicSensor_tecsgen.h
+$(_TECS_OBJ_DIR)tUltrasonicSensor_templ.o : tUltrasonicSensor_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sUltrasonicSensor_tecsgen.h $(GEN_DIR)/tUltrasonicSensor_factory.h $(GEN_DIR)/tUltrasonicSensor_tecsgen.h
+$(_TECS_OBJ_DIR)tUltrasonicSensor.o : tUltrasonicSensor.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sUltrasonicSensor_tecsgen.h $(GEN_DIR)/tUltrasonicSensor_factory.h $(GEN_DIR)/tUltrasonicSensor_tecsgen.h
+
+# Celltype: tColorSensor  #_MDEP_#
+$(_TECS_OBJ_DIR)tColorSensor_tecsgen.o : tColorSensor_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sColorSensor_tecsgen.h $(GEN_DIR)/tColorSensor_factory.h $(GEN_DIR)/tColorSensor_tecsgen.h
+$(_TECS_OBJ_DIR)tColorSensor_templ.o : tColorSensor_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sColorSensor_tecsgen.h $(GEN_DIR)/tColorSensor_factory.h $(GEN_DIR)/tColorSensor_tecsgen.h
+$(_TECS_OBJ_DIR)tColorSensor.o : tColorSensor.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sColorSensor_tecsgen.h $(GEN_DIR)/tColorSensor_factory.h $(GEN_DIR)/tColorSensor_tecsgen.h
+
+# Celltype: tTouchSensor  #_MDEP_#
+$(_TECS_OBJ_DIR)tTouchSensor_tecsgen.o : tTouchSensor_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sTouchSensor_tecsgen.h $(GEN_DIR)/tTouchSensor_factory.h $(GEN_DIR)/tTouchSensor_tecsgen.h
+$(_TECS_OBJ_DIR)tTouchSensor_templ.o : tTouchSensor_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sTouchSensor_tecsgen.h $(GEN_DIR)/tTouchSensor_factory.h $(GEN_DIR)/tTouchSensor_tecsgen.h
+$(_TECS_OBJ_DIR)tTouchSensor.o : tTouchSensor.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sTouchSensor_tecsgen.h $(GEN_DIR)/tTouchSensor_factory.h $(GEN_DIR)/tTouchSensor_tecsgen.h
+
+# Celltype: tGyroSensor  #_MDEP_#
+$(_TECS_OBJ_DIR)tGyroSensor_tecsgen.o : tGyroSensor_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sGyroSensor_tecsgen.h $(GEN_DIR)/tGyroSensor_factory.h $(GEN_DIR)/tGyroSensor_tecsgen.h
+$(_TECS_OBJ_DIR)tGyroSensor_templ.o : tGyroSensor_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sGyroSensor_tecsgen.h $(GEN_DIR)/tGyroSensor_factory.h $(GEN_DIR)/tGyroSensor_tecsgen.h
+$(_TECS_OBJ_DIR)tGyroSensor.o : tGyroSensor.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sGyroSensor_tecsgen.h $(GEN_DIR)/tGyroSensor_factory.h $(GEN_DIR)/tGyroSensor_tecsgen.h
+
+# Celltype: tMotor  #_MDEP_#
+$(_TECS_OBJ_DIR)tMotor_tecsgen.o : tMotor_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sMotor_tecsgen.h $(GEN_DIR)/tMotor_factory.h $(GEN_DIR)/tMotor_tecsgen.h
+$(_TECS_OBJ_DIR)tMotor_templ.o : tMotor_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sMotor_tecsgen.h $(GEN_DIR)/tMotor_factory.h $(GEN_DIR)/tMotor_tecsgen.h
+$(_TECS_OBJ_DIR)tMotor.o : tMotor.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sMotor_tecsgen.h $(GEN_DIR)/tMotor_factory.h $(GEN_DIR)/tMotor_tecsgen.h
+
+# Celltype: tButton  #_MDEP_#
+$(_TECS_OBJ_DIR)tButton_tecsgen.o : tButton_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sButton_tecsgen.h $(GEN_DIR)/tButton_factory.h $(GEN_DIR)/tButton_tecsgen.h
+$(_TECS_OBJ_DIR)tButton_templ.o : tButton_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sButton_tecsgen.h $(GEN_DIR)/tButton_factory.h $(GEN_DIR)/tButton_tecsgen.h
+$(_TECS_OBJ_DIR)tButton.o : tButton.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sButton_tecsgen.h $(GEN_DIR)/tButton_factory.h $(GEN_DIR)/tButton_tecsgen.h
+
+# Celltype: tLCD  #_MDEP_#
+$(_TECS_OBJ_DIR)tLCD_tecsgen.o : tLCD_tecsgen.c  $(GEN_DIR)/tButton_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sButton_tecsgen.h $(GEN_DIR)/sLCD_tecsgen.h $(GEN_DIR)/tLCD_factory.h $(GEN_DIR)/tLCD_tecsgen.h
+$(_TECS_OBJ_DIR)tLCD_templ.o : tLCD_templ.c  $(GEN_DIR)/tButton_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sButton_tecsgen.h $(GEN_DIR)/sLCD_tecsgen.h $(GEN_DIR)/tLCD_factory.h $(GEN_DIR)/tLCD_tecsgen.h
+$(_TECS_OBJ_DIR)tLCD.o : tLCD.c  $(GEN_DIR)/tButton_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sButton_tecsgen.h $(GEN_DIR)/sLCD_tecsgen.h $(GEN_DIR)/tLCD_factory.h $(GEN_DIR)/tLCD_tecsgen.h
+
+# Celltype: tLED  #_MDEP_#
+$(_TECS_OBJ_DIR)tLED_tecsgen.o : tLED_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sLED_tecsgen.h $(GEN_DIR)/tLED_factory.h $(GEN_DIR)/tLED_tecsgen.h
+$(_TECS_OBJ_DIR)tLED_templ.o : tLED_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sLED_tecsgen.h $(GEN_DIR)/tLED_factory.h $(GEN_DIR)/tLED_tecsgen.h
+$(_TECS_OBJ_DIR)tLED.o : tLED.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sLED_tecsgen.h $(GEN_DIR)/tLED_factory.h $(GEN_DIR)/tLED_tecsgen.h
+
+# Celltype: tBattery  #_MDEP_#
+$(_TECS_OBJ_DIR)tBattery_tecsgen.o : tBattery_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sBattery_tecsgen.h $(GEN_DIR)/tBattery_factory.h $(GEN_DIR)/tBattery_tecsgen.h
+$(_TECS_OBJ_DIR)tBattery_templ.o : tBattery_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sBattery_tecsgen.h $(GEN_DIR)/tBattery_factory.h $(GEN_DIR)/tBattery_tecsgen.h
+$(_TECS_OBJ_DIR)tBattery.o : tBattery.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sBattery_tecsgen.h $(GEN_DIR)/tBattery_factory.h $(GEN_DIR)/tBattery_tecsgen.h
+
+# Celltype: tSpeaker  #_MDEP_#
+$(_TECS_OBJ_DIR)tSpeaker_tecsgen.o : tSpeaker_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sSpeaker_tecsgen.h $(GEN_DIR)/tSpeaker_factory.h $(GEN_DIR)/tSpeaker_tecsgen.h
+$(_TECS_OBJ_DIR)tSpeaker_templ.o : tSpeaker_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sSpeaker_tecsgen.h $(GEN_DIR)/tSpeaker_factory.h $(GEN_DIR)/tSpeaker_tecsgen.h
+$(_TECS_OBJ_DIR)tSpeaker.o : tSpeaker.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sSpeaker_tecsgen.h $(GEN_DIR)/tSpeaker_factory.h $(GEN_DIR)/tSpeaker_tecsgen.h
+
+# Celltype: tEV3Platform  #_MDEP_#
+$(_TECS_OBJ_DIR)tEV3Platform_tecsgen.o : tEV3Platform_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sTaskBody_tecsgen.h $(GEN_DIR)/tEV3Platform_factory.h $(GEN_DIR)/tEV3Platform_tecsgen.h
+$(_TECS_OBJ_DIR)tEV3Platform_templ.o : tEV3Platform_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sTaskBody_tecsgen.h $(GEN_DIR)/tEV3Platform_factory.h $(GEN_DIR)/tEV3Platform_tecsgen.h
+$(_TECS_OBJ_DIR)tEV3Platform.o : tEV3Platform.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sTaskBody_tecsgen.h $(GEN_DIR)/tEV3Platform_factory.h $(GEN_DIR)/tEV3Platform_tecsgen.h
+
+# Celltype: tBalancer  #_MDEP_#
+$(_TECS_OBJ_DIR)tBalancer_tecsgen.o : tBalancer_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sBalancer_tecsgen.h $(GEN_DIR)/tBalancer_factory.h $(GEN_DIR)/tBalancer_tecsgen.h
+$(_TECS_OBJ_DIR)tBalancer_templ.o : tBalancer_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sBalancer_tecsgen.h $(GEN_DIR)/tBalancer_factory.h $(GEN_DIR)/tBalancer_tecsgen.h
+$(_TECS_OBJ_DIR)tBalancer.o : tBalancer.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/sBalancer_tecsgen.h $(GEN_DIR)/tBalancer_factory.h $(GEN_DIR)/tBalancer_tecsgen.h
+
+# Celltype: tTECSInitializer  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tTECSInitializer_tecsgen.o : nMruby_tTECSInitializer_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeBridge_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tTECSInitializer_factory.h $(GEN_DIR)/nMruby_tTECSInitializer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tTECSInitializer_templ.o : nMruby_tTECSInitializer_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeBridge_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tTECSInitializer_factory.h $(GEN_DIR)/nMruby_tTECSInitializer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tTECSInitializer.o : nMruby_tTECSInitializer.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeBridge_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tTECSInitializer_factory.h $(GEN_DIR)/nMruby_tTECSInitializer_tecsgen.h
+
+# Celltype: tCharPointer  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tCharPointer_tecsgen.o : nMruby_tCharPointer_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tCharPointer_factory.h $(GEN_DIR)/nMruby_tCharPointer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tCharPointer_templ.o : nMruby_tCharPointer_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tCharPointer_factory.h $(GEN_DIR)/nMruby_tCharPointer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tCharPointer.o : nMruby_tCharPointer.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tCharPointer_factory.h $(GEN_DIR)/nMruby_tCharPointer_tecsgen.h
+
+# Celltype: tInt8Pointer  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tInt8Pointer_tecsgen.o : nMruby_tInt8Pointer_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tInt8Pointer_factory.h $(GEN_DIR)/nMruby_tInt8Pointer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tInt8Pointer_templ.o : nMruby_tInt8Pointer_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tInt8Pointer_factory.h $(GEN_DIR)/nMruby_tInt8Pointer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tInt8Pointer.o : nMruby_tInt8Pointer.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tInt8Pointer_factory.h $(GEN_DIR)/nMruby_tInt8Pointer_tecsgen.h
+
+# Celltype: tInt32Pointer  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tInt32Pointer_tecsgen.o : nMruby_tInt32Pointer_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tInt32Pointer_factory.h $(GEN_DIR)/nMruby_tInt32Pointer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tInt32Pointer_templ.o : nMruby_tInt32Pointer_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tInt32Pointer_factory.h $(GEN_DIR)/nMruby_tInt32Pointer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tInt32Pointer.o : nMruby_tInt32Pointer.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tInt32Pointer_factory.h $(GEN_DIR)/nMruby_tInt32Pointer_tecsgen.h
+
+# Celltype: tIntPointer  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tIntPointer_tecsgen.o : nMruby_tIntPointer_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tIntPointer_factory.h $(GEN_DIR)/nMruby_tIntPointer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tIntPointer_templ.o : nMruby_tIntPointer_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tIntPointer_factory.h $(GEN_DIR)/nMruby_tIntPointer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tIntPointer.o : nMruby_tIntPointer.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tIntPointer_factory.h $(GEN_DIR)/nMruby_tIntPointer_tecsgen.h
+
+# Celltype: tULongPointer  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tULongPointer_tecsgen.o : nMruby_tULongPointer_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tULongPointer_factory.h $(GEN_DIR)/nMruby_tULongPointer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tULongPointer_templ.o : nMruby_tULongPointer_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tULongPointer_factory.h $(GEN_DIR)/nMruby_tULongPointer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tULongPointer.o : nMruby_tULongPointer.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tULongPointer_factory.h $(GEN_DIR)/nMruby_tULongPointer_tecsgen.h
+
+# Celltype: tMruby  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tMruby_tecsgen.o : nMruby_tMruby_tecsgen.c  $(GEN_DIR)/nMruby_tTECSInitializer_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeBridge_tecsgen.h $(GEN_DIR)/nMruby_tMruby_factory.h $(GEN_DIR)/nMruby_tMruby_tecsgen.h $(GEN_DIR)/sTaskBody_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tMruby_templ.o : nMruby_tMruby_templ.c  $(GEN_DIR)/nMruby_tTECSInitializer_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeBridge_tecsgen.h $(GEN_DIR)/nMruby_tMruby_factory.h $(GEN_DIR)/nMruby_tMruby_tecsgen.h $(GEN_DIR)/sTaskBody_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tMruby.o : nMruby_tMruby.c  $(GEN_DIR)/nMruby_tTECSInitializer_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeBridge_tecsgen.h $(GEN_DIR)/nMruby_tMruby_factory.h $(GEN_DIR)/nMruby_tMruby_tecsgen.h $(GEN_DIR)/sTaskBody_tecsgen.h
+
+# Celltype: tsKernel  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tsKernel_tecsgen.o : nMruby_tsKernel_tecsgen.c  $(GEN_DIR)/tKernel_tecsgen.h  tKernel_inline.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsKernel_factory.h $(GEN_DIR)/nMruby_tsKernel_tecsgen.h $(GEN_DIR)/sKernel_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsKernel_templ.o : nMruby_tsKernel_templ.c  $(GEN_DIR)/tKernel_tecsgen.h  tKernel_inline.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsKernel_factory.h $(GEN_DIR)/nMruby_tsKernel_tecsgen.h $(GEN_DIR)/sKernel_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsKernel.o : nMruby_tsKernel.c  $(GEN_DIR)/tKernel_tecsgen.h  tKernel_inline.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsKernel_factory.h $(GEN_DIR)/nMruby_tsKernel_tecsgen.h $(GEN_DIR)/sKernel_tecsgen.h
+
+# Celltype: tsKernel_Initializer  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tsKernel_Initializer_tecsgen.o : nMruby_tsKernel_Initializer_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsKernel_Initializer_factory.h $(GEN_DIR)/nMruby_tsKernel_Initializer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsKernel_Initializer_templ.o : nMruby_tsKernel_Initializer_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsKernel_Initializer_factory.h $(GEN_DIR)/nMruby_tsKernel_Initializer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsKernel_Initializer.o : nMruby_tsKernel_Initializer.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsKernel_Initializer_factory.h $(GEN_DIR)/nMruby_tsKernel_Initializer_tecsgen.h
+
+# Celltype: tsMotor  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tsMotor_tecsgen.o : nMruby_tsMotor_tecsgen.c  $(GEN_DIR)/tMotor_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsMotor_factory.h $(GEN_DIR)/nMruby_tsMotor_tecsgen.h $(GEN_DIR)/sMotor_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsMotor_templ.o : nMruby_tsMotor_templ.c  $(GEN_DIR)/tMotor_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsMotor_factory.h $(GEN_DIR)/nMruby_tsMotor_tecsgen.h $(GEN_DIR)/sMotor_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsMotor.o : nMruby_tsMotor.c  $(GEN_DIR)/tMotor_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsMotor_factory.h $(GEN_DIR)/nMruby_tsMotor_tecsgen.h $(GEN_DIR)/sMotor_tecsgen.h
+
+# Celltype: tsMotor_Initializer  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tsMotor_Initializer_tecsgen.o : nMruby_tsMotor_Initializer_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsMotor_Initializer_factory.h $(GEN_DIR)/nMruby_tsMotor_Initializer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsMotor_Initializer_templ.o : nMruby_tsMotor_Initializer_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsMotor_Initializer_factory.h $(GEN_DIR)/nMruby_tsMotor_Initializer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsMotor_Initializer.o : nMruby_tsMotor_Initializer.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsMotor_Initializer_factory.h $(GEN_DIR)/nMruby_tsMotor_Initializer_tecsgen.h
+
+# Celltype: tsLCD  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tsLCD_tecsgen.o : nMruby_tsLCD_tecsgen.c  $(GEN_DIR)/tButton_tecsgen.h  $(GEN_DIR)/tLCD_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsLCD_factory.h $(GEN_DIR)/nMruby_tsLCD_tecsgen.h $(GEN_DIR)/sLCD_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsLCD_templ.o : nMruby_tsLCD_templ.c  $(GEN_DIR)/tButton_tecsgen.h  $(GEN_DIR)/tLCD_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsLCD_factory.h $(GEN_DIR)/nMruby_tsLCD_tecsgen.h $(GEN_DIR)/sLCD_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsLCD.o : nMruby_tsLCD.c  $(GEN_DIR)/tButton_tecsgen.h  $(GEN_DIR)/tLCD_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsLCD_factory.h $(GEN_DIR)/nMruby_tsLCD_tecsgen.h $(GEN_DIR)/sLCD_tecsgen.h
+
+# Celltype: tsLCD_Initializer  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tsLCD_Initializer_tecsgen.o : nMruby_tsLCD_Initializer_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsLCD_Initializer_factory.h $(GEN_DIR)/nMruby_tsLCD_Initializer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsLCD_Initializer_templ.o : nMruby_tsLCD_Initializer_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsLCD_Initializer_factory.h $(GEN_DIR)/nMruby_tsLCD_Initializer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsLCD_Initializer.o : nMruby_tsLCD_Initializer.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsLCD_Initializer_factory.h $(GEN_DIR)/nMruby_tsLCD_Initializer_tecsgen.h
+
+# Celltype: tsLED  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tsLED_tecsgen.o : nMruby_tsLED_tecsgen.c  $(GEN_DIR)/tLED_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsLED_factory.h $(GEN_DIR)/nMruby_tsLED_tecsgen.h $(GEN_DIR)/sLED_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsLED_templ.o : nMruby_tsLED_templ.c  $(GEN_DIR)/tLED_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsLED_factory.h $(GEN_DIR)/nMruby_tsLED_tecsgen.h $(GEN_DIR)/sLED_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsLED.o : nMruby_tsLED.c  $(GEN_DIR)/tLED_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsLED_factory.h $(GEN_DIR)/nMruby_tsLED_tecsgen.h $(GEN_DIR)/sLED_tecsgen.h
+
+# Celltype: tsLED_Initializer  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tsLED_Initializer_tecsgen.o : nMruby_tsLED_Initializer_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsLED_Initializer_factory.h $(GEN_DIR)/nMruby_tsLED_Initializer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsLED_Initializer_templ.o : nMruby_tsLED_Initializer_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsLED_Initializer_factory.h $(GEN_DIR)/nMruby_tsLED_Initializer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsLED_Initializer.o : nMruby_tsLED_Initializer.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsLED_Initializer_factory.h $(GEN_DIR)/nMruby_tsLED_Initializer_tecsgen.h
+
+# Celltype: tsButton  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tsButton_tecsgen.o : nMruby_tsButton_tecsgen.c  $(GEN_DIR)/tButton_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsButton_factory.h $(GEN_DIR)/nMruby_tsButton_tecsgen.h $(GEN_DIR)/sButton_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsButton_templ.o : nMruby_tsButton_templ.c  $(GEN_DIR)/tButton_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsButton_factory.h $(GEN_DIR)/nMruby_tsButton_tecsgen.h $(GEN_DIR)/sButton_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsButton.o : nMruby_tsButton.c  $(GEN_DIR)/tButton_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsButton_factory.h $(GEN_DIR)/nMruby_tsButton_tecsgen.h $(GEN_DIR)/sButton_tecsgen.h
+
+# Celltype: tsButton_Initializer  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tsButton_Initializer_tecsgen.o : nMruby_tsButton_Initializer_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsButton_Initializer_factory.h $(GEN_DIR)/nMruby_tsButton_Initializer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsButton_Initializer_templ.o : nMruby_tsButton_Initializer_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsButton_Initializer_factory.h $(GEN_DIR)/nMruby_tsButton_Initializer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsButton_Initializer.o : nMruby_tsButton_Initializer.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsButton_Initializer_factory.h $(GEN_DIR)/nMruby_tsButton_Initializer_tecsgen.h
+
+# Celltype: tsBattery  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tsBattery_tecsgen.o : nMruby_tsBattery_tecsgen.c  $(GEN_DIR)/tBattery_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsBattery_factory.h $(GEN_DIR)/nMruby_tsBattery_tecsgen.h $(GEN_DIR)/sBattery_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsBattery_templ.o : nMruby_tsBattery_templ.c  $(GEN_DIR)/tBattery_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsBattery_factory.h $(GEN_DIR)/nMruby_tsBattery_tecsgen.h $(GEN_DIR)/sBattery_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsBattery.o : nMruby_tsBattery.c  $(GEN_DIR)/tBattery_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsBattery_factory.h $(GEN_DIR)/nMruby_tsBattery_tecsgen.h $(GEN_DIR)/sBattery_tecsgen.h
+
+# Celltype: tsBattery_Initializer  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tsBattery_Initializer_tecsgen.o : nMruby_tsBattery_Initializer_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsBattery_Initializer_factory.h $(GEN_DIR)/nMruby_tsBattery_Initializer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsBattery_Initializer_templ.o : nMruby_tsBattery_Initializer_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsBattery_Initializer_factory.h $(GEN_DIR)/nMruby_tsBattery_Initializer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsBattery_Initializer.o : nMruby_tsBattery_Initializer.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsBattery_Initializer_factory.h $(GEN_DIR)/nMruby_tsBattery_Initializer_tecsgen.h
+
+# Celltype: tsSpeaker  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tsSpeaker_tecsgen.o : nMruby_tsSpeaker_tecsgen.c  $(GEN_DIR)/tSpeaker_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsSpeaker_factory.h $(GEN_DIR)/nMruby_tsSpeaker_tecsgen.h $(GEN_DIR)/sSpeaker_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsSpeaker_templ.o : nMruby_tsSpeaker_templ.c  $(GEN_DIR)/tSpeaker_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsSpeaker_factory.h $(GEN_DIR)/nMruby_tsSpeaker_tecsgen.h $(GEN_DIR)/sSpeaker_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsSpeaker.o : nMruby_tsSpeaker.c  $(GEN_DIR)/tSpeaker_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsSpeaker_factory.h $(GEN_DIR)/nMruby_tsSpeaker_tecsgen.h $(GEN_DIR)/sSpeaker_tecsgen.h
+
+# Celltype: tsSpeaker_Initializer  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tsSpeaker_Initializer_tecsgen.o : nMruby_tsSpeaker_Initializer_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsSpeaker_Initializer_factory.h $(GEN_DIR)/nMruby_tsSpeaker_Initializer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsSpeaker_Initializer_templ.o : nMruby_tsSpeaker_Initializer_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsSpeaker_Initializer_factory.h $(GEN_DIR)/nMruby_tsSpeaker_Initializer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsSpeaker_Initializer.o : nMruby_tsSpeaker_Initializer.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsSpeaker_Initializer_factory.h $(GEN_DIR)/nMruby_tsSpeaker_Initializer_tecsgen.h
+
+# Celltype: tsUltrasonicSensor  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tsUltrasonicSensor_tecsgen.o : nMruby_tsUltrasonicSensor_tecsgen.c  $(GEN_DIR)/tUltrasonicSensor_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsUltrasonicSensor_factory.h $(GEN_DIR)/nMruby_tsUltrasonicSensor_tecsgen.h $(GEN_DIR)/sUltrasonicSensor_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsUltrasonicSensor_templ.o : nMruby_tsUltrasonicSensor_templ.c  $(GEN_DIR)/tUltrasonicSensor_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsUltrasonicSensor_factory.h $(GEN_DIR)/nMruby_tsUltrasonicSensor_tecsgen.h $(GEN_DIR)/sUltrasonicSensor_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsUltrasonicSensor.o : nMruby_tsUltrasonicSensor.c  $(GEN_DIR)/tUltrasonicSensor_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsUltrasonicSensor_factory.h $(GEN_DIR)/nMruby_tsUltrasonicSensor_tecsgen.h $(GEN_DIR)/sUltrasonicSensor_tecsgen.h
+
+# Celltype: tsUltrasonicSensor_Initializer  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tsUltrasonicSensor_Initializer_tecsgen.o : nMruby_tsUltrasonicSensor_Initializer_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsUltrasonicSensor_Initializer_factory.h $(GEN_DIR)/nMruby_tsUltrasonicSensor_Initializer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsUltrasonicSensor_Initializer_templ.o : nMruby_tsUltrasonicSensor_Initializer_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsUltrasonicSensor_Initializer_factory.h $(GEN_DIR)/nMruby_tsUltrasonicSensor_Initializer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsUltrasonicSensor_Initializer.o : nMruby_tsUltrasonicSensor_Initializer.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsUltrasonicSensor_Initializer_factory.h $(GEN_DIR)/nMruby_tsUltrasonicSensor_Initializer_tecsgen.h
+
+# Celltype: tsGyroSensor  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tsGyroSensor_tecsgen.o : nMruby_tsGyroSensor_tecsgen.c  $(GEN_DIR)/tGyroSensor_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsGyroSensor_factory.h $(GEN_DIR)/nMruby_tsGyroSensor_tecsgen.h $(GEN_DIR)/sGyroSensor_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsGyroSensor_templ.o : nMruby_tsGyroSensor_templ.c  $(GEN_DIR)/tGyroSensor_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsGyroSensor_factory.h $(GEN_DIR)/nMruby_tsGyroSensor_tecsgen.h $(GEN_DIR)/sGyroSensor_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsGyroSensor.o : nMruby_tsGyroSensor.c  $(GEN_DIR)/tGyroSensor_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsGyroSensor_factory.h $(GEN_DIR)/nMruby_tsGyroSensor_tecsgen.h $(GEN_DIR)/sGyroSensor_tecsgen.h
+
+# Celltype: tsGyroSensor_Initializer  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tsGyroSensor_Initializer_tecsgen.o : nMruby_tsGyroSensor_Initializer_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsGyroSensor_Initializer_factory.h $(GEN_DIR)/nMruby_tsGyroSensor_Initializer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsGyroSensor_Initializer_templ.o : nMruby_tsGyroSensor_Initializer_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsGyroSensor_Initializer_factory.h $(GEN_DIR)/nMruby_tsGyroSensor_Initializer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsGyroSensor_Initializer.o : nMruby_tsGyroSensor_Initializer.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsGyroSensor_Initializer_factory.h $(GEN_DIR)/nMruby_tsGyroSensor_Initializer_tecsgen.h
+
+# Celltype: tsColorSensor  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tsColorSensor_tecsgen.o : nMruby_tsColorSensor_tecsgen.c  $(GEN_DIR)/tColorSensor_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsColorSensor_factory.h $(GEN_DIR)/nMruby_tsColorSensor_tecsgen.h $(GEN_DIR)/sColorSensor_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsColorSensor_templ.o : nMruby_tsColorSensor_templ.c  $(GEN_DIR)/tColorSensor_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsColorSensor_factory.h $(GEN_DIR)/nMruby_tsColorSensor_tecsgen.h $(GEN_DIR)/sColorSensor_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsColorSensor.o : nMruby_tsColorSensor.c  $(GEN_DIR)/tColorSensor_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsColorSensor_factory.h $(GEN_DIR)/nMruby_tsColorSensor_tecsgen.h $(GEN_DIR)/sColorSensor_tecsgen.h
+
+# Celltype: tsColorSensor_Initializer  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tsColorSensor_Initializer_tecsgen.o : nMruby_tsColorSensor_Initializer_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsColorSensor_Initializer_factory.h $(GEN_DIR)/nMruby_tsColorSensor_Initializer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsColorSensor_Initializer_templ.o : nMruby_tsColorSensor_Initializer_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsColorSensor_Initializer_factory.h $(GEN_DIR)/nMruby_tsColorSensor_Initializer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsColorSensor_Initializer.o : nMruby_tsColorSensor_Initializer.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsColorSensor_Initializer_factory.h $(GEN_DIR)/nMruby_tsColorSensor_Initializer_tecsgen.h
+
+# Celltype: tsTouchSensor  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tsTouchSensor_tecsgen.o : nMruby_tsTouchSensor_tecsgen.c  $(GEN_DIR)/tTouchSensor_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsTouchSensor_factory.h $(GEN_DIR)/nMruby_tsTouchSensor_tecsgen.h $(GEN_DIR)/sTouchSensor_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsTouchSensor_templ.o : nMruby_tsTouchSensor_templ.c  $(GEN_DIR)/tTouchSensor_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsTouchSensor_factory.h $(GEN_DIR)/nMruby_tsTouchSensor_tecsgen.h $(GEN_DIR)/sTouchSensor_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsTouchSensor.o : nMruby_tsTouchSensor.c  $(GEN_DIR)/tTouchSensor_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsTouchSensor_factory.h $(GEN_DIR)/nMruby_tsTouchSensor_tecsgen.h $(GEN_DIR)/sTouchSensor_tecsgen.h
+
+# Celltype: tsTouchSensor_Initializer  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tsTouchSensor_Initializer_tecsgen.o : nMruby_tsTouchSensor_Initializer_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsTouchSensor_Initializer_factory.h $(GEN_DIR)/nMruby_tsTouchSensor_Initializer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsTouchSensor_Initializer_templ.o : nMruby_tsTouchSensor_Initializer_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsTouchSensor_Initializer_factory.h $(GEN_DIR)/nMruby_tsTouchSensor_Initializer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsTouchSensor_Initializer.o : nMruby_tsTouchSensor_Initializer.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsTouchSensor_Initializer_factory.h $(GEN_DIR)/nMruby_tsTouchSensor_Initializer_tecsgen.h
+
+# Celltype: tsBalancer  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tsBalancer_tecsgen.o : nMruby_tsBalancer_tecsgen.c  $(GEN_DIR)/tBalancer_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsBalancer_factory.h $(GEN_DIR)/nMruby_tsBalancer_tecsgen.h $(GEN_DIR)/sBalancer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsBalancer_templ.o : nMruby_tsBalancer_templ.c  $(GEN_DIR)/tBalancer_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsBalancer_factory.h $(GEN_DIR)/nMruby_tsBalancer_tecsgen.h $(GEN_DIR)/sBalancer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsBalancer.o : nMruby_tsBalancer.c  $(GEN_DIR)/tBalancer_tecsgen.h $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_tsBalancer_factory.h $(GEN_DIR)/nMruby_tsBalancer_tecsgen.h $(GEN_DIR)/sBalancer_tecsgen.h
+
+# Celltype: tsBalancer_Initializer  #_MDEP_#
+$(_TECS_OBJ_DIR)nMruby_tsBalancer_Initializer_tecsgen.o : nMruby_tsBalancer_Initializer_tecsgen.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsBalancer_Initializer_factory.h $(GEN_DIR)/nMruby_tsBalancer_Initializer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsBalancer_Initializer_templ.o : nMruby_tsBalancer_Initializer_templ.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsBalancer_Initializer_factory.h $(GEN_DIR)/nMruby_tsBalancer_Initializer_tecsgen.h
+$(_TECS_OBJ_DIR)nMruby_tsBalancer_Initializer.o : nMruby_tsBalancer_Initializer.c $(GEN_DIR)/global_tecsgen.h $(GEN_DIR)/nMruby_sInitializeTECSBridge_tecsgen.h $(GEN_DIR)/nMruby_tsBalancer_Initializer_factory.h $(GEN_DIR)/nMruby_tsBalancer_Initializer_tecsgen.h
+

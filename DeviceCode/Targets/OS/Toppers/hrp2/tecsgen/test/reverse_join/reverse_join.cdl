@@ -1,0 +1,24 @@
+import_C( "tecs.h" );
+import( "cygwin_kernel.cdl" );
+
+signature sSig {
+	void  func(void);
+};
+
+celltype tMain {
+  entry sTaskBody eBody;
+};
+
+[prototype]
+cell tMain Main {
+  eBody <= Task.cBody;
+};
+
+cell tTask Task {
+  priority = 11;
+  stackSize = 512;
+  taskAttribute = C_EXP( "TA_ACT" );
+};
+
+cell tMain Main
+{};

@@ -1,0 +1,5 @@
+import_C( "tecs_netmf.h" );
+
+import( <netmfInitializer.cdl> );
+import( <netmfPointers.cdl> );
+import( <netmfVMs.cdl> );

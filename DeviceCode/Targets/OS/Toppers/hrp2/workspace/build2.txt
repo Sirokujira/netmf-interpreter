@@ -1,0 +1,21 @@
+rm -rf /home/T_O/ev3rt-beta5-release/hrp2/workspace/OBJ
+make[1]: ディレクトリ '/home/T_O/ev3rt-beta5-release/hrp2/workspace/OBJ' に入ります
+rm -f \#* *~ *.o  cfg2_out.ld cfg3_out.ld ldscript.ld
+rm -f hrp2.exe hrp2.syms hrp2.srec hrp2.bin
+rm -f kernel_mem.c cfg2_out.exe cfg2_out.tf cfg2_out.syms cfg2_out.srec
+rm -f cfg3_out.exe cfg3_out.tf cfg3_out.syms cfg3_out.srec
+rm -f kernel_cfg.timestamp kernel_cfg.h kernel_cfg.c kernel_mem2.c  kernel_cfg.h kernel_cfg.c kernel_mem3.c 
+rm -f cfg1_out.c cfg1_out.exe cfg1_out.syms cfg1_out.srec
+rm -f makeoffset.s offset.h
+make[1]: ディレクトリ '/home/T_O/ev3rt-beta5-release/hrp2/workspace/OBJ' から出ます
+make[1]: ディレクトリ '/home/T_O/ev3rt-beta5-release/hrp2/workspace/OBJ' に入ります
+
+touch -r kernel_cfg.c kernel_cfg.timestamp
+make[1]: 'kernel_cfg.h' に対して行うべき事はありません.
+make[1]: ディレクトリ '/home/T_O/ev3rt-beta5-release/hrp2/workspace/OBJ' から出ます
+Image Name:   TOPPERS/hrp2 Kernel (EV3)
+Created:      Thu Dec 10 21:19:43 2015
+Image Type:   ARM Linux Kernel Image (uncompressed)
+Data Size:    553284 Bytes = 540.32 kB = 0.53 MB
+Load Address: c0008000
+Entry Point:  c0008000

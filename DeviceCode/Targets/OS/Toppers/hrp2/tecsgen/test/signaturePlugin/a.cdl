@@ -1,0 +1,6 @@
+// #833 のテスト
+celltype tA {
+	factory {
+		write( "tecsgen.cfg", "hello!" );
+	};
+};
