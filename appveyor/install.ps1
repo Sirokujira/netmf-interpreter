@@ -29,7 +29,7 @@ function InstallGCCCompiler()
     $sh = New-Object -ComObject Shell.Application
     $unzipDirObj = $sh.NameSpace("C:\projects\netmf-interpreter")
     $zipPathObj = $sh.NameSpace("C:\projects\netmf-interpreter\gcc-arm-none-eabi-5_2-2015q4-20151219-win32.zip")
-    Write-Output "アーカイブ展開開始 $zipPath"
+    Write-Output "ArchiveDecompressStart $zipPath"
     $unzipDirObj.CopyHere($zipPathObj.Items())
 }
 
@@ -41,7 +41,7 @@ function InstallWinSDK()
     $sh = New-Object -ComObject Shell.Application
     $unzipDirObj = $sh.NameSpace("C:\projects")
     $zipPathObj = $sh.NameSpace("C:\projects\netmf-interpreter\build_tools")
-    Write-Output "アーカイブ展開開始 $zipPath"
+    Write-Output "ArchiveDecompressStart $zipPath"
     $unzipDirObj.CopyHere($zipPathObj.Items())
 }
 
