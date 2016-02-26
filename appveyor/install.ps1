@@ -40,7 +40,7 @@ function InstallWinSDK()
     # ZIPファイル展開(SDK Tools)
     $sh = New-Object -ComObject Shell.Application
     $unzipDirObj = $sh.NameSpace("C:\projects")
-    $zipPathObj = $sh.NameSpace("C:\projects\netmf-interpreter\build_tools")
+    $zipPathObj = $sh.NameSpace("C:\projects\netmf-interpreter\build_tools.zip")
     Write-Output "ArchiveDecompressStart $zipPath"
     $unzipDirObj.CopyHere($zipPathObj.Items())
 }
