@@ -33,13 +33,17 @@ function InstallGCCCompiler()
     # Set-Location $basedir
 
     # ZIPファイル展開(GCC)
-    $shell = New-Object -ComObject Shell.Application
+    # $shell = New-Object -ComObject Shell.Application
+    # $archivePath = "C:\\projects\\netmf-interpreter"
+    # $unzipDirObj = $sh.NameSpace($archivePath)
+    # $zipFilePath = "C:\\projects\\netmf-interpreter\\gcc-arm-none-eabi-5_2-2015q4-20151219-win32.zip"
+    # $zipPathObj = $sh.NameSpace($zipFilePath)
+    # Write-Output "GCCCompiler : ArchiverDecompressStart $zipPath"
+    # $unzipDirObj.CopyHere($zipPathObj.Items())
+    
     $archivePath = "C:\\projects\\netmf-interpreter"
-    $unzipDirObj = $sh.NameSpace($archivePath)
     $zipFilePath = "C:\\projects\\netmf-interpreter\\gcc-arm-none-eabi-5_2-2015q4-20151219-win32.zip"
-    $zipPathObj = $sh.NameSpace($zipFilePath)
-    Write-Output "GCCCompiler : ArchiverDecompressStart $zipPath"
-    $unzipDirObj.CopyHere($zipPathObj.Items())
+    UnZipFile -ComputerName localhost -Path $zipFilePath -Destination $archivePath -Verbose
 }
 
 function InstallBuildTools()
@@ -48,13 +52,18 @@ function InstallBuildTools()
     # Start-FileDownload "http://netmf.github.io/downloads/build-tools.zip"
 
     # ZIPファイル展開(SDK Tools)
-    $shell = New-Object -ComObject Shell.Application
+    # Appveyor - NG
+    # $shell = New-Object -ComObject Shell.Application
+    # $archivePath = "C:\\projects"
+    # $unzipDirObj = $shell.NameSpace($archivePath)
+    # $zipFilePath = "C:\\projects\\netmf-interpreter\\build_tools.zip"
+    # $zipPathObj = $sh.NameSpace($zipFilePath)
+    # Write-Output "BuildTools : ArchiveDecompressStart $zipPath"
+    # $unzipDirObj.CopyHere($zipPathObj.Items())
+    
     $archivePath = "C:\\projects"
-    $unzipDirObj = $shell.NameSpace($archivePath)
     $zipFilePath = "C:\\projects\\netmf-interpreter\\build_tools.zip"
-    $zipPathObj = $sh.NameSpace($zipFilePath)
-    Write-Output "BuildTools : ArchiveDecompressStart $zipPath"
-    $unzipDirObj.CopyHere($zipPathObj.Items())
+    UnZipFile -ComputerName localhost -Path $zipFilePath -Destination $archivePath -Verbose
 }
 
 function main () 
