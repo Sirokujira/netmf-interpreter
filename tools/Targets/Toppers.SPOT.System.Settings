@@ -23,9 +23,9 @@
     <!-- http://www.ie.u-ryukyu.ac.jp/~e085739/c.makefile.tuts.html -->
     <!-- ./Configure Check -->
     <SD_DIR                 Condition="'$(SD_DIR)'==''"                 >$(_SD_DIR)</SD_DIR>
-    <!-- <SD_DIR                 Condition="'$(SD_DIR)'==''"                 >G:\MicroFrameworkPK_v4_3\DeviceCode\Targets\OS\Toppers\hrp2</SD_DIR> -->
-    <SRCDIR>G:\MicroFrameworkPK_v4_3\DeviceCode\Targets\OS\Toppers\hrp2</SRCDIR>
-    <MRUBY_SRC_DIR          Condition="'$(MRUBY_SRC_DIR)'==''"          >G:\MicroFrameworkPK_v4_3\DeviceCode\Targets\OS\Toppers\mruby</MRUBY_SRC_DIR>
+    <!-- <SD_DIR                 Condition="'$(SD_DIR)'==''"                 >C:\Users\v050493\Desktop\NETMF\netmf-interpreter\DeviceCode\Targets\OS\Toppers\hrp2</SD_DIR> -->
+    <SRCDIR>C:\Users\v050493\Desktop\NETMF\netmf-interpreter\DeviceCode\Targets\OS\Toppers\hrp2</SRCDIR>
+    <MRUBY_SRC_DIR          Condition="'$(MRUBY_SRC_DIR)'==''"          >C:\Users\v050493\Desktop\NETMF\netmf-interpreter\DeviceCode\Targets\OS\Toppers\mruby</MRUBY_SRC_DIR>
 	<MRUBY_LIB              Condition="'$(MRUBY_LIB)'==''"              >$(_MRUBY_LIB)</MRUBY_LIB>
 	<MRBC                   Condition="'$(MRBC)'==''"                   >$(_MRBC)</MRBC>
 	<EXE                    Condition="'$(EXE)'==''"                    >$(_EXE)</EXE>
