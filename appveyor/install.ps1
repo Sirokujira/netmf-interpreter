@@ -43,7 +43,7 @@ function InstallGCCCompiler()
     
     $archivePath = "C:\\projects\\netmf-interpreter"
     $zipFilePath = "C:\\projects\\netmf-interpreter\\gcc-arm-none-eabi-5_2-2015q4-20151219-win32.zip"
-    New-ZipExtract -source $zipFilePath -destination $archivePath -verbose
+    New-ZipExtract -source $zipFilePath -destination $archivePath -force -verbose
 }
 
 function InstallBuildTools()
@@ -63,7 +63,7 @@ function InstallBuildTools()
     
     $archivePath = "C:\\projects"
     $zipFilePath = "C:\\projects\\netmf-interpreter\\build_tools.zip"
-    New-ZipExtract -source $zipFilePath -Destination $archivePath -Verbose
+    New-ZipExtract -source $zipFilePath -destination $archivePath -force -verbose
 }
 
 function main () 
