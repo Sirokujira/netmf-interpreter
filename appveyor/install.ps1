@@ -61,7 +61,8 @@ function InstallBuildTools()
     # Write-Output "BuildTools : ArchiveDecompressStart $zipPath"
     # $unzipDirObj.CopyHere($zipPathObj.Items())
     
-    $archivePath = "C:\\projects\\build-tools"
+    # $archivePath = "C:\\projects\\build-tools"
+    $archivePath = "C:\\projects\\"
     $zipFilePath = "C:\\projects\\netmf-interpreter\\build-tools.zip"
     New-ZipExtract -source $zipFilePath -destination $archivePath -force -verbose
 }
