@@ -29,13 +29,10 @@ static BOOL         LinkStatus = FALSE;
 static int          nAttempts = 0;
 static BOOL         isPhyPoweringUp = FALSE;
 
-/* these define the region to zero initialize */
-extern UINT32 Image$$ER_ETHERNET$$ZI$$Base;
-extern UINT32 Image$$ER_ETHERNET$$ZI$$Length;
+extern void ZeroRxDesc();
+extern void ZeroTxDesc();
 
 extern NETWORK_CONFIG g_NetworkConfig;
-
-extern void SignalClr();
 
 err_t STM32F4_ETH_ethhw_init( struct netif *myNetIf )
 {
@@ -53,34 +50,19 @@ err_t STM32F4_ETH_ethhw_init( struct netif *myNetIf )
     return ERR_OK;
 }
 
+// ISR for Receive interrupts
 void lwip_interrupt_continuation( void )
 {
     NATIVE_PROFILE_PAL_NETWORK();
-	
-    if(!InterruptTaskContinuation.IsLinked())
-    {
-        InterruptTaskContinuation.Enqueue();
-        // Wake CLR thread (if it is sleeping) to pickup the continuation.
-        // [Can't call eth_input(...) from within ISR context ] so it must 
-        // be done with a continuation. 
-        SignalClr();
-    }
+    STM32F4_ETH_LWIP_recv( &g_STM32F4_ETH_NetIF );
 }
 
-void lwip_interrupt_continuation_callback(void* arg)
-{
-    // post a call to the input handler on the tcp_ip thread
-    // DO NOT call the input function directly in this continuation
-    // as the code must run on the TCPIP thread. The continuation 
-    // is only used to shift the post out of the ISR context as
-    // the underlying OS APIs used by the OS cross thread messaging
-    // are not alowed from an ISR.
-    eth_input( &g_STM32F4_ETH_NetIF );
-}
-
-// MCBSTM32F400 is wired up in such a way that there is no link status 
-// interrupt available in hadware. Thus this continuation is used to 
-// poll the PHY to determine the current state at regular intervals.
+// completion used when system is wired up in such a way that there is
+// no link status interrupt available in hardware. Thus this continuation
+// is used to poll the PHY to determine the current state at regular
+// intervals.
+//
+// NOTE: 
 // This is not a recommended design for hardware as it requires waking
 // the system from sleep for polling, thus wasting power on battery
 // operated systems.
@@ -114,7 +96,7 @@ void lwip_network_uptime_completion( void *arg )
             /* Network is up, open ethernet driver */
             SOCK_NetworkConfiguration *pNetCfg = &g_NetworkConfig.NetworkInterfaces[ 0 ];
             STM32F4_ETH_LWIP_open( pNetIf );
-			eth_netif_set_link_up( pNetIf );
+            eth_netif_set_link_up( pNetIf );
             if( pNetCfg->flags & SOCK_NETWORKCONFIGURATION_FLAGS_DHCP )
                 eth_netif_dhcp_start( pNetIf );
 
@@ -125,7 +107,7 @@ void lwip_network_uptime_completion( void *arg )
             /* Network is down, close ethernet driver */
             STM32F4_ETH_LWIP_close( FALSE );
             netifapi_netif_set_down( pNetIf );
-			eth_netif_set_link_down( pNetIf );
+            eth_netif_set_link_down( pNetIf );
         }
 
         /* Save new network status */
@@ -153,7 +135,6 @@ void lwip_network_uptime_completion( void *arg )
 
 void InitContinuations( struct netif *pNetIf )
 {
-    InterruptTaskContinuation.InitializeCallback( (HAL_CALLBACK_FPN)lwip_interrupt_continuation_callback, (void*)pNetIf );
 
     LwipUpTimeCompletion.InitializeForUserMode( ( HAL_CALLBACK_FPN )lwip_network_uptime_completion, ( void* )pNetIf );
     LwipUpTimeCompletion.EnqueueDelta64( 2000000 );
@@ -162,17 +143,12 @@ void InitContinuations( struct netif *pNetIf )
 void DeInitContinuations( )
 {
     LwipUpTimeCompletion.Abort( );
-    InterruptTaskContinuation.Abort();
 }
 
 void EthernetPrepareZero( )
 {
-    /* The ethernet section (TX/RX descriptors and their buffers) is in a separate memory zone
-       which is not zero initialized. It must be done manually */
-    void* base = ( void* )&Image$$ER_ETHERNET$$ZI$$Base;
-    UINT32  length = ( UINT32 )&Image$$ER_ETHERNET$$ZI$$Length;
-
-    memset( base, 0x00, length );
+    ZeroRxDesc();
+    ZeroTxDesc();
 }
 
 void EthernetWakeUp( )
@@ -232,8 +208,6 @@ int STM32F4_ETH_LWIP_Driver::Open( int index )
     /* Return LWIP's net interface number */
     return g_STM32F4_ETH_NetIF.num;
 }
-
-// -- //
 
 BOOL STM32F4_ETH_LWIP_Driver::Close( void )
 {

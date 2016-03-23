@@ -22,7 +22,12 @@
     <Version>4.0.0.0</Version>
   </PropertyGroup>
   <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Settings" />
-  <PropertyGroup />
+  <PropertyGroup>
+    <!-- warning C4390: ';' : empty controlled statement found; is this the intent? -->
+    <ExtraFlags Condition="'$(PLATFORM_FAMILY)'=='x86'">$(ExtraFlags) /wd4390</ExtraFlags>
+    <!-- warning C4838: conversion from 'type1' to 'type2' requires a narrowing conversion -->
+    <ExtraFlags Condition="'$(PLATFORM_FAMILY)'=='x86'">$(ExtraFlags) /wd4838</ExtraFlags>
+  </PropertyGroup>
   <!--
   <ItemGroup>
     <SubDirectories Include="Stubs"/>

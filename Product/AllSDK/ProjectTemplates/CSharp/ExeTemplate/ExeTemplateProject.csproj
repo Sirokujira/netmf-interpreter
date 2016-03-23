@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
+    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <NetMFTemplateName>MFConsoleApplication</NetMFTemplateName>
@@ -19,13 +19,13 @@
     <ProjectGuid>{08FF08A7-6883-4875-BBC5-5F9405D59B4D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>$(NetMFTemplateName)</RootNamespace>
-    <AssemblyName>$(NetMFTemplateName)</AssemblyName>
+    <RootNamespace>CSMFConsoleApplication</RootNamespace>
+    <AssemblyName>CSMFConsoleApplication</AssemblyName>
     <PlatformTarget>x86</PlatformTarget>
     <Configuration Condition="'$(FLAVOR_WIN)'!=''">$(FLAVOR_WIN)</Configuration>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <NetMFBuildVsSdkVersion>12</NetMFBuildVsSdkVersion>
+    <NetMFBuildVsSdkVersion>14</NetMFBuildVsSdkVersion>
     <GeneratePkgDefFile>false</GeneratePkgDefFile>
     <IncludeAssemblyInVSIXContainer>false</IncludeAssemblyInVSIXContainer>
     <IncludeDebugSymbolsInVSIXContainer>false</IncludeDebugSymbolsInVSIXContainer>
@@ -40,12 +40,10 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <CreateVsixContainer>False</CreateVsixContainer>
     <DeployExtension>False</DeployExtension>
-    <IntermediateOutputPath>C:\Users\smaillet\AppData\Local\Temp\vsAE7C.tmp\Release\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <CreateVsixContainer>False</CreateVsixContainer>
     <DeployExtension>False</DeployExtension>
-    <IntermediateOutputPath>C:\Users\smaillet\AppData\Local\Temp\vsAE7C.tmp\Debug\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualStudio.CoreUtility">

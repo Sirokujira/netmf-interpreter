@@ -15,6 +15,10 @@
 #include "STM32F4_Flash.h"
 #include "..\stm32f4xx.h"
 
+#ifndef FLASH
+#define FLASH               ((FLASH_TypeDef *) FLASH_R_BASE)
+#endif
+
 typedef UINT16 CHIP_WORD;
 
 #define FLASH_CR_PSIZE_BITS FLASH_CR_PSIZE_0 // 16 bit programming
@@ -27,8 +31,8 @@ typedef UINT16 CHIP_WORD;
 #endif
 
 
-    static const int STM32F4_FLASH_KEY1 = 0x45670123;
-    static const int STM32F4_FLASH_KEY2 = 0xcdef89ab;
+    static const UINT32 STM32F4_FLASH_KEY1 = 0x45670123;
+    static const UINT32 STM32F4_FLASH_KEY2 = 0xcdef89ab;
 
 
 //--//
@@ -46,7 +50,7 @@ typedef UINT16 CHIP_WORD;
     //    No other functions in this interface may be called
     //    until after Init returns.
     //
-BOOL __section(SectionForFlashOperations)STM32F4_Flash_Driver::ChipInitialize( void* context )
+BOOL __section("SectionForFlashOperations")STM32F4_Flash_Driver::ChipInitialize( void* context )
 {
     NATIVE_PROFILE_HAL_DRIVERS_FLASH();
     return TRUE;
@@ -62,7 +66,7 @@ BOOL __section(SectionForFlashOperations)STM32F4_Flash_Driver::ChipInitialize( v
     // Remarks:
     //   De initializes the device when no longer needed
     //
-BOOL __section(SectionForFlashOperations)STM32F4_Flash_Driver::ChipUnInitialize( void* context )
+BOOL __section("SectionForFlashOperations")STM32F4_Flash_Driver::ChipUnInitialize( void* context )
 {
     NATIVE_PROFILE_HAL_DRIVERS_FLASH();
     return TRUE;
@@ -72,7 +76,7 @@ BOOL __section(SectionForFlashOperations)STM32F4_Flash_Driver::ChipUnInitialize(
     // Description:
     //    Gets the information describing the device
     //
-const BlockDeviceInfo* __section(SectionForFlashOperations)STM32F4_Flash_Driver::GetDeviceInfo( void* context )
+const BlockDeviceInfo* __section("SectionForFlashOperations")STM32F4_Flash_Driver::GetDeviceInfo( void* context )
 {
     MEMORY_MAPPED_NOR_BLOCK_CONFIG* config = (MEMORY_MAPPED_NOR_BLOCK_CONFIG*)context;
     
@@ -96,7 +100,7 @@ const BlockDeviceInfo* __section(SectionForFlashOperations)STM32F4_Flash_Driver:
     // Remarks:
     //   This function reads the number of sectors specified from the device.
     //   
-BOOL  __section(SectionForFlashOperations)STM32F4_Flash_Driver::Read( void* context, ByteAddress StartSector, UINT32 NumBytes, BYTE * pSectorBuff)
+BOOL  __section("SectionForFlashOperations")STM32F4_Flash_Driver::Read( void* context, ByteAddress StartSector, UINT32 NumBytes, BYTE * pSectorBuff)
 {
     // XIP device does not need to read into a buffer
     NATIVE_PROFILE_HAL_DRIVERS_FLASH();
@@ -133,7 +137,7 @@ BOOL  __section(SectionForFlashOperations)STM32F4_Flash_Driver::Read( void* cont
     // Remarks:
     //   This function reads the number of sectors specified from the device.
     //   
-BOOL __section(SectionForFlashOperations)STM32F4_Flash_Driver::Write(void* context, ByteAddress Address, UINT32 NumBytes, BYTE * pSectorBuff, BOOL ReadModifyWrite)
+BOOL __section("SectionForFlashOperations")STM32F4_Flash_Driver::Write(void* context, ByteAddress Address, UINT32 NumBytes, BYTE * pSectorBuff, BOOL ReadModifyWrite)
 {
     NATIVE_PROFILE_PAL_FLASH();
 
@@ -174,7 +178,7 @@ BOOL __section(SectionForFlashOperations)STM32F4_Flash_Driver::Write(void* conte
     return TRUE;
 }
 
-BOOL __section(SectionForFlashOperations)STM32F4_Flash_Driver::Memset(void* context, ByteAddress Address, UINT8 Data, UINT32 NumBytes)
+BOOL __section("SectionForFlashOperations")STM32F4_Flash_Driver::Memset(void* context, ByteAddress Address, UINT8 Data, UINT32 NumBytes)
 {
     NATIVE_PROFILE_PAL_FLASH();
 
@@ -184,13 +188,13 @@ BOOL __section(SectionForFlashOperations)STM32F4_Flash_Driver::Memset(void* cont
 }
 
 
-BOOL __section(SectionForFlashOperations)STM32F4_Flash_Driver::GetSectorMetadata(void* context, ByteAddress SectorStart, SectorMetadata* pSectorMetadata)
+BOOL __section("SectionForFlashOperations")STM32F4_Flash_Driver::GetSectorMetadata(void* context, ByteAddress SectorStart, SectorMetadata* pSectorMetadata)
 {
     // no metadata
     return FALSE;
 }
 
-BOOL __section(SectionForFlashOperations)STM32F4_Flash_Driver::SetSectorMetadata(void* context, ByteAddress SectorStart, SectorMetadata* pSectorMetadata)
+BOOL __section("SectionForFlashOperations")STM32F4_Flash_Driver::SetSectorMetadata(void* context, ByteAddress SectorStart, SectorMetadata* pSectorMetadata)
 {
     // no metadata
     return FALSE;
@@ -210,7 +214,7 @@ BOOL __section(SectionForFlashOperations)STM32F4_Flash_Driver::SetSectorMetadata
     // Remarks:
     //    Check  the block containing the sector address specified.
     //    
-BOOL __section(SectionForFlashOperations)STM32F4_Flash_Driver::IsBlockErased( void* context, ByteAddress BlockStart, UINT32 BlockLength )
+BOOL __section("SectionForFlashOperations")STM32F4_Flash_Driver::IsBlockErased( void* context, ByteAddress BlockStart, UINT32 BlockLength )
 {
     NATIVE_PROFILE_HAL_DRIVERS_FLASH();
     
@@ -243,7 +247,7 @@ BOOL __section(SectionForFlashOperations)STM32F4_Flash_Driver::IsBlockErased( vo
     // Remarks:
     //    Erases the block containing the sector address specified.
     //    
-BOOL __section(SectionForFlashOperations)STM32F4_Flash_Driver::EraseBlock( void* context, ByteAddress Sector )
+BOOL __section("SectionForFlashOperations")STM32F4_Flash_Driver::EraseBlock( void* context, ByteAddress Sector )
 {
     NATIVE_PROFILE_HAL_DRIVERS_FLASH();
       BOOL SectorInBank2 = FALSE;
@@ -291,7 +295,7 @@ BOOL __section(SectionForFlashOperations)STM32F4_Flash_Driver::EraseBlock( void*
     //   shutting down the hardware when the system is 
     //   going into low power states.
     //
-void  __section(SectionForFlashOperations)STM32F4_Flash_Driver::SetPowerState( void* context, UINT32 State )
+void  __section("SectionForFlashOperations")STM32F4_Flash_Driver::SetPowerState( void* context, UINT32 State )
 {
 }
 
@@ -300,7 +304,7 @@ void  __section(SectionForFlashOperations)STM32F4_Flash_Driver::SetPowerState( v
 
 #pragma arm section code = "SectionForFlashOperations"
 
-UINT32 __section(SectionForFlashOperations)STM32F4_Flash_Driver::MaxSectorWrite_uSec( void* context )
+UINT32 __section("SectionForFlashOperations")STM32F4_Flash_Driver::MaxSectorWrite_uSec( void* context )
 {
     NATIVE_PROFILE_PAL_FLASH();
 
@@ -310,7 +314,7 @@ UINT32 __section(SectionForFlashOperations)STM32F4_Flash_Driver::MaxSectorWrite_
 }
 
 
-UINT32 __section(SectionForFlashOperations)STM32F4_Flash_Driver::MaxBlockErase_uSec( void* context )
+UINT32 __section("SectionForFlashOperations")STM32F4_Flash_Driver::MaxBlockErase_uSec( void* context )
 {
     NATIVE_PROFILE_PAL_FLASH();
     

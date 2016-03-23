@@ -437,6 +437,8 @@ void HAL_Windows_FastSleep( INT64 ticks )
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+#pragma managed(push, off)
+
 void debug_printf( char const* format, ... )
 {
     va_list arg_ptr;
@@ -501,16 +503,14 @@ int hal_vfprintf( COM_HANDLE stream, const char* format, va_list arg )
 
     switch(ExtractTransport(stream))
     {
-    case USART_TRANSPORT:
-    case USB_TRANSPORT:
-    case SOCKET_TRANSPORT:
-        DebuggerPort_Write( stream, buffer, chars ); // skip null terminator
+    default:
+        DebuggerPort_Write( stream, buffer, chars, 0 ); // skip null terminator
         break;
 
     case LCD_TRANSPORT:
         break;
 
-    default:
+    case FLASH_WRITE_TRANSPORT:
         _ASSERTE(FALSE);
     }
 
@@ -535,6 +535,8 @@ int hal_vsnprintf( char* buffer, size_t len, const char* format, va_list arg )
 {
     return _vsnprintf_s( buffer, len, len-1/* force space for trailing zero*/, format, arg );
 }
+
+#pragma managed(pop)
 
 ///////////////////////////////////////////////////////////////
 

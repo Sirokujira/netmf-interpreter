@@ -35,12 +35,14 @@ class CriticalSection
 {
 public:
     CriticalSection( )
-        : Owner( NoOwner )
+        : osMutexInitMember( MutexDef )
+        , MutexId( 0 )
+        , Owner( NoOwner )
         , RefCount( 0 )
     {
-        osMutexInitMember( MutexDef );
+        osMutexConstructMember( MutexDef );
         MutexId = osMutexCreate( osMutex( MutexDef ) );
-	    ASSERT( MutexId != NULL);
+        ASSERT( MutexId != NULL);
     }
 
     void lock( )
@@ -84,10 +86,6 @@ private:
 
 #endif
 
-#if defined(__CC_ARM)
-register unsigned int PRIMASK __asm("primask");
-#endif
-
 // determines if the current system context is that of a physical interrupt
 inline bool sys_InIsr()
 {
@@ -97,13 +95,14 @@ inline bool sys_InIsr()
 // internal function to simulate common interrupt enable state query for embedded MCUs
 inline bool irqs_enabled( )
 {
-    return IrqsEnabled( PRIMASK );
+    unsigned int retVal = __get_PRIMASK();
+    return retVal;
 }
 
 // internal function to simulate common interrupt enable intrinsics for embedded MCUs
 uint32_t enable_irqs( )
 {
-    uint32_t retVal = PRIMASK;
+    unsigned int retVal = __get_PRIMASK();
     __enable_irq();
     return retVal;
 }
@@ -111,12 +110,12 @@ uint32_t enable_irqs( )
 // internal function to simulate common interrupt disable intrinsics for embedded MCUs
 uint32_t disable_irqs( )
 {
-    uint32_t retVal = PRIMASK;
+    unsigned int retVal = __get_PRIMASK();
     __disable_irq();
     return retVal;
 }
 
 inline void irq_yield()
 {
-    __nop();
+    __NOP();
 }

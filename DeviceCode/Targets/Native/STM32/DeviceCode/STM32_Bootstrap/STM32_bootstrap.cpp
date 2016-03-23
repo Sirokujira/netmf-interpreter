@@ -110,23 +110,14 @@ void BootstrapCode_GPIO();
 
 extern "C"
 {
-void __section(SectionForBootstrapOperations) STM32_BootstrapCode()
+void __section("SectionForBootstrapOperations") STM32_BootstrapCode()
 {
     // assure interupts off
     __disable_irq();
     
-    // configure jtag debug support
-    DBGMCU->CR = DBGMCU_CR_DBG_TIM2_STOP | DBGMCU_CR_DBG_SLEEP;
-                
     // allow unaligned memory access and do not enforce 8 byte stack alignment
     SCB->CCR &= ~(SCB_CCR_UNALIGN_TRP | SCB_CCR_STKALIGN);
 
-    // catch all faults
-    CoreDebug->DEMCR |= CoreDebug_DEMCR_VC_HARDERR_Msk | CoreDebug_DEMCR_VC_INTERR_Msk |
-                        CoreDebug_DEMCR_VC_BUSERR_Msk | CoreDebug_DEMCR_VC_STATERR_Msk |
-                        CoreDebug_DEMCR_VC_CHKERR_Msk | CoreDebug_DEMCR_VC_NOCPERR_Msk |
-                        CoreDebug_DEMCR_VC_MMERR_Msk;
-    
     // for clock configuration the cpu has to run on the internal 8MHz oscillator
     RCC->CR |= RCC_CR_HSION;
     while(!(RCC->CR & RCC_CR_HSIRDY));
@@ -164,7 +155,7 @@ void __section(SectionForBootstrapOperations) STM32_BootstrapCode()
 }
 
 
-void __section(SectionForBootstrapOperations) BootstrapCode()
+void __section("SectionForBootstrapOperations") BootstrapCode()
 {
     STM32_BootstrapCode();
     
@@ -173,7 +164,7 @@ void __section(SectionForBootstrapOperations) BootstrapCode()
     PrepareImageRegions();
 }
 
-void __section(SectionForBootstrapOperations) BootstrapCodeMinimal()
+void __section("SectionForBootstrapOperations") BootstrapCodeMinimal()
 {
     STM32_BootstrapCode();
     

@@ -116,11 +116,8 @@ int hal_vfprintf( COM_HANDLE stream, const char* format, va_list arg )
 
     switch(ExtractTransport(stream))
     {
-
-    case USART_TRANSPORT:
-    case USB_TRANSPORT:
-    case SOCKET_TRANSPORT:
-        DebuggerPort_Write( stream, buffer, chars ); // skip null terminator
+    default:
+        DebuggerPort_Write( stream, buffer, chars, 0 ); // skip null terminator
         break;
 
 #if !defined(BUILD_RTM)

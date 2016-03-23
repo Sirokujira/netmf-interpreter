@@ -49,11 +49,19 @@ namespace Microsoft.SPOT.Platform.Test
 
         private string[] m_transportType = {"USB", "Emulator", "Serial", "TCPIP"};
 
+        public enum ExitCode
+        {
+            Success = 0,
+            InvalidArguments = -1,
+            UnexpectedException = -2,
+            FailedTests = -3
+        }
+
         #endregion
 
         #region Entry points
 
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
             // Parse the command line arguments.
             if (args != null && args.Length != 0)
@@ -61,12 +69,12 @@ namespace Microsoft.SPOT.Platform.Test
                 if (args[0] == "/?")
                 {
                     DisplayHelp();
-                    return;
+                    return (int)ExitCode.Success;
                 }
                 else if (String.Equals(args[0], "-help", StringComparison.InvariantCultureIgnoreCase))
                 {
                     DisplayHelp();
-                    return;
+                    return (int)ExitCode.Success;
                 }
             }
 
@@ -80,11 +88,26 @@ namespace Microsoft.SPOT.Platform.Test
             try
             {
                 m_testSystem.RunTests();
+                if (m_testSystem.DidAllTestsPass)
+                {
+                    return (int)ExitCode.Success;
+                }
+                else
+                {
+                    Console.Error.WriteLine("Not all tests passed successfully!");
+                    return (int)ExitCode.FailedTests;
+                }
+            }
+            catch(ArgumentException)
+            {
+                return (int)ExitCode.InvalidArguments;
             }
             catch (Exception ex)
             {
-                Utils.WriteToEventLog(String.Format("TestSystem: " + 
-                    "An uncaught exception was thrown when invoking RunTests: {0}",ex.ToString()));
+                string errMsg = String.Format("TestSystem: " + "An uncaught exception was thrown when invoking RunTests: {0}", ex.ToString());
+                Console.Error.WriteLine(errMsg);
+                Utils.WriteToEventLog(errMsg);
+                return (int)ExitCode.UnexpectedException;
             }
         }
 
@@ -103,7 +126,7 @@ namespace Microsoft.SPOT.Platform.Test
 
                 if (testRunResult == HarnessExecutionResult.InvalidArguments)
                 {
-                    return;
+                    throw new ArgumentException();
                 }
 
                 // Update the test run properties.
@@ -134,6 +157,7 @@ namespace Microsoft.SPOT.Platform.Test
             {
                 Console.WriteLine("\nERROR: " + ex.ToString());
                 Utils.WriteToEventLog(string.Format("Exception in TestSystem: {0}", ex.ToString()));
+                throw;
             }
         }
 
@@ -1760,20 +1784,25 @@ namespace Microsoft.SPOT.Platform.Test
                     // Add the DPWS fixture tests which are built by the build system to the test list.
                     string dpwsFixtureTestPath = "";
 
-                    string flavWin = Environment.GetEnvironmentVariable("FLAVOR_WIN");
+                    string flav = Environment.GetEnvironmentVariable("FLAVOR");
+                    
+                    if (string.IsNullOrEmpty(flav))
+                    {
+                        flav = "Release";
+                    }
 
                     dpwsFixtureTestPath = string.Format(@"{0}\BuildOutput\public\{1}\test\server\dpws",
                         Environment.GetEnvironmentVariable("SPOCLIENT"),
-                        flavWin);
+                        flav);
 
                     if (!Directory.Exists(dpwsFixtureTestPath))
                     {
-                        if (flavWin.ToLower() == "debug") flavWin = "Release";
-                        else flavWin = "Debug";
+                        if (flav.ToLower() == "debug") flav = "Release";
+                        else flav = "Debug";
 
                         dpwsFixtureTestPath = string.Format(@"{0}\BuildOutput\public\{1}\test\server\dpws",
                             Environment.GetEnvironmentVariable("SPOCLIENT"),
-                            flavWin);
+                            flav);
                     }
 
                     if (Directory.Exists(dpwsFixtureTestPath))

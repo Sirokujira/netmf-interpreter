@@ -77,12 +77,6 @@
     <CC_CPP_COMMON_FLAGS>$(CC_CPP_COMMON_FLAGS) -DMDK_V3_1</CC_CPP_COMMON_FLAGS>
 
     <CC_CPP_COMMON_FLAGS>$(CC_CPP_COMMON_FLAGS) -DARM_V3_1</CC_CPP_COMMON_FLAGS>
-<!-- TODO: FIND OUT WHY THESE ARE NEEDED -->
-    <CC_CPP_COMMON_FLAGS>$(CC_CPP_COMMON_FLAGS) -I$(SPO_SDK)\DeviceCode</CC_CPP_COMMON_FLAGS>
-    <CC_CPP_COMMON_FLAGS>$(CC_CPP_COMMON_FLAGS) -I$(SPO_SDK)\DeviceCode\pal\rtip</CC_CPP_COMMON_FLAGS>
-    <CC_CPP_COMMON_FLAGS>$(CC_CPP_COMMON_FLAGS) -I$(SPO_SDK)\DeviceCode\pal\rtip\rtpcore</CC_CPP_COMMON_FLAGS>
-    <CC_CPP_COMMON_FLAGS>$(CC_CPP_COMMON_FLAGS) -I$(SPO_SDK)\devicecode\pal\rtip\tinyclr</CC_CPP_COMMON_FLAGS>
-<!-- END -->
 
     <CC_CPP_COMMON_FLAGS Condition="'$(reducesize)'!='true'">$(CC_CPP_COMMON_FLAGS) $(SWTC)feedback $(SPO_SDK)\tools\make\Feedback\$(TARGETPLATFORM)_$(COMPILER_TOOL_VERSION).feedback</CC_CPP_COMMON_FLAGS>
     <CC_CPP_COMMON_FLAGS Condition="'$(reducesize)'=='true'">$(CC_CPP_COMMON_FLAGS) $(SWTC)feedback $(SPO_SDK)\tools\make\Feedback\$(TARGETPLATFORM)_$(COMPILER_TOOL_VERSION)_loader.feedback</CC_CPP_COMMON_FLAGS>
@@ -95,10 +89,10 @@
     <CC_CPP_ASM_INTERLEAVE Condition="'$(COMPILER_TOOL_VERSION)'=='MDK4.23'" > $(SWTC)asm $(SWTC)interleave </CC_CPP_ASM_INTERLEAVE>
     <CC_CPP_ASM_INTERLEAVE Condition="'$(COMPILER_TOOL_VERSION)'=='MDK4.54'" >                              </CC_CPP_ASM_INTERLEAVE>
 
-    <CC_CPP_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='RTM'"         >$(CC_CPP_TARGETTYPE_FLAGS) $(SWTC)no_debug $(SWTC)dwarf2 $(SWTC)no_debug_macros -O3 $(SWTC)inline -Otime $(SWTC)no_autoinline $(CC_CPP_ASM_INTERLEAVE) </CC_CPP_TARGETTYPE_FLAGS>
-    <CC_CPP_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Debug'"       >$(CC_CPP_TARGETTYPE_FLAGS) $(SWTC)debug    $(SWTC)dwarf2 $(SWTC)debug_macros    -O0 $(SWTC)inline                             $(CC_CPP_ASM_INTERLEAVE) </CC_CPP_TARGETTYPE_FLAGS>
-    <CC_CPP_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Instrumented'">$(CC_CPP_TARGETTYPE_FLAGS) $(SWTC)debug    $(SWTC)dwarf2 $(SWTC)debug_macros    -O0 $(SWTC)inline                             $(CC_CPP_ASM_INTERLEAVE) </CC_CPP_TARGETTYPE_FLAGS>
-    <CC_CPP_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Release'"     >$(CC_CPP_TARGETTYPE_FLAGS) $(SWTC)no_debug $(SWTC)dwarf2 $(SWTC)no_debug_macros -O2 $(SWTC)inline -Otime $(SWTC)no_autoinline $(CC_CPP_ASM_INTERLEAVE) </CC_CPP_TARGETTYPE_FLAGS>
+    <CC_CPP_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='RTM'"         >$(CC_CPP_TARGETTYPE_FLAGS) -g -O3 $(SWTC)inline -Otime $(SWTC)no_autoinline $(CC_CPP_ASM_INTERLEAVE) </CC_CPP_TARGETTYPE_FLAGS>
+    <CC_CPP_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Debug'"       >$(CC_CPP_TARGETTYPE_FLAGS) -g -O0 $(SWTC)inline                             $(CC_CPP_ASM_INTERLEAVE) </CC_CPP_TARGETTYPE_FLAGS>
+    <CC_CPP_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Instrumented'">$(CC_CPP_TARGETTYPE_FLAGS) -g -O0 $(SWTC)inline                             $(CC_CPP_ASM_INTERLEAVE) </CC_CPP_TARGETTYPE_FLAGS>
+    <CC_CPP_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Release'"     >$(CC_CPP_TARGETTYPE_FLAGS) -g -O2 $(SWTC)inline -Otime $(SWTC)no_autoinline $(CC_CPP_ASM_INTERLEAVE) </CC_CPP_TARGETTYPE_FLAGS>
 
 
     <AS_FLAGS>$(AS_FLAGS) $(SWTC)diag_suppress A1658</AS_FLAGS>
@@ -131,8 +125,8 @@
 
   <!-- Assembler flags -->
   <PropertyGroup>
-    <AS_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='RTM'"         >$(AS_TARGETTYPE_FLAGS) $(SWTC)PD "BUILD_RTM SETS \"1\""</AS_TARGETTYPE_FLAGS>
-    <AS_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Release'"     >$(AS_TARGETTYPE_FLAGS) $(SWTC)PD "BUILD_RTM SETS \"0\""</AS_TARGETTYPE_FLAGS>
+    <AS_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='RTM'"         >$(AS_TARGETTYPE_FLAGS) $(SWTC)PD "BUILD_RTM SETS \"1\"" -g</AS_TARGETTYPE_FLAGS>
+    <AS_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Release'"     >$(AS_TARGETTYPE_FLAGS) $(SWTC)PD "BUILD_RTM SETS \"0\"" -g</AS_TARGETTYPE_FLAGS>
     <AS_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Instrumented'">$(AS_TARGETTYPE_FLAGS) $(SWTC)PD "BUILD_RTM SETS \"0\"" -g</AS_TARGETTYPE_FLAGS>
     <AS_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Debug'"       >$(AS_TARGETTYPE_FLAGS) $(SWTC)PD "BUILD_RTM SETS \"0\"" -g</AS_TARGETTYPE_FLAGS>
 
@@ -203,7 +197,6 @@
 
     <CC_CPP_COMMON_FLAGS>$(CC_CPP_COMMON_FLAGS) @(CC_CPP_Defines->'-D%(filename)',' ')</CC_CPP_COMMON_FLAGS>
 
-    <CC_CPP_INCS>$(CC_CPP_INCS) -I$(RVCT31INC)</CC_CPP_INCS>
     <CC_CPP_INCS>$(CC_CPP_INCS) -I$(CLRROOT)\$(Directory)</CC_CPP_INCS>
     <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)\DeviceCode\include</CC_CPP_INCS>
     <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)\DeviceCode\Cores\arm</CC_CPP_INCS>
@@ -218,6 +211,8 @@
     <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)\CLR\Libraries\SPOT_Net_Security</CC_CPP_INCS>
     <CC_CPP_INCS>$(CC_CPP_INCS) @(IncludePaths->'-I$(CLRROOT)\%(relativedir)%(filename)',' ')</CC_CPP_INCS>
     <CC_CPP_INCS>$(CC_CPP_INCS) @(DirectIncludePaths->'-I%(FullPath)',' ')</CC_CPP_INCS>
+        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(RVCT31INC)</CC_CPP_INCS>
+
 
     <CC_CPP_COMMON_FLAGS>$(CC_CPP_COMMON_FLAGS) $(AS_CC_CPP_COMMON_FLAGS) $(CC_CPP_TARGETTYPE_FLAGS) $(CC_CPP_INCS) $(ExtraFlags)</CC_CPP_COMMON_FLAGS>
   </PropertyGroup>
@@ -402,25 +397,25 @@
   <Target Name="BuildScatterfile" Condition="'$(DEPEND)'!='ACTIVE'" Inputs="@(EXEScatterFileDefinition);@(ScatterFileReferences)" Outputs="@(EXEScatterFile)">
     <Message Text="..."/>
     <ProcessScatterFile
-    	Properties="@(BuildScatterFileProperties)"
-		DefinitionFile="@(EXEScatterfileDefinition)"
-		OutputFile="@(EXEScatterFile)"
-    	/>
+        Properties="@(BuildScatterFileProperties)"
+        DefinitionFile="@(EXEScatterfileDefinition)"
+        OutputFile="@(EXEScatterFile)"
+        />
   </Target>
 
-  <Target Name="TinyClrDat" Inputs="$(BIN_DIR)\tinyclr.dat;$(AS_SUBDIR)\tinyclr_dat.s" Outputs="$(OBJ_DIR)\tinyclr_dat.$(OBJ_EXT)">
+  <Target Name="TinyClrDat" Inputs="$(BIN_DIR)\$(AssemblyName).dat;$(AS_SUBDIR)\$(AssemblyName)_dat.s" Outputs="$(OBJ_DIR)\$(AssemblyName)_dat.$(OBJ_EXT)">
     <Message                               Text="***************************************************************************************************"/>
-    <Message Text="Target: TinyClrDat with outputs $(OBJ_DIR)\tinyclr_dat.$(OBJ_EXT)"/>
-    <Message Condition="'$(FORCEDAT)'!=''" Text="Building Tinyclr.dat from $(BUILD_TREE_CLIENT)\dat\$(ENDIANNESS)\tinyclr_$(FORCEDAT).dat"/>
-    <Message Condition="'$(FORCEDAT)'==''" Text="Building Tinyclr.dat from the features specified in the tinyclr.proj file"/>
-    <Exec Condition="'$(FORCEDAT)'!='' AND EXISTS('$(BUILD_TREE_CLIENT)\dat\$(ENDIANNESS)\tinyclr_$(FORCEDAT).dat')" Command="copy /y $(BUILD_TREE_CLIENT)\dat\$(ENDIANNESS)\tinyclr_$(FORCEDAT).dat $(BIN_DIR)\tinyclr.dat" />
-    <Exec Command="$(ADS_WRAPPER) $(AS) -I$(BIN_DIR) $(AS_FLAGS) $(POS_DEPENDENT) $(SWTC)LIST $(OBJ_DIR)\tinyclr_dat.txt $(SWTC)xref -o $(OBJ_DIR)\tinyclr_dat.$(OBJ_EXT) $(AS_SUBDIR)\tinyclr_dat.s"/>
+    <Message Text="Target: TinyClrDat with outputs $(OBJ_DIR)\$(AssemblyName)_dat.$(OBJ_EXT)"/>
+    <Message Condition="'$(FORCEDAT)'!=''" Text="Building $(AssemblyName).dat from $(BUILD_TREE_CLIENT)\dat\$(ENDIANNESS)\$(AssemblyName)_$(FORCEDAT).dat"/>
+    <Message Condition="'$(FORCEDAT)'==''" Text="Building $(AssemblyName).dat from the features specified in the $(AssemblyName).proj file"/>
+    <Exec Condition="'$(FORCEDAT)'!='' AND EXISTS('$(BUILD_TREE_CLIENT)\dat\$(ENDIANNESS)\$(AssemblyName)_$(FORCEDAT).dat')" Command="copy /y $(BUILD_TREE_CLIENT)\dat\$(ENDIANNESS)\$(AssemblyName)_$(FORCEDAT).dat $(BIN_DIR)\$(AssemblyName).dat" />
+    <Exec Command="$(ADS_WRAPPER) $(AS) -I$(BIN_DIR) $(AS_FLAGS) $(POS_DEPENDENT) $(SWTC)LIST $(OBJ_DIR)\$(AssemblyName)_dat.txt $(SWTC)xref -o $(OBJ_DIR)\$(AssemblyName)_dat.$(OBJ_EXT) $(AS_SUBDIR)\$(AssemblyName)_dat.s"/>
     <Message                               Text="========== Database file content:"/>    
-    <Exec Command="$(PRG_MMP) -dump_dat $(BIN_DIR)\tinyclr.dat" />
+    <Exec Command="$(PRG_MMP) -dump_dat $(BIN_DIR)\$(AssemblyName).dat" />
     <Message                               Text="========== End of Database file content"/>    
     <Message                               Text="***************************************************************************************************"/>
-    <Exec Command="copy /BVY $(BIN_DIR)\tinyclr.dat $(BIN_DIR)\tinyclr.dat.fromlastbuildrun" />
-    <Exec Command="del  /Q /F $(BIN_DIR)\tinyclr.dat"/>
+    <Exec Command="copy /BVY $(BIN_DIR)\$(AssemblyName).dat $(BIN_DIR)\$(AssemblyName).dat.fromlastbuildrun" />
+    <Exec Command="del  /Q /F $(BIN_DIR)\$(AssemblyName).dat"/>
   </Target>
 
 </Project>

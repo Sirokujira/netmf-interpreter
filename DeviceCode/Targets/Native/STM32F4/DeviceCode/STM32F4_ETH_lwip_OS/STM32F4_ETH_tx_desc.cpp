@@ -68,6 +68,13 @@ static TxDesc_t s_txDescriptor[N_TX_DESC];      // TX descriptors
 static TxDesc_t *s_pTxDesc;                     // Pointer on the current TX descriptor
 static uint8_t s_txBuffer[N_TX_DESC][TX_BUFFER_LENGTH];
 
+void ZeroTxDesc()
+{
+    s_pTxDesc = NULL;
+    memset(s_txDescriptor, 0, sizeof(s_txDescriptor));
+    memset(s_txBuffer, 0, sizeof(s_txBuffer));
+}
+
 //--------------------------------------------------------------------------------------------
 // Functions definitions
 //--------------------------------------------------------------------------------------------
@@ -114,7 +121,7 @@ void eth_initTxDescriptor()
     }
 
     #if DEBUG_TX_DESC
-    debug_printf("----- After init TX desc -----\r\n");
+    hal_printf("----- After init TX desc -----\r\n");
     eth_displayTxDescStatus();
     #endif
     
@@ -213,9 +220,9 @@ void eth_displayTxDescStatus()
 
     for (uint32_t i = 0; i < N_TX_DESC; i++)
     {
-        debug_printf("tdes0: 0x%08x %s\r\n", s_txDescriptor[i].tdes0,
+        hal_printf("tdes0: 0x%08x %s\r\n", s_txDescriptor[i].tdes0,
                      s_pTxDesc == &s_txDescriptor[i] ? "<===" : "");
-        debug_printf("tdes1: 0x%08x\r\n", s_txDescriptor[i].tdes1);
+        hal_printf("tdes1: 0x%08x\r\n", s_txDescriptor[i].tdes1);
     }
 }
 #endif

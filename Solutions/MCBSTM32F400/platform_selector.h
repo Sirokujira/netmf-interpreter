@@ -26,9 +26,9 @@
 #if defined(PLATFORM_ARM_MCBSTM32F400)
 #define HAL_SYSTEM_NAME "MCBSTM32F400"
 
-#define PLATFORM_ARM_STM32F4 // STM32F407 cpu
+#define PLATFORM_ARM_STM32F4 1 // STM32F407 cpu
 #define STM32F4_ETH_PHY_RMII 1
-#define USB_ALLOW_CONFIGURATION_OVERRIDE  1
+#define USB_ALLOW_CONFIGURATION_OVERRIDE 1
 
 //
 // processor and features
@@ -77,12 +77,16 @@
 #define RTSPROTECTRESISTOR              RESISTOR_DISABLED
 
 #define TOTAL_GPIO_PORT                 9 // PA - PI
+#define TOTAL_GPIO_PINS                 TOTAL_GPIO_PORT * 16
 #define INSTRUMENTATION_H_GPIO_PIN      GPIO_PIN_NONE
 
-#define TOTAL_USART_PORT                7 // ITM0 + 6 physical UARTS
+#define TOTAL_USART_PORT                6 // 6 physical UARTS
 
 #define USART_DEFAULT_PORT              COM1
 #define USART_DEFAULT_BAUDRATE          115200
+
+#define TOTAL_GENERIC_PORTS             1 // 1 generic port extensions (ITM channel 0 )
+#define ITM_GENERIC_PORTNUM             0 // ITM0 is index 0 in generic port interface table
 
 #define DEBUG_TEXT_PORT                 ITM0
 #define STDIO                           USB1
@@ -112,8 +116,8 @@
 #define STM32F4_I2C_SCL_PIN  PORT_PIN( GPIO_PORTB, 8 ) // PB8
 #define STM32F4_I2C_SDA_PIN  PORT_PIN( GPIO_PORTB, 9 ) // PB9
 
-#define STM32F4_UART_RXD_PINS {23           , 54, 43} // PB7, D6, C11
-#define STM32F4_UART_TXD_PINS {22           , 53, 42} // PB6, D5, C10
+#define STM32F4_UART_RXD_PINS {23, 54, 43} // PB7, D6, C11
+#define STM32F4_UART_TXD_PINS {22, 53, 42} // PB6, D5, C10
 #define STM32F4_UART_CTS_PINS {(BYTE)GPIO_PIN_NONE, 51, 59} // GPIO_PIN_NONE, D3, D11
 #define STM32F4_UART_RTS_PINS {(BYTE)GPIO_PIN_NONE, 52, 60} // GPIO_PIN_NONE, D4, D12
 

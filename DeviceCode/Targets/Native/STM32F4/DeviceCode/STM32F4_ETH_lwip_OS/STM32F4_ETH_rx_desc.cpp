@@ -69,6 +69,13 @@ static RxDesc_t s_rxDescriptor[N_RX_DESC];      // RX descriptors
 static RxDesc_t *s_pRxDesc;                     // Pointer on the current RX descriptor
 static uint8_t s_rxBuffer[N_RX_DESC][RX_BUFFER_LENGTH]; // RX buffers
 
+void ZeroRxDesc()
+{
+    s_pRxDesc = NULL;
+    memset(s_rxDescriptor, 0, sizeof(s_rxDescriptor));
+    memset(s_rxBuffer, 0, sizeof(s_rxBuffer));
+}
+
 //--------------------------------------------------------------------------------------------
 // Local functions declarations
 //--------------------------------------------------------------------------------------------
@@ -115,7 +122,7 @@ void eth_initRxDescriptors()
     }
 
     #if DEBUG_RX_DESC
-    debug_printf("----- After init RX desc -----\r\n");
+    hal_printf("----- After init RX desc -----\r\n");
     eth_displayRxDescStatus();
     #endif
     
@@ -275,7 +282,7 @@ void eth_displayRxDescStatus()
 
     for (uint32_t i = 0; i < N_RX_DESC; i++)
     {
-        debug_printf("%d: 0x%08x %s\r\n", i, s_rxDescriptor[i].rdes0, 
+        hal_printf("%d: 0x%08x %s\r\n", i, s_rxDescriptor[i].rdes0, 
                      s_pRxDesc == &s_rxDescriptor[i] ? "<===" : "");
     }
 }

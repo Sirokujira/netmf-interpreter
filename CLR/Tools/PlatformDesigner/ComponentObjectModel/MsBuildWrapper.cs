@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Text;
 using System.IO;
+using System.Linq;
 using XsdInventoryFormatObject;
 using Microsoft.Build.Framework;
 //using Microsoft.Build.BuildEngine;
@@ -3137,6 +3138,12 @@ namespace ComponentObjectModel
 
                     ProjectPropertyGroupElement bpg = SaveStringProps(proj, mfproj, tbl);
 
+                    var reducesizeProp = mfproj.Properties.FirstOrDefault(p => p.Name == "reducesize");
+                    if (reducesizeProp != null)
+                    {
+                        bpg.AddProperty("reducesize", reducesizeProp.Value);
+                    }
+
                     ProjectImportElement pi = proj.Xml.AddImport(@"$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Settings");
 
                     if (mfproj.IsClrProject)
@@ -3781,25 +3788,39 @@ namespace ComponentObjectModel
                     if (defProj != null)
                     {
                         ///
-                        /// If we have the LWIP feature project then we need to add the following property to the 
+                        /// If we have the LWIP or LWIP OS feature project then we need to add the following property to the 
                         /// solutions settings file
                         /// 
                         bool AddLWIP = false;
+                        bool AddLWIPOS = false;
                         foreach (MFComponent f in defProj.Features)
                         {
-                            if (f.Name.Equals("Network (RTIP)", StringComparison.InvariantCultureIgnoreCase))
+                            if (f.Name.Equals("Network (Emulator)", StringComparison.InvariantCultureIgnoreCase))
                             {
                                 AddLWIP = false;
+                                AddLWIPOS = false;
                                 break;
                             }
                             else if (f.Name.Equals("Network (LWIP)", StringComparison.InvariantCultureIgnoreCase))
                             {
                                 AddLWIP = true;
+                                AddLWIPOS = false;
+                                break;
+                            }
+                            else if (f.Name.Equals("Network (LWIP OS)", StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                AddLWIP = false;
+                                AddLWIPOS = true;
+                                break;
                             }
                         }
                         if (AddLWIP)
                         {
                             mainGrp.AddProperty("TCP_IP_STACK", "LWIP");
+                        }
+                        else if (AddLWIPOS)
+                        {
+                            mainGrp.AddProperty("TCP_IP_STACK", "LWIP_1_4_1_OS");
                         }
                     }
 
@@ -3847,6 +3868,20 @@ namespace ComponentObjectModel
                         proj.Xml.AddImport(prc.ProjectPath);
                     }
 
+                    // TODO: this is a hack so that if an OS library is selected, the corresponding target of that OS is imported.
+                    //       for any os library, a clause to the below ifelse should be added to capture the additional target import.
+                    if (defProj != null)
+                    {
+                        foreach (MFComponent l in defProj.Libraries)
+                        {
+                            if (l.Name.Equals("CMSIS_RTX", StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                var im = proj.Xml.AddImport(@"$(SPOCLIENT)\devicecode\Targets\OS\CMSIS_RTOS\CMSIS_RTOS.settings");
+                                im.Condition = @"'$(reducesize)' == 'false'";
+                            }
+                        }
+                    }
+
                     proj.Save(fullpath);
 
                     
@@ -3863,6 +3898,15 @@ namespace ComponentObjectModel
                         {
                             CopyClonedFile(cloneRoot + "lwip_selector.h", newRoot + "lwip_selector.h", solution.m_cloneSolution.Name, solution.Name);
                         }
+
+                        ///
+                        /// Copy the lwipopts file for the cloned solution
+                        /// 
+                        if (File.Exists(cloneRoot + "lwipopts.h"))
+                        {
+                            CopyClonedFile(cloneRoot + "lwipopts.h", newRoot + "lwipopts.h", solution.m_cloneSolution.Name, solution.Name);
+                        }
+
                         //CopyClonedFile(cloneRoot + "dotnetmf.proj", newRoot + "dotnetmf.proj", solution.m_cloneSolution.Name, solution.Name);
                         //CopyClonedFiles(cloneRoot + "DeviceCode\\", newRoot + "DeviceCode\\", solution.m_cloneSolution.Name, solution.Name);
                     }
@@ -3881,6 +3925,26 @@ namespace ComponentObjectModel
                                 if (f.Name.Equals("Network (LWIP)", StringComparison.InvariantCultureIgnoreCase))
                                 {
                                     CopyClonedFile(lwipSel, Path.Combine(dir, "lwip_selector.h"), "<TEMPLATE>", solution.Name);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    ///
+                    /// copy the generic lwip_selector file in the case the cloned solution doesn't have one or we are creating a
+                    /// new solution with LWIP_OS
+                    /// 
+                    if (!File.Exists(Path.Combine(dir, "lwipopts.h")))
+                    {
+                        string lwipSel = ExpandEnvVars("$(SPOCLIENT)\\DeviceCode\\PAL\\lwip_1_4_1_os\\config\\lwipopts.h", "");
+                        if (File.Exists(lwipSel) && defProj != null)
+                        {
+                            foreach (MFComponent f in defProj.Features)
+                            {
+                                if (f.Name.Equals("Network (LWIP OS)", StringComparison.InvariantCultureIgnoreCase))
+                                {
+                                    CopyClonedFile(lwipSel, Path.Combine(dir, "lwipopts.h"), "<TEMPLATE>", solution.Name);
                                     break;
                                 }
                             }
@@ -4335,7 +4399,8 @@ namespace ComponentObjectModel
 
                 foreach (string subdir in Directory.GetDirectories(Path.GetDirectoryName(fullpath)))
                 {
-                    if (subdir.TrimEnd().ToUpper().EndsWith("DEVICECODE")) continue;
+                    if (subdir.EndsWith("DeviceCode", StringComparison.OrdinalIgnoreCase)) continue;
+                    if (subdir.EndsWith("ManagedCode", StringComparison.OrdinalIgnoreCase)) continue;
 
                     foreach (string projFile in Directory.GetFiles(subdir, "*.proj"))
                     {
