@@ -15,10 +15,6 @@
 #include "STM32F4_Flash.h"
 #include "..\stm32f4xx.h"
 
-#ifndef FLASH
-#define FLASH               ((FLASH_TypeDef *) FLASH_R_BASE)
-#endif
-
 typedef UINT16 CHIP_WORD;
 
 #define FLASH_CR_PSIZE_BITS FLASH_CR_PSIZE_0 // 16 bit programming
@@ -31,8 +27,8 @@ typedef UINT16 CHIP_WORD;
 #endif
 
 
-    static const UINT32 STM32F4_FLASH_KEY1 = 0x45670123;
-    static const UINT32 STM32F4_FLASH_KEY2 = 0xcdef89ab;
+    static const int STM32F4_FLASH_KEY1 = 0x45670123;
+    static const int STM32F4_FLASH_KEY2 = 0xcdef89ab;
 
 
 //--//

@@ -9,6 +9,7 @@
         <IsClrProject>False</IsClrProject>
         <InteropFeatures />
         <ExtraAssemblies />
+        <ProjectPath>$(SPOCLIENT)\Solutions\STM32F4DISCOVERY\TinyBooter\TinyBooter.proj</ProjectPath>
         <MFSettingsFile>$(SPOCLIENT)\Solutions\STM32F4DISCOVERY\STM32F4DISCOVERY.settings</MFSettingsFile>
         <IsSolutionWizardVisible>True</IsSolutionWizardVisible>
         <reducesize>true</reducesize>
