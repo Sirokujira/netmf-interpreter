@@ -1,0 +1,30 @@
+
+version: 1.0.{build}
+image: Visual Studio 2015
+install:
+- ps: >-
+    Start-FileDownload "https://github.com/NETMF/netmf-interpreter/releases/download/NETMFCryptoLibraries/NetMFCryptoLibs.msi"
+
+    Start-FileDownload "https://launchpad.net/gcc-arm-embedded/5.0/5-2015-q4-major/+download/gcc-arm-none-eabi-5_2-2015q4-20151219-win32.zip"
+
+    Start-FileDownload "http://netmf.github.io/downloads/build-tools.zip"
+
+    Import-Module ".\appveyor\PS-Zip\PS-Zip.psm1" -Force
+
+    .\appveyor\install.ps1
+build_script:
+- cmd: >-
+    build_sdk.cmd
+
+    setenv_gcc 5.2.1 C:\projects\gcc-arm-none-eabi
+
+    cd Solutions\ToppersHRP2onEV3
+
+    MSbuild dotnetmf.proj /t:rebuild /p:flavor=release;memory=flash
+
+    msiexec.exe NetMFCryptoLibs.msi /VERYSILENT /NORESTART
+
+    netmfvs2015.msi /VERYSILENT /NORESTART
+artifacts:
+- path: netmfvs2015.msi
+  name: netmfvs2015
