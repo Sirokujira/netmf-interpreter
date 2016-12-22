@@ -30,15 +30,15 @@ build_script:
     MSbuild dotnetmf.proj /t:GenerateCLRDefines
     
     build_sdk.cmd
-	
+    
     setenv_gcc 5.2.1 C:\projects\gcc-arm-none-eabi
-	
+    
     cd Solutions\ToppersHRP2onEV3
-	
+    
     MSbuild dotnetmf.proj /t:rebuild /p:flavor=release;memory=flash
-	
+    
     msiexec.exe NetMFCryptoLibs.msi /VERYSILENT /NORESTART
-	
+    
     netmfvs2015.msi /VERYSILENT /NORESTART
 
 
