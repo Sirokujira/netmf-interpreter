@@ -25,10 +25,10 @@ install:
     Invoke-WebRequest -UseBasicParsing -Uri "http://netmf.github.io/downloads/build-tools.zip" | Expand-Stream -Destination $SPOROOT
 
 
+# NG : 
+# MSbuild dotnetmf.proj /t:GenerateCLRDefines
 build_script:
 - cmd: >-
-    MSbuild dotnetmf.proj /t:GenerateCLRDefines
-    
     build_sdk.cmd
     
     setenv_gcc 5.2.1 C:\projects\gcc-arm-none-eabi
