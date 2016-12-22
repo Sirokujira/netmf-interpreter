@@ -10,6 +10,10 @@ image: Visual Studio 2015
 # new
 # Import-Module .\tools\scripts\Build-netmf.psm1
 # Invoke-WebRequest -UseBasicParsing -Uri "http://netmf.github.io/downloads/build-tools.zip" | Expand-Stream -Destination $SPOROOT
+# CLR Build
+# https://github.com/NETMF/netmf-interpreter/issues/378
+# https://github.com/NETMF/netmf-interpreter/blob/34a92c3d79d3d1c48440dc32f88d5b81095311a4/Framework/Tools/CreateCLRDefines.proj
+# MSbuild dotnetmf.proj /t:GenerateCLRDefines
 install:
 - ps: >-
     Start-FileDownload "https://github.com/NETMF/netmf-interpreter/releases/download/NETMFCryptoLibraries/NetMFCryptoLibs.msi"
@@ -23,17 +27,23 @@ install:
 
 build_script:
 - cmd: >-
+    MSbuild dotnetmf.proj /t:GenerateCLRDefines
+    
     build_sdk.cmd
-
+	
     setenv_gcc 5.2.1 C:\projects\gcc-arm-none-eabi
-
+	
     cd Solutions\ToppersHRP2onEV3
-
+	
     MSbuild dotnetmf.proj /t:rebuild /p:flavor=release;memory=flash
-
+	
     msiexec.exe NetMFCryptoLibs.msi /VERYSILENT /NORESTART
-
+	
     netmfvs2015.msi /VERYSILENT /NORESTART
+
+
 artifacts:
 - path: netmfvs2015.msi
   name: netmfvs2015
+
+
