@@ -1,17 +1,26 @@
 
 version: 1.0.{build}
 image: Visual Studio 2015
+
+# Tool Download
+# old
+# Start-FileDownload "http://netmf.github.io/downloads/build-tools.zip"
+# Import-Module ".\appveyor\PS-Zip\PS-Zip.psm1" -Force
+# .\appveyor\install.ps1
+# new
+# Import-Module .\tools\scripts\Build-netmf.psm1
+# Invoke-WebRequest -UseBasicParsing -Uri "http://netmf.github.io/downloads/build-tools.zip" | Expand-Stream -Destination $SPOROOT
 install:
 - ps: >-
     Start-FileDownload "https://github.com/NETMF/netmf-interpreter/releases/download/NETMFCryptoLibraries/NetMFCryptoLibs.msi"
-
+    
     Start-FileDownload "https://launchpad.net/gcc-arm-embedded/5.0/5-2015-q4-major/+download/gcc-arm-none-eabi-5_2-2015q4-20151219-win32.zip"
+    
+    Import-Module .\tools\scripts\Build-netmf.psm1
+    
+    Invoke-WebRequest -UseBasicParsing -Uri "http://netmf.github.io/downloads/build-tools.zip" | Expand-Stream -Destination $SPOROOT
 
-    Start-FileDownload "http://netmf.github.io/downloads/build-tools.zip"
 
-    Import-Module ".\appveyor\PS-Zip\PS-Zip.psm1" -Force
-
-    .\appveyor\install.ps1
 build_script:
 - cmd: >-
     build_sdk.cmd
