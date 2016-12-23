@@ -28,22 +28,17 @@ namespace NETMF
 {
     namespace Metadata
     {
-        // macro to generate a compile time error if the given structure is not a proper C++ POD type
-        // POD types are essential for ensuring binary compatibility with the memory layout generated
-        // by the NETMF tools. Since this code is intended for use on the desktop and on devices it
-        // must remain portable so that the raw PE images are accessible directly in memory as-is.
-        #define ASSERT_METADATA_STRUCT_IS_POD( t ) \
-        static_assert( std::is_pod<t>::value \
-                     , "Metadata structure " #t " MUST always remain a POD structure for portability" \
-                     );
-
-        using Microsoft::Utilities::EnumFlags;
-
+        // Simple const expression to form a NETMF LCR opcode value
+        // from the prefix and code value pair, used in computing the
+        // value of the Opcode enumeration below.
         constexpr uint16_t MakeOpcode( uint8_t msb, uint8_t lsb )
         {
             return ( msb << 8 ) + lsb;
         }
 
+        // enumeration of all opcodes with their values in binary IL
+        // NOTE: This requires a version of OCODE.def that contains 
+        // no duplicate opcode IDs or aliases
         enum class Opcode : uint16_t
         {
 #define OPDEF( id, name, pop, push, params, kind, len, b1, b2, flow )\
@@ -52,20 +47,8 @@ namespace NETMF
 #undef OPDEF
         };
 
-        // using a typedef for each of these helps in providing more
-        // self documenting code. 
-        typedef uint16_t StringTableIndex;
-        typedef uint16_t TypeDefTableIndex;
-        typedef uint16_t TypeRefTableIndex;
-        typedef uint16_t FieldDefTableIndex;
-        typedef uint16_t MethodDefTableIndex;
-        typedef uint16_t SigTableIndex;
-        typedef uint32_t MetadataToken;
-        typedef uint16_t MetadataOffset;
-        typedef uint8_t const* MetadataPtr;
-
-        const uint16_t EmptyIndex = 0xFFFF;
-
+        // Enumeration used as an index into the table of tables
+        // to locate the table data in an assemblies metadata
         enum class TableKind : uint16_t
         {
                AssemblyRef = 0x0000,
@@ -87,32 +70,82 @@ namespace NETMF
                        Max = 0x0010,
         };
 
+        // using a typedef for each of these helps in providing more
+        // self documenting code as there are a number of tables and
+        // a simple integer type conveys no useful information on
+        // which table an index refers to. 
+        typedef uint16_t AssemblyTableRefIndex;
+        typedef uint16_t TypeRefTableIndex;
+        typedef uint16_t FieldRefTableIndex;
+        typedef uint16_t MethodRefTableIndex;
+        typedef uint16_t TypeDefTableIndex;
+        typedef uint16_t FieldDefTableIndex;
+        typedef uint16_t MethodDefTableIndex;
+        typedef uint16_t AttributesTableIndex;
+        typedef uint16_t TypeSpecTableIndex;
+        typedef uint16_t ResourcesTableIndex;
+        typedef uint32_t ResourcesDataTableIndex;
+        typedef uint16_t StringTableIndex;
+        typedef uint16_t SigTableIndex;
+        typedef uint16_t MetadataOffset;    // offset (index) into IL Blob
+        typedef uint16_t ResourcesFilesTableIndex;
 
+        const uint16_t EmptyIndex = 0xFFFF; // constant value indicating an empty table ( Zero can't be used here as it is a valid index)
+
+        typedef uint32_t MetadataToken;     // FULL 32 bit token
+        typedef uint8_t const* MetadataPtr; // pointer into IL Blob
+
+        // constant for the maximum table index
+        // that is the maximum legal integer index
+        // is to AssemblyHeader::StartOfTables[] is
+        // TableMax - 1.
         static const uint32_t TableMax = static_cast< uint32_t >( TableKind::Max );
-        
+
         // Traits style template specialized by DECLARE_TABLEKIND
         // macro to bind the table type with the enumeration index.
         // This allows other templates based on the type to determine
         // the correct index without repetitive and error prone manual
         // alternatives.
+        //
+        // This template is specialized based on the table entry type
+        // with the DECLARE_TABLEKIND macro to provide the following members:
+        //     value - (TalbeKind) enumeration value for the table associated
+        //             with the type T
+        // example:
+        //     template<typename T>
+        //     MetadatToken MakeToken( typename table_kind<T>::type index )
+        //     {
+        //         return MakeToken( table_kind<T>::value, (uint32_t)index); 
+        //     }
         template< typename T>
         struct table_kind;
 
-        #define DECLARE_TABLEKIND( t, k )\
-        ASSERT_METADATA_STRUCT_IS_POD( t ) \
+        // macro to declare the binding between a table entry type and
+        // TableKind index for that table in the Assembly header
+        // This also verifies that the table entry type passes the C++
+        // POD type traits check.
+        // Input:
+        //    t - Type of the table entry
+        //    k - TypeKind enum for this table type
+        //   it - index type for index into the table of entries
+        //        (i.e. StringTableIndex, TypeDefTableIndex, etc...)
+        //
+        #define DECLARE_TABLEKIND( t, k, it )\
+        ASSERT_STRUCT_IS_POD( t ) \
         template<> \
         struct table_kind<t> \
         {\
             static const TableKind value = k;\
+            typedef it IndexType;\
         };
 
-        // some token types in the Binary form refer to 
-        // one of two possible tables only, this template
+        // some token types in the Metadata refer to one
+        // of two possible tables only, this template
         // provides support for defining such types and 
         // extracting the table and index values from them
         // 
         template< TableKind bitSetKind, TableKind bitUnsetKind>
-        struct BinaryToken
+        struct BinaryToken final
         {
             uint16_t Value;
 
@@ -161,24 +194,24 @@ namespace NETMF
             return ( ( static_cast<uint32_t>( tbl) << 24 ) & 0xFF000000 ) | ( data & 0x00FFFFFF );
         }
 
-        struct VersionInfo
+        struct VersionInfo final
         {
             uint16_t MajorVersion;
             uint16_t MinorVersion;
             uint16_t BuildNumber;
             uint16_t RevisionNumber;
         };
-        ASSERT_METADATA_STRUCT_IS_POD( VersionInfo )
+        ASSERT_STRUCT_IS_POD( VersionInfo )
 
-        struct AssemblyRefTableEntry
+        struct AssemblyRefTableEntry final
         {
             StringTableIndex Name;
             uint16_t pad;
             VersionInfo Version;
         };
-        DECLARE_TABLEKIND( AssemblyRefTableEntry, TableKind::AssemblyRef )
+        DECLARE_TABLEKIND( AssemblyRefTableEntry, TableKind::AssemblyRef, AssemblyTableRefIndex )
 
-        struct TypeRefTableEntry
+        struct TypeRefTableEntry final
         {
             StringTableIndex Name;
             StringTableIndex NameSpace;
@@ -186,9 +219,9 @@ namespace NETMF
             TypeRefOrAssemblyRef Scope;
             uint16_t Pad;
         };
-        DECLARE_TABLEKIND( TypeRefTableEntry, TableKind::TypeRef )
+        DECLARE_TABLEKIND( TypeRefTableEntry, TableKind::TypeRef, TypeRefTableIndex )
 
-        struct FieldRefTableEntry
+        struct FieldRefTableEntry final
         {
             StringTableIndex Name;
             TypeRefTableIndex Container;
@@ -196,16 +229,16 @@ namespace NETMF
             SigTableIndex Sig;
             uint16_t Pad;
         };
-        DECLARE_TABLEKIND( FieldRefTableEntry, TableKind::FieldRef )
+        DECLARE_TABLEKIND( FieldRefTableEntry, TableKind::FieldRef, FieldRefTableIndex )
 
-        struct MethodRefTableEntry
+        struct MethodRefTableEntry final
         {
             StringTableIndex Name;
             TypeRefTableIndex Container;
             SigTableIndex Sig;
             uint16_t Pad;
         };
-        DECLARE_TABLEKIND( MethodRefTableEntry, TableKind::MethodRef )
+        DECLARE_TABLEKIND( MethodRefTableEntry, TableKind::MethodRef, MethodRefTableIndex )
 
         enum class TypeDefFlags : uint16_t
         {
@@ -238,7 +271,7 @@ namespace NETMF
         };
         ENUM_FLAGS( TypeDefFlags )
 
-        struct TypeDefTableEntry
+        struct TypeDefTableEntry final
         {
             StringTableIndex Name;
             StringTableIndex NameSpace;
@@ -271,7 +304,7 @@ namespace NETMF
                 return ( flags & ( TypeDefFlags::Delegate | TypeDefFlags::MulticastDelegate ) ) != TypeDefFlags::None;
             }
         };
-        DECLARE_TABLEKIND( TypeDefTableEntry, TableKind::TypeDef )
+        DECLARE_TABLEKIND( TypeDefTableEntry, TableKind::TypeDef, TypeDefTableIndex )
 
         enum class FieldDefFlags : uint16_t
         {
@@ -296,7 +329,7 @@ namespace NETMF
         };
         ENUM_FLAGS( FieldDefFlags )
 
-        struct FieldDefTableEntry
+        struct FieldDefTableEntry final
         {
             StringTableIndex Name;
             SigTableIndex sig;
@@ -304,7 +337,7 @@ namespace NETMF
             SigTableIndex DefaultValue;
             FieldDefFlags Flags;
         };
-        DECLARE_TABLEKIND( FieldDefTableEntry, TableKind::FieldDef )
+        DECLARE_TABLEKIND( FieldDefTableEntry, TableKind::FieldDef, FieldDefTableIndex )
 
         enum class MethodDefFlags : uint32_t
         {
@@ -345,7 +378,7 @@ namespace NETMF
         };
         ENUM_FLAGS( MethodDefFlags )
 
-        struct MethodDefTableEntry
+        struct MethodDefTableEntry final
         {
             StringTableIndex Name;
             MetadataOffset RVA;
@@ -360,23 +393,23 @@ namespace NETMF
             SigTableIndex Locals;
             SigTableIndex Sig;
         };
-        DECLARE_TABLEKIND( MethodDefTableEntry, TableKind::MethodDef )
+        DECLARE_TABLEKIND( MethodDefTableEntry, TableKind::MethodDef, MethodDefTableIndex )
 
-        struct AttributeTableEntry
+        struct AttributeTableEntry final
         {
             TableKind OwnerType;      // one of TableKind::TypeDef, TableKind::MethodDef, or TableKind::FieldDef.
             uint16_t OwnerIdx;        // index into the table specified by ownerType
             MethodRefOrMethodDef Constructor;
             SigTableIndex Data;
         };
-        DECLARE_TABLEKIND( AttributeTableEntry, TableKind::Attributes )
+        DECLARE_TABLEKIND( AttributeTableEntry, TableKind::Attributes, AttributesTableIndex )
 
-        struct TypeSpecTableEntry
+        struct TypeSpecTableEntry final
         {
             SigTableIndex Sig;
             uint16_t pad;
         };
-        DECLARE_TABLEKIND( TypeSpecTableEntry, TableKind::TypeSpec )
+        DECLARE_TABLEKIND( TypeSpecTableEntry, TableKind::TypeSpec, TypeSpecTableIndex )
 
         enum class ExceptionHandlerMode : uint16_t
         {
@@ -404,7 +437,7 @@ namespace NETMF
         // VERIFY whether MetadataProcessor will align the table entries
         // or not. (Current NETMF CLR seems to assume it won't and does
         // a memcpy)
-        struct ExceptionHandlerTableEntry
+        struct ExceptionHandlerTableEntry final
         {
             ExceptionHandlerMode Mode;
             union
@@ -461,11 +494,11 @@ namespace NETMF
             //bool InFilter( MetadataPtr pByteCodeStream, MetadataPtr p )
 
         };
-        ASSERT_METADATA_STRUCT_IS_POD( ExceptionHandlerTableEntry )
+        ASSERT_STRUCT_IS_POD( ExceptionHandlerTableEntry )
 
         static_assert( sizeof( ExceptionHandlerTableEntry ) == 12, "Record size mismatch!" );
 
-        struct ResourcesFilesTableEntry
+        struct ResourcesFilesTableEntry final
         {
             static const uint32_t CurrentVersion = 2;
 
@@ -484,18 +517,20 @@ namespace NETMF
             uint32_t NumberOfResources;
             StringTableIndex Name;
             uint16_t Pad;
-            uint32_t Offset;          // TableKind::Resource
+            ResourcesDataTableIndex Offset;
         };
-        DECLARE_TABLEKIND( ResourcesFilesTableEntry, TableKind::ResourcesFiles )
+        DECLARE_TABLEKIND( ResourcesFilesTableEntry, TableKind::ResourcesFiles, ResourcesFilesTableIndex )
 
-        // in future release of NETMF CLR the
+        // In future release of NETMF CLR the
         // bitmap and font enumeration values here
         // should be removed and treated as binary
         // blobs.
         // This requires that the PE generator
         // (or more specifically the NETMF resource generator)
         // understands the format and can perform the necessary
-        // byte order conversions.
+        // byte order conversions. This helps in keeping the core
+        // runtime and tooling isolated from the graphics system
+        // (a goal of the new work on the runtime )
         enum class ResourceKind : uint8_t
         {
             Invalid = 0x00,
@@ -505,7 +540,7 @@ namespace NETMF
              Binary = 0x04,
         };
 
-        struct ResourcesTableEntry
+        struct ResourcesTableEntry final
         {
             // The last entry in the Resources table 
             // will have:
@@ -532,9 +567,9 @@ namespace NETMF
             ResourceKind Kind;
             uint8_t Flags;
 
-            // offset into the ResourceData blob table for the
+            // offset into the ResourcesData blob table for the
             // start of the resource data
-            uint32_t Offset; // TableKind::ResourceData
+            ResourcesDataTableIndex Offset;
 
             // Compute size of the resourceData blob for this entry
             // based on the start of the next entry
@@ -553,7 +588,7 @@ namespace NETMF
                 return next.Offset - Offset + ( next.Flags & FlagsPaddingMask );
             }
         };
-        DECLARE_TABLEKIND( ResourcesTableEntry, TableKind::Resources )
+        DECLARE_TABLEKIND( ResourcesTableEntry, TableKind::Resources, ResourcesTableIndex )
 
         enum class AssemblyHeaderFlags : uint32_t
         {
@@ -583,7 +618,8 @@ namespace NETMF
                  Generic = 0x10, // Generic method sig with explicit number of type arguments (precedes ordinary parameter count)
         };
 
-        // NOTE: While this NETMF specific enum corresponds to the ECMA ELEMENT_TYPE_xxxx
+        // NOTE:
+        // While this NETMF specific enum corresponds to the ECMA ELEMENT_TYPE_xxxx
         // the actual numeric values are not the same and it is a reduced set of values.
         enum class DataType : uint8_t
         {
@@ -618,7 +654,7 @@ namespace NETMF
         // headers are located in the well known memory regions used by the
         // CLR. The memory regions are scanned for valid headers (e.g. marker
         // and CRCs are valid )
-        struct AssemblyHeader
+        struct AssemblyHeader final
         {
             uint8_t Marker[ 8 ];
 
@@ -627,7 +663,7 @@ namespace NETMF
             AssemblyHeaderFlags Flags;
 
             uint32_t NativeMethodsChecksum;
-            // offset into TableKind::ResourceData for native "patch" code exists.
+            // offset into TableKind::ResourcesData for native "patch" code exists.
             // At runtime if this is not 0xFFFFFFFF then the CLR will compute
             // a physical address of the start of the patch code and call the function
             // located there. The function must be position independent and must have 
@@ -638,7 +674,7 @@ namespace NETMF
             // as many micro controllers limit the memory addresses where executable
             // code can reside. (i.e. internal flash or RAM only ) thus, this is not a
             // generalized extensibility/ dynamically loaded native code mechanism.
-            uint32_t PatchEntryOffset; 
+            ResourcesDataTableIndex PatchEntryOffset; 
 
             VersionInfo Version;
 
@@ -655,7 +691,6 @@ namespace NETMF
             // most compact form to hold this information, but it only costs 16 bytes/assembly.
             // Trying to only align some of the tables is just much more hassle than it's worth.
             // This field itself must also be aligned on a 32 bit boundary.
-            //uint8_t PaddingOfTables[ ( ( TableMax - 1 ) + 3 ) / 4 * 4 ];
             uint8_t PaddingOfTables[ TableMax ];
 
             uint32_t SizeOfTable( TableKind index ) const
@@ -711,7 +746,7 @@ namespace NETMF
             static uint16_t const StringTableIndexToBlobOffsetMap[ ];
             static char const WellKnownStringTableBlob[ ];
         };
-        ASSERT_METADATA_STRUCT_IS_POD( AssemblyHeader )
+        ASSERT_STRUCT_IS_POD( AssemblyHeader )
         static_assert( 0 == ( offsetof( AssemblyHeader, StartOfTables ) & 0x03 ), "StartOfTables not aligned on 32bit boundary" );
         static_assert( 0 == ( offsetof( AssemblyHeader, PaddingOfTables ) & 0x03 ), "PaddingOfTables not aligned on 32bit boundary" );
 
@@ -846,7 +881,7 @@ namespace NETMF
         // use in ranged for loops, and other standard C++
         // contexts.
         template<typename T>
-        class AssemblyTable
+        class AssemblyTable final
         {
             static const TableKind Kind = table_kind<T>::value;
         public:
@@ -857,9 +892,9 @@ namespace NETMF
             T const* begin( ) { return reinterpret_cast<T const*>( Header.GetTable( Kind ) ); }
             T const* end( ) { return begin() + Header.TableElementCount( Kind ); }
 
-            T const& operator[]( uint16_t index )
+            T const& operator[]( typename table_kind<T>::IndexType index )
             {
-                return begin()[ index ];
+                return begin()[ static_cast<int>( index ) ];
             }
 
             size_t length( )
@@ -881,7 +916,6 @@ namespace NETMF
             MethodDefTableEntry const& p = GetTable<MethodDefTableEntry>( )[ i ];
             return FindMethodBoundaries( p, i, start, end );
         }
-
     }
 }
 #endif
