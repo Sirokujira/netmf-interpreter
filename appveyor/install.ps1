@@ -75,12 +75,28 @@ function InstallBuildTools()
     Move-Item $moveSrcFolderPath2 $moveDestFolderPath2
 }
 
+function InstallBuildTools2()
+{
+    $archivePath = "C:\\projects\\build-tools"
+    $zipFilePath = "C:\\projects\\netmf-interpreter\\build-tools.zip"
+    New-ZipExtract -source $zipFilePath -destination $archivePath -force -verbose
+    
+    # FolderMove
+    $moveSrcFolderPath1 = "C:\\projects\\build-tools\bin"
+    $moveDestFolderPath1 = "C:\\projects\\netmf-interpreter\\bin"
+    Move-Item $moveSrcFolderPath1 $moveDestFolderPath1
+    $moveSrcFolderPath2 = "C:\\projects\\build-tools\tools"
+    $moveDestFolderPath2 = "C:\\projects\\netmf-interpreter\\tools"
+    Move-Item $moveSrcFolderPath2 $moveDestFolderPath2
+}
+
 function main () 
 {
     # Version 4.4
     InstallNETMFSDK
     InstallGCCCompiler
-    InstallBuildTools
+    # InstallBuildTools
+    InstallBuildTools2
 }
 
 main
