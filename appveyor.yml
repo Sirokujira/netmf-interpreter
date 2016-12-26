@@ -3,7 +3,7 @@ version: 1.0.{build}
 image: Visual Studio 2015
 
 environment:
-  SPOROOT: 'C:\projects\netmf-interpreter'
+  SPOROOT: 'C:\projects\netmf-interpreter\build-tools'
 
 # Tool Download
 # old
@@ -29,8 +29,10 @@ install:
     
     Start-FileDownload "http://netmf.github.io/downloads/build-tools.zip"
     
-    ./Install-BinTools.ps1
-    
+    Import-Module ".\appveyor\PS-Zip\PS-Zip.psm1" -Force
+	
+	.\appveyor\install.ps1
+	
     msiexec.exe NetMFCryptoLibs.msi /VERYSILENT /NORESTART
 
 
