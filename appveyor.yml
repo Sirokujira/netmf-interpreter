@@ -30,9 +30,9 @@ install:
     Start-FileDownload "http://netmf.github.io/downloads/build-tools.zip"
     
     Import-Module ".\appveyor\PS-Zip\PS-Zip.psm1" -Force
-	
-	.\appveyor\install.ps1
-	
+    
+    .\appveyor\install.ps1
+    
     msiexec.exe NetMFCryptoLibs.msi /VERYSILENT /NORESTART
 
 
