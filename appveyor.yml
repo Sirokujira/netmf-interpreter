@@ -29,6 +29,8 @@ install:
     
     Start-FileDownload "http://netmf.github.io/downloads/build-tools.zip"
     
+    Start-FileDownload "https://github.com/NETMF/netmf-interpreter/releases/download/v4.4-RTW-20-Oct-2015/MicroFrameworkSDK.MSI"
+    
     Import-Module ".\appveyor\PS-Zip\PS-Zip.psm1" -Force
     
     .\appveyor\install.ps1
@@ -38,6 +40,8 @@ install:
 
 # NG : 
 # MSbuild dotnetmf.proj /t:GenerateCLRDefines
+# set 
+# candle.exe - NG
 build_script:
 - cmd: >-
     dir "C:\projects\netmf-interpreter\"
@@ -47,10 +51,6 @@ build_script:
     dir "C:\projects\netmf-interpreter\build-tools"
     
     dir "C:\projects\netmf-interpreter\build-tools\tools"
-    
-    set 
-    
-    set SPOROOT="C:\\projects\\netmf-interpreter\\build-tools"
     
     build_sdk.cmd
     

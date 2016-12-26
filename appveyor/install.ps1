@@ -23,6 +23,12 @@ function InstallNETMFSDK()
     msiexec.exe NetMFCryptoLibs.msi /S /v/norestart /v/qn
 }
 
+function InstallNETMFSDK_44()
+{
+    Write-Output "MicroFrameworkSDK.MSI : InstallStart"
+    msiexec.exe MicroFrameworkSDK.MSI /S /v/norestart /v/qn
+}
+
 function InstallGCCCompiler()
 {
     # NG?
