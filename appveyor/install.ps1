@@ -83,24 +83,24 @@ function InstallBuildTools2()
     $zipFilePath = $basePath + "\\build-tools.zip"
     New-ZipExtract -source $zipFilePath -destination $archivePath -force -verbose
     
-    # $moveSrcFolderAllPath = $archivePath
-    # $moveDestFolderAllPath = "C:\\projects\\tools"
-    # Copy-Item -Path $moveSrcFolderAllPath -Destination $moveDestFolderAllPath
-    
-    # FolderMove
-    $moveSrcFolderPath1 = $archivePath + "\\bin"
-    $moveDestFolderPath1 = $basePath + "\\bin"
-    # Move-Item $moveSrcFolderPath1 $moveDestFolderPath1
-    Copy-Item -Path $moveSrcFolderPath1 -Destination $moveDestFolderPath1
-    
-    $moveSrcFolderPath2 = $archivePath + "\\tools"
-    $moveDestFolderPath2 = $basePath + "\\tools"
-    # Move-Item $moveSrcFolderPath2 $moveDestFolderPath2
-    Copy-Item -Path $moveSrcFolderPath2 -Destination $moveDestFolderPath2
-    
-    $moveSrcFolderPath3 = $archivePath + "\\tools"
-    $moveDestFolderPath3 = "C:\\projects"
-    Copy-Item -Path $moveSrcFolderPath3 -Destination $moveDestFolderPath3 -Recurse
+    # # $moveSrcFolderAllPath = $archivePath
+    # # $moveDestFolderAllPath = "C:\\projects\\tools"
+    # # Copy-Item -Path $moveSrcFolderAllPath -Destination $moveDestFolderAllPath
+    # 
+    # # FolderMove
+    # $moveSrcFolderPath1 = $archivePath + "\\bin"
+    # $moveDestFolderPath1 = $basePath + "\\bin"
+    # # Move-Item $moveSrcFolderPath1 $moveDestFolderPath1
+    # Copy-Item -Path $moveSrcFolderPath1 -Destination $moveDestFolderPath1
+    # 
+    # $moveSrcFolderPath2 = $archivePath + "\\tools"
+    # $moveDestFolderPath2 = $basePath + "\\tools"
+    # # Move-Item $moveSrcFolderPath2 $moveDestFolderPath2
+    # Copy-Item -Path $moveSrcFolderPath2 -Destination $moveDestFolderPath2
+    # 
+    # $moveSrcFolderPath3 = $archivePath + "\\tools"
+    # $moveDestFolderPath3 = "C:\\projects"
+    # Copy-Item -Path $moveSrcFolderPath3 -Destination $moveDestFolderPath3 -Recurse
 }
 
 function main () 
