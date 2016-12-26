@@ -79,7 +79,7 @@ function InstallBuildTools2()
 {
     # $archivePath = "C:\\projects\\build-tools"
     $archivePath = "C:\\projects\\tools"
-    $basePath = "C:\\projects\\netmf-interpreter\\"
+    $basePath = "C:\\projects\\netmf-interpreter"
     $zipFilePath = $basePath + "\\build-tools.zip"
     New-ZipExtract -source $zipFilePath -destination $archivePath -force -verbose
     
