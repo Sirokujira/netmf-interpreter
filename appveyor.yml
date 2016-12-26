@@ -37,6 +37,8 @@ install:
 # MSbuild dotnetmf.proj /t:GenerateCLRDefines
 build_script:
 - cmd: >-
+    dir "C:\projects\tools"
+    
     build_sdk.cmd
     
     dir
