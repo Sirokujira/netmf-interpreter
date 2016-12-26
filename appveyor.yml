@@ -16,6 +16,8 @@ image: Visual Studio 2015
 # MSbuild dotnetmf.proj /t:GenerateCLRDefines
 # MMU use?(ARM7/9)
 # https://github.com/NETMF/netmf-interpreter/wiki/Hardware%20Layer
+# Import-Module ".\appveyor\PS-Zip\PS-Zip.psm1" -Force
+# .\appveyor\install.ps1
 install:
 - ps: >-
     Start-FileDownload "https://github.com/NETMF/netmf-interpreter/releases/download/NETMFCryptoLibraries/NetMFCryptoLibs.msi"
@@ -24,11 +26,9 @@ install:
     
     Start-FileDownload "http://netmf.github.io/downloads/build-tools.zip"
     
-    Import-Module ".\appveyor\PS-Zip\PS-Zip.psm1" -Force
-    
-    .\appveyor\install.ps1
-    
     ./Install-BinTools.ps1
+    
+    Copy-Item -Path "C:\\projects\\build-tools" -Destination "C:\\projects\\tools" -Recurse
     
     msiexec.exe NetMFCryptoLibs.msi /VERYSILENT /NORESTART
 
@@ -37,13 +37,15 @@ install:
 # MSbuild dotnetmf.proj /t:GenerateCLRDefines
 build_script:
 - cmd: >-
+    dir "C:\projects\build-tools"
+    
     dir "C:\projects\tools"
     
     dir "C:\projects\tools\tools"
     
-    build_sdk.cmd
+    dir "C:\projects\build-tools\tools"
     
-    dir
+    build_sdk.cmd
     
     netmfvs2015.msi /VERYSILENT /NORESTART
     
