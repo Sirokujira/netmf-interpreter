@@ -46,6 +46,12 @@ build_script:
     
     dir "C:\projects\netmf-interpreter\build-tools"
     
+    dir "C:\projects\netmf-interpreter\build-tools\tools"
+    
+    set 
+    
+    set SPOROOT="C:\\projects\\netmf-interpreter\\build-tools"
+    
     build_sdk.cmd
     
     netmfvs2015.msi /VERYSILENT /NORESTART
