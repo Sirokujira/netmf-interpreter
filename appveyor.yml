@@ -39,7 +39,7 @@ build_script:
 - cmd: >-
     dir "C:\projects\tools"
     
-    dir "C:\projects\tools\"
+    dir "C:\projects\tools\tools"
     
     build_sdk.cmd
     
