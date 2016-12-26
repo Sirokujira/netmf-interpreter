@@ -98,7 +98,7 @@ function InstallBuildTools2()
     # # Move-Item $moveSrcFolderPath2 $moveDestFolderPath2
     # Copy-Item -Path $moveSrcFolderPath2 -Destination $moveDestFolderPath2
     # 
-    $moveSrcFolderPath3 = $archivePath + "\\tools"
+    $moveSrcFolderPath3 = $archivePath
     $moveDestFolderPath3 = "C:\\projects\\tools"
     Copy-Item -Path $moveSrcFolderPath3 -Destination $moveDestFolderPath3 -Recurse
 }
