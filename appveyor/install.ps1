@@ -83,7 +83,7 @@ function InstallBuildTools2()
     New-ZipExtract -source $zipFilePath -destination $archivePath -force -verbose
     
     $moveSrcFolderAllPath = $archivePath
-    $moveDestFolderAllPath = "C:\\projects"
+    $moveDestFolderAllPath = "C:\\projects\\tools"
     Copy-Item -Path $moveSrcFolderAllPath -Destination $moveDestFolderAllPath
     
     # FolderMove
