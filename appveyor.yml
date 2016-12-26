@@ -44,6 +44,8 @@ build_script:
     
     dir "C:\projects\netmf-interpreter\tools"
     
+    dir "C:\projects\netmf-interpreter\build-tools"
+    
     build_sdk.cmd
     
     netmfvs2015.msi /VERYSILENT /NORESTART
