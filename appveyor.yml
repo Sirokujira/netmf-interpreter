@@ -39,6 +39,8 @@ build_script:
 - cmd: >-
     build_sdk.cmd
     
+    dir
+    
     netmfvs2015.msi /VERYSILENT /NORESTART
     
     setenv_gcc 5.2.1 C:\projects\gcc-arm-none-eabi
