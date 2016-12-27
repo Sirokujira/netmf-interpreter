@@ -68,17 +68,17 @@ function InstallBuildTools()
     # $unzipDirObj.CopyHere($zipPathObj.Items())
     
     # $archivePath = "C:\\projects\\build-tools"
-    $archivePath = "C:\\projects\\build-tools"
+    $archivePath = "C:\\projects"
     $zipFilePath = "C:\\projects\\netmf-interpreter\\build-tools.zip"
     New-ZipExtract -source $zipFilePath -destination $archivePath -force -verbose
     
     # FolderMove
-    $moveSrcFolderPath1 = "C:\\projects\\build-tools\bin"
-    $moveDestFolderPath1 = "C:\\projects\\bin"
-    Move-Item $moveSrcFolderPath1 $moveDestFolderPath1
-    $moveSrcFolderPath2 = "C:\\projects\\build-tools\tools"
-    $moveDestFolderPath2 = "C:\\projects\\tools"
-    Move-Item $moveSrcFolderPath2 $moveDestFolderPath2
+    # $moveSrcFolderPath1 = "C:\\projects\\build-tools\bin"
+    # $moveDestFolderPath1 = "C:\\projects\\bin"
+    # Move-Item $moveSrcFolderPath1 $moveDestFolderPath1
+    # $moveSrcFolderPath2 = "C:\\projects\\build-tools\tools"
+    # $moveDestFolderPath2 = "C:\\projects\\tools"
+    # Move-Item $moveSrcFolderPath2 $moveDestFolderPath2
 }
 
 function InstallBuildTools2()
