@@ -44,13 +44,17 @@ install:
 # candle.exe - NG
 build_script:
 - cmd: >-
-    dir "C:\projects\netmf-interpreter\"
+    dir "C:\projects"
     
-    dir "C:\projects\netmf-interpreter\tools"
+    dir "C:\projects\netmf-interpreter"
     
-    dir "C:\projects\netmf-interpreter\build-tools"
+    dir "C:\projects\tools"
     
-    dir "C:\projects\netmf-interpreter\build-tools\tools"
+    dir "C:\projects\tools\x86"
+    
+    dir "C:\projects\tools\x86\WiX"
+    
+    dir "C:\projects\tools\x86\WiX\tools_3_5_1315_0"
     
     build_sdk.cmd
     
