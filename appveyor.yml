@@ -36,6 +36,8 @@ install:
     .\appveyor\install.ps1
     
     msiexec.exe NetMFCryptoLibs.msi /VERYSILENT /NORESTART
+    
+    msiexec.exe MicroFrameworkSDK.MSI /VERYSILENT /NORESTART
 
 
 # NG : 
