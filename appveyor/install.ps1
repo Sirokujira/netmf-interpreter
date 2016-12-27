@@ -112,10 +112,10 @@ function main ()
 {
     # Version 4.4
     InstallNETMFSDK
+    InstallBuildTools
+    Start-Sleep -s 30
     InstallGCCCompiler
     # Wait Process
-    Start-Sleep -s 30
-    InstallBuildTools
     # InstallBuildTools2
 }
 

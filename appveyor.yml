@@ -46,6 +46,8 @@ build_script:
 - cmd: >-
     dir "C:\projects"
     
+    dir "C:\projects\gcc-arm-none-eabi"
+    
     dir "C:\projects\netmf-interpreter"
     
     dir "C:\projects\tools"
