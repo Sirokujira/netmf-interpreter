@@ -42,8 +42,7 @@ install:
 
 # NG : 
 # MSbuild dotnetmf.proj /t:GenerateCLRDefines
-# set 
-# candle.exe - NG
+# netmfvs2015.msi /VERYSILENT /NORESTART
 build_script:
 - cmd: >-
     dir "C:\projects"
@@ -61,8 +60,6 @@ build_script:
     dir "C:\projects\tools\x86\WiX\tools_3_5_1315_0"
     
     build_sdk.cmd
-    
-    netmfvs2015.msi /VERYSILENT /NORESTART
     
     setenv_gcc 5.2.1 C:\projects\gcc-arm-none-eabi
     
