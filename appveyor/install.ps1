@@ -83,26 +83,26 @@ function InstallBuildTools()
 
 function InstallBuildTools2()
 {
-    $archivePath = "C:\\projects\\netmf-interpreter\\build-tools"
-    $basePath = "C:\\projects\\netmf-interpreter"
-    $zipFilePath = $basePath + "\\build-tools.zip"
+    $basePath = "C:\\projects"
+    $archivePath = $basePath + "\\netmf-interpreter\\build-tools"
+    $zipFilePath = $basePath + "\\netmf-interpreter\\build-tools.zip"
     New-ZipExtract -source $zipFilePath -destination $archivePath -force -verbose
     
-    # # $moveSrcFolderAllPath = $archivePath
-    # # $moveDestFolderAllPath = "C:\\projects\\tools"
-    # # Copy-Item -Path $moveSrcFolderAllPath -Destination $moveDestFolderAllPath
-    # 
-    # # FolderMove
-    # $moveSrcFolderPath1 = $archivePath + "\\bin"
-    # $moveDestFolderPath1 = $basePath + "\\bin"
-    # # Move-Item $moveSrcFolderPath1 $moveDestFolderPath1
-    # Copy-Item -Path $moveSrcFolderPath1 -Destination $moveDestFolderPath1
-    # 
-    # $moveSrcFolderPath2 = $archivePath + "\\tools"
-    # $moveDestFolderPath2 = $basePath + "\\tools"
-    # # Move-Item $moveSrcFolderPath2 $moveDestFolderPath2
-    # Copy-Item -Path $moveSrcFolderPath2 -Destination $moveDestFolderPath2
-    # 
+    # $moveSrcFolderAllPath = $archivePath
+    # $moveDestFolderAllPath = "C:\\projects\\tools"
+    # Copy-Item -Path $moveSrcFolderAllPath -Destination $moveDestFolderAllPath
+    
+    # FolderMove
+    $moveSrcFolderPath1 = $archivePath + "\\bin"
+    $moveDestFolderPath1 = $basePath + "\\bin"
+    # Move-Item $moveSrcFolderPath1 $moveDestFolderPath1
+    Copy-Item -Path $moveSrcFolderPath1 -Destination $moveDestFolderPath1 -Recurse
+    
+    $moveSrcFolderPath2 = $archivePath + "\\tools"
+    $moveDestFolderPath2 = $basePath + "\\tools"
+    # Move-Item $moveSrcFolderPath2 $moveDestFolderPath2
+    Copy-Item -Path $moveSrcFolderPath2 -Destination $moveDestFolderPath2 -Recurse
+    
     # $moveSrcFolderPath3 = "C:\\projects\\build-tools"
     # $moveDestFolderPath3 = "C:\\projects\\tools"
     # Copy-Item -Path $moveSrcFolderPath3 -Destination $moveDestFolderPath3 -Recurse
@@ -112,11 +112,10 @@ function main ()
 {
     # Version 4.4
     InstallNETMFSDK
-    InstallBuildTools
-    Start-Sleep -s 30
+    # InstallBuildTools
     InstallGCCCompiler
     # Wait Process
-    # InstallBuildTools2
+    InstallBuildTools2
 }
 
 main
