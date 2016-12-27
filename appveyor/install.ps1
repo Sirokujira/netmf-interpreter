@@ -52,6 +52,13 @@ function InstallGCCCompiler()
     New-ZipExtract -source $zipFilePath -destination $archivePath -force -verbose
 }
 
+function InstallGCCCompiler2()
+{
+    $archivePath = "C:\\projects\\gcc-arm-none-eabi"
+    $zipFilePath = "C:\\projects\\netmf-interpreter\\gcc-arm-none-eabi-5_4-2016q2-20160622-win32.zip"
+    New-ZipExtract -source $zipFilePath -destination $archivePath -force -verbose
+}
+
 function InstallBuildTools()
 {
     # NG?
@@ -112,9 +119,11 @@ function main ()
 {
     # Version 4.4
     InstallNETMFSDK
-    # InstallBuildTools
-    InstallGCCCompiler
+    # ToolChain
+    # InstallGCCCompiler
+    InstallGCCCompiler2
     # Wait Process
+    # InstallBuildTools
     InstallBuildTools2
 }
 

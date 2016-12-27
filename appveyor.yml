@@ -21,11 +21,16 @@ environment:
 # https://github.com/NETMF/netmf-interpreter/wiki/Hardware%20Layer
 # Import-Module ".\appveyor\PS-Zip\PS-Zip.psm1" -Force
 # .\appveyor\install.ps1
+# gcc toolchain
+# old (2015)
+# Start-FileDownload "https://launchpad.net/gcc-arm-embedded/5.0/5-2015-q4-major/+download/gcc-arm-none-eabi-5_2-2015q4-20151219-win32.zip"
+# new (2016)
+# Start-FileDownload "https://launchpad.net/gcc-arm-embedded/5.0/5-2016-q2-update/+download/gcc-arm-none-eabi-5_4-2016q2-20160622-win32.zip"
 install:
 - ps: >-
     Start-FileDownload "https://github.com/NETMF/netmf-interpreter/releases/download/NETMFCryptoLibraries/NetMFCryptoLibs.msi"
-    
-    Start-FileDownload "https://launchpad.net/gcc-arm-embedded/5.0/5-2015-q4-major/+download/gcc-arm-none-eabi-5_2-2015q4-20151219-win32.zip"
+	
+    Start-FileDownload "https://launchpad.net/gcc-arm-embedded/5.0/5-2016-q2-update/+download/gcc-arm-none-eabi-5_4-2016q2-20160622-win32.zip"
     
     Start-FileDownload "http://netmf.github.io/downloads/build-tools.zip"
     
@@ -43,6 +48,10 @@ install:
 # NG : 
 # MSbuild dotnetmf.proj /t:GenerateCLRDefines
 # netmfvs2015.msi /VERYSILENT /NORESTART
+# old
+# setenv_gcc 5.2.1 C:\projects\gcc-arm-none-eabi
+# new
+# setenv_gcc 5.4.1 C:\projects\gcc-arm-none-eabi
 build_script:
 - cmd: >-
     dir "C:\projects"
@@ -51,17 +60,9 @@ build_script:
     
     dir "C:\projects\netmf-interpreter"
     
-    dir "C:\projects\tools"
-    
-    dir "C:\projects\tools\x86"
-    
-    dir "C:\projects\tools\x86\WiX"
-    
-    dir "C:\projects\tools\x86\WiX\tools_3_5_1315_0"
-    
     build_sdk.cmd
     
-    setenv_gcc 5.2.1 C:\projects\gcc-arm-none-eabi
+    setenv_gcc 5.4.1 C:\projects\gcc-arm-none-eabi
     
     cd Solutions\ToppersHRP2onEV3
     
