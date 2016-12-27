@@ -113,8 +113,8 @@ function main ()
     # Version 4.4
     InstallNETMFSDK
     InstallGCCCompiler
-    # InstallBuildTools
-    InstallBuildTools2
+    InstallBuildTools
+    # InstallBuildTools2
 }
 
 main
