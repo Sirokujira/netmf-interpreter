@@ -2,7 +2,7 @@
     <PropertyGroup>
         <AssemblyName>ARM9_ItmPort</AssemblyName>
         <ProjectGuid>{E30D2587-7481-4ECB-A961-16A8BA3DECB9}</ProjectGuid>
-        <Description>Cortex-Mx Generic ITM port</Description>
+        <Description>ARM9 Generic ITM port</Description>
         <Level>HAL</Level>
         <LibraryFile>ARM9_ItmPort.$(LIB_EXT)</LibraryFile>
         <ProjectPath>$(SPOCLIENT)\DeviceCode\Cores\arm\Processors\ARM9\ItmPort\dotNetMF.proj</ProjectPath>

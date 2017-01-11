@@ -16,6 +16,7 @@
     <BuildNumber            Condition="'$(BuildNumber)'==''"            >$(_BuildNumber)</BuildNumber>
     <RevisionNumber         Condition="'$(RevisionNumber)'==''"         >$(_RevisionNumber)</RevisionNumber>
     <SignBuild              Condition="'$(SignBuild)'==''"              >$(_SignBuild)</SignBuild>
+    <reducesize             Condition="'$(reducesize)'==''"             >$(_reducesize)</reducesize>
   </PropertyGroup>
   <PropertyGroup>
     <!-- Toppers Depends -->
@@ -565,9 +566,9 @@
     <profile Condition="'$(profile)'==''"           >false</profile>
     <sampleprof Condition="'$(sampleprof)'==''"     >false</sampleprof>
     <latencyprof Condition="'$(latencyprof)'==''"   >false</latencyprof>
-    <FLAVOR Condition="'$(FLAVOR)'==''"             >Debug</FLAVOR>
+    <FLAVOR Condition="'$(FLAVOR)'==''"             >Release</FLAVOR>
     <MEMORY Condition="'$(MEMORY)'==''"             >FLASH</MEMORY>
-    <ENABLE_FASTCOMPILE Condition="'$(ENABLE_FASTCOMPILE)'==''"   >true</ENABLE_FASTCOMPILE>
+    <ENABLE_FASTCOMPILE Condition="'$(ENABLE_FASTCOMPILE)'==''">false</ENABLE_FASTCOMPILE>
     <FourByteCrytoLib>false</FourByteCrytoLib>
     <CLEAN_INDEPENDENT_ONLY Condition="'$(CLEAN_INDEPENDENT_ONLY)'==''"></CLEAN_INDEPENDENT_ONLY>
     <Configuration Condition="'$(Configuration)'=='' And '$(FLAVOR)'=='Debug'"       >$(FLAVOR)</Configuration>
@@ -578,7 +579,7 @@
 
   <!-- set up platform dependant properties, also setup the TARGETPLATFORM as capitals for set up PLATFORM_ARM_XXX flag -->
 
-  <!--  platform dependent properties are included here, based on teh path right above -->
+  <!--  platform dependent properties are included here, based on the path right above -->
   <!--  the settigns file is required to be have a specifc name ! -->
   <Import Project="$(MFSettingsFile)"                                       Condition=" EXISTS('$(MFSettingsFile)')"/>
 <!-- -->
@@ -603,7 +604,7 @@
     <TOOLS_DIR>$(SPO_BUILD)\public\$(Configuration)\Server\dll</TOOLS_DIR>
 
     <!-- TODO: finish consolidation of parallel build trees (eg, see other def'n of MainProps in Microsoft.SPOT.Build.Configuration.Settings) -->
-    <MainProps>_FLAVOR=$(FLAVOR);_PLATFORMS=$(PLATFORMS);_PLATFORM=$(PLATFORM);_TARGETLOCATION=$(TARGETLOCATION);_MEMORY=$(MEMORY);_CLEAN_INDEPENDENT_ONLY=$(CLEAN_INDEPENDENT_ONLY);_BuildNumber=$(BuildNumber);_RevisionNumber=$(RevisionNumber);_Configuration=$(Configuration);_TinyCLR_Platform=$(TinyCLR_Platform);_SignBuild=$(SignBuild);_SolutionRoot=$(SolutionRoot);_MFSettingsFile=$(MFSettingsFile);PropagatedBy=System</MainProps>
+    <MainProps>_FLAVOR=$(FLAVOR);_PLATFORMS=$(PLATFORMS);_PLATFORM=$(PLATFORM);_TARGETLOCATION=$(TARGETLOCATION);_MEMORY=$(MEMORY);_CLEAN_INDEPENDENT_ONLY=$(CLEAN_INDEPENDENT_ONLY);_BuildNumber=$(BuildNumber);_RevisionNumber=$(RevisionNumber);_Configuration=$(Configuration);_TinyCLR_Platform=$(TinyCLR_Platform);_SignBuild=$(SignBuild);_SolutionRoot=$(SolutionRoot);_MFSettingsFile=$(MFSettingsFile);PropagatedBy=System;_reducesize=$(reducesize)</MainProps>
 
     <CLRLIB>$(CLRROOT)\Tools\Libraries</CLRLIB>
 
