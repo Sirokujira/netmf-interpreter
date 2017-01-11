@@ -320,8 +320,10 @@
     <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(AR) $(ARFLAGS) @(TargetModule) @(ObjFiles->'%(FileName)%(Extension)',' ') "/> -->
     <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(LINK) $(LDFLAGS) -o @(ObjFiles->'%(FileName)%(Extension)',' ') module_cfg.obj -lm -lc -lgcc" /> -->
     <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(LINK) $(LDFLAGS) -o app.obj cli_main.obj cli_motor.obj cli_sensor.obj ev3api.obj ev3api_battery.obj ev3api_brick.obj ev3api_cfg.obj ev3api_fs.obj ev3api_lcd.obj ev3api_motor.obj ev3api_newlib.obj ev3api_sensor.obj ev3api_speaker.obj strerror.obj t_perror.obj tlsf.obj vasyslog.obj module_cfg.obj -lm -lc -lgcc" /> -->
-    <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(LINK) $(LDFLAGS) -o app.exe module_cfg.obj ..\..\DeviceCode\uItron4API.obj ..\..\DeviceCode\configuration.obj ..\..\DeviceCode\cpu.obj ..\..\DeviceCode\GlobalLock.obj ..\..\DeviceCode\Various_uIron4.obj app.obj cli_main.obj cli_motor.obj cli_sensor.obj ev3api.obj ev3api_battery.obj ev3api_brick.obj ev3api_cfg.obj ev3api_fs.obj ev3api_lcd.obj ev3api_motor.obj ev3api_newlib.obj ev3api_sensor.obj ev3api_speaker.obj strerror.obj t_perror.obj tlsf.obj vasyslog.obj $(GNU_TOOLS_BIN)\..\arm-none-eabi\lib\libm.a $(GNU_TOOLS_BIN)\..\arm-none-eabi\lib\libc.a $(GNU_TOOLS_BIN)\..\lib\gcc\arm-none-eabi\$(GCC_VER)\libgcc.a" />
-
+    <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(LINK) $(LDFLAGS) -o app.exe module_cfg.obj ..\..\DeviceCode\uItron4API.obj ..\..\DeviceCode\configuration.obj ..\..\DeviceCode\cpu.obj ..\..\DeviceCode\GlobalLock.obj ..\..\DeviceCode\Various_uIron4.obj app.obj cli_main.obj cli_motor.obj cli_sensor.obj ev3api.obj ev3api_battery.obj ev3api_brick.obj ev3api_cfg.obj ev3api_fs.obj ev3api_lcd.obj ev3api_motor.obj ev3api_newlib.obj ev3api_sensor.obj ev3api_speaker.obj strerror.obj t_perror.obj tlsf.obj vasyslog.obj $(GNU_TOOLS_BIN)\..\arm-none-eabi\lib\libm.a $(GNU_TOOLS_BIN)\..\arm-none-eabi\lib\libc.a $(GNU_TOOLS_BIN)\..\lib\gcc\arm-none-eabi\$(GCC_VER)\libgcc.a" /> -->
+	<!-- base hello ev3 -->
+    <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(LINK)                 -o app     module_cfg.obj ..\..\DeviceCode\uItron4API.obj ..\..\DeviceCode\configuration.obj ..\..\DeviceCode\cpu.obj ..\..\DeviceCode\GlobalLock.obj ..\..\DeviceCode\Various_uIron4.obj app.obj cli_main.obj cli_motor.obj cli_sensor.obj ev3api.obj ev3api_battery.obj ev3api_brick.obj ev3api_cfg.obj ev3api_fs.obj ev3api_lcd.obj ev3api_motor.obj ev3api_newlib.obj ev3api_sensor.obj ev3api_speaker.obj strerror.obj t_perror.obj tlsf.obj vasyslog.obj $(GNU_TOOLS_BIN)\..\arm-none-eabi\lib\libm.a $(GNU_TOOLS_BIN)\..\arm-none-eabi\lib\libc.a $(GNU_TOOLS_BIN)\..\lib\gcc\arm-none-eabi\$(GCC_VER)\libgcc.a" />
+    
     <!-- module_cfg.obj app.obj ev3api.obj ev3api_battery.obj ev3api_brick.obj ev3api_cfg.obj ev3api_fs.obj ev3api_lcd.obj ev3api_motor.obj ev3api_newlib.obj ev3api_sensor.obj ev3api_speaker.obj strerror.obj t_perror.obj tlsf.obj vasyslog.obj -->
 	<!-- #arm-none-eabi-strip -K _module_cfg_entry_num -K _module_cfg_tab -K _module_pil_version -strip-all app -->
   </Target>
@@ -337,7 +339,6 @@
 
 	<!-- $(CFGLINK) $(CFLAGS) -nostartfiles cfg1_out.c -o cfg1_out.o -->
 	<!-- <Exec Command="$(ADS_WRAPPER) $(CC) $(CC_FLAGS) -nostartfiles cfg1_out.c -o cfg1_out.o $(CFG1COMPILEINCLUDE)" /> -->
-	<!-- $(GNU_TOOLS_BIN)\..\arm-none-eabi\lib\libm.a $(GNU_TOOLS_BIN)\..\arm-none-eabi\lib\libc.a $(GNU_TOOLS_BIN)\..\lib\gcc\arm-none-eabi\4.9.3\libgcc.a -->
 	<!-- <Exec Command="@$(ADS_WRAPPER) $(CC) $(CFLAGS) -o cfg1_out.o -c cfg1_out.c $(CFG1COMPILEINCLUDE)" /> -->
 	<!-- <Exec Command="$(ADS_WRAPPER) $(CC) $(CFLAGS) -o$(OBJ_DIR)\cfg1_out.o -c cfg1_out.c $(CFG1COMPILEINCLUDE)" /> -->
 
@@ -363,7 +364,7 @@
 	<!-- <Exec Command="@$(ADS_WRAPPER) $(CC) $(CFLAGS) $(CFG1_OUT_LDFLAGS) -o $(CFG1_OUT) $(START_OBJS) $(SRCDIR)\workspace\helloev3onnetmf\cfg1_out.o $(END_OBJS) "/> -->
 	<!-- NG parameter -->
 	<!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) -nostartfiles $(CFLAGS) $(CFG1_OUT_LDFLAGS) -Wl,-e,0 -o $(CFG1_OUT) cfg1_out.o" /> -->
-	<Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) -nostartfiles $(CFLAGS) $(CFG1_OUT_LDFLAGS) -Wl,-e,0 -o $(CFG1_OUT) cfg1_out.o module_cfg.o ev3api.o ev3api_battery.o ev3api_brick.o ev3api_cfg.o ev3api_fs.o ev3api_lcd.o ev3api_motor.o ev3api_newlib.o ev3api_sensor.o ev3api_speaker.o strerror.o t_perror.o tlsf.o vasyslog.o $(GNU_TOOLS_BIN)\..\arm-none-eabi\lib\libm.a $(GNU_TOOLS_BIN)\..\arm-none-eabi\lib\libc.a $(GNU_TOOLS_BIN)\..\lib\gcc\arm-none-eabi\4.9.3\libgcc.a" />
+	<Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) -nostartfiles $(CFLAGS) $(CFG1_OUT_LDFLAGS) -Wl,-e,0 -o $(CFG1_OUT) cfg1_out.o module_cfg.o ev3api.o ev3api_battery.o ev3api_brick.o ev3api_cfg.o ev3api_fs.o ev3api_lcd.o ev3api_motor.o ev3api_newlib.o ev3api_sensor.o ev3api_speaker.o strerror.o t_perror.o tlsf.o vasyslog.o $(GNU_TOOLS_BIN)\..\arm-none-eabi\lib\libm.a $(GNU_TOOLS_BIN)\..\arm-none-eabi\lib\libc.a $(GNU_TOOLS_BIN)\..\lib\gcc\arm-none-eabi\$(GCC_VER)\libgcc.a" />
 
 	<Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(NM) -n $(CFG1_OUT) > cfg1_out.syms "/>
 	<Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(FROMELF) -O srec -S $(CFG1_OUT) cfg1_out.srec "/>
@@ -386,7 +387,6 @@
 
 	<!-- <Exec Command="@$(LINK) $(CFLAGS) $(CFG1_OUT_LDFLAGS) -Wl,-e,0 -o $(CFG1_OUT) cfg1_out.o" /> -->
 	<!-- <Exec Command="@$(ADS_WRAPPER) $(CC) -nostartfiles $(CFLAGS) $(CFG1_OUT_LDFLAGS) -Wl,-e,0 -o $(CFG1_OUT) cfg1_out.o " /> -->
-	<!-- <Exec Command="@$(ADS_WRAPPER) $(CC) -nostartfiles $(CFLAGS) $(CFG1_OUT_LDFLAGS) -o $(CFG1_OUT) cfg1_out.o ev3api.obj ev3api_battery.obj ev3api_brick.obj ev3api_cfg.obj ev3api_fs.obj ev3api_lcd.obj ev3api_motor.obj ev3api_newlib.obj ev3api_sensor.obj ev3api_speaker.obj strerror.obj t_perror.obj tlsf.obj vasyslog.obj $(GNU_TOOLS_BIN)\..\arm-none-eabi\lib\libm.a $(GNU_TOOLS_BIN)\..\arm-none-eabi\lib\libc.a $(GNU_TOOLS_BIN)\..\lib\gcc\arm-none-eabi\4.9.3\libgcc.a" /> -->
 	<!-- <Exec Command="@$(ADS_WRAPPER) $(CC) -nostartfiles $(CFLAGS) -T $(LOADERDIR)/app/app.ld -Wl,-e,0 -o $(CFG1_OUT) $(START_OBJS) $(SRCDIR)\workspace\helloev3onnetmf\cfg1_out.o $(END_OBJS) "/> -->
 
 	<!-- ok -->
