@@ -116,28 +116,12 @@
     <DriverLibs Include="cpu_prestackinit_stubs.$(LIB_EXT)" />
   </ItemGroup>
   <ItemGroup>
-    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\Native\STM32\DeviceCode\STM32_Bootstrap\dotNetMF.proj" />
-    <DriverLibs Include="STM32_bootstrap.$(LIB_EXT)" />
-  </ItemGroup>
-  <ItemGroup>
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Drivers\BatteryCharger\stubs\dotNetMF.proj" />
     <DriverLibs Include="batterycharger_hal_stubs.$(LIB_EXT)" />
   </ItemGroup>
   <ItemGroup>
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Drivers\BatteryMeasurement\stubs\dotNetMF.proj" />
     <DriverLibs Include="batterymeasurement_hal_stubs.$(LIB_EXT)" />
-  </ItemGroup>
-  <ItemGroup>
-    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\Native\STM32\DeviceCode\STM32_GPIO\dotNetMF.proj" />
-    <DriverLibs Include="STM32_GPIO.$(LIB_EXT)" />
-  </ItemGroup>
-  <ItemGroup>
-    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\Native\STM32\DeviceCode\STM32_Power\dotNetMF.proj" />
-    <DriverLibs Include="STM32_Power.$(LIB_EXT)" />
-  </ItemGroup>
-  <ItemGroup>
-    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\Native\STM32\DeviceCode\STM32_Time\dotNetMF.proj" />
-    <DriverLibs Include="STM32_time.$(LIB_EXT)" />
   </ItemGroup>
   <ItemGroup>
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Drivers\stubs\Processor\stubs_watchdog\dotNetMF.proj" />
@@ -243,10 +227,7 @@
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Drivers\stubs\processor\stubs_lcd\dotNetMF.proj" />
     <DriverLibs Include="cpu_LCD_stubs.$(LIB_EXT)" />
   </ItemGroup>
-  <ItemGroup>
-    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\Native\STM32\DeviceCode\STM32_Flash\dotNetMF.proj" />
-    <DriverLibs Include="STM32_Flash.$(LIB_EXT)" />
-  </ItemGroup>
+  <!-- MCBSTM32E CommentOut
   <ItemGroup>
     <RequiredProjects Include="$(SPOCLIENT)\Solutions\MCBSTM32E\DeviceCode\M25P64\dotNetMF.proj" />
     <DriverLibs Include="M25P64_Flash.$(LIB_EXT)" />
@@ -266,6 +247,28 @@
   <ItemGroup>
     <RequiredProjects Include="$(SPOCLIENT)\Solutions\MCBSTM32E\DeviceCode\Init\dotNetMF.proj" />
     <DriverLibs Include="IO_Init_MCBSTM32E.$(LIB_EXT)" />
+  </ItemGroup>
+  -->
+  <!-- STM32 CommentOut
+  <ItemGroup>
+    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\Native\STM32\DeviceCode\STM32_Bootstrap\dotNetMF.proj" />
+    <DriverLibs Include="STM32_bootstrap.$(LIB_EXT)" />
+  </ItemGroup>
+  <ItemGroup>
+    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\Native\STM32\DeviceCode\STM32_GPIO\dotNetMF.proj" />
+    <DriverLibs Include="STM32_GPIO.$(LIB_EXT)" />
+  </ItemGroup>
+  <ItemGroup>
+    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\Native\STM32\DeviceCode\STM32_Power\dotNetMF.proj" />
+    <DriverLibs Include="STM32_Power.$(LIB_EXT)" />
+  </ItemGroup>
+  <ItemGroup>
+    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\Native\STM32\DeviceCode\STM32_Time\dotNetMF.proj" />
+    <DriverLibs Include="STM32_time.$(LIB_EXT)" />
+  </ItemGroup>
+  <ItemGroup>
+    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\Native\STM32\DeviceCode\STM32_Flash\dotNetMF.proj" />
+    <DriverLibs Include="STM32_Flash.$(LIB_EXT)" />
   </ItemGroup>
   <ItemGroup>
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\Native\STM32\DeviceCode\STM32_SPI\dotNetMF.proj" />
@@ -299,6 +302,7 @@
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\Native\STM32\DeviceCode\STM32_DA\dotNetMF.proj" />
     <DriverLibs Include="STM32_DA.$(LIB_EXT)" />
   </ItemGroup>
+  -->
   <ItemGroup>
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\PAL\COM\dotNetMF.proj" />
     <DriverLibs Include="COM_pal.$(LIB_EXT)" />
