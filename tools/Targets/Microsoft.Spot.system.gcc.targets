@@ -207,9 +207,9 @@
   <!-- other flags -->
   <PropertyGroup>
     <ARFLAGS>$(ARFLAGS) -rcs</ARFLAGS>
-    <!-- <LINK_FLAGS>$(LINK_FLAGS),-static,--gc-sections,--no-wchar-size-warning</LINK_FLAGS> -->
+    <!-- <LINK_FLAGS>$(LINK_FLAGS),-static, -gc-sections, -no-wchar-size-warning</LINK_FLAGS> -->
     <LINK_FLAGS>$(LINK_FLAGS) -static --gc-sections --no-wchar-size-warning</LINK_FLAGS>
-    <!-- <LINK_FLAGS>$(LINK_FLAGS) -static --gc-sections --no-warn-mismatch --library-path=$(LIB_DIR) --library-path=$(PLATFORM_INDEPENDENT_LIB_DIR)  </LINK_FLAGS> -->
+    <!-- <LINK_FLAGS>$(LINK_FLAGS) -static -gc-sections  -no-warn-mismatch  -library-path=$(LIB_DIR)  -library-path=$(PLATFORM_INDEPENDENT_LIB_DIR)  </LINK_FLAGS> -->
   </PropertyGroup>
    
   <PropertyGroup>
