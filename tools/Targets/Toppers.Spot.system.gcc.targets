@@ -203,7 +203,12 @@
     <!-- other flags -->
     <PropertyGroup>
         <ARFLAGS>$(ARFLAGS) -rcs</ARFLAGS>
-        <LINK_FLAGS>$(LINK_FLAGS),-static,--gc-sections,--no-wchar-size-warning</LINK_FLAGS>
+        <!-- <LINK_FLAGS>$(LINK_FLAGS),-static,--gc-sections,--no-wchar-size-warning</LINK_FLAGS> -->
+        <LINK_FLAGS>$(LINK_FLAGS) -static --gc-sections --no-wchar-size-warning</LINK_FLAGS>
+    
+        <LINK_FLAGS Condition="'$(INSTRUCTION_SET)'=='thumb'">$(LINK_FLAGS) --allow-multiple-definition</LINK_FLAGS>
+    	<LINK_FLAGS Condition="'$(INSTRUCTION_SET)'=='thumb2'">$(LINK_FLAGS) --allow-multiple-definition</LINK_FLAGS>
+    	<LINK_FLAGS Condition="'$(INSTRUCTION_SET)'=='thumb2fp'">$(LINK_FLAGS) --allow-multiple-definition</LINK_FLAGS>
     </PropertyGroup>
    
     <PropertyGroup>
