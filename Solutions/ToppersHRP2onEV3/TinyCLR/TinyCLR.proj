@@ -416,9 +416,12 @@
   </ItemGroup>
   <!-- OS common lib -->
   <!-- Reference DeviceCode proj AssemblyName -->
+  <!-- 
   <ItemGroup>
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\OS\Toppers\hrp2\DeviceCode\dotNetMF.proj" />
     <DriverLibs Include="ToppersHRP2_OS.$(LIB_EXT)" />
   </ItemGroup>
+  -->
+
   <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Targets" />
 </Project>
