@@ -111,10 +111,12 @@
     <DriverLibs Include="TinyHal_Cortex.$(LIB_EXT)" />
   </ItemGroup>
   -->
+  <!-- 4.4 NG
   <ItemGroup>
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Drivers\Stubs\Processor\stubs_PreStackInit\dotNetMF.proj" />
     <DriverLibs Include="cpu_prestackinit_stubs.$(LIB_EXT)" />
   </ItemGroup>
+  -->
   <ItemGroup>
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Drivers\BatteryCharger\stubs\dotNetMF.proj" />
     <DriverLibs Include="batterycharger_hal_stubs.$(LIB_EXT)" />
