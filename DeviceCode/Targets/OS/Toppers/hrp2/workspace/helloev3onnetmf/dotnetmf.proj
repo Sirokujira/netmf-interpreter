@@ -8,9 +8,9 @@
     <Description>ToppersHRP2onEV3 Sample</Description>
     <Level>HAL</Level>
     <ModuleFile>helloev3onnetmf</ModuleFile>
-    <ProjectPath>$(SPOCLIENT)\DeviceCode\Targets\OS\Toppers\hrp2\workspace\helloev3onnetmf\dotNetMF.proj</ProjectPath>
+    <ProjectPath>$(SPOCLIENT)/DeviceCode/Targets/OS/Toppers/hrp2/workspace/helloev3onnetmf/dotNetMF.proj</ProjectPath>
     <ManifestFile>helloev3onnetmf.manifest</ManifestFile>
-    <Groups>Processor\ToppersHRP2</Groups>
+    <Groups>Processor/ToppersHRP2</Groups>
     <Documentation>
     </Documentation>
     <PlatformIndependent>False</PlatformIndependent>
@@ -33,25 +33,28 @@
         <ComponentType xmlns="http://schemas.microsoft.com/netmf/InventoryFormat.xsd">Processor</ComponentType>
       </MFComponent>
     </ProcessorSpecific>
-    <Directory>DeviceCode\Targets\OS\Toppers\hrp2\workspace\helloev3onnetmf</Directory>
+    <Directory>DeviceCode/Targets/OS/Toppers/hrp2/workspace/helloev3onnetmf</Directory>
+    <!-- module build -->
     <OutputType>DynamicLoading</OutputType>
+    <!-- kernel build -->
+    <!-- <OutputType>Kernel</OutputType> -->
     <PlatformIndependentBuild>false</PlatformIndependentBuild>
     <Version>4.0.0.0</Version>
   </PropertyGroup>
   <PropertyGroup>
     <ARMBUILD_ONLY>true</ARMBUILD_ONLY>
   </PropertyGroup>
-  <Import Project="$(SPOCLIENT)\tools\targets\Toppers.SPOT.System.Settings" />
+  <Import Project="$(SPOCLIENT)/tools/targets/Toppers.SPOT.System.Settings" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>
       </AdditionalDependencies>
       <RegisterOutput>false</RegisterOutput>
-      <AdditionalLibraryDirectories>..\uITron4\bin\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../uITron4/bin/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PreBuildEvent>
-      <Command>wscript ..\tools\update.js "$(ProjectDir)..\$(TargetName)Cfg\$(Configuration)\$(TargetName)Cfg.srec" cfg1_out.srec</Command>
+      <Command>wscript ../tools/update.js "$(ProjectDir)../$(TargetName)Cfg/$(Configuration)/$(TargetName)Cfg.srec" cfg1_out.srec</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>copy srec and syms</Message>
@@ -70,94 +73,92 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2" />
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\include" />
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\kernel" />
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\arch" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/include" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/kernel" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/arch" />
 
     <!-- App Dir -->
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\workspace\common" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/workspace/common" />
     <!-- Kernel Dir -->
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\arch\arm_gcc\am1808" />
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\arch\arm_gcc\common" />
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc" />
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\api\include" />
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\common\include" />
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\TLSF-2.4.6\include" />
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\platform\include" />
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\pil\include" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/arch/arm_gcc/am1808" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/arch/arm_gcc/common" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/api/include" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/common/include" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/TLSF-2.4.6/include" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/platform/include" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/pil/include" />
     
     <!-- No such file or directory -->
     <!-- common/module_common.h -->
-    <!-- <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\dmloader\app\common" /> -->
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\dmloader\app" />
+    <!-- <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/dmloader/app/common" /> -->
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/dmloader/app" />
     <!-- mach/irqs.h -->
-    <!-- <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\linux\arch\arm\mach-davinci\include\mach" /> -->
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\linux\arch\arm\mach-davinci\include" />
+    <!-- <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/linux/arch/arm/mach-davinci/include/mach" /> -->
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/linux/arch/arm/mach-davinci/include" />
     <!-- asm/page.h -->
-    <!-- <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\linux\arch\arm\include\asm" /> -->
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\linux\arch\arm\include" />
+    <!-- <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/linux/arch/arm/include/asm" /> -->
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/linux/arch/arm/include" />
     <!-- linux/compiler.h -->
-    <!-- <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\linux\include\linux" /> -->
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\linux\include" />
+    <!-- <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/linux/include/linux" /> -->
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/linux/include" />
     <!-- asm-generic/ioctl.h -->
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\linux\include" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/linux/include" />
     <!-- asm-generic/ioctl.h -->
-    <!-- <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\common\virtual-linux-kernel\include\asm-generic" /> -->
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\common\virtual-linux-kernel\include" />
+    <!-- <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/common/virtual-linux-kernel/include/asm-generic" /> -->
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/common/virtual-linux-kernel/include" />
     <!-- lms2012/lms2012/source/lms2012.h -->
-    <!-- <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\lms2012\lms2012\source" /> -->
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers" />
+    <!-- <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/lms2012/lms2012/source" /> -->
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers" />
     <!-- gpio_dri.h -->
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\gpio\include" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/gpio/include" />
     <!-- brick_dri.h -->
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\brick\include" />
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\common\include" />
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\console\include" />
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\fatfs\include" />
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\lcd\include" />
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\motor\include" />
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\newlib\include" />
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\sensor\include" />
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\soc\include" />
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\sound\include" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/brick/include" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/common/include" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/console/include" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/fatfs/include" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/lcd/include" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/motor/include" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/newlib/include" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/sensor/include" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/soc/include" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/sound/include" />
     <!-- armv5/am1808/interrupt.h -->
-    <!-- <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\soc\AM1808_StarterWare_1_00_03_03\include\armv5\am1808" /> -->
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\soc\AM1808_StarterWare_1_00_03_03\include" />
+    <!-- <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/soc/AM1808_StarterWare_1_00_03_03/include/armv5/am1808" /> -->
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/soc/AM1808_StarterWare_1_00_03_03/include" />
     <!-- hw_types.h -->
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\soc\AM1808_StarterWare_1_00_03_03\include\hw" />
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\soc\AM1808_StarterWare_1_00_03_03\include" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/soc/AM1808_StarterWare_1_00_03_03/include/hw" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/soc/AM1808_StarterWare_1_00_03_03/include" />
     <!-- analog_dri.h -->
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\sensor\analog\include" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/sensor/analog/include" />
     <!-- uart_dri.h -->
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\sensor\uart\include" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/sensor/uart/include" />
     <!-- bluetooth_dri.h -->
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\bluetooth\include" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/bluetooth/include" />
     <!-- api.cfg.h -->
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\api" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/api" />
 
-    <HFiles Include="..\..\omit_svc.h" />
-    <HFiles Include="..\..\syssvc\banner.h" />
-    <HFiles Include="..\..\syssvc\logtask.h" />
-    <HFiles Include="..\..\syssvc\serial.h" />
-    <HFiles Include="..\..\syssvc\syslog.h" />
-    <HFiles Include="..\..\arch\logtrace\trace_config.h" />
-    <HFiles Include="..\..\arch\arm_gcc\am1808\chip_config.h" />
+    <HFiles Include="../../omit_svc.h" />
+    <HFiles Include="../../syssvc/logtask.h" />
+    <HFiles Include="../../syssvc/syslog.h" />
+    <HFiles Include="../../arch/logtrace/trace_config.h" />
+    <HFiles Include="../../arch/arm_gcc/am1808/chip_config.h" />
     <HFiles Include="app.h" />
-    <HFiles Include="module_cfg.h" />
 
     <!-- Cファイルより先に読み込ませる? -->
-    <!-- <CFiles Include="..\..\library\histogram.c" /> -->
-    <!-- <CFiles Include="..\..\library\log_output.c" /> -->
-    <CFiles Include="..\..\library\strerror.c" />
-    <CFiles Include="..\..\library\t_perror.c" />
-    <CFiles Include="..\..\library\vasyslog.c" />
-    <!-- <CFiles Include="..\..\syssvc\banner.c" /> -->
-    <CFiles Include="..\..\syssvc\logtask.c" />
-    <!-- <CFiles Include="..\..\syssvc\serial.c" /> -->
-    <CFiles Include="..\..\syssvc\syslog.c" />
-    <CFiles Include="..\..\syssvc\test_svc.c" />
+    <CFiles Include="../../library/histogram.c" />
+    <CFiles Include="../../library/log_output.c" />
+    <CFiles Include="../../library/strerror.c" />
+    <CFiles Include="../../library/t_perror.c" />
+    <CFiles Include="../../library/vasyslog.c" />
+    
+    <CFiles Include="../../syssvc/logtask.c" />
+    
+    <CFiles Include="../../syssvc/syslog.c" />
+    <CFiles Include="../../syssvc/test_svc.c" />
     <CFiles Include="../../target/ev3_gcc/TLSF-2.4.6/src/tlsf.c" />
+    
     <!-- -->
     <CFiles Include="../../target/ev3_gcc/api/src/ev3api.c" />
     <CFiles Include="ev3api_cfg.c" />
@@ -171,7 +172,7 @@
     <CFiles Include="../../target/ev3_gcc/api/src/ev3api_sensor.c" />
 
     <!-- netmf on OS -->
-    <HFiles Include="../../DeviceCode\include\tinyhal.h" />
+    <HFiles Include="../../DeviceCode/include/tinyhal.h" />
     <HFiles Include="../../DeviceCodeuItron4API.h" />
     <Compile Include="../../DeviceCodeconfiguration.cpp" />
     <Compile Include="../../DeviceCodecpu.cpp" />
@@ -180,32 +181,42 @@
     <!-- <Compile Include="uIron4API.c" /> -->
     <CFiles Include="../../DeviceCodeuIron4API.c" />
 
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2" />
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\include" />
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\kernel" />
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\arch" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/include" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/kernel" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/arch" />
 
     <!-- App Dir -->
-    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\workspace\common" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/workspace/common" />
 
     <!-- BUILD_MODULE -->
     <CFiles Include="module_cfg.c" />
+    <HFiles Include="module_cfg.h" />
+    
+    <!-- BUILD_Kernel -->
+    <!-- <CFiles Include="kernel_cfg.c" /> -->
+    <!-- <CFiles Include="kernel_mem2.c" /> -->
+    <!-- <CFiles Include="kernel_mem3.c" /> -->
+    <!-- <HFiles Include="kernel_cfg.h" /> -->
+    
     <CFiles Include="app.c" />
     <CFiles Include="cli_main.c" />
     <CFiles Include="cli_motor.c" />
     <CFiles Include="cli_sensor.c" />
 
-    <None Include="..\..\.cproject" />
-    <None Include="..\..\.project" />
-    <None Include="..\..\arch\logtrace\MANIFEST" />
-    <None Include="..\..\configure" />
-    <None Include="..\..\MANIFEST" />
-    <None Include="..\..\README.txt" />
-    <None Include="..\..\syssvc\banner.cfg" />
-    <None Include="..\..\syssvc\logtask.cfg" />
-    <None Include="..\..\syssvc\serial.cfg" />
-    <None Include="..\..\syssvc\syslog.cfg" />
-    <None Include="..\..\syssvc\test_svc.cfg" />
+    <None Include="../../.cproject" />
+    <None Include="../../.project" />
+    <None Include="../../arch/logtrace/MANIFEST" />
+    <None Include="../../configure" />
+    <None Include="../../MANIFEST" />
+    <None Include="../../README.txt" />
+    <None Include="../../syssvc/banner.cfg" />
+    <None Include="../../syssvc/logtask.cfg" />
+    <None Include="../../syssvc/serial.cfg" />
+    <None Include="../../syssvc/syslog.cfg" />
+    <None Include="../../syssvc/test_svc.cfg" />
   </ItemGroup>
-  <Import Project="$(SPOCLIENT)\tools\targets\Toppers.SPOT.System.Targets" />
+  
+  <Import Project="$(SPOCLIENT)/tools/targets/Toppers.SPOT.System.Targets" />
+  <!-- <Import Project="$(SPOCLIENT)/tools/targets/Toppers.Spot.system.gcc.targets" /> -->
 </Project>

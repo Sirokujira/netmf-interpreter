@@ -24,7 +24,6 @@
     <!-- http://www.ie.u-ryukyu.ac.jp/~e085739/c.makefile.tuts.html -->
     <!-- ./Configure Check -->
     <SD_DIR                 Condition="'$(SD_DIR)'==''"                 >$(_SD_DIR)</SD_DIR>
-    <!-- <SD_DIR                 Condition="'$(SD_DIR)'==''"                 >C:\Users\v050493\Desktop\NETMF\netmf-interpreter\DeviceCode\Targets\OS\Toppers\hrp2</SD_DIR> -->
     <SRCDIR>$(SPOCLIENT)\DeviceCode\Targets\OS\Toppers\hrp2</SRCDIR>
     <MRUBY_SRC_DIR          Condition="'$(MRUBY_SRC_DIR)'==''"          >$(SPOCLIENT)\DeviceCode\Targets\OS\Toppers\mruby</MRUBY_SRC_DIR>
     <MRUBY_LIB              Condition="'$(MRUBY_LIB)'==''"              >$(_MRUBY_LIB)</MRUBY_LIB>

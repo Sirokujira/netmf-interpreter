@@ -364,69 +364,69 @@
         <Exec WorkingDirectory="$(OBJ_DIR)" Command="touch -r kernel_cfg.c kernel_cfg.timestamp" />
     </Target>
 
-	<Target Name="module_cfg2">
-	    <!-- CFG_OUT_SRCS := module_cfg.h module_cfg.c -->
-	    <!-- $(CFG_OUT_SRCS): $(MODCFG) -->
-	    <!-- $(call print_cmd, "CFG[1]", $@) -->
-	    <!-- ok -->
-	    <!-- <Exec WorkingDirectory="$(OBJDIR)" Command="@$(CFG) -pass=1 -kernel=hrp2 $(CFGINCLUDE) $(CFG_TABS) $(APPL_CFG)" /> -->
-	    <!-- <Exec Command="@$(CFG) -pass=1 -kernel=hrp2 $(CFGINCLUDE) $(CFG_TABS) $(APPL_CFG)" /> -->
-	    
-	    <!-- NG parameter -->
-	    <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) -nostartfiles $(CFLAGS) -Wl,-Ttext,$(TEXT_START_ADDRESS) -Wl,-e,0x00.. -o cfg1_out.o -c cfg1_out.c $(CFGINCLUDE)" /> -->
-	    <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) -nostartfiles $(CFLAGS) -Wl,-Ttext,$(TEXT_START_ADDRESS) -Wl,-e,0 -o cfg1_out.o -c cfg1_out.c $(CFG1COMPILEINCLUDE)" /> -->
-	    <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) -nostartfiles -std=gnu99 -Wl,-Ttext,$(TEXT_START_ADDRESS) -Wl,-e,0 -o cfg1_out.o -c cfg1_out.c $(CFG1COMPILEINCLUDE)" /> -->
-	    <!-- <Exec Command="@$(ADS_WRAPPER) $(CC) -nostartfiles $(CFLAGS) $(CFG1COMPILEINCLUDE) -DBUILD_MODULE -Wl,-Ttext,0x00000000 -Wl,-e,0 -o cfg1_out.o cfg1_out.c" /> -->
-	    <!--
-	    ifndef OMIT_DEBUG_INFO  COPTS += -g
-	    ifndef OMIT_WARNING_ALL COPTS := $(COPTS) -Wall
-	    ifndef OMIT_OPTIMIZATION COPTS := $(COPTS) -O2
-	    -->
-	    <!-- module build -->
-	    <!-- use -DBUILD_MODULE -->
-	    <Exec Command="@$(ADS_WRAPPER) $(CC) -nostartfiles -O2 $(CFLAGS) $(CFG1COMPILEINCLUDE) -DBUILD_MODULE -Wl,-Ttext,0x00000000 -Wl,-e,0 -o cfg1_out.o cfg1_out.c" />
-	    
-	    <!-- <Exec Command="@$(LINK) $(CFLAGS) $(CFG1_OUT_LDFLAGS) -Wl,-e,0 -o $(CFG1_OUT) cfg1_out.o" /> -->
-	    <!-- <Exec Command="@$(ADS_WRAPPER) $(CC) -nostartfiles $(CFLAGS) $(CFG1_OUT_LDFLAGS) -o $(CFG1_OUT) cfg1_out.o ev3api.obj ev3api_battery.obj ev3api_brick.obj ev3api_cfg.obj ev3api_fs.obj ev3api_lcd.obj ev3api_motor.obj ev3api_newlib.obj ev3api_sensor.obj ev3api_speaker.obj strerror.obj t_perror.obj tlsf.obj vasyslog.obj $(GNU_TOOLS_BIN)\..\arm-none-eabi\lib\libm.a $(GNU_TOOLS_BIN)\..\arm-none-eabi\lib\libc.a $(GNU_TOOLS_BIN)\..\lib\gcc\arm-none-eabi\$(GCC_VER)\libgcc.a" /> -->
-	    <!-- <Exec Command="@$(ADS_WRAPPER) $(CC) -nostartfiles $(CFLAGS) -T $(LOADERDIR)/app/app.ld -Wl,-e,0 -o $(CFG1_OUT) $(START_OBJS) $(SRCDIR)\workspace\helloev3onnetmf\cfg1_out.o $(END_OBJS) "/> -->
-	    
-	    <!-- ok -->
-	    <Exec Command="@$(ADS_WRAPPER) $(CC) -nostartfiles $(CFLAGS) $(CFG1_OUT_LDFLAGS) -Wl,-Ttext,$(TEXT_START_ADDRESS) -Wl,-e,0 -o $(CFG1_OUT) cfg1_out.o" />
-	    <Exec Command="@$(NM) -n $(CFG1_OUT) > cfg1_out.syms" />
-	    <Exec Command="@$(FROMELF) -O srec -S $(CFG1_OUT) cfg1_out.srec" />
-	    
-	    <!-- <Exec Command="@$(ADS_WRAPPER) $(CC) $(CFLAGS) -DBUILD_MODULE -Wl,-Ttext,$(TEXT_START_ADDRESS) -Wl,-e,0 -o app.o -c app.c -I$(TARGETDIR)/api -I$(LOADERDIR)/app/common $(CFGINCLUDE)" /> -->
-	    <!-- $(call print_cmd, "CFG[2]", $@) -->
-	    <Exec Command="@$(CFG) $(APPL_CFG) --pass=2 --kernel=hrp2 --template-file=$(LOADERDIR)/app/common/module.tf $(CFG_TABS) -I$(TARGETDIR)/api -I$(LOADERDIR)/app/common $(CFGINCLUDE)" />
-	    
-	    <!-- <Exec Command="@$(ADS_WRAPPER) $(CC) -nostartfiles -O2 $(CFLAGS) $(CFG1COMPILEINCLUDE) -DBUILD_MODULE -Wl,-Ttext,0x00000000 -Wl,-e,0 -o module_cfg.o module_cfg.c" /> -->
-	</Target>
+    <Target Name="module_cfg2">
+        <!-- CFG_OUT_SRCS := module_cfg.h module_cfg.c -->
+        <!-- $(CFG_OUT_SRCS): $(MODCFG) -->
+        <!-- $(call print_cmd, "CFG[1]", $@) -->
+        <!-- ok -->
+        <!-- <Exec WorkingDirectory="$(OBJDIR)" Command="@$(CFG) -pass=1 -kernel=hrp2 $(CFGINCLUDE) $(CFG_TABS) $(APPL_CFG)" /> -->
+        <!-- <Exec Command="@$(CFG) -pass=1 -kernel=hrp2 $(CFGINCLUDE) $(CFG_TABS) $(APPL_CFG)" /> -->
+        
+        <!-- NG parameter -->
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) -nostartfiles $(CFLAGS) -Wl,-Ttext,$(TEXT_START_ADDRESS) -Wl,-e,0x00.. -o cfg1_out.o -c cfg1_out.c $(CFGINCLUDE)" /> -->
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) -nostartfiles $(CFLAGS) -Wl,-Ttext,$(TEXT_START_ADDRESS) -Wl,-e,0 -o cfg1_out.o -c cfg1_out.c $(CFG1COMPILEINCLUDE)" /> -->
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) -nostartfiles -std=gnu99 -Wl,-Ttext,$(TEXT_START_ADDRESS) -Wl,-e,0 -o cfg1_out.o -c cfg1_out.c $(CFG1COMPILEINCLUDE)" /> -->
+        <!-- <Exec Command="@$(ADS_WRAPPER) $(CC) -nostartfiles $(CFLAGS) $(CFG1COMPILEINCLUDE) -DBUILD_MODULE -Wl,-Ttext,0x00000000 -Wl,-e,0 -o cfg1_out.o cfg1_out.c" /> -->
+        <!--
+        ifndef OMIT_DEBUG_INFO  COPTS += -g
+        ifndef OMIT_WARNING_ALL COPTS := $(COPTS) -Wall
+        ifndef OMIT_OPTIMIZATION COPTS := $(COPTS) -O2
+        -->
+        <!-- module build -->
+        <!-- use -DBUILD_MODULE -->
+        <Exec Command="@$(ADS_WRAPPER) $(CC) -nostartfiles -O2 $(CFLAGS) $(CFG1COMPILEINCLUDE) -DBUILD_MODULE -Wl,-Ttext,0x00000000 -Wl,-e,0 -o cfg1_out.o cfg1_out.c" />
+        
+        <!-- <Exec Command="@$(LINK) $(CFLAGS) $(CFG1_OUT_LDFLAGS) -Wl,-e,0 -o $(CFG1_OUT) cfg1_out.o" /> -->
+        <!-- <Exec Command="@$(ADS_WRAPPER) $(CC) -nostartfiles $(CFLAGS) $(CFG1_OUT_LDFLAGS) -o $(CFG1_OUT) cfg1_out.o ev3api.obj ev3api_battery.obj ev3api_brick.obj ev3api_cfg.obj ev3api_fs.obj ev3api_lcd.obj ev3api_motor.obj ev3api_newlib.obj ev3api_sensor.obj ev3api_speaker.obj strerror.obj t_perror.obj tlsf.obj vasyslog.obj $(GNU_TOOLS_BIN)\..\arm-none-eabi\lib\libm.a $(GNU_TOOLS_BIN)\..\arm-none-eabi\lib\libc.a $(GNU_TOOLS_BIN)\..\lib\gcc\arm-none-eabi\$(GCC_VER)\libgcc.a" /> -->
+        <!-- <Exec Command="@$(ADS_WRAPPER) $(CC) -nostartfiles $(CFLAGS) -T $(LOADERDIR)/app/app.ld -Wl,-e,0 -o $(CFG1_OUT) $(START_OBJS) $(SRCDIR)\workspace\helloev3onnetmf\cfg1_out.o $(END_OBJS) "/> -->
+        
+        <!-- ok -->
+        <Exec Command="@$(ADS_WRAPPER) $(CC) -nostartfiles $(CFLAGS) $(CFG1_OUT_LDFLAGS) -Wl,-Ttext,$(TEXT_START_ADDRESS) -Wl,-e,0 -o $(CFG1_OUT) cfg1_out.o" />
+        <Exec Command="@$(NM) -n $(CFG1_OUT) > cfg1_out.syms" />
+        <Exec Command="@$(FROMELF) -O srec -S $(CFG1_OUT) cfg1_out.srec" />
+        
+        <!-- <Exec Command="@$(ADS_WRAPPER) $(CC) $(CFLAGS) -DBUILD_MODULE -Wl,-Ttext,$(TEXT_START_ADDRESS) -Wl,-e,0 -o app.o -c app.c -I$(TARGETDIR)/api -I$(LOADERDIR)/app/common $(CFGINCLUDE)" /> -->
+        <!-- $(call print_cmd, "CFG[2]", $@) -->
+        <Exec Command="@$(CFG) $(APPL_CFG) --pass=2 --kernel=hrp2 --template-file=$(LOADERDIR)/app/common/module.tf $(CFG_TABS) -I$(TARGETDIR)/api -I$(LOADERDIR)/app/common $(CFGINCLUDE)" />
+        
+        <!-- <Exec Command="@$(ADS_WRAPPER) $(CC) -nostartfiles -O2 $(CFLAGS) $(CFG1COMPILEINCLUDE) -DBUILD_MODULE -Wl,-Ttext,0x00000000 -Wl,-e,0 -o module_cfg.o module_cfg.c" /> -->
+    </Target>
 
-	<Target Name="module_cfg_create2">
-		<!-- NG parameter -->
-		<!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) -DBUILD_DEBUG -O2 -Wall -std=gnu99 -Wl,-Ttext,$(TEXT_START_ADDRESS) -Wl,-e,0 -o cfg1_out.o -c cfg1_out.c $(CFG1COMPILEINCLUDE)" /> -->
+    <Target Name="module_cfg_create2">
+        <!-- NG parameter -->
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) -DBUILD_DEBUG -O2 -Wall -std=gnu99 -Wl,-Ttext,$(TEXT_START_ADDRESS) -Wl,-e,0 -o cfg1_out.o -c cfg1_out.c $(CFG1COMPILEINCLUDE)" /> -->
 
-		<!-- ok -->
-		<Exec Command="@$(ADS_WRAPPER) $(CC) -nostartfiles $(CFLAGS) $(CFG1_OUT_LDFLAGS) -Wl,-e,0 -o $(CFG1_OUT) cfg1_out.o " />
-		<Exec Command="@$(NM) -n $(CFG1_OUT) > cfg1_out.syms" />
-		<Exec Command="@$(FROMELF) -O srec -S $(CFG1_OUT) cfg1_out.srec" />
-		<Exec Command="@$(CFG) $(APPL_CFG) --pass=2 --kernel=hrp2 --template-file=$(LOADERDIR)/app/common/module.tf $(CFG_TABS) -I$(TARGETDIR)/api -I $(LOADERDIR)/app/common $(CFGINCLUDE)" />
-	</Target>
+        <!-- ok -->
+        <Exec Command="@$(ADS_WRAPPER) $(CC) -nostartfiles $(CFLAGS) $(CFG1_OUT_LDFLAGS) -Wl,-e,0 -o $(CFG1_OUT) cfg1_out.o " />
+        <Exec Command="@$(NM) -n $(CFG1_OUT) > cfg1_out.syms" />
+        <Exec Command="@$(FROMELF) -O srec -S $(CFG1_OUT) cfg1_out.srec" />
+        <Exec Command="@$(CFG) $(APPL_CFG) --pass=2 --kernel=hrp2 --template-file=$(LOADERDIR)/app/common/module.tf $(CFG_TABS) -I$(TARGETDIR)/api -I $(LOADERDIR)/app/common $(CFGINCLUDE)" />
+    </Target>
 
-	<!-- Use Pass3 -->
-	<Target Name="cfg3" >
-	<!--
-	<Choose>
-	  <When Condition="'$(USE_CFG_PASS3)'!=''">
-	    kernel_mem_usePass3
-	    kernel_mem_usePass4
-	  </When>
-	  <When Condition="'$(USE_CFG_PASS3)'==''">
-	    kernel_mem_nousePass3
-	  </When>
-	</Choose>
-	-->
-	</Target>
+    <!-- Use Pass3 -->
+    <Target Name="cfg3" >
+    <!--
+    <Choose>
+      <When Condition="'$(USE_CFG_PASS3)'!=''">
+        kernel_mem_usePass3
+        kernel_mem_usePass4
+      </When>
+      <When Condition="'$(USE_CFG_PASS3)'==''">
+        kernel_mem_nousePass3
+      </When>
+    </Choose>
+    -->
+    </Target>
 
     <Target Name="kernel_mem_usePass3">
         <!-- kernel_mem3.c: $(APPL_CFG) kernel_cfg.timestamp $(ALL2_OBJS) $(LIBS_DEP) -->
@@ -583,174 +583,185 @@
     <Message Text="file selected @(AllSigFiles)"/>
   </Target>
 
-	<!-- Lernel Library File Create -->
-	<Target Name="libkernel">
-		<!-- libkernel.a: $(OFFSET_H) $(KERNEL_LIB_OBJS) -->
-		<Exec Command="rm -f libkernel.a" />
-		<Exec Command="$(AR) -rcs libkernel.a $(KERNEL_LIB_OBJS)" />
-		<Exec Command="$(RANLIB) libkernel.a" />
-	</Target>
-
-	<!-- BinaryFile Create -->
-	<Target Name="objnameToBinary" Inputs="$(OBJFILE);$(OBJNAME)">
-	    <Exec Command="$(OBJCOPY) -O binary -S $(OBJFILE) $(OBJNAME).bin" />
-	</Target>
-
-	<Target Name="uImage" DependsOnTargets="@(OBJNAME).bin">
-	    <Exec Command="@(MKIMAGE) -A arm -O linux -T kernel -C none -a 0xc0008000 -e 0xc0008000 -n hrp2 kernel -d hrp2.bin uImage" />
-	    <Exec Command="chmod +x uImage" />
-	    <Exec Command="cp uImage @(SD_DIR)" />
-	</Target>
-
-	<!-- #  S RecordFile Create -->
-	<!-- $(objnameToBinary).srec: $(OBJFILE) -->
-	<Target Name="ObjnameToSrec" Inputs="@(OBJFILE);@(OBJNAME)">
-	    <Exec Command="$(OBJCOPY) -O srec -S $(OBJFILE) $(OBJNAME).srec" />
-	</Target>
-
-	<!-- Compile Result Clear -->
-	<Target Name="clean">
-	    <!-- <Exec Command="rm -f \#* *~ *.o $(CLEAN_FILES)" /> -->
-	    <Exec Command="rm -f \#* *~ *.obj $(CLEAN_FILES)" />
-	    <Exec Command="rm -f $(OBJFILE) $(OBJNAME).syms $(OBJNAME).srec $(OBJNAME).bin" />
-	    <Exec Command="rm -f kernel_mem.c $(CFG2_OUT) cfg2_out.tf cfg2_out.syms cfg2_out.srec" />
-	    <Exec Command="rm -f $(CFG3_OUT) cfg3_out.tf cfg3_out.syms cfg3_out.srec" />
-	    <Exec Command="rm -f kernel_cfg.timestamp $(CFG2_OUT_SRCS) $(CFG3_OUT_SRCS)" />
-	    <Exec Command="rm -f cfg1_out.c $(CFG1_OUT) cfg1_out.syms cfg1_out.srec" />
-	    <Exec Command="rm -f ev3api_cfg.c ev3api_cfg.h omit_svc.h" />
-	    <!--
-	    <Choose>
-	        <When Condition=" '$(KERNEL_LIB)'!='' ">
-	            <Exec Command="rm -f libkernel.a" />
-	        </When>
-	        <When Condition=" '$(KERNEL_LIB)'=='' ">
-	        </When>
-	    </Choose>
-	    -->
-	    <Exec Command="rm -f makeoffset.s offset.h" />
-	    <Exec Command="rm -f $(MLIB) $(CLIB) $(RLIB) $(DLIB) $(DEPLIB)" />
-	</Target>
-
-	<Target Name="cleankernel">
-	    <Exec Command="rm -rf $(KERNEL_LIB_OBJS)" />
-	    <Exec Command="rm -f makeoffset.s offset.h" />
-	</Target>
-
-	<Target Name="cleandep">
-	    <Exec Command="if ! [ -f Makefile.depend ]; then \ "/>
-	    <Exec Command="rm -f kernel_cfg.timestamp $(CFG2_OUT_SRCS); \ "/>
-	    <Exec Command="rm -f cfg1_out.c cfg1_out.o $(CFG1_OUT) cfg1_out.syms cfg1_out.srec; \ "/>
-	    <Exec Command="rm -f makeoffset.s offset.h; \ "/>
-	    <Exec Command="fi"/>
-	    <Exec Command="rm -f Makefile.depend"/>
-	</Target>
-
-	<Target Name="cleantecs">
-	    <Exec Command="rm -rf gen" />
-	    <Exec Command="rm -f tecs.timestamp" />
-	</Target>
-
-	<Target Name="clean_mrb_c">
-	</Target>
-
-	<Target Name="realclean" DependsOnTargets="cleantecs;cleandep;clean;clean_mrb_c">
-	    <Exec Command="rm -f $(REALCLEAN_FILES)" />
-	</Target>
-
-	<!-- TECS Interface Generator Execute -->
-	<Target Name="tecs_timestamp">
-	    <Exec Command="$(APPL_CDL) $(TECS_IMPORTS)" />
-	    <!-- <Exec Command="$(call print_cmd, "TECSGEN", $<)" /> -->
-	    <Exec Command="$(TECSGEN) -R -D TECS -D TECS_CPP -I$(SRCDIR)/tecs_plugin $(INCLUDES) $(APPL_CDL)" />
-	    <Exec Command="touch tecs.timestamp" />
-	</Target>
-
-	<Target Name="tecs" DependsOnTargets="tecs_timestamp">
-	</Target>
-
-
-	<!-- Dependencies Files Create -->
-	<Target Name="gendepend">
-		<Message Text="Generating Makefile.depend."/>
-	</Target>
+    <!-- Lernel Library File Create -->
+    <Target Name="libkernel">
+        <!-- libkernel.a: $(OFFSET_H) $(KERNEL_LIB_OBJS) -->
+        <Exec Command="rm -f libkernel.a" />
+        <Exec Command="$(AR) -rcs libkernel.a $(KERNEL_LIB_OBJS)" />
+        <Exec Command="$(RANLIB) libkernel.a" />
+    </Target>
+	
 	
-	<Target Name="depend">
-		<!--
-		  <Choose>
-		    <When Condition=" '$(KERNEL_LIB)'!='' ">
-		        cleandep kernel_cfg.timestamp gendepend \
-		                    cfg1_out.depend cfg1_out.d \
-		                    $(ALL2_OBJS:.o=.d)
-		    </When>
-		    <When Condition=" '$(KERNEL_LIB)'=='' ">
-		        cleandep $(OFFSET_H) kernel_cfg.timestamp gendepend \
-		            cfg1_out.depend cfg1_out.d \
-		            $(KERNEL_AUX_COBJS:.o=.d) $(KERNEL_ASMOBJS:.o=.d) \
-		            $(KERNEL_COBJS:.o=.d) $(KERNEL_LCSRCS:.c=.d) $(ALL2_OBJS:.o=.d)
-		    </When>
-		  <Message Text="Generating Makefile.depend."/>
-		  </Choose>
-		-->
-	</Target>
-
-
-	<!-- End(Toppers Setting) -->
-	<Target Name="CompressBin" Inputs="@(CompressBinFile);@(CompressBinFile->'%(RootDir)%(Directory)%(FileName).symdefs')" Outputs="@(CompressBinOutput);@(CompressBinComp)" >
-	    <Exec Command="$(NM) @(CompressBinFile->'%(RootDir)%(Directory)%(FileName).axf') >> @(CompressBinFile->'%(RootDir)%(Directory)%(FileName).dump')"/>
-	    <Exec Command="$(CREATESYMDEF)     @(CompressBinFile->'%(RootDir)%(Directory)%(FileName).dump') @(CompressBinFile->'%(RootDir)%(Directory)%(FileName).symdefs')" Condition="EXISTS('$(CREATESYMDEF)')"/>
-	    <Exec Command="$(CREATESYMDEF_ALT) @(CompressBinFile->'%(RootDir)%(Directory)%(FileName).dump') @(CompressBinFile->'%(RootDir)%(Directory)%(FileName).symdefs')" Condition="!EXISTS('$(CREATESYMDEF)')"/>
-	    <Exec Command="$(TOOLS_DIR)\buildhelper -symdef @(CompressBinFile->'%(RootDir)%(Directory)%(FileName).symdefs') EntryPoint -compress @(CompressBinFile) @(CompressBinComp)"/>
-	    <Exec Command="$(AS) $(AS_FLAGS) -I$(OBJ_DIR) -a=@(CompressBinOutput->'%(RootDir)%(Directory)%(FileName).txt') -o @(CompressBinOutput) @(CompressBinAsm)"/>
-	    <Exec Command="del /q @(CompressBinFile->'%(RootDir)%(Directory)%(FileName).hex')" ContinueOnError="true"/>
-	</Target>
-
-	<Target Name="BuildSigFiles"
+    <!-- BinaryFile Create -->
+    <Target Name="objnameToBinary" Inputs="$(OBJFILE);$(OBJNAME)">
+        <Exec Command="$(OBJCOPY) -O binary -S $(OBJFILE) $(OBJNAME).bin" />
+    </Target>
+	
+	
+    <Target Name="uImage" DependsOnTargets="@(OBJNAME).bin">
+        <Exec Command="@(MKIMAGE) -A arm -O linux -T kernel -C none -a 0xc0008000 -e 0xc0008000 -n hrp2 kernel -d hrp2.bin uImage" />
+        <Exec Command="chmod +x uImage" />
+        <Exec Command="cp uImage @(SD_DIR)" />
+    </Target>
+	
+	
+    <!-- #  S RecordFile Create -->
+    <!-- $(objnameToBinary).srec: $(OBJFILE) -->
+    <Target Name="ObjnameToSrec" Inputs="@(OBJFILE);@(OBJNAME)">
+        <Exec Command="$(OBJCOPY) -O srec -S $(OBJFILE) $(OBJNAME).srec" />
+    </Target>
+	
+	
+    <!-- Compile Result Clear -->
+    <Target Name="clean">
+        <!-- <Exec Command="rm -f \#* *~ *.o $(CLEAN_FILES)" /> -->
+        <Exec Command="rm -f \#* *~ *.obj $(CLEAN_FILES)" />
+        <Exec Command="rm -f $(OBJFILE) $(OBJNAME).syms $(OBJNAME).srec $(OBJNAME).bin" />
+        <Exec Command="rm -f kernel_mem.c $(CFG2_OUT) cfg2_out.tf cfg2_out.syms cfg2_out.srec" />
+        <Exec Command="rm -f $(CFG3_OUT) cfg3_out.tf cfg3_out.syms cfg3_out.srec" />
+        <Exec Command="rm -f kernel_cfg.timestamp $(CFG2_OUT_SRCS) $(CFG3_OUT_SRCS)" />
+        <Exec Command="rm -f cfg1_out.c $(CFG1_OUT) cfg1_out.syms cfg1_out.srec" />
+        <Exec Command="rm -f ev3api_cfg.c ev3api_cfg.h omit_svc.h" />
+        <!--
+        <Choose>
+            <When Condition=" '$(KERNEL_LIB)'!='' ">
+                <Exec Command="rm -f libkernel.a" />
+            </When>
+            <When Condition=" '$(KERNEL_LIB)'=='' ">
+            </When>
+        </Choose>
+        -->
+        <Exec Command="rm -f makeoffset.s offset.h" />
+        <Exec Command="rm -f $(MLIB) $(CLIB) $(RLIB) $(DLIB) $(DEPLIB)" />
+    </Target>
+	
+	
+    <Target Name="cleankernel">
+        <Exec Command="rm -rf $(KERNEL_LIB_OBJS)" />
+        <Exec Command="rm -f makeoffset.s offset.h" />
+    </Target>
+	
+	
+    <Target Name="cleandep">
+        <Exec Command="if ! [ -f Makefile.depend ]; then \ "/>
+        <Exec Command="rm -f kernel_cfg.timestamp $(CFG2_OUT_SRCS); \ "/>
+        <Exec Command="rm -f cfg1_out.c cfg1_out.o $(CFG1_OUT) cfg1_out.syms cfg1_out.srec; \ "/>
+        <Exec Command="rm -f makeoffset.s offset.h; \ "/>
+        <Exec Command="fi"/>
+        <Exec Command="rm -f Makefile.depend"/>
+    </Target>
+	
+	
+    <Target Name="cleantecs">
+        <Exec Command="rm -rf gen" />
+        <Exec Command="rm -f tecs.timestamp" />
+    </Target>
+	
+	
+    <Target Name="clean_mrb_c">
+    </Target>
+	
+	
+    <Target Name="realclean" DependsOnTargets="cleantecs;cleandep;clean;clean_mrb_c">
+        <Exec Command="rm -f $(REALCLEAN_FILES)" />
+    </Target>
+	
+	
+    <!-- TECS Interface Generator Execute -->
+    <Target Name="tecs_timestamp">
+        <Exec Command="$(APPL_CDL) $(TECS_IMPORTS)" />
+        <!-- <Exec Command="$(call print_cmd, "TECSGEN", $<)" /> -->
+        <Exec Command="$(TECSGEN) -R -D TECS -D TECS_CPP -I$(SRCDIR)/tecs_plugin $(INCLUDES) $(APPL_CDL)" />
+        <Exec Command="touch tecs.timestamp" />
+    </Target>
+	
+	
+    <Target Name="tecs" DependsOnTargets="tecs_timestamp">
+    </Target>
+	
+	
+    <!-- Dependencies Files Create -->
+    <Target Name="gendepend">
+        <Message Text="Generating Makefile.depend."/>
+    </Target>
+    
+    <Target Name="depend">
+        <!--
+          <Choose>
+            <When Condition=" '$(KERNEL_LIB)'!='' ">
+                cleandep kernel_cfg.timestamp gendepend \
+                            cfg1_out.depend cfg1_out.d \
+                            $(ALL2_OBJS:.o=.d)
+            </When>
+            <When Condition=" '$(KERNEL_LIB)'=='' ">
+                cleandep $(OFFSET_H) kernel_cfg.timestamp gendepend \
+                    cfg1_out.depend cfg1_out.d \
+                    $(KERNEL_AUX_COBJS:.o=.d) $(KERNEL_ASMOBJS:.o=.d) \
+                    $(KERNEL_COBJS:.o=.d) $(KERNEL_LCSRCS:.c=.d) $(ALL2_OBJS:.o=.d)
+            </When>
+          <Message Text="Generating Makefile.depend."/>
+          </Choose>
+        -->
+    </Target>
+	
+	
+    <!-- End(Toppers Setting) -->
+    <Target Name="CompressBin" Inputs="@(CompressBinFile);@(CompressBinFile->'%(RootDir)%(Directory)%(FileName).symdefs')" Outputs="@(CompressBinOutput);@(CompressBinComp)" >
+        <Exec Command="$(NM) @(CompressBinFile->'%(RootDir)%(Directory)%(FileName).axf') >> @(CompressBinFile->'%(RootDir)%(Directory)%(FileName).dump')"/>
+        <Exec Command="$(CREATESYMDEF)     @(CompressBinFile->'%(RootDir)%(Directory)%(FileName).dump') @(CompressBinFile->'%(RootDir)%(Directory)%(FileName).symdefs')" Condition="EXISTS('$(CREATESYMDEF)')"/>
+        <Exec Command="$(CREATESYMDEF_ALT) @(CompressBinFile->'%(RootDir)%(Directory)%(FileName).dump') @(CompressBinFile->'%(RootDir)%(Directory)%(FileName).symdefs')" Condition="!EXISTS('$(CREATESYMDEF)')"/>
+        <Exec Command="$(TOOLS_DIR)\buildhelper -symdef @(CompressBinFile->'%(RootDir)%(Directory)%(FileName).symdefs') EntryPoint -compress @(CompressBinFile) @(CompressBinComp)"/>
+        <Exec Command="$(AS) $(AS_FLAGS) -I$(OBJ_DIR) -a=@(CompressBinOutput->'%(RootDir)%(Directory)%(FileName).txt') -o @(CompressBinOutput) @(CompressBinAsm)"/>
+        <Exec Command="del /q @(CompressBinFile->'%(RootDir)%(Directory)%(FileName).hex')" ContinueOnError="true"/>
+    </Target>
+	
+    <Target Name="BuildSigFiles"
             Inputs="@(AllSigFiles)"
             Outputs="@(AllSigFiles->'%(OutputDir)%(FileName).sig')"
             DependsOnTargets="FindBinFilesForSig"
             Condition="EXISTS('$(SPO_SDK)\crypto\lib\x86\dll\crypto.dll')" >
-
-	    <Message Text="Create Signature files for @(AllSigFiles)"/>
-	    <Exec Condition="EXISTS('%(RelativeDir)%(AllSigFiles.Filename)%(Extension)')" Command="$(PRG_MMP) -sign_file %(RelativeDir)%(AllSigFiles.Filename)%(Extension) $(SPO_SDK)\tools\bin\tinybooter_private_key.bin %(AllSigFiles.Outputdir)%(AllSigFiles.Filename).sig"/>
-	</Target>
-
-	<ItemGroup>
-		<BuildScatterFileProperties Include="SPOCLIENT=$(SPOCLIENT)" />
-		<BuildScatterFileProperties Include="PROFILE_BUILD=$(TRUE)" Condition="'$(sampleprof)'=='true'" />
-		<BuildScatterFileProperties Include="PLATFORM=$(PLATFORM)" />
-		<BuildScatterFileProperties Include="TARGETCODEBASE=$(TARGETCODEBASE)" />
-		<BuildScatterFileProperties Include="TARGETCODEBASETYPE=$(TARGETCODEBASETYPE)" />
-		<BuildScatterFileProperties Include="TARGETPLATFORM=$(TARGETPLATFORM)" />
-		<BuildScatterFileProperties Include="TARGETLOCATION=$(TARGETLOCATION)" />
-		<BuildScatterFileProperties Include="TARGETTYPE=$(FLAVOR)" />
-		<BuildScatterFileProperties Include="TARGETPROCESSOR=$(TARGETPROCESSOR)" />
-		<BuildScatterFileProperties Include="ALTERNATEFLASHLOCATION=$(ALTERNATEFLASHLOCATION)" />
-		<BuildScatterFileProperties Include="COMPILER_TOOL_VERSION=$(COMPILER_TOOL_VERSION)" />
-		<BuildScatterFileProperties Include="COMPILER_TOOL=$(COMPILER_TOOL)" />
-		<BuildScatterFileProperties Include="PROFILE_BUILD=$TRUE" Condition="'$(FLAVOR)'=='Instrumented'" />
-	</ItemGroup>
-  
-	<Target Name="BuildScatterfile" Condition="'$(DEPEND)'!='ACTIVE'" Inputs="@(EXEScatterFileDefinition);@(ScatterFileReferences)" Outputs="@(EXEScatterFile)">
-		<Message Text="..."/>    
-		<ProcessScatterFile
-		    Properties="@(BuildScatterFileProperties)"
-		      DefinitionFile="@(EXEScatterfileDefinition)"
-		      OutputFile="@(EXEScatterFile)"
-		 />
-	</Target>
-
-	<Target Name="TinyClrDat" Inputs="$(BIN_DIR)\$(AssemblyName).dat;$(AS_SUBDIR)\$(AssemblyName)_dat.s" Outputs="$(OBJ_DIR)\$(AssemblyName)_dat.$(OBJ_EXT)">
-		<Message                               Text="***************************************************************************************************"/>
-		<Message Text="Target: TinyClrDat with outputs $(OBJ_DIR)\$(AssemblyName)_dat.$(OBJ_EXT)"/>
-		<Message Condition="'$(FORCEDAT)'!=''" Text="Building $(AssemblyName).dat from $(BUILD_TREE_CLIENT)\dat\$(ENDIANNESS)\$(AssemblyName)_$(FORCEDAT).dat"/>
-		<Message Condition="'$(FORCEDAT)'==''" Text="Building $(AssemblyName).dat from the features specified in the $(AssemblyName).proj file"/>
-		<Exec Condition="'$(FORCEDAT)'!='' AND EXISTS('$(BUILD_TREE_CLIENT)\dat\$(ENDIANNESS)\$(AssemblyName)_$(FORCEDAT).dat')" Command="copy /y $(BUILD_TREE_CLIENT)\dat\$(ENDIANNESS)\$(AssemblyName)_$(FORCEDAT).dat $(BIN_DIR)\$(AssemblyName).dat" />
-		<Exec Command="$(AS) -I$(BIN_DIR) $(AS_FLAGS) -a=$(OBJ_DIR)\$(AssemblyName)_dat.txt -o $(OBJ_DIR)\$(AssemblyName)_dat.$(OBJ_EXT) $(AS_SUBDIR)\$(AssemblyName)_dat.s"/>
-		<Message                               Text="========== Database file content:"/>    
-		<Exec Command="$(PRG_MMP) -dump_dat $(BIN_DIR)\$(AssemblyName).dat" />
-		<Message                               Text="========== End of Database file content"/>    
-		<Message                               Text="***************************************************************************************************"/>
-		<Exec Command="copy /BVY $(BIN_DIR)\$(AssemblyName).dat $(BIN_DIR)\$(AssemblyName).dat.fromlastbuildrun" />
-		<Exec Command="del  /Q /F $(BIN_DIR)\$(AssemblyName).dat"/>
-	</Target>
+			
+        <Message Text="Create Signature files for @(AllSigFiles)"/>
+        <Exec Condition="EXISTS('%(RelativeDir)%(AllSigFiles.Filename)%(Extension)')" Command="$(PRG_MMP) -sign_file %(RelativeDir)%(AllSigFiles.Filename)%(Extension) $(SPO_SDK)\tools\bin\tinybooter_private_key.bin %(AllSigFiles.Outputdir)%(AllSigFiles.Filename).sig"/>
+    </Target>
+    
+    <ItemGroup>
+        <BuildScatterFileProperties Include="SPOCLIENT=$(SPOCLIENT)" />
+        <BuildScatterFileProperties Include="PROFILE_BUILD=$(TRUE)" Condition="'$(sampleprof)'=='true'" />
+        <BuildScatterFileProperties Include="PLATFORM=$(PLATFORM)" />
+        <BuildScatterFileProperties Include="TARGETCODEBASE=$(TARGETCODEBASE)" />
+        <BuildScatterFileProperties Include="TARGETCODEBASETYPE=$(TARGETCODEBASETYPE)" />
+        <BuildScatterFileProperties Include="TARGETPLATFORM=$(TARGETPLATFORM)" />
+        <BuildScatterFileProperties Include="TARGETLOCATION=$(TARGETLOCATION)" />
+        <BuildScatterFileProperties Include="TARGETTYPE=$(FLAVOR)" />
+        <BuildScatterFileProperties Include="TARGETPROCESSOR=$(TARGETPROCESSOR)" />
+        <BuildScatterFileProperties Include="ALTERNATEFLASHLOCATION=$(ALTERNATEFLASHLOCATION)" />
+        <BuildScatterFileProperties Include="COMPILER_TOOL_VERSION=$(COMPILER_TOOL_VERSION)" />
+        <BuildScatterFileProperties Include="COMPILER_TOOL=$(COMPILER_TOOL)" />
+        <BuildScatterFileProperties Include="PROFILE_BUILD=$TRUE" Condition="'$(FLAVOR)'=='Instrumented'" />
+    </ItemGroup>
+    
+    <Target Name="BuildScatterfile" Condition="'$(DEPEND)'!='ACTIVE'" Inputs="@(EXEScatterFileDefinition);@(ScatterFileReferences)" Outputs="@(EXEScatterFile)">
+        <Message Text="..."/>
+        <ProcessScatterFile
+            Properties="@(BuildScatterFileProperties)"
+              DefinitionFile="@(EXEScatterfileDefinition)"
+              OutputFile="@(EXEScatterFile)"
+        />
+    </Target>
+    
+    <Target Name="TinyClrDat" Inputs="$(BIN_DIR)\$(AssemblyName).dat;$(AS_SUBDIR)\$(AssemblyName)_dat.s" Outputs="$(OBJ_DIR)\$(AssemblyName)_dat.$(OBJ_EXT)">
+        <Message                               Text="***************************************************************************************************"/>
+        <Message Text="Target: TinyClrDat with outputs $(OBJ_DIR)\$(AssemblyName)_dat.$(OBJ_EXT)"/>
+        <Message Condition="'$(FORCEDAT)'!=''" Text="Building $(AssemblyName).dat from $(BUILD_TREE_CLIENT)\dat\$(ENDIANNESS)\$(AssemblyName)_$(FORCEDAT).dat"/>
+        <Message Condition="'$(FORCEDAT)'==''" Text="Building $(AssemblyName).dat from the features specified in the $(AssemblyName).proj file"/>
+        <Exec Condition="'$(FORCEDAT)'!='' AND EXISTS('$(BUILD_TREE_CLIENT)\dat\$(ENDIANNESS)\$(AssemblyName)_$(FORCEDAT).dat')" Command="copy /y $(BUILD_TREE_CLIENT)\dat\$(ENDIANNESS)\$(AssemblyName)_$(FORCEDAT).dat $(BIN_DIR)\$(AssemblyName).dat" />
+        <Exec Command="$(AS) -I$(BIN_DIR) $(AS_FLAGS) -a=$(OBJ_DIR)\$(AssemblyName)_dat.txt -o $(OBJ_DIR)\$(AssemblyName)_dat.$(OBJ_EXT) $(AS_SUBDIR)\$(AssemblyName)_dat.s"/>
+        <Message                               Text="========== Database file content:"/>    
+        <Exec Command="$(PRG_MMP) -dump_dat $(BIN_DIR)\$(AssemblyName).dat" />
+        <Message                               Text="========== End of Database file content"/>    
+        <Message                               Text="***************************************************************************************************"/>
+        <Exec Command="copy /BVY $(BIN_DIR)\$(AssemblyName).dat $(BIN_DIR)\$(AssemblyName).dat.fromlastbuildrun" />
+        <Exec Command="del  /Q /F $(BIN_DIR)\$(AssemblyName).dat"/>
+    </Target>
 </Project>
