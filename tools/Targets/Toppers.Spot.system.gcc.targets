@@ -431,7 +431,7 @@
     <Target Name="kernel_mem_usePass3">
         <!-- kernel_mem3.c: $(APPL_CFG) kernel_cfg.timestamp $(ALL2_OBJS) $(LIBS_DEP) -->
         <!-- <Exec Command="$(LINK) $(CFLAGS) $(CFG2_OUT_LDFLAGS) -o $(CFG2_OUT) $(START_OBJS) $(APPL_OBJS) $(MRUBY_LIB) $(SYSSVC_OBJS) $(CFG2_OBJS) $(ALL_LIBS)  $(END_OBJS)" /> -->
-        <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(LINK) -shared -mno-pic-data-is-text-relative -nostdlib -fno-strict-aliasing -mcpu=armelf -marmelf -LG:\MicroFrameworkPK_v4_3\DeviceCode\Targets\OS\Toppers\hrp2 -o cfg2_out log_output.obj t_perror.obj strerror.obj banner.obj syslog.obj serial.obj logtask.obj kernel_cfg.obj kernel_mem2.obj" />
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(LINK) -shared -mno-pic-data-is-text-relative -nostdlib -fno-strict-aliasing -o cfg2_out log_output.obj t_perror.obj strerror.obj banner.obj syslog.obj serial.obj logtask.obj kernel_cfg.obj kernel_mem2.obj" />
         
         <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(NM) -n $(CFG2_OUT) > cfg2_out.syms" />
         <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(OBJCOPY) -O srec -S $(CFG2_OUT) cfg2_out.srec" />
