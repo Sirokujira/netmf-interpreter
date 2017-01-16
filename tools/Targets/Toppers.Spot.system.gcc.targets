@@ -285,7 +285,7 @@
     </Target>
 
     <!-- DynamicLoading -->
-    <Target Name="ArmBuildLib2" Condition="'$(OutputType)'=='DynamicLoading'" DependsOnTargets="FindCompileFilesExistence;FindFastCompileFilesExistence;DelBuildLib2;ArmCompileC;ArmCompileCPP;ArmAssemble;CreateLibManifest;$(ExtraTargets);" Inputs="@(ObjFiles)" Outputs="@(TargetModule);@(TargetModule->'%(FullPath).manifest')"> -->
+    <!-- <Target Name="ArmBuildLib2" Condition="'$(OutputType)'=='DynamicLoading'" DependsOnTargets="FindCompileFilesExistence;FindFastCompileFilesExistence;DelBuildLib2;ArmCompileC;ArmCompileCPP;ArmAssemble;CreateLibManifest;$(ExtraTargets);" Inputs="@(ObjFiles)" Outputs="@(TargetModule);@(TargetModule->'%(FullPath).manifest')"> -->
     <Target Name="ArmBuildLib2" Condition="'$(OutputType)'=='DynamicLoading'" DependsOnTargets="FindCompileFilesExistence;FindFastCompileFilesExistence;DelBuildLib2;ArmCompileC;ArmCompileCPP;ArmAssemble;CreateLibManifest;module_cfg1;module_cfg2;$(ExtraTargets);">
         <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Condition="'@(FilesExist)'!=''" Command="$(AR) $(ARFLAGS) @(TargetModule) @(ObjFiles->'%(FileName)%(Extension)',' ') "/> -->
         <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(AR) $(ARFLAGS) @(TargetModule) @(ObjFiles->'%(FileName)%(Extension)',' ') "/> -->
