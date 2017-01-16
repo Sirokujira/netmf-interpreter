@@ -115,14 +115,14 @@
         <CompileFiles Include="@(CSFiles)"/>
     </ItemGroup>
   
-  <!-- Toppers Task -->
-  <ItemGroup Condition="'$(OutputType)'=='Configure'">
-    <TargetLib  Condition="'@(TargetLib)'==''" Include="$(LIB_DIR)\$(AssemblyName).$(LIB_EXT)"/>
-  </ItemGroup>
+    <!-- Toppers Task -->
+    <ItemGroup Condition="'$(OutputType)'=='Configure'">
+    	<TargetLib  Condition="'@(TargetLib)'==''" Include="$(LIB_DIR)\$(AssemblyName).$(LIB_EXT)"/>
+    </ItemGroup>
 
-  <ItemGroup Condition="'$(OutputType)'=='DynamicLoader'">
-    <TargetModule Condition="'@(TargetModule)'==''" Include="$(LIB_DIR)\$(AssemblyName)"/>
-  </ItemGroup>
+    <ItemGroup Condition="'$(OutputType)'=='DynamicLoader'">
+    	<TargetModule Condition="'@(TargetModule)'==''" Include="$(LIB_DIR)\$(AssemblyName)"/>
+    </ItemGroup>
 
     <!-- Hook properties and targets -->
     <!-- Projects may override any of these targets, so long as their versions

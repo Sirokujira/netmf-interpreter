@@ -126,18 +126,26 @@
     <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/sound/include" />
     <!-- armv5/am1808/interrupt.h -->
     <!-- <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/soc/AM1808_StarterWare_1_00_03_03/include/armv5/am1808" /> -->
-    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/soc/AM1808_StarterWare_1_00_03_03/include" />
     <!-- hw_types.h -->
-    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/soc/AM1808_StarterWare_1_00_03_03/include/hw" />
     <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/soc/AM1808_StarterWare_1_00_03_03/include" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/soc/AM1808_StarterWare_1_00_03_03/include/hw" />
     <!-- analog_dri.h -->
     <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/sensor/analog/include" />
     <!-- uart_dri.h -->
     <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/sensor/uart/include" />
     <!-- bluetooth_dri.h -->
     <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/bluetooth/include" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/bluetooth/btstack/include" />
     <!-- api.cfg.h -->
     <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/api" />
+    <!-- lcd_dri.c -->
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/common/virtual-linux-kernel/arch/arm/include" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/lcd/include" />
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/lcd/linux/include" />
+    <!-- pru.c -->
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/sensor/uart/d_uart/Linuxmod_AM1808/pru-firmware-05-31-2011-1423-v3.0/pru/hal/common/include" />
+    <!-- pru_suart.c -->
+    <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/target/ev3_gcc/drivers/sensor/uart/d_uart/Linuxmod_AM1808/pru-firmware-05-31-2011-1423-v3.0/pru/hal/uart/include" />
 
     <HFiles Include="../../omit_svc.h" />
     <HFiles Include="../../syssvc/logtask.h" />
@@ -161,7 +169,6 @@
     
     <!-- -->
     <CFiles Include="../../target/ev3_gcc/api/src/ev3api.c" />
-    <CFiles Include="ev3api_cfg.c" />
     <CFiles Include="../../target/ev3_gcc/api/src/ev3api_battery.c" />
     <CFiles Include="../../target/ev3_gcc/api/src/ev3api_brick.c" />
     <CFiles Include="../../target/ev3_gcc/api/src/ev3api_fs.c" />
@@ -173,12 +180,12 @@
 
     <!-- netmf on OS -->
     <HFiles Include="../../DeviceCode/include/tinyhal.h" />
-    <HFiles Include="../../DeviceCodeuItron4API.h" />
-    <Compile Include="../../DeviceCodeconfiguration.cpp" />
-    <Compile Include="../../DeviceCodecpu.cpp" />
-    <Compile Include="../../DeviceCodeGlobalLock.cpp" />
-    <Compile Include="../../DeviceCodeVarious_uIron4.cpp" />
-    <!-- <Compile Include="uIron4API.c" /> -->
+    <HFiles Include="../../DeviceCode/uItron4API.h" />
+    <Compile Include="../../DeviceCode/configuration.cpp" />
+    <Compile Include="../../DeviceCode/cpu.cpp" />
+    <Compile Include="../../DeviceCode/GlobalLock.cpp" />
+    <Compile Include="../../DeviceCode/Various_uIron4.cpp" />
+    <Compile Include="../../uIron4API.c" />
     <CFiles Include="../../DeviceCodeuIron4API.c" />
 
     <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2" />
@@ -188,6 +195,8 @@
 
     <!-- App Dir -->
     <IncludePaths Include="DeviceCode/Targets/OS/Toppers/workspace/common" />
+
+    <CFiles Include="ev3api_cfg.c" />
 
     <!-- BUILD_MODULE -->
     <CFiles Include="module_cfg.c" />
@@ -203,7 +212,7 @@
     <CFiles Include="cli_main.c" />
     <CFiles Include="cli_motor.c" />
     <CFiles Include="cli_sensor.c" />
-
+	
     <None Include="../../.cproject" />
     <None Include="../../.project" />
     <None Include="../../arch/logtrace/MANIFEST" />

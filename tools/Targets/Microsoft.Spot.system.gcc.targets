@@ -1,5 +1,6 @@
 <Project  xmlns="http://schemas.microsoft.com/developer/msbuild/2003"  ToolsVersion="4.0">
 
+
   <PropertyGroup>
     <BuildToolName>GCC</BuildToolName>
     <BuildToolGuid>{722B0D5D-1243-4557-913F-61FAB04E9209}</BuildToolGuid>
@@ -13,6 +14,7 @@
 
     <!-- GNU Tools - Assumes that the Path is already set up to these tools (the default) -->
 
+    
     <CC>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-gcc.exe"</CC>
     <TCC>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-gcc.exe"</TCC>
     <CPP>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-gcc.exe"</CPP>
