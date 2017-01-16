@@ -67,9 +67,11 @@
         <ARCH_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Release'"      >-Os</ARCH_TARGETTYPE_FLAGS>
 
         <!-- add -->
-        <CFLAGS>-fPIC -mno-pic-data-is-text-relative -nostdlib -std=gnu99 -fno-strict-aliasing -mcpu=$(ARM_TYPE_FLAGS) -mlittle-endian -D__TARGET_ARCH_ARM=5</CFLAGS>
+        <!-- <CFLAGS>-fPIC -mno-pic-data-is-text-relative -nostdlib -std=gnu99 -fno-strict-aliasing -mcpu=$(ARM_TYPE_FLAGS) -mlittle-endian -D__TARGET_ARCH_ARM=5</CFLAGS> -->
+        <CFLAGS>-fPIC -mno-pic-data-is-text-relative -nostdlib -std=gnu99 -fno-strict-aliasing -mcpu=$(DEVICE_TYPE) -mlittle-endian -D__TARGET_ARCH_ARM=5</CFLAGS>
         <!-- <CFLAGS>-fPIC -nostdlib -std=c99 -nostartfiles -fno-strict-aliasing -mcpu=arm926ej-s -mlittle-endian -D__TARGET_ARCH_ARM=5</CFLAGS> -->
-        <CXXFLAGS>-fPIC -mno-pic-data-is-text-relative -nostdlib -std=gnu++11 -fno-strict-aliasing -mcpu=$(ARM_TYPE_FLAGS) -mlittle-endian -D__TARGET_ARCH_ARM=5</CXXFLAGS>
+        <!-- <CXXFLAGS>-fPIC -mno-pic-data-is-text-relative -nostdlib -std=gnu++11 -fno-strict-aliasing -mcpu=$(ARM_TYPE_FLAGS) -mlittle-endian -D__TARGET_ARCH_ARM=5</CXXFLAGS> -->
+        <CXXFLAGS>-fPIC -mno-pic-data-is-text-relative -nostdlib -std=gnu++11 -fno-strict-aliasing -mcpu=$(DEVICE_TYPE) -mlittle-endian -D__TARGET_ARCH_ARM=5</CXXFLAGS>
 
         <FLOATING_POINT_FLAG Condition="('$(PLATFORM_EMULATED_FLOATINGPOINT)'!='true' and '$(DEVICE_TYPE)' == 'cortex-m4') or '$(INSTRUCTION_SET)'=='thumb2fp'">-mfloat-abi=hard -mfpu=fpv4-sp-d16</FLOATING_POINT_FLAG>
         <FLOATING_POINT_FLAG Condition="'$(PLATFORM_EMULATED_FLOATINGPOINT)'=='true'">-mfloat-abi=softfp -mfpu=fpv4-sp-d16</FLOATING_POINT_FLAG>
