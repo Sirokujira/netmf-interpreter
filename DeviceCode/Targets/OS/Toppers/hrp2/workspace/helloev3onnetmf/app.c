@@ -170,9 +170,8 @@ void main_task(intptr_t unused) {
 	fclose(fout);
 #endif
 
-	// MFMain 
 	// NETMF ‹N“®
-	MFmain();
+	// MFmain();
 
 	/**
 	 *

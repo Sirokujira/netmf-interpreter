@@ -37,12 +37,12 @@
         <!-- unrecognized option -marm is gcc 5.x , arm-none-eabi-as.exe -->
         <!-- <ARCH_TYPE_FLAGS Condition="'$(DEVICE_TYPE)' == 'arm926EJ-S'">-mcpu=arm926ej-s -marm</ARCH_TYPE_FLAGS> -->
         <!-- <ARCH_TYPE_FLAGS Condition="'$(DEVICE_TYPE)' == 'ARM7TDMI'">-mcpu=arm7tdmi -marm</ARCH_TYPE_FLAGS> -->
-        <ARCH_TYPE_FLAGS Condition="'$(DEVICE_TYPE)' == 'arm926EJ-S'">-mcpu=arm926ej-s</ARCH_TYPE_FLAGS>
-        <ARCH_TYPE_FLAGS Condition="'$(DEVICE_TYPE)' == 'ARM7TDMI'">-mcpu=arm7tdmi</ARCH_TYPE_FLAGS>
+        <ARCH_TYPE_FLAGS Condition="'$(DEVICE_TYPE)' == 'arm926EJ-S'">-mcpu=arm926ej-s -marmelf</ARCH_TYPE_FLAGS>
+        <ARCH_TYPE_FLAGS Condition="'$(DEVICE_TYPE)' == 'ARM7TDMI'">-mcpu=arm7tdmi -marmelf</ARCH_TYPE_FLAGS>
         <ARCH_TYPE_FLAGS Condition="'$(DEVICE_TYPE)' == 'cortex-m4'">-mcpu=cortex-m4 -mthumb</ARCH_TYPE_FLAGS>
         <ARCH_TYPE_FLAGS Condition="'$(DEVICE_TYPE)' == 'cortex-m3'">-mcpu=cortex-m3 -mthumb</ARCH_TYPE_FLAGS>
         <!-- <ARCH_TYPE_FLAGS Condition="'$(ARCH_TYPE_FLAGS)'==''">-mcpu=$(DEVICE_TYPE)</ARCH_TYPE_FLAGS> -->
-        <ARCH_TYPE_FLAGS Condition="'$(DEVICE_TYPE)' == ''">-mcpu=arm926ej-s</ARCH_TYPE_FLAGS>
+        <ARCH_TYPE_FLAGS Condition="'$(DEVICE_TYPE)' == ''">-mcpu=arm926ej-s -marmelf</ARCH_TYPE_FLAGS>
 
         <!-- GCC_ARCH_DIR specifies the CPU architecture portion of the path to the appropriate libraries for a given device -->
         <GCC_ARCH_DIR Condition="'$(DEVICE_TYPE)' == 'arm926EJ-S'"></GCC_ARCH_DIR>
