@@ -181,12 +181,11 @@
     <!-- netmf on OS -->
     <HFiles Include="../../DeviceCode/include/tinyhal.h" />
     <HFiles Include="../../DeviceCode/uItron4API.h" />
-    <Compile Include="../../DeviceCode/configuration.cpp" />
-    <Compile Include="../../DeviceCode/cpu.cpp" />
-    <Compile Include="../../DeviceCode/GlobalLock.cpp" />
-    <Compile Include="../../DeviceCode/Various_uIron4.cpp" />
-    <Compile Include="../../uIron4API.c" />
-    <CFiles Include="../../DeviceCodeuIron4API.c" />
+    <CPPFiles Include="../../DeviceCode/configuration.cpp" />
+    <CPPFiles Include="../../DeviceCode/cpu.cpp" />
+    <CPPFiles Include="../../DeviceCode/GlobalLock.cpp" />
+    <CPPFiles Include="../../DeviceCode/Various_uIron4.cpp" />
+    <CFiles Include="../../DeviceCode/uIron4API.c" />
 
     <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2" />
     <IncludePaths Include="DeviceCode/Targets/OS/Toppers/hrp2/include" />
