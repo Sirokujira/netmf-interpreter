@@ -1,6 +1,5 @@
 <Project  xmlns="http://schemas.microsoft.com/developer/msbuild/2003"  ToolsVersion="4.0">
 
-
   <PropertyGroup>
     <BuildToolName>GCC</BuildToolName>
     <BuildToolGuid>{722B0D5D-1243-4557-913F-61FAB04E9209}</BuildToolGuid>
@@ -14,13 +13,10 @@
 
     <!-- GNU Tools - Assumes that the Path is already set up to these tools (the default) -->
 
-    
     <CC>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-gcc.exe"</CC>
     <TCC>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-gcc.exe"</TCC>
-    <CPP>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-gcc.exe"</CPP>
-    <!-- <CPP>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-g++.exe"</CPP> -->
-    <TCPP>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-gcc.exe"</TCPP>
-    <!-- <TCPP>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-g++.exe"</TCPP> -->
+    <CPP>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-g++.exe"</CPP>
+    <TCPP>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-g++.exe"</TCPP>
     <AS>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-as.exe"</AS>
     <LINK>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-g++.exe"</LINK>
     <!-- <LINK>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-ld.exe"</LINK> -->
@@ -36,11 +32,8 @@
   
   <PropertyGroup>
     <!-- We need to convert the RVDS CPU type to its GCC equivalent if needed-->
-    <!-- unrecognized option -marm is gcc 5.x , arm-none-eabi-as.exe -->
-    <!-- <ARCH_TYPE_FLAGS Condition="'$(DEVICE_TYPE)' == 'arm926EJ-S'">-mcpu=arm926ej-s -marm </ARCH_TYPE_FLAGS> -->
-    <!-- <ARCH_TYPE_FLAGS Condition="'$(DEVICE_TYPE)' == 'ARM7TDMI'">-mcpu=arm7tdmi -marm </ARCH_TYPE_FLAGS> -->
-    <ARCH_TYPE_FLAGS Condition="'$(DEVICE_TYPE)' == 'arm926EJ-S'">-mcpu=arm926ej-s</ARCH_TYPE_FLAGS>
-    <ARCH_TYPE_FLAGS Condition="'$(DEVICE_TYPE)' == 'ARM7TDMI'">-mcpu=arm7tdmi</ARCH_TYPE_FLAGS>
+    <ARCH_TYPE_FLAGS Condition="'$(DEVICE_TYPE)' == 'arm926EJ-S'">-mcpu=arm926ej-s -marm </ARCH_TYPE_FLAGS>
+    <ARCH_TYPE_FLAGS Condition="'$(DEVICE_TYPE)' == 'ARM7TDMI'">-mcpu=arm7tdmi -marm </ARCH_TYPE_FLAGS>
     <ARCH_TYPE_FLAGS Condition="'$(DEVICE_TYPE)' == 'cortex-m4'">-mcpu=cortex-m4 -mthumb</ARCH_TYPE_FLAGS>
     <ARCH_TYPE_FLAGS Condition="'$(DEVICE_TYPE)' == 'cortex-m3'">-mcpu=cortex-m3 -mthumb</ARCH_TYPE_FLAGS>
     <!-- <ARCH_TYPE_FLAGS Condition="'$(ARCH_TYPE_FLAGS)'==''">-mcpu=$(DEVICE_TYPE)</ARCH_TYPE_FLAGS> -->
@@ -210,9 +203,7 @@
   <!-- other flags -->
   <PropertyGroup>
     <ARFLAGS>$(ARFLAGS) -rcs</ARFLAGS>
-    <!-- <LINK_FLAGS>$(LINK_FLAGS),-static, -gc-sections, -no-wchar-size-warning</LINK_FLAGS> -->
-    <LINK_FLAGS>$(LINK_FLAGS) -static --gc-sections --no-wchar-size-warning</LINK_FLAGS>
-    <!-- <LINK_FLAGS>$(LINK_FLAGS) -static -gc-sections  -no-warn-mismatch  -library-path=$(LIB_DIR)  -library-path=$(PLATFORM_INDEPENDENT_LIB_DIR)  </LINK_FLAGS> -->
+    <LINK_FLAGS>$(LINK_FLAGS),-static,--gc-sections,--no-wchar-size-warning</LINK_FLAGS>
   </PropertyGroup>
    
   <PropertyGroup>
@@ -232,7 +223,7 @@
     <GCCSTDLIBS>-lstdc++ -lsupc++ -lm -lgcc -lc </GCCSTDLIBS>
 
     <!-- Use newlib-nano (default) or newlib -->
-    <LINK_NANO_SPECS Condition="'$(NewlibNano)' != 'false'">-specs="$(GNU_LIBGCC_DIR)\nano.specs" </LINK_NANO_SPECS>
+    <LINK_NANO_SPECS Condition="'$(NewlibNano)' != 'false'">-specs="$(GNU_LIBGCC_DIR)\nano.specs" -specs="$(GNU_LIBGCC_DIR)\nosys.specs"  </LINK_NANO_SPECS>
   </PropertyGroup>
 
   <!-- item group  -->
@@ -291,7 +282,8 @@
         -->
         <!-- case LINK (GNU_TARGET)-g++.exe -->
         <!-- http://stackoverflow.com/questions/11116399/crt1-o-in-function-start-undefined-reference-to-main-in-linux -->
-        <Exec WorkingDirectory="$(LIB_DIR)" Command="$(LINK) $(ARCH_TYPE_FLAGS) $(FLOATING_POINT_FLAG) --specs=nosys.specs -nostartfiles -ffunction-sections -fdata-sections -Xlinker $(ARCH_TARGETTYPE_FLAGS) -L&quot;$(GNU_LIBGCC_DIR)&quot; -specs=$(MsBuildThisFileDirectory)startfile.specs -Wl$(LINK_FLAGS),-Map=$(EXEName).map $(LINK_NANO_SPECS) -T@(EXEScatterFile,' ') @(EXEInputs,' ') -Wl,-( @(PlatformIndependentLibs->'$(PLATFORM_INDEPENDENT_RELATIVE_LIB_DIR)%(FileName)%(Extension)',' ') @(DriverLibs->'%(FileName)%(Extension)',' ') @(InputLibs,' ') -Wl,-) -Wl,-no-whole-archive -Wl,-( $(GCCSTDLIBS) -Wl,-) $(ExtraLibs) -o@(EXEOutput)" />
+        <!-- <Exec WorkingDirectory="$(LIB_DIR)" Command="$(LINK) $(ARCH_TYPE_FLAGS) $(FLOATING_POINT_FLAG) - -specs=nosys.specs -nostartfiles -ffunction-sections -fdata-sections -Xlinker $(ARCH_TARGETTYPE_FLAGS) -L&quot;$(GNU_LIBGCC_DIR)&quot; -specs=$(MsBuildThisFileDirectory)startfile.specs -Wl$(LINK_FLAGS),-Map=$(EXEName).map $(LINK_NANO_SPECS) -T@(EXEScatterFile,' ') @(EXEInputs,' ') -Wl,-( @(PlatformIndependentLibs->'$(PLATFORM_INDEPENDENT_RELATIVE_LIB_DIR)%(FileName)%(Extension)',' ') @(DriverLibs->'%(FileName)%(Extension)',' ') @(InputLibs,' ') -Wl,-) -Wl,-no-whole-archive -Wl,-( $(GCCSTDLIBS) -Wl,-) $(ExtraLibs) -o@(EXEOutput)" /> -->
+        <Exec WorkingDirectory="$(LIB_DIR)" Command="$(LINK) $(ARCH_TYPE_FLAGS) $(FLOATING_POINT_FLAG) -ffunction-sections -fdata-sections -Xlinker $(ARCH_TARGETTYPE_FLAGS) -L&quot;$(GNU_LIBGCC_DIR)&quot; -specs=$(MsBuildThisFileDirectory)startfile.specs -Wl$(LINK_FLAGS),-Map=$(EXEName).map $(LINK_NANO_SPECS) -T@(EXEScatterFile,' ') @(EXEInputs,' ') -Wl,-( @(PlatformIndependentLibs->'$(PLATFORM_INDEPENDENT_RELATIVE_LIB_DIR)%(FileName)%(Extension)',' ') @(DriverLibs->'%(FileName)%(Extension)',' ') @(InputLibs,' ') -Wl,-) -Wl,-no-whole-archive -Wl,-( $(GCCSTDLIBS) -Wl,-) $(ExtraLibs) -o@(EXEOutput)" />
         <!-- case LINK (GNU_TARGET)-ld.exe -->
         <!-- <Exec WorkingDirectory="$(LIB_DIR)" Command="$(LINK) $(LINK_FLAGS) -u ARM_Vectors -u _start - -Map $(EXEName).map - -output=@(EXEOutput) - -script=@(EXEScatterFile,' ') @(EXEInputs,' ') -( @(PlatformIndependentLibs->'$(PLATFORM_INDEPENDENT_RELATIVE_LIB_DIR)%(FileName)%(Extension)',' ') @(DriverLibs->'%(FileName)%(Extension)',' ')  @(InputLibs,' ') -) -( &quot;$(GNU_LIB_DIR)\libm.a&quot; &quot;$(GNU_LIB_DIR)\$(LIBCGCC)&quot; &quot;$(GNU_LIBGCC_DIR)\$(LIBGCC)&quot; -) -( $(ExtraLibs) -)"/> -->
 
@@ -317,6 +309,7 @@
         <!--     echo adding LOAD_IMAGE_CRC value to $*.symdefs -->
         <Exec Condition="'$(ADD_LOAD_IMAGE_CRC)'=='true'" Command="$(TOOLS_DIR)\BuildHelper -hashBuild $(EXEName).bin$(ImageLocation) $(EXEName).symdefs" />
     </Target>
+
 
   <Target Name="FindBinFilesForSig" >
     <!-- create signature files-->
