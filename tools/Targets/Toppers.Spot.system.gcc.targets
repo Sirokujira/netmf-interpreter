@@ -472,7 +472,10 @@
     </Target>
     <Target Name="kernel_mem_nousePass3">
         <!-- kernel_mem.c: $(APPL_CFG) kernel_cfg.timestamp $(ALL2_OBJS) $(LIBS_DEP) -->
-        <Exec Command="$(LINK) $(CFLAGS) $(CFG2_OUT_LDFLAGS) -o $(CFG2_OUT) $(START_OBJS) $(APPL_OBJS) $(SYSSVC_OBJS) $(CFG2_OBJS) $(ALL_LIBS) $(END_OBJS)" />
+        <!-- <Exec Command="$(LINK) $(CFLAGS) $(CFG2_OUT_LDFLAGS) -o $(CFG2_OUT) $(START_OBJS) $(APPL_OBJS) $(SYSSVC_OBJS) $(CFG2_OBJS) $(ALL_LIBS) $(END_OBJS)" /> -->
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(LINK) $(CFG2_OUT_LDFLAGS) -o $(CFG2_OUT) log_output.obj t_perror.obj strerror.obj banner.obj syslog.obj serial.obj logtask.obj kernel_cfg.obj kernel_mem2.obj" /> -->
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(LINK) $(CFG2_OUT_LDFLAGS) -o $(CFG2_OUT) cli_main.obj cli_motor.obj cli_sensor.obj ev3api.obj ev3api_battery.obj ev3api_brick.obj ev3api_cfg.obj ev3api_fs.obj ev3api_lcd.obj ev3api_motor.obj ev3api_newlib.obj ev3api_sensor.obj ev3api_speaker.obj strerror.obj t_perror.obj tlsf.obj vasyslog.obj" />
+        
         <Exec Command="$(NM) -n $(CFG2_OUT) > cfg2_out.syms" />
         <Exec Command="$(OBJCOPY) -O srec -S $(CFG2_OUT) cfg2_out.srec" />
         <Exec Command="rm -f $(LDSCRIPT)" />
