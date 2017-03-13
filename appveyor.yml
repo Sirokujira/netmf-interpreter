@@ -30,7 +30,8 @@ install:
 - ps: >-
     Start-FileDownload "https://github.com/NETMF/netmf-interpreter/releases/download/NETMFCryptoLibraries/NetMFCryptoLibs.msi"
     
-    Start-FileDownload "https://launchpad.net/gcc-arm-embedded/5.0/5-2016-q2-update/+download/gcc-arm-none-eabi-5_4-2016q2-20160622-win32.zip"
+    # Start-FileDownload "https://launchpad.net/gcc-arm-embedded/5.0/5-2016-q2-update/+download/gcc-arm-none-eabi-5_4-2016q2-20160622-win32.zip"
+    Start-FileDownload "https://launchpad.net/gcc-arm-embedded/4.9/4.9-2014-q4-major/+download/gcc-arm-none-eabi-4_9-2014q4-20141203-win32.zip"
     
     Start-FileDownload "http://netmf.github.io/downloads/build-tools.zip"
     
@@ -52,6 +53,8 @@ install:
 # setenv_gcc 5.2.1 C:\projects\gcc-arm-none-eabi
 # new
 # setenv_gcc 5.4.1 C:\projects\gcc-arm-none-eabi
+# 
+# setenv_gcc 4.9.3 C:\projects\gcc-arm-none-eabi-4_9
 build_script:
 - cmd: >-
     dir "C:\projects"
@@ -62,7 +65,7 @@ build_script:
     
     build_sdk.cmd
     
-    setenv_gcc 5.4.1 C:\projects\gcc-arm-none-eabi
+    setenv_gcc 4.9.3 C:\projects\gcc-arm-none-eabi-4_9
     
     cd Solutions\ToppersHRP2onEV3
     
@@ -79,6 +82,6 @@ artifacts:
 - path: netmfvs2015.msi
   name: netmfvs2015
 
-- path: BuildOutput\ARM\GCC5.0\le\FLASH\release\ToppersHRP2onEV3\obj\DeviceCode\Targets\OS\Toppers\hrp2\workspace\helloev3onnetmf\hrp2
+- path: BuildOutput\ARM\GCC4.9\le\FLASH\release\ToppersHRP2onEV3\obj\DeviceCode\Targets\OS\Toppers\hrp2\workspace\helloev3onnetmf\hrp2
   name: Release
 
