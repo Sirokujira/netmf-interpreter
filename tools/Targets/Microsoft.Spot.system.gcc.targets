@@ -18,8 +18,7 @@
     <CPP>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-g++.exe"</CPP>
     <TCPP>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-g++.exe"</TCPP>
     <AS>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-as.exe"</AS>
-    <!-- <LINK>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-g++.exe"</LINK> -->
-    <LINK>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-ld.exe"</LINK>
+    <LINK>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-g++.exe"</LINK>
     <AR>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-ar.exe"</AR>
     <NM>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-nm.exe"</NM>
     <FROMELF>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-objcopy.exe"</FROMELF>
