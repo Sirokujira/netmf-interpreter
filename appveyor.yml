@@ -65,7 +65,7 @@ build_script:
     
     build_sdk.cmd
     
-    setenv_gcc 4.9.3 C:\projects\gcc-arm-none-eabi-4_9
+    setenv_gcc 4.9.3 C:\projects\gcc-arm-none-eabi
     
     cd Solutions\ToppersHRP2onEV3
     
