@@ -6,14 +6,13 @@
 
   <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Settings" />
   <ItemGroup>
-    <!-- <SubDirectories Include="helloev3" Condition="'$(PLATFORM_FAMILY)'=='arm'"/> -->
+    <SubDirectories Include="helloev3onnetmf" Condition="'$(PLATFORM_FAMILY)'=='arm'"/>
     <!-- <SubDirectories Include="linetrace" Condition="'$(PLATFORM_FAMILY)'=='arm'"/> -->
     <!-- <SubDirectories Include="OBJ" Condition="'$(PLATFORM_FAMILY)'=='arm'"/> -->
     <!-- <SubDirectories Include="OBJ" /> -->
     <!-- kernel -->
     <!-- <SubDirectories Include="gyrobo_kernel" Condition="'$(PLATFORM_FAMILY)'=='arm'"/> -->
     <!-- <SubDirectories Include="helloev3_kernel" Condition="'$(PLATFORM_FAMILY)'=='arm'"/> -->
-    <SubDirectories Include="mruby_samples" />
   </ItemGroup>
   <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Targets" />
 </Project>

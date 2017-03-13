@@ -9,7 +9,7 @@
     <PLATFORM>ToppersHRP2onEV3</PLATFORM>
     <IsSolutionWizardVisible>True</IsSolutionWizardVisible>
     <ENDIANNESS>le</ENDIANNESS>
-    <DEVICE_TYPE>arm926EJ-S</DEVICE_TYPE>
+    <DEVICE_TYPE>arm926ej-s</DEVICE_TYPE>
     <OS_PLATFORM>true</OS_PLATFORM>
     <NO_BOOTLOADER_COMPRESSION>TRUE</NO_BOOTLOADER_COMPRESSION>
     <!-- cpu -->

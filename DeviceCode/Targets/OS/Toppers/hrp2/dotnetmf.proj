@@ -8,10 +8,10 @@
     <SubDirectories Include="DeviceCode" />
     <!-- Main -->
     <SubDirectories Include="workspace" />
+    <!-- Drivers -->
+    <SubDirectories Include="Target" />
     <!-- TECS -->
     <!-- <SubDirectories Include="tecsgen" /> -->
-    <!-- Target -->
-    <!-- <SubDirectories Include="ev3_gcc" /> -->
     <!-- Sample -->
     <!-- <SubDirectories Include="sample" /> -->
   </ItemGroup>

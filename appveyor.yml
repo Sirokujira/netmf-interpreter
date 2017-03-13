@@ -68,9 +68,17 @@ build_script:
     
     MSbuild dotnetmf.proj /t:rebuild /p:flavor=release;memory=flash
 
+    cd ..\..
+    
+    cd DeviceCode\Targets\OS\Toppers\hrp2\workspace\helloev3onnetmf
+    
+    MSbuild dotnetmf.proj /t:rebuild /p:flavor=release;memory=flash
+ 
 
 artifacts:
 - path: netmfvs2015.msi
   name: netmfvs2015
 
+- path: BuildOutput\ARM\GCC5.0\le\FLASH\release\ToppersHRP2onEV3\obj\DeviceCode\Targets\OS\Toppers\hrp2\workspace\helloev3onnetmf\hrp2
+  name: Release
 

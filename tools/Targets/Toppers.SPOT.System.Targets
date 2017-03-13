@@ -117,11 +117,11 @@
   
     <!-- Toppers Task -->
     <ItemGroup Condition="'$(OutputType)'=='Configure'">
-    	<TargetLib  Condition="'@(TargetLib)'==''" Include="$(LIB_DIR)\$(AssemblyName).$(LIB_EXT)"/>
+        <TargetLib  Condition="'@(TargetLib)'==''" Include="$(LIB_DIR)\$(AssemblyName).$(LIB_EXT)"/>
     </ItemGroup>
 
     <ItemGroup Condition="'$(OutputType)'=='DynamicLoader'">
-    	<TargetModule Condition="'@(TargetModule)'==''" Include="$(LIB_DIR)\$(AssemblyName)"/>
+        <TargetModule Condition="'@(TargetModule)'==''" Include="$(LIB_DIR)\$(AssemblyName)"/>
     </ItemGroup>
 
     <!-- Hook properties and targets -->
@@ -427,13 +427,13 @@
         <!-- // cp libkernel.a $(LIBKERNELDIR)/libkernel.a -->
     </Target>
 
+    <!--
     <Target Name="libkernel">
-        <!-- 
         make and libkernel.a copy to dev\null
         make libkernel.a > /dev/null && \
         cp libkernel.a $(LIBKERNELDIR)/libkernel.a
-        -->
     </Target>
+    -->
 
     <!-- Module Build -->
     <Target Name="EV3Module">
@@ -468,12 +468,4 @@
         <Message Text="  help              Display this helpful usage text."/>
         <Message Text=" "/>
     </Target>
-
-    <!--
-    <Target Name="Help2" >
-        <Message Text=" "/>
-        <Message Text="Test"/>
-        <Message Text=" "/>
-    </Target>
-    -->
 </Project>
