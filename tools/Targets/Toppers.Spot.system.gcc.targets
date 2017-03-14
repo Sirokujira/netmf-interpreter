@@ -70,6 +70,40 @@
         <CFLAGS>-fPIC -mno-pic-data-is-text-relative -nostdlib -std=gnu99 -fno-strict-aliasing -mcpu=$(DEVICE_TYPE) -mlittle-endian -D__TARGET_ARCH_ARM=5</CFLAGS>
         <CXXFLAGS>-fPIC -mno-pic-data-is-text-relative -nostdlib -std=gnu11 -fno-strict-aliasing -mcpu=$(DEVICE_TYPE) -mlittle-endian -D__TARGET_ARCH_ARM=5</CXXFLAGS>
 
+        
+        <!-- http://stackoverflow.com/questions/24881/how-do-i-fix-for-loop-initial-declaration-used-outside-c99-mode-gcc-error -->
+        <!-- Toppers Custom -->
+        <CTOPPERS_EV3_WARNING_OFF_FLAGS>-Wimplicit-function-declaration</CTOPPERS_EV3_WARNING_OFF_FLAGS>
+        <!-- <CTOPPERS_EV3_FLAGS>-std=gnu99 -Dgcc -D__TARGET_ARCH_ARM=5 $(CTOPPERS_EV3_WARNING_OFF_FLAGS)</CTOPPERS_EV3_FLAGS> --> 
+        
+        <!-- lcd build -->
+        <!-- kernel/task.c build flag : -DALLFUNC -->
+        <!-- target_config.c build flag : -DBUILD_EV3_PLATFORM -->
+        <CTOPPERS_EV3_FLAGS>-g -std=gnu99 -DBUILD_EV3_PLATFORM -DCONFIG_FB_DEFERRED_IO -D__KERNEL__ -DSUPPORT_XLOG_SYS -Dgcc -DALLFUNC -D__TARGET_ARCH_ARM=5 $(CTOPPERS_EV3_WARNING_OFF_FLAGS)</CTOPPERS_EV3_FLAGS>
+        
+        <!-- 
+            # kernel define
+            # KERNEL_DIR := $(KERNEL_DIR) $(COREDIR)
+            # KERNEL_ASMOBJS := $(KERNEL_ASMOBJS) core_support.o
+            # KERNEL_COBJS := $(KERNEL_COBJS) core_config.o arm.o
+            # KERNEL_CFLAGS := $(KERNEL_CFLAGS) -DSUPPORT_XLOG_SYS
+        -->
+        
+        <!-- -std=gnu++11 ng -->
+        <CXXTOPPERS_EV3_WARNING_OFF_FLAGS></CXXTOPPERS_EV3_WARNING_OFF_FLAGS>
+        <!-- <CXXTOPPERS_EV3_FLAGS>-fPIC -mno-pic-data-is-text-relative -nostdlib -fno-strict-aliasing -D__TARGET_ARCH_ARM=5</CXXTOPPERS_EV3_FLAGS> -->
+        <CXXTOPPERS_EV3_FLAGS>-std=gnu++11 -Dgcc -D__TARGET_ARCH_ARM=5 $(CXXTOPPERS_EV3_WARNING_OFF_FLAGS)</CXXTOPPERS_EV3_FLAGS>
+        
+        <!-- kernel -->
+        <USE_CFG_PASS3>mem use</USE_CFG_PASS3>
+        
+        <!-- <CC_FLAGS>$(CC_FLAGS)-xc </CC_FLAGS> -->
+        <!-- <CPP_FLAGS>$(CPP_FLAGS)-xc++ -Wno-invalid-offsetof -fcheck-new </CPP_FLAGS> -->
+        
+        <!-- Toppers Add -->
+        <CC_FLAGS>$(CC_FLAGS)-xc $(CTOPPERS_EV3_FLAGS)</CC_FLAGS>
+        <CPP_FLAGS>$(CPP_FLAGS)-xc++ -Wno-invalid-offsetof -fcheck-new $(CXXTOPPERS_EV3_FLAGS)</CPP_FLAGS>
+
         <FLOATING_POINT_FLAG Condition="('$(PLATFORM_EMULATED_FLOATINGPOINT)'!='true' and '$(DEVICE_TYPE)' == 'cortex-m4') or '$(INSTRUCTION_SET)'=='thumb2fp'">-mfloat-abi=hard -mfpu=fpv4-sp-d16</FLOATING_POINT_FLAG>
         <FLOATING_POINT_FLAG Condition="'$(PLATFORM_EMULATED_FLOATINGPOINT)'=='true'">-mfloat-abi=softfp -mfpu=fpv4-sp-d16</FLOATING_POINT_FLAG>
 
@@ -78,11 +112,11 @@
         <AS_CC_CPP_COMMON_FLAGS Condition="'$(ENDIANNESS)'=='le'">$(AS_CC_CPP_COMMON_FLAGS) -mlittle-endian</AS_CC_CPP_COMMON_FLAGS>
         <AS_CC_CPP_COMMON_FLAGS Condition="'$(ENDIANNESS)'=='be'">$(AS_CC_CPP_COMMON_FLAGS) -mbig-endian</AS_CC_CPP_COMMON_FLAGS>
     </PropertyGroup>
-
+    
     <!-- Assembler flags -->
     <PropertyGroup>
         <AS_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='RTM'"         >$(AS_TARGETTYPE_FLAGS) --defsym BUILD_RTM=1</AS_TARGETTYPE_FLAGS>
-        <AS_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Release'"     >$(AS_TARGETTYPE_FLAGS) --defsym BUILD_RTM=0 </AS_TARGETTYPE_FLAGS>
+        <AS_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Release'"     >$(AS_TARGETTYPE_FLAGS) --defsym BUILD_RTM=0</AS_TARGETTYPE_FLAGS>
         <AS_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Debug'"       >$(AS_TARGETTYPE_FLAGS) --defsym BUILD_RTM=0 -g</AS_TARGETTYPE_FLAGS>
         <AS_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Instrumented'">$(AS_TARGETTYPE_FLAGS) --defsym BUILD_RTM=0 -g</AS_TARGETTYPE_FLAGS>
         
@@ -90,11 +124,9 @@
         <AS_FLAGS Condition="'$(sampleprof)'=='true'" >$(AS_FLAGS) --defsym FIQ_SAMPLING_PROFILER=1</AS_FLAGS>
         <AS_FLAGS Condition="'$(latencyprof)'=='true'">$(AS_FLAGS) --defsym FIQ_LATENCY_PROFILER=1</AS_FLAGS>
         <AS_FLAGS Condition="'$(INSTRUCTION_SET)'=='arm'"     >$(AS_FLAGS) --defsym COMPILE_ARM=1</AS_FLAGS>
-        <AS_FLAGS Condition="'$(INSTRUCTION_SET)'=='thumb' and '$(COMPILER_TOOL)'=='GCCOP'">$(AS_FLAGS) --defsym COMPILE_THUMB=1 -mthumb</AS_FLAGS>
-        <AS_FLAGS Condition="'$(INSTRUCTION_SET)'=='thumb' and '$(COMPILER_TOOL)'!='GCCOP'">$(AS_FLAGS) --defsym COMPILE_THUMB=1 -mthumb-interwork</AS_FLAGS>
         <AS_FLAGS Condition="'$(INSTRUCTION_SET)'=='thumb2'"  >$(AS_FLAGS) --defsym COMPILE_THUMB2=1</AS_FLAGS>
         <AS_FLAGS Condition="'$(INSTRUCTION_SET)'=='thumb2fp'">$(AS_FLAGS) --defsym COMPILE_THUMB2=1</AS_FLAGS>
-
+        
         <!-- Assembler flags -->
         <!-- TODO: There are no string macros in the GDD assembler, so this must be done another way
           TargetLocation     SETS $(TARGETLOCATION)
@@ -104,7 +136,7 @@
           TargetPlatformName SETS PLATFORM_ARM_$(TARGETPLATFORM)
           CompilerVersion    SETS $(COMPILER_TOOL_VERSION)
           TargetPlatformProcessor SETS PLATFORM_ARM_$(TARGETPROCESSOR)
-         -->
+        -->
         <!-- Used by FirstEntry.s in liu of defining TargetPlatformProcessor & TargetPlatformName -->
         <AS_FLAGS>$(AS_FLAGS) --defsym PLATFORM_ARM_$(TARGETPROCESSOR)=1</AS_FLAGS>
         <AS_FLAGS>$(AS_FLAGS) --defsym PLATFORM_ARM_$(TARGETPLATFORM)=1</AS_FLAGS>
