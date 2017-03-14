@@ -58,8 +58,6 @@
         <CC_CPP_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Instrumented'" >$(CC_CPP_TARGETTYPE_FLAGS) -O0</CC_CPP_TARGETTYPE_FLAGS>
         <CC_CPP_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Release'"      >$(CC_CPP_TARGETTYPE_FLAGS) -Os</CC_CPP_TARGETTYPE_FLAGS>
 
-        <CC_FLAGS>$(CC_FLAGS)-xc</CC_FLAGS>
-
         <ARCH_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='RTM'"          >-O3</ARCH_TARGETTYPE_FLAGS>
         <ARCH_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Debug'"        >-Og -femit-class-debug-always -g3 -ggdb</ARCH_TARGETTYPE_FLAGS>
         <ARCH_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Instrumented'" >-O0</ARCH_TARGETTYPE_FLAGS>
@@ -70,7 +68,6 @@
         <CFLAGS>-fPIC -mno-pic-data-is-text-relative -nostdlib -std=gnu99 -fno-strict-aliasing -mcpu=$(DEVICE_TYPE) -mlittle-endian -D__TARGET_ARCH_ARM=5</CFLAGS>
         <CXXFLAGS>-fPIC -mno-pic-data-is-text-relative -nostdlib -std=gnu11 -fno-strict-aliasing -mcpu=$(DEVICE_TYPE) -mlittle-endian -D__TARGET_ARCH_ARM=5</CXXFLAGS>
 
-        
         <!-- http://stackoverflow.com/questions/24881/how-do-i-fix-for-loop-initial-declaration-used-outside-c99-mode-gcc-error -->
         <!-- Toppers Custom -->
         <CTOPPERS_EV3_WARNING_OFF_FLAGS>-Wimplicit-function-declaration</CTOPPERS_EV3_WARNING_OFF_FLAGS>
@@ -97,13 +94,13 @@
         <!-- kernel -->
         <USE_CFG_PASS3>mem use</USE_CFG_PASS3>
         
-        <!-- <CC_FLAGS>$(CC_FLAGS)-xc </CC_FLAGS> -->
-        <!-- <CPP_FLAGS>$(CPP_FLAGS)-xc++ -Wno-invalid-offsetof -fcheck-new </CPP_FLAGS> -->
-        
         <!-- Toppers Add -->
-        <CC_FLAGS>$(CC_FLAGS)-xc $(CTOPPERS_EV3_FLAGS)</CC_FLAGS>
-        <CPP_FLAGS>$(CPP_FLAGS)-xc++ -Wno-invalid-offsetof -fcheck-new $(CXXTOPPERS_EV3_FLAGS)</CPP_FLAGS>
+        <CC_FLAGS>$(CC_FLAGS) -xc $(CTOPPERS_EV3_FLAGS)</CC_FLAGS>
+        <CPP_FLAGS>$(CPP_FLAGS) -xc++ -Wno-invalid-offsetof -fcheck-new $(CXXTOPPERS_EV3_FLAGS)</CPP_FLAGS>
 
+        <FLOATING_POINT_FLAG Condition="'$(INSTRUCTION_SET)'=='arm'    and'$(PLATFORM_EMULATED_FLOATINGPOINT)'!='true'">-mfloat-abi=soft</FLOATING_POINT_FLAG>
+        <FLOATING_POINT_FLAG Condition="'$(INSTRUCTION_SET)'=='thumb'  and'$(PLATFORM_EMULATED_FLOATINGPOINT)'!='true'">-mfloat-abi=soft</FLOATING_POINT_FLAG>
+        <FLOATING_POINT_FLAG Condition="'$(INSTRUCTION_SET)'=='thumb2' and'$(PLATFORM_EMULATED_FLOATINGPOINT)'!='true'">-mfloat-abi=soft</FLOATING_POINT_FLAG>
         <FLOATING_POINT_FLAG Condition="('$(PLATFORM_EMULATED_FLOATINGPOINT)'!='true' and '$(DEVICE_TYPE)' == 'cortex-m4') or '$(INSTRUCTION_SET)'=='thumb2fp'">-mfloat-abi=hard -mfpu=fpv4-sp-d16</FLOATING_POINT_FLAG>
         <FLOATING_POINT_FLAG Condition="'$(PLATFORM_EMULATED_FLOATINGPOINT)'=='true'">-mfloat-abi=softfp -mfpu=fpv4-sp-d16</FLOATING_POINT_FLAG>
 
@@ -615,19 +612,19 @@
     <Target Name="objnameToBinary" Inputs="$(OBJFILE);$(OBJNAME)">
         <Exec Command="$(OBJCOPY) -O binary -S $(OBJFILE) $(OBJNAME).bin" />
     </Target>
-	
+    
     <Target Name="uImage" DependsOnTargets="@(OBJNAME).bin">
         <Exec Command="@(MKIMAGE) -A arm -O linux -T kernel -C none -a $(TEXT_START_ADDRESS) -e $(TEXT_START_ADDRESS) -n $(TOPPERS_OSTYPE) kernel -d $(TOPPERS_OSTYPE).bin uImage" />
         <Exec Command="chmod +x uImage" />
         <Exec Command="cp uImage @(SD_DIR)" />
     </Target>
-	
+    
     <!-- #  S RecordFile Create -->
     <!-- $(objnameToBinary).srec: $(OBJFILE) -->
     <Target Name="ObjnameToSrec" Inputs="@(OBJFILE);@(OBJNAME)">
         <Exec Command="$(OBJCOPY) -O srec -S $(OBJFILE) $(OBJNAME).srec" />
     </Target>
-	
+    
     <!-- Compile Result Clear -->
     <Target Name="clean">
         <!-- <Exec Command="rm -f \#* *~ *.o $(CLEAN_FILES)" /> -->
@@ -650,29 +647,29 @@
         <Exec Command="rm -f makeoffset.s offset.h" />
         <Exec Command="rm -f $(MLIB) $(CLIB) $(RLIB) $(DLIB) $(DEPLIB)" />
     </Target>
-	
+    
     <Target Name="cleankernel">
         <Exec Command="rm -rf $(KERNEL_LIB_OBJS)" />
         <Exec Command="rm -f makeoffset.s offset.h" />
     </Target>
-	
+    
     <Target Name="cleandep">
         <Exec Command="if ! [ -f Makefile.depend ]; then rm -f kernel_cfg.timestamp $(CFG2_OUT_SRCS); rm -f cfg1_out.c cfg1_out.o $(CFG1_OUT) cfg1_out.syms cfg1_out.srec; rm -f makeoffset.s offset.h; fi"/>
         <Exec Command="rm -f Makefile.depend"/>
     </Target>
-	
+    
     <Target Name="cleantecs">
         <Exec Command="rm -rf gen" />
         <Exec Command="rm -f tecs.timestamp" />
     </Target>
-	
+    
     <Target Name="clean_mrb_c">
     </Target>
-	
+    
     <Target Name="realclean" DependsOnTargets="cleantecs;cleandep;clean;clean_mrb_c">
         <Exec Command="rm -f $(REALCLEAN_FILES)" />
     </Target>
-	
+    
     <!-- TECS Interface Generator Execute -->
     <Target Name="tecs_timestamp">
         <Exec Command="$(APPL_CDL) $(TECS_IMPORTS)" />
@@ -680,10 +677,10 @@
         <Exec Command="$(TECSGEN) -R -D TECS -D TECS_CPP -I$(SRCDIR)/tecs_plugin $(INCLUDES) $(APPL_CDL)" />
         <Exec Command="touch tecs.timestamp" />
     </Target>
-	
+    
     <Target Name="tecs" DependsOnTargets="tecs_timestamp">
     </Target>
-	
+    
     <!-- Dependencies Files Create -->
     <Target Name="gendepend">
         <Message Text="Generating Makefile.depend."/>
@@ -707,7 +704,7 @@
       </Choose>
     -->
     </Target>
-	
+    
     <!-- End(Toppers Setting) -->
     <Target Name="CompressBin" Inputs="@(CompressBinFile);@(CompressBinFile->'%(RootDir)%(Directory)%(FileName).symdefs')" Outputs="@(CompressBinOutput);@(CompressBinComp)" >
         <Exec Command="$(NM) @(CompressBinFile->'%(RootDir)%(Directory)%(FileName).axf') >> @(CompressBinFile->'%(RootDir)%(Directory)%(FileName).dump')"/>
@@ -717,13 +714,13 @@
         <Exec Command="$(AS) $(AS_FLAGS) -I$(OBJ_DIR) -a=@(CompressBinOutput->'%(RootDir)%(Directory)%(FileName).txt') -o @(CompressBinOutput) @(CompressBinAsm)"/>
         <Exec Command="del /q @(CompressBinFile->'%(RootDir)%(Directory)%(FileName).hex')" ContinueOnError="true"/>
     </Target>
-	
+    
     <Target Name="BuildSigFiles"
             Inputs="@(AllSigFiles)"
             Outputs="@(AllSigFiles->'%(OutputDir)%(FileName).sig')"
             DependsOnTargets="FindBinFilesForSig"
             Condition="EXISTS('$(SPO_SDK)\crypto\lib\x86\dll\crypto.dll')" >
-			
+            
         <Message Text="Create Signature files for @(AllSigFiles)"/>
         <Exec Condition="EXISTS('%(RelativeDir)%(AllSigFiles.Filename)%(Extension)')" Command="$(PRG_MMP) -sign_file %(RelativeDir)%(AllSigFiles.Filename)%(Extension) $(SPO_SDK)\tools\bin\tinybooter_private_key.bin %(AllSigFiles.Outputdir)%(AllSigFiles.Filename).sig"/>
     </Target>
