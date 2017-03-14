@@ -1,3 +1,0 @@
-#ifndef  TOPPERS_CB_TYPE_ONLY
-#define  TOPPERS_CB_TYPE_ONLY
-#endif   /*TOPPERS_CB_TYPE_ONLY*/

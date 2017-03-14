@@ -4,7 +4,7 @@
   </PropertyGroup>
   <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Settings" />
   <ItemGroup>
-    <!-- EV3 Base -->
+    <!-- netMF Drivers? -->
     <SubDirectories Include="DeviceCode" />
     <!-- Main -->
     <SubDirectories Include="workspace" />

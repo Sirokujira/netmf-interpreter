@@ -1,13 +1,11 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
-    <Directory>DeviceCode/Targets/OS/Toppers/hrp2/target</Directory>
+    <Directory>DeviceCode/Targets/OS/Toppers/HRP2/target/ev3_gcc/drivers/sensor</Directory>
   </PropertyGroup>
   <Import Project="$(SPOCLIENT)/tools/targets/Microsoft.SPOT.System.Settings" />
   <ItemGroup>
-    <!-- EV3 Base -->
-    <!-- <SubDirectories Include="ev3_gcc" Condition="'$(PLATFORM_FAMILY)'=='arm'"/> -->
-    <SubDirectories Include="ev3_gcc" />
+    <SubDirectories Include="analog" />
+    <SubDirectories Include="uart" />
   </ItemGroup>
-  
   <Import Project="$(SPOCLIENT)/tools/targets/Microsoft.SPOT.System.Targets" />
 </Project>

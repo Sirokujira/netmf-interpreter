@@ -206,6 +206,7 @@ extern "C" {
 #define SOC_EDMA3_MEMPROTECT                0
 #endif
 
+#define am1808
 #if defined(am1808) || defined(omapl138) || defined(c6748)
 #define SOC_EDMA3_NUM_DMACH                 32
 #define SOC_EDMA3_NUM_QDMACH                8
