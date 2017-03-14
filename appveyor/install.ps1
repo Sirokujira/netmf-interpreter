@@ -56,7 +56,8 @@ function InstallGCCCompiler2()
 {
     $archivePath = "C:\\projects\\gcc-arm-none-eabi"
     # $zipFilePath = "C:\\projects\\netmf-interpreter\\gcc-arm-none-eabi-5_4-2016q2-20160622-win32.zip"
-    $zipFilePath = "C:\\projects\\netmf-interpreter\\gcc-arm-none-eabi-4_9-2014q4-20141203-win32.zip"
+    # $zipFilePath = "C:\\projects\\netmf-interpreter\\gcc-arm-none-eabi-4_9-2014q4-20141203-win32.zip"
+    $zipFilePath = "C:\\projects\\netmf-interpreter\\gcc-arm-none-eabi-4_9-2015q3-20150921-win32.exe"
     New-ZipExtract -source $zipFilePath -destination $archivePath -force -verbose
 }
 
