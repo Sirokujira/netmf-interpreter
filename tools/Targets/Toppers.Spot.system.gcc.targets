@@ -16,9 +16,7 @@
         <CC>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-gcc.exe"</CC>
         <TCC>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-gcc.exe"</TCC>
         <CPP>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-gcc.exe"</CPP>
-        <!-- <CPP>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-g++.exe"</CPP> -->
         <TCPP>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-gcc.exe"</TCPP>
-        <!-- <TCPP>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-g++.exe"</TCPP> -->
         <AS>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-as.exe"</AS>
         <!-- <LINK>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-g++.exe"</LINK> -->
         <LINK>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-ld.exe"</LINK>
