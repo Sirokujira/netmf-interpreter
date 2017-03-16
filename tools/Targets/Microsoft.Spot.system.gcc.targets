@@ -199,7 +199,6 @@
   <!-- other flags -->
   <PropertyGroup>
     <ARFLAGS>$(ARFLAGS) -rcs</ARFLAGS>
-    <!-- <LINK_FLAGS>$(LINK_FLAGS),-static,--gc-sections,--no-wchar-size-warning</LINK_FLAGS> -->
     <!-- 4.3 -->
     <LINK_FLAGS>$(LINK_FLAGS),-static,--gc-sections,--no-warn-mismatch -u ARM_Vectors -u _start</LINK_FLAGS>
   </PropertyGroup>
