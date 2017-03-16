@@ -214,7 +214,7 @@
   <PropertyGroup>
     <ARFLAGS>$(ARFLAGS) -rcs</ARFLAGS>
     <!-- 4.3 -->
-    <LINK_FLAGS>$(LINK_FLAGS),-static,--gc-sections,--no-warn-mismatch -u ARM_Vectors -u _start</LINK_FLAGS>
+    <LINK_FLAGS>$(LINK_FLAGS),-static,--gc-sections,--no-warn-mismatch,-u ARM_Vectors,-u _start</LINK_FLAGS>
   </PropertyGroup>
    
   <PropertyGroup>
@@ -235,7 +235,9 @@
 
     <!--Standard libraries -->
     <!-- NOTE: These are renamed by the "specs" provided to the command line-->
-    <GCCSTDLIBS>-lstdc++ -lsupc++ -lm -lgcc -lc </GCCSTDLIBS>
+    <!-- <GCCSTDLIBS>-lstdc++ -lsupc++ -lm -lgcc -lc </GCCSTDLIBS> -->
+    <!-- 4.3 -->
+    <GCCSTDLIBS>-lm -lgcc -lc </GCCSTDLIBS>
 
     <!-- Use newlib-nano (default) or newlib -->
     <LINK_NANO_SPECS Condition="'$(NewlibNano)' != 'false'">-specs="$(GNU_LIBGCC_DIR)\nano.specs"</LINK_NANO_SPECS>
@@ -323,8 +325,7 @@
     </Target>
 
   <Target Name="ArmBuildAXF" Condition="'$(OutputType)'=='Executable'" DependsOnTargets="ArmCompileCPP;ArmCompileC;ArmAssemble;$(ExtraEXETargets);BuildScatterfile" Inputs="@(EXEInputs);@(InputLibs);@(PlatformIndependentLibs->'$(PLATFORM_INDEPENDENT_RELATIVE_LIB_DIR)\%(FileName)%(Extension)');@(DriverLibs->'%(FileName)%(Extension)');@(EXEScatterFile)" Outputs="@(EXEOutput)">
-    <Exec WorkingDirectory="$(LIB_DIR)" Command="$(LINK) $(ARCH_TYPE_FLAGS) $(FLOATING_POINT_FLAG) -ffunction-sections -fdata-sections -Xlinker $(ARCH_TARGETTYPE_FLAGS) -L&quot;$(GNU_LIBGCC_DIR)&quot; -Wl$(LINK_FLAGS),-Map=$(EXEName).map --output=@(EXEOutput) -T@(EXEScatterFile,' ') @(EXEInputs,' ') -Wl,-( @(PlatformIndependentLibs->'$(PLATFORM_INDEPENDENT_RELATIVE_LIB_DIR)%(FileName)%(Extension)',' ') @(DriverLibs->'%(FileName)%(Extension)',' ') @(InputLibs,' ') -Wl,-) -Wl,-no-whole-archive -Wl,-( $(GCCSTDLIBS) -Wl,-) $(ExtraLibs)" />
-
+    <Exec WorkingDirectory="$(LIB_DIR)" Command="$(LINK) $(ARCH_TYPE_FLAGS) -ffunction-sections -fdata-sections -Xlinker -L&quot;$(GNU_LIBGCC_DIR)&quot; -Wl$(LINK_FLAGS),-Map=$(EXEName).map --output=@(EXEOutput) --script=@(EXEScatterFile,' ') @(EXEInputs,' ') -Wl,-( @(PlatformIndependentLibs->'$(PLATFORM_INDEPENDENT_RELATIVE_LIB_DIR)%(FileName)%(Extension)',' ') @(DriverLibs->'%(FileName)%(Extension)',' ') @(InputLibs,' ') -Wl,-) -Wl,-( $(GCCSTDLIBS) -Wl,-) $(ExtraLibs)" />
 
     <Exec Command="$(OBJDUMP) -d -EL @(EXEOutput) > $(EXEName).axfdump" />
 
