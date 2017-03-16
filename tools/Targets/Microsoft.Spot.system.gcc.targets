@@ -25,6 +25,16 @@
     <OBJDUMP>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-objdump.exe"</OBJDUMP>
     <RANLIB>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-ranlib.exe"</RANLIB>
     <CREATESYMDEF>$(TOOLS_DIR)\CreateSymdef.exe</CREATESYMDEF>
+    <CREATESYMDEF_ALT>$(SPOCLIENT)\TOOLS\BIN\CreateSymdef.exe</CREATESYMDEF_ALT>
+
+    <!-- alternate location for tool binaries -->
+    <AS      Condition="!EXISTS('$(AS)')"     >"$(GNU_TOOLS_BIN)\..\$(GNU_TARGET)\bin\as.exe"</AS>
+    <LINK    Condition="!EXISTS('$(LINK)')"   >"$(GNU_TOOLS_BIN)\..\$(GNU_TARGET)\bin\ld.exe"</LINK>
+    <AR      Condition="!EXISTS('$(AR)')"     >"$(GNU_TOOLS_BIN)\..\$(GNU_TARGET)\bin\ar.exe"</AR>
+    <NM      Condition="!EXISTS('$(NM)')"     >"$(GNU_TOOLS_BIN)\..\$(GNU_TARGET)\bin\nm.exe"</NM>
+    <FROMELF Condition="!EXISTS('$(FROMELF)')">"$(GNU_TOOLS_BIN)\..\$(GNU_TARGET)\bin\objcopy.exe"</FROMELF>
+    <OBJDUMP Condition="!EXISTS('$(OBJDUMP)')">"$(GNU_TOOLS_BIN)\..\$(GNU_TARGET)\bin\objdump.exe"</OBJDUMP>
+    <RANLIB  Condition="!EXISTS('$(RANLIB)')" >"$(GNU_TOOLS_BIN)\..\$(GNU_TARGET)\bin\ranlib.exe"</RANLIB>
   </PropertyGroup>
 
   <!-- based on cpu type, setup compiler-->  
@@ -283,7 +293,7 @@
         -->
         <!-- <Exec WorkingDirectory="$(LIB_DIR)" Command="$(LINK) $(ARCH_TYPE_FLAGS) $(FLOATING_POINT_FLAG) -ffunction-sections -fdata-sections -Xlinker $(ARCH_TARGETTYPE_FLAGS) -L&quot;$(GNU_LIBGCC_DIR)&quot; -specs=$(MsBuildThisFileDirectory)startfile.specs -Wl$(LINK_FLAGS),-Map=$(EXEName).map $(LINK_NANO_SPECS) -T@(EXEScatterFile,' ') @(EXEInputs,' ') -Wl,-( @(PlatformIndependentLibs->'$(PLATFORM_INDEPENDENT_RELATIVE_LIB_DIR)%(FileName)%(Extension)',' ') @(DriverLibs->'%(FileName)%(Extension)',' ') @(InputLibs,' ') -Wl,-) -Wl,-no-whole-archive -Wl,-( $(GCCSTDLIBS) -Wl,-) $(ExtraLibs) -o@(EXEOutput)" /> -->
         <!--  -nostartfiles -->
-        <Exec WorkingDirectory="$(LIB_DIR)" Command="$(LINK) $(ARCH_TYPE_FLAGS) $(FLOATING_POINT_FLAG) -ffunction-sections -fdata-sections -Xlinker -nostdlib -nostartfiles $(ARCH_TARGETTYPE_FLAGS) -L&quot;$(GNU_LIBGCC_DIR)&quot; -specs=$(MsBuildThisFileDirectory)startfile.specs -Wl$(LINK_FLAGS),-Map=$(EXEName).map $(LINK_NANO_SPECS) -T@(EXEScatterFile,' ') @(EXEInputs,' ') -Wl,-( @(PlatformIndependentLibs->'$(PLATFORM_INDEPENDENT_RELATIVE_LIB_DIR)%(FileName)%(Extension)',' ') @(DriverLibs->'%(FileName)%(Extension)',' ') @(InputLibs,' ') -Wl,-) -Wl,-no-whole-archive -Wl,-( $(GCCSTDLIBS) -Wl,-) $(ExtraLibs) -o&quot;@(EXEOutput)&quot;" />
+        <Exec WorkingDirectory="$(LIB_DIR)" Command="$(LINK) $(ARCH_TYPE_FLAGS) $(FLOATING_POINT_FLAG) -ffunction-sections -fdata-sections -Xlinker -nostdlib -nostartfiles $(ARCH_TARGETTYPE_FLAGS) -L&quot;$(GNU_LIBGCC_DIR)&quot; -Wl$(LINK_FLAGS),-Map=$(EXEName).map -T@(EXEScatterFile,' ') @(EXEInputs,' ') -Wl,-( @(PlatformIndependentLibs->'$(PLATFORM_INDEPENDENT_RELATIVE_LIB_DIR)%(FileName)%(Extension)',' ') @(DriverLibs->'%(FileName)%(Extension)',' ') @(InputLibs,' ') -Wl,-) -Wl,-no-whole-archive -Wl,-( $(GCCSTDLIBS) -Wl,-) $(ExtraLibs) -o&quot;@(EXEOutput)&quot;" />
 
         <Exec Command="@$(OBJDUMP) -d -EL @(EXEOutput) > $(EXEName).axfdump" />
         
@@ -309,7 +319,7 @@
     </Target>
 
   <Target Name="ArmBuildAXF" Condition="'$(OutputType)'=='Executable'" DependsOnTargets="ArmCompileCPP;ArmCompileC;ArmAssemble;$(ExtraEXETargets);BuildScatterfile" Inputs="@(EXEInputs);@(InputLibs);@(PlatformIndependentLibs->'$(PLATFORM_INDEPENDENT_RELATIVE_LIB_DIR)\%(FileName)%(Extension)');@(DriverLibs->'%(FileName)%(Extension)');@(EXEScatterFile)" Outputs="@(EXEOutput)">
-    <Exec WorkingDirectory="$(LIB_DIR)" Command="$(LINK) $(ARCH_TYPE_FLAGS) $(FLOATING_POINT_FLAG) -ffunction-sections -fdata-sections -Xlinker $(ARCH_TARGETTYPE_FLAGS) -L&quot;$(GNU_LIBGCC_DIR)&quot; -specs=$(MsBuildThisFileDirectory)startfile.specs -Wl$(LINK_FLAGS),-Map=$(EXEName).map $(LINK_NANO_SPECS) --output=@(EXEOutput) -T@(EXEScatterFile,' ') @(EXEInputs,' ') -Wl,-( @(PlatformIndependentLibs->'$(PLATFORM_INDEPENDENT_RELATIVE_LIB_DIR)%(FileName)%(Extension)',' ') @(DriverLibs->'%(FileName)%(Extension)',' ') @(InputLibs,' ') -Wl,-) -Wl,-no-whole-archive -Wl,-( $(GCCSTDLIBS) -Wl,-) $(ExtraLibs)" />
+    <Exec WorkingDirectory="$(LIB_DIR)" Command="$(LINK) $(ARCH_TYPE_FLAGS) $(FLOATING_POINT_FLAG) -ffunction-sections -fdata-sections -Xlinker $(ARCH_TARGETTYPE_FLAGS) -L&quot;$(GNU_LIBGCC_DIR)&quot; -Wl$(LINK_FLAGS),-Map=$(EXEName).map --output=@(EXEOutput) -T@(EXEScatterFile,' ') @(EXEInputs,' ') -Wl,-( @(PlatformIndependentLibs->'$(PLATFORM_INDEPENDENT_RELATIVE_LIB_DIR)%(FileName)%(Extension)',' ') @(DriverLibs->'%(FileName)%(Extension)',' ') @(InputLibs,' ') -Wl,-) -Wl,-no-whole-archive -Wl,-( $(GCCSTDLIBS) -Wl,-) $(ExtraLibs)" />
 
 
     <Exec Command="$(OBJDUMP) -d -EL @(EXEOutput) > $(EXEName).axfdump" />
