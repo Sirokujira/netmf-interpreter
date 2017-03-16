@@ -21,6 +21,7 @@ void initialize_lcd_font();
 #define virt_to_phys(x) (x)
 #define copy_from_user memcpy
 
+
 /**
  * Reuse 'st7586fb.c' from LEGO MINDSTORMS EV3 source code
  */
@@ -28,7 +29,7 @@ void initialize_lcd_font();
 
 #include <sil.h>
 static void mdelay(unsigned long msecs) {
-	sil_dly_nse(msecs * 1000 * 1000);
+    sil_dly_nse(msecs * 1000 * 1000);
 }
 
 #include <kernel.h>
@@ -50,72 +51,72 @@ bitmap_t *lcd_screen_fb;
 bitmap_t *ev3rt_console_fb;
 
 static void initialize(intptr_t unused) {
-	/**
-	 * Initialize frame buffers
-	 */
+    /**
+     * Initialize frame buffers
+     */
     static bitmap_t console_bitmap;
-	static uint8_t lcd_console_fb_vmem[((WIDTH + 2) / 3 * HEIGHT)];
-	console_bitmap.height = HEIGHT;
-	console_bitmap.width  = WIDTH;
-	console_bitmap.pixels = lcd_console_fb_vmem;
+    static uint8_t lcd_console_fb_vmem[((WIDTH + 2) / 3 * HEIGHT)];
+    console_bitmap.height = HEIGHT;
+    console_bitmap.width  = WIDTH;
+    console_bitmap.pixels = lcd_console_fb_vmem;
     ev3rt_console_fb = &console_bitmap;
     lcd_screen_fb = &lcd_screen;
     on_display_fb = lcd_screen_fb;
 
     initialize_lcd_font();
 
-	initialize_lcd_spi();
-	st7586fb_probe(&spidev);
-	st7586fb_ioctl(spidev.drvdata, FB_ST7586_INIT_DISPLAY, 0);
-	st7586fb_ioctl(spidev.drvdata, FB_ST7586_START_DISPLAY, 0);
+    initialize_lcd_spi();
+    st7586fb_probe(&spidev);
+    st7586fb_ioctl(spidev.drvdata, FB_ST7586_INIT_DISPLAY, 0);
+    st7586fb_ioctl(spidev.drvdata, FB_ST7586_START_DISPLAY, 0);
 
-	lcd_screen.pixels = ((struct fb_info *)(spidev.drvdata))->screen_base;
-	lcd_screen.height = HEIGHT;
-	lcd_screen.width = WIDTH;
-	global_brick_info.lcd_screen = &lcd_screen;
+    lcd_screen.pixels = ((struct fb_info *)(spidev.drvdata))->screen_base;
+    lcd_screen.height = HEIGHT;
+    lcd_screen.width = WIDTH;
+    global_brick_info.lcd_screen = &lcd_screen;
 
-	SVC_PERROR(act_tsk(LCD_REFRESH_TSK));
+    SVC_PERROR(act_tsk(LCD_REFRESH_TSK));
 }
 
 static void softreset(intptr_t unused) {
-	memset(lcd_screen.pixels, 0, BITMAP_PIXELS_SIZE(lcd_screen.width, lcd_screen.height));
+    memset(lcd_screen.pixels, 0, BITMAP_PIXELS_SIZE(lcd_screen.width, lcd_screen.height));
 }
 
 void initialize_lcd_dri() {
-	initialize(0);
-	softreset(0);
+    initialize(0);
+    softreset(0);
 
-	ev3_driver_t driver;
-	driver.init_func = NULL;
-	driver.softreset_func = softreset;
-	SVC_PERROR(platform_register_driver(&driver));
+    ev3_driver_t driver;
+    driver.init_func = NULL;
+    driver.softreset_func = softreset;
+    SVC_PERROR(platform_register_driver(&driver));
 }
 
 static void* current_video_memory;
 
 void lcd_refresh_tsk(intptr_t unused) {
-	struct st7586fb_par *par = ((struct fb_info *)(spidev.drvdata))->par;
+    struct st7586fb_par *par = ((struct fb_info *)(spidev.drvdata))->par;
 
-	while (1) {
+    while (1) {
 #if 0 // For test
-		struct fb_info *info = spidev.drvdata;
-		u8 *vmem = info->screen_base;
-		static int i = 0;
-		vmem[i++] = 0xFF;
-		if (i == (WIDTH+2)/3*HEIGHT) i = 0;
+        struct fb_info *info = spidev.drvdata;
+        u8 *vmem = info->screen_base;
+        static int i = 0;
+        vmem[i++] = 0xFF;
+        if (i == (WIDTH+2)/3*HEIGHT) i = 0;
 #endif
-		st7586_set_addr_win(par, 0, 0, WIDTH, HEIGHT);
-		st7586_write_cmd(par, ST7586_RAMWR);
+        st7586_set_addr_win(par, 0, 0, WIDTH, HEIGHT);
+        st7586_write_cmd(par, ST7586_RAMWR);
 
-		/* Blast frame buffer to ST7586 internal display RAM */
-		ER ercd = st7586_write_data_buf(par, on_display_fb->pixels, (WIDTH + 2) / 3 * HEIGHT);
-		assert(ercd == E_OK);
+        /* Blast frame buffer to ST7586 internal display RAM */
+        ER ercd = st7586_write_data_buf(par, on_display_fb->pixels, (WIDTH + 2) / 3 * HEIGHT);
+        assert(ercd == E_OK);
 
 #if 0 // Legacy code
-		st7586fb_deferred_io(spidev.drvdata, NULL);
+        st7586fb_deferred_io(spidev.drvdata, NULL);
 #endif
-		tslp_tsk(1000 / (LCD_FRAME_RATE));
-	}
+        tslp_tsk(1000 / (LCD_FRAME_RATE));
+    }
 }
 
 /**
@@ -136,30 +137,30 @@ void lcd_set_framebuffer(const bitmap_t *fb) {
 #if 0
 
 #if 0
-	/**
-	 * Show splash screen
-	 */
-	int width, height;
-	if (bmpfile_read_header(splash_bmpfile, sizeof(splash_bmpfile), &width, &height) == E_OK && width == lcd_screen.width && height == lcd_screen.height) {
-		bmpfile_to_bitmap(splash_bmpfile, sizeof(splash_bmpfile), &lcd_screen);
-		bitmap_draw_string("Initializing...", &lcd_screen, (lcd_screen.width - 10 * strlen("Initializing...")) / 2, 100, global_brick_info.font_w10h16, ROP_COPY);
-		st7586fb_deferred_io(spidev.drvdata, NULL);
-	} else syslog(LOG_ERROR, "Displaying splash screen failed.");
+    /**
+     * Show splash screen
+     */
+    int width, height;
+    if (bmpfile_read_header(splash_bmpfile, sizeof(splash_bmpfile), &width, &height) == E_OK && width == lcd_screen.width && height == lcd_screen.height) {
+        bmpfile_to_bitmap(splash_bmpfile, sizeof(splash_bmpfile), &lcd_screen);
+        bitmap_draw_string("Initializing...", &lcd_screen, (lcd_screen.width - 10 * strlen("Initializing...")) / 2, 100, global_brick_info.font_w10h16, ROP_COPY);
+        st7586fb_deferred_io(spidev.drvdata, NULL);
+    } else syslog(LOG_ERROR, "Displaying splash screen failed.");
 #endif
 
 void initialize_lcd_dri(intptr_t unused) {
-	ev3_driver_t driver;
-	driver.init_func = initialize;
-	driver.softreset_func = softreset;
-	SVC_PERROR(platform_register_driver(&driver));
+    ev3_driver_t driver;
+    driver.init_func = initialize;
+    driver.softreset_func = softreset;
+    SVC_PERROR(platform_register_driver(&driver));
 }
 
 
 static void initialize(intptr_t unused) {
-	ModuleInit();
+    ModuleInit();
 
-//	pwm_dev2_mmap = pMotor;
-//	driver_data_motor_rdy = &ReadyStatus;
+//  pwm_dev2_mmap = pMotor;
+//  driver_data_motor_rdy = &ReadyStatus;
 
     for(int i = 0; i < TNUM_OUTPUT_PORT; ++i) {
         driver_data_motor[i].speed = &(pMotor[i].Speed);
@@ -173,13 +174,13 @@ static void initialize(intptr_t unused) {
 }
 
 static void softreset(intptr_t unused) {
-	char buf[5];
-	buf[0] = opOUTPUT_SET_TYPE;
-	buf[1] = TYPE_NONE;
-	buf[2] = TYPE_NONE;
-	buf[3] = TYPE_NONE;
-	buf[4] = TYPE_NONE;
-	Device1Write(NULL, buf, sizeof(buf), NULL);
+    char buf[5];
+    buf[0] = opOUTPUT_SET_TYPE;
+    buf[1] = TYPE_NONE;
+    buf[2] = TYPE_NONE;
+    buf[3] = TYPE_NONE;
+    buf[4] = TYPE_NONE;
+    Device1Write(NULL, buf, sizeof(buf), NULL);
 }
 
 /**
@@ -189,14 +190,14 @@ static void softreset(intptr_t unused) {
  * @retval E_OK  success
  */
 ER_UINT extsvc_motor_command(intptr_t cmd, intptr_t size, intptr_t par3, intptr_t par4, intptr_t par5, ID cdmid) {
-	ER_UINT ercd;
+    ER_UINT ercd;
 
-	Device1Write(NULL, (void*)cmd, size, NULL);
+    Device1Write(NULL, (void*)cmd, size, NULL);
 
-	ercd = E_OK;
+    ercd = E_OK;
 
 //error_exit:
-	return(ercd);
+    return(ercd);
 }
 
 //ER motor_command(void *cmd, uint32_t size) {
@@ -217,15 +218,15 @@ ER_UINT extsvc_motor_command(intptr_t cmd, intptr_t size, intptr_t par3, intptr_
 
 //void ev3_motor_set_speed(uint_t port, int speed)
 //{
-//	SetRegulationPower(port, speed * 100);
+//  SetRegulationPower(port, speed * 100);
 //}
 //
 //void ev3_motor_brake(uint_t port, bool_t is_float)
 //{
-//	if(is_float)
-//		StopAndFloatMotor(port);
-//	else
-//		StopAndBrakeMotor(port);
+//  if(is_float)
+//      StopAndFloatMotor(port);
+//  else
+//      StopAndBrakeMotor(port);
 //}
 //
 //MOTORDATA *ev3_get_motor_data(uint_t port) {

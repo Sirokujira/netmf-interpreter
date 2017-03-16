@@ -101,7 +101,6 @@
     <RequiredProjects Include="$(SPOCLIENT)\Crypto\stubs\dotNetMF.proj" />
     <DriverLibs Include="Crypto_stub.$(LIB_EXT)" />
   </ItemGroup>
-  <!--
   <ItemGroup>
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Cores\arm\Processors\ARM9\GlobalLock\dotNetMF.proj" />
     <DriverLibs Include="GlobalLock_hal_Cortex.$(LIB_EXT)" />
@@ -110,7 +109,6 @@
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Cores\arm\Processors\ARM9\TinyHal\dotNetMF.proj" />
     <DriverLibs Include="TinyHal_Cortex.$(LIB_EXT)" />
   </ItemGroup>
-  -->
   <!-- 4.4 NG
   <ItemGroup>
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Drivers\Stubs\Processor\stubs_PreStackInit\dotNetMF.proj" />
