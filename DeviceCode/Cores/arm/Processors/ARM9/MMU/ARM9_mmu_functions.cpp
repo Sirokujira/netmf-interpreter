@@ -14,8 +14,6 @@
 
 //--//
 
-#pragma arm section code = "SectionForBootstrapOperations"
-
 UINT32* __section(SectionForBootstrapOperations) ARM9_MMU::GetL1Entry( UINT32* base, UINT32 address )
 {
     return &base[address >> 20];

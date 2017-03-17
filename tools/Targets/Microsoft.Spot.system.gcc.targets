@@ -286,7 +286,7 @@
     <Exec WorkingDirectory="$(OBJ_DIR)" Condition="'@(FilesExist)'!=''" Command="$(AR) $(ARFLAGS) @(TargetLib) @(ObjFiles->'%(FileName)%(Extension)',' ') "/>
   </Target>
 
-    <Target Name="BuildAXF" Condition="'$(OutputType)'=='Executable'" DependsOnTargets="ArmCompileCPP;ArmCompileC;ArmAssemble;$(ExtraEXETargets);BuildScatterfile" Inputs="@(EXEInputs);@(InputLibs);@(PlatformIndependentLibs->'$(PLATFORM_INDEPENDENT_RELATIVE_LIB_DIR)\%(FileName)%(Extension)');@(DriverLibs->'%(FileName)%(Extension)');@(EXEScatterFile)" Outputs="@(EXEOutput)">
+    <Target Name="BuildAXF" Condition="'$(OutputType)'=='Executable'" DependsOnTargets="BuildScatterfile;ArmCompileCPP;ArmCompileC;ArmAssemble;$(ExtraEXETargets)" Inputs="@(EXEInputs);@(InputLibs);@(PlatformIndependentLibs->'$(PLATFORM_INDEPENDENT_RELATIVE_LIB_DIR)\%(FileName)%(Extension)');@(DriverLibs->'%(FileName)%(Extension)');@(EXEScatterFile)" Outputs="@(EXEOutput)">
         <!-- NOTE:
              This forces the working directory to LIB_DIR in order to work around issues with long command lines.
              (GNU Embedded for ARM 4.9.3 at least has a bug where long command lines will drop a character and thus generate an error)

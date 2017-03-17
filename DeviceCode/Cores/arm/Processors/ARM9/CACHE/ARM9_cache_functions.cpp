@@ -11,8 +11,6 @@
 #pragma O2
 #endif
 
-#pragma arm section code = "SectionForBootstrapOperations"
-
 #if defined(__GNUC__)
 
 extern "C"

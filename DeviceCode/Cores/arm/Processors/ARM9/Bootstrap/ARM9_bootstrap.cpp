@@ -17,9 +17,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 
-#pragma arm section code = "SectionForBootstrapOperations"
-
-
 #if defined(COMPILE_ARM) || defined(COMPILE_THUMB)
 
 #pragma ARM

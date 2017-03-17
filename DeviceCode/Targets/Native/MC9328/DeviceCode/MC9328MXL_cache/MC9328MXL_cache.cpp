@@ -4,8 +4,6 @@
 
 #include <cores\arm\include\cpu.h>
 
-#pragma arm section code = "SectionForBootstrapOperations"
-
 void __section(SectionForBootstrapOperations) CPU_FlushCaches()
 {
     CPU_ARM9_FlushCaches(8,64);
