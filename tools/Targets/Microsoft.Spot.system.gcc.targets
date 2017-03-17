@@ -323,7 +323,7 @@
         <Exec Condition="'$(ADD_LOAD_IMAGE_CRC)'=='true'" Command="$(TOOLS_DIR)\BuildHelper -hashBuild $(EXEName).bin$(ImageLocation) $(EXEName).symdefs" />
     </Target>
 
-  <Target Name="ArmBuildAXF" Condition="'$(OutputType)'=='Executable'" DependsOnTargets="ArmCompileCPP;ArmCompileC;ArmAssemble;$(ExtraEXETargets);BuildScatterfile" Inputs="@(EXEInputs);@(InputLibs);@(PlatformIndependentLibs->'$(PLATFORM_INDEPENDENT_RELATIVE_LIB_DIR)\%(FileName)%(Extension)');@(DriverLibs->'%(FileName)%(Extension)');@(EXEScatterFile)" Outputs="@(EXEOutput)">
+  <Target Name="ArmBuildAXF" Condition="'$(OutputType)'=='Executable'" DependsOnTargets="BuildScatterfile;ArmCompileCPP;ArmCompileC;ArmAssemble;$(ExtraEXETargets)" Inputs="@(EXEInputs);@(InputLibs);@(PlatformIndependentLibs->'$(PLATFORM_INDEPENDENT_RELATIVE_LIB_DIR)\%(FileName)%(Extension)');@(DriverLibs->'%(FileName)%(Extension)');@(EXEScatterFile)" Outputs="@(EXEOutput)">
     <Exec WorkingDirectory="$(LIB_DIR)" Command="$(LINK) $(ARCH_TYPE_FLAGS) -ffunction-sections -fdata-sections -Xlinker -L&quot;$(GNU_LIBGCC_DIR)&quot; -Wl$(LINK_FLAGS),-Map=$(EXEName).map --output=@(EXEOutput) --script=@(EXEScatterFile,' ') @(EXEInputs,' ') -Wl,-( @(PlatformIndependentLibs->'$(PLATFORM_INDEPENDENT_RELATIVE_LIB_DIR)%(FileName)%(Extension)',' ') @(DriverLibs->'%(FileName)%(Extension)',' ') @(InputLibs,' ') -Wl,-) -Wl,-( $(GCCSTDLIBS) -Wl,-) $(ExtraLibs)" />
 
     <Exec Command="$(OBJDUMP) -d -EL @(EXEOutput) > $(EXEName).axfdump" />
