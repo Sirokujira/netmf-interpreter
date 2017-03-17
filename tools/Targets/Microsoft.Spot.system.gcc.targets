@@ -75,7 +75,8 @@
     yet another compiler aren't really that valuable anyway.
     -->
     <CC_FLAGS>$(CC_FLAGS)-xc -std=gnu99</CC_FLAGS>
-    <CPP_FLAGS>$(CPP_FLAGS)-xc++ -w -fcheck-new</CPP_FLAGS>
+    <!-- <CPP_FLAGS>$(CPP_FLAGS)-xc++ -w -fcheck-new</CPP_FLAGS> -->
+    <CPP_FLAGS>$(CPP_FLAGS)-xc++ -Wno-invalid-offsetof -fcheck-new</CPP_FLAGS>
 
     <FLOATING_POINT_FLAG Condition="'$(INSTRUCTION_SET)'=='arm'    and'$(PLATFORM_EMULATED_FLOATINGPOINT)'!='true'">-mfloat-abi=soft</FLOATING_POINT_FLAG>
     <FLOATING_POINT_FLAG Condition="'$(INSTRUCTION_SET)'=='thumb'  and'$(PLATFORM_EMULATED_FLOATINGPOINT)'!='true'">-mfloat-abi=soft</FLOATING_POINT_FLAG>
@@ -165,7 +166,7 @@
     <CC_CPP_COMMON_FLAGS Condition="'$(ENDIANNESS)'=='be'">$(CC_CPP_COMMON_FLAGS) -DNETMF_TARGET_BIG_ENDIAN</CC_CPP_COMMON_FLAGS>
 
     <CC_CPP_COMMON_FLAGS Condition="'$(PATCH_BUILD)'=='Active'">$(CC_CPP_COMMON_FLAGS) -DPATCH_BUILD</CC_CPP_COMMON_FLAGS>
-    <CC_CPP_COMMON_FLAGS Condition="'$(OS_PLATFORM)'=='true'">$(CC_CPP_COMMON_FLAGS) -DPLATFORM_ARM_OS_PORT</CC_CPP_COMMON_FLAGS>
+    <CC_CPP_COMMON_FLAGS Condition="'$(OS_PLATFORM)'=='true'">$(CC_CPP_COMMON_FLAGS) -DPLATFORM_ARM_OS_PORT -fsection-anchors</CC_CPP_COMMON_FLAGS>
 
     <CC_CPP_COMMON_FLAGS Condition="'$(COMPILER_TOOL)'=='GCC'"   >$(CC_CPP_COMMON_FLAGS) -DGCC </CC_CPP_COMMON_FLAGS>
     <CC_CPP_COMMON_FLAGS Condition="'$(COMPILER_TOOL_VERSION_NUM)'&lt;'4.4'"   >$(CC_CPP_COMMON_FLAGS) -DGCC_OLD_ARG_LIST </CC_CPP_COMMON_FLAGS>
