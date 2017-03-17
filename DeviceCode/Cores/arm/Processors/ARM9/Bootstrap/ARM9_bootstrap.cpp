@@ -26,8 +26,9 @@
     mrc     p15, 0, reg, c2, c0, 0; \
     nop \
 
+#pragma arm section code = "SectionForBootstrapOperations"
 
-void __section(SectionForBootstrapOperations) CPU_ARM9_BootstrapCode()
+void __section("SectionForBootstrapOperations") CPU_ARM9_BootstrapCode()
 {
     UINT32 reg;
 
