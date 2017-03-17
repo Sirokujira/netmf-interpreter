@@ -149,11 +149,11 @@
     <PlatformIndependentLibs Include="CLRStartup.$(LIB_EXT)" />
   </ItemGroup>
   <ItemGroup>
-    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Cores\arm\Processors\ARM9\GlobalLock\dotNetMF.proj" />
+    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Cores\arm\Common\GlobalLock\dotNetMF.proj" />
     <DriverLibs Include="GlobalLock_hal.$(LIB_EXT)" />
   </ItemGroup>
   <ItemGroup>
-    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\cores\arm\Processors\ARM9\TinyHal\dotNetMF.proj" />
+    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\cores\arm\dotNetMF.proj" />
     <DriverLibs Include="TinyHal.$(LIB_EXT)" />
   </ItemGroup>
   <ItemGroup>
