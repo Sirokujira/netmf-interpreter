@@ -10,7 +10,6 @@
     <SubDirectories Include="Bootstrap"/>
     <SubDirectories Include="CACHE"/>
     <SubDirectories Include="MMU"/>
-    <SubDirectories Include="GlobalLock"/>
   </ItemGroup>
 
   <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Targets" />

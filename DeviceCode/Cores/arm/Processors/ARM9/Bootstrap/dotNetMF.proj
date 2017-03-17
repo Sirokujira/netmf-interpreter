@@ -33,10 +33,10 @@
     <Compile Include="ARM9_bootstrap.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <HFiles Include="$(SPOCLIENT)\devicecode\cores\arm\Processors\ARM9\include\arm_util.h" />
-    <HFiles Include="$(SPOCLIENT)\devicecode\cores\arm\Processors\ARM9\include\cpu.h" />
-    <HFiles Include="$(SPOCLIENT)\devicecode\cores\arm\Processors\ARM9\include\cpu_definitions.h" />
-    <HFiles Include="$(SPOCLIENT)\devicecode\cores\arm\Processors\ARM9\include\smartptr_fiq_arm.h" />
+    <HFiles Include="$(SPOCLIENT)\devicecode\cores\arm\include\arm_util.h" />
+    <HFiles Include="$(SPOCLIENT)\devicecode\cores\arm\include\cpu.h" />
+    <HFiles Include="$(SPOCLIENT)\devicecode\cores\arm\include\cpu_definitions.h" />
+    <HFiles Include="$(SPOCLIENT)\devicecode\cores\arm\include\smartptr_fiq_arm.h" />
   </ItemGroup>
   <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Targets" />
 </Project>
