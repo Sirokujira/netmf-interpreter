@@ -213,7 +213,7 @@
   <PropertyGroup>
     <ARFLAGS>$(ARFLAGS) -rcs</ARFLAGS>
     <!-- 4.3 -->
-    <LINK_FLAGS>$(LINK_FLAGS),-static,--gc-sections,--no-warn-mismatch,-u ARM_Vectors,-u _start</LINK_FLAGS>
+    <LINK_FLAGS>$(LINK_FLAGS),-static,--gc-sections,--no-warn-mismatch,--undefined=ARM_Vectors,--undefined=_start</LINK_FLAGS>
   </PropertyGroup>
    
   <PropertyGroup>
@@ -286,7 +286,7 @@
     <Exec WorkingDirectory="$(OBJ_DIR)" Condition="'@(FilesExist)'!=''" Command="$(AR) $(ARFLAGS) @(TargetLib) @(ObjFiles->'%(FileName)%(Extension)',' ') "/>
   </Target>
 
-    <Target Name="BuildAXF" Condition="'$(OutputType)'=='Executable'" DependsOnTargets="BuildScatterfile;ArmCompileCPP;ArmCompileC;ArmAssemble;$(ExtraEXETargets)" Inputs="@(EXEInputs);@(InputLibs);@(PlatformIndependentLibs->'$(PLATFORM_INDEPENDENT_RELATIVE_LIB_DIR)\%(FileName)%(Extension)');@(DriverLibs->'%(FileName)%(Extension)');@(EXEScatterFile)" Outputs="@(EXEOutput)">
+    <Target Name="BuildAXF" Condition="'$(OutputType)'=='Executable'" DependsOnTargets="ArmCompileCPP;ArmCompileC;ArmAssemble;$(ExtraEXETargets);BuildScatterfile" Inputs="@(EXEInputs);@(InputLibs);@(PlatformIndependentLibs->'$(PLATFORM_INDEPENDENT_RELATIVE_LIB_DIR)\%(FileName)%(Extension)');@(DriverLibs->'%(FileName)%(Extension)');@(EXEScatterFile)" Outputs="@(EXEOutput)">
         <!-- NOTE:
              This forces the working directory to LIB_DIR in order to work around issues with long command lines.
              (GNU Embedded for ARM 4.9.3 at least has a bug where long command lines will drop a character and thus generate an error)
@@ -323,7 +323,7 @@
         <Exec Condition="'$(ADD_LOAD_IMAGE_CRC)'=='true'" Command="$(TOOLS_DIR)\BuildHelper -hashBuild $(EXEName).bin$(ImageLocation) $(EXEName).symdefs" />
     </Target>
 
-  <Target Name="ArmBuildAXF" Condition="'$(OutputType)'=='Executable'" DependsOnTargets="BuildScatterfile;ArmCompileCPP;ArmCompileC;ArmAssemble;$(ExtraEXETargets)" Inputs="@(EXEInputs);@(InputLibs);@(PlatformIndependentLibs->'$(PLATFORM_INDEPENDENT_RELATIVE_LIB_DIR)\%(FileName)%(Extension)');@(DriverLibs->'%(FileName)%(Extension)');@(EXEScatterFile)" Outputs="@(EXEOutput)">
+  <Target Name="ArmBuildAXF" Condition="'$(OutputType)'=='Executable'" DependsOnTargets="ArmCompileCPP;ArmCompileC;ArmAssemble;$(ExtraEXETargets);BuildScatterfile" Inputs="@(EXEInputs);@(InputLibs);@(PlatformIndependentLibs->'$(PLATFORM_INDEPENDENT_RELATIVE_LIB_DIR)\%(FileName)%(Extension)');@(DriverLibs->'%(FileName)%(Extension)');@(EXEScatterFile)" Outputs="@(EXEOutput)">
     <Exec WorkingDirectory="$(LIB_DIR)" Command="$(LINK) $(ARCH_TYPE_FLAGS) -ffunction-sections -fdata-sections -Xlinker -L&quot;$(GNU_LIBGCC_DIR)&quot; -Wl$(LINK_FLAGS),-Map=$(EXEName).map --output=@(EXEOutput) --script=@(EXEScatterFile,' ') @(EXEInputs,' ') -Wl,-( @(PlatformIndependentLibs->'$(PLATFORM_INDEPENDENT_RELATIVE_LIB_DIR)%(FileName)%(Extension)',' ') @(DriverLibs->'%(FileName)%(Extension)',' ') @(InputLibs,' ') -Wl,-) -Wl,-( $(GCCSTDLIBS) -Wl,-) $(ExtraLibs)" />
 
     <Exec Command="$(OBJDUMP) -d -EL @(EXEOutput) > $(EXEName).axfdump" />
