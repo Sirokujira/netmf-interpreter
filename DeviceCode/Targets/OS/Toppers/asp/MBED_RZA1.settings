@@ -1,0 +1,23 @@
+﻿<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Name>RZA1</Name>
+    <CpuName>RZA1</CpuName>
+    <DefaultISA>ARM</DefaultISA>
+    <Guid>{70F9B78E-0C56-4F23-AC58-1427507EC0CE}</Guid>
+    <Description>
+    </Description>
+    <Documentation>
+    </Documentation>
+    <ProjectPath>$(SPOCLIENT)\devicecode\Targets\OS\Toppers\asp\MBED_RZA1.settings</ProjectPath>
+    <PLATFORM_FAMILY>RZA1</PLATFORM_FAMILY>
+    <CustomFilter>RZA1</CustomFilter>
+    <INSTRUCTION_SET Condition="'$(INSTRUCTION_SET)'==''">RZA1</INSTRUCTION_SET>
+    <TARGETPROCESSOR>RZA1</TARGETPROCESSOR>
+    <TARGETCODEBASE>RZA1</TARGETCODEBASE>
+    <TARGETCODEBASETYPE>OS</TARGETCODEBASETYPE>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <IncludePaths Include="DeviceCode\Targets\OS\Toppers\asp" />
+  </ItemGroup>
+</Project>

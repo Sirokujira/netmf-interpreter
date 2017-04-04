@@ -1,0 +1,97 @@
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <AssemblyName>mbed_common</AssemblyName>
+    <Size>
+    </Size>
+    <ProjectGuid>{B80513EA-A942-4D30-AB3C-575D8877978F}</ProjectGuid>
+    <Description>mbed common library</Description>
+    <Level>HAL</Level>
+    <LibraryFile>mbed_common.$(LIB_EXT)</LibraryFile>
+    <ProjectPath>$(SPOCLIENT)\DeviceCode\OS\mbed\libraries\mbed\common\dotNetMF.proj</ProjectPath>
+    <ManifestFile>mbed_common.$(LIB_EXT).manifest</ManifestFile>
+    <Groups>Processor\mbed</Groups>
+    <Documentation>
+    </Documentation>
+    <PlatformIndependent>False</PlatformIndependent>
+    <CustomFilter>
+    </CustomFilter>
+    <Required>False</Required>
+    <IgnoreDefaultLibPath>False</IgnoreDefaultLibPath>
+    <IsStub>False</IsStub>
+    <LibraryCategory>
+      <MFComponent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Analog_HAL" Guid="{705CCD97-0A0F-410D-B535-78B862D742B1}" ProjectPath="" xmlns="">
+        <VersionDependency xmlns="http://schemas.microsoft.com/netmf/InventoryFormat.xsd">
+          <Major>4</Major>
+          <Minor>0</Minor>
+          <Revision>0</Revision>
+          <Build>0</Build>
+          <Extra />
+          <Date>2011-11-05</Date>
+          <Author>Kentaro Sekimoto</Author>
+        </VersionDependency>
+        <ComponentType xmlns="http://schemas.microsoft.com/netmf/InventoryFormat.xsd">LibraryCategory</ComponentType>
+      </MFComponent>
+    </LibraryCategory>
+    <ProcessorSpecific>
+      <MFComponent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="FM3" Guid="{00CC0049-00FD-0044-AF40-DB0A37E94271}" xmlns="">
+        <VersionDependency xmlns="http://schemas.microsoft.com/netmf/InventoryFormat.xsd">
+          <Major>4</Major>
+          <Minor>0</Minor>
+          <Revision>0</Revision>
+          <Build>0</Build>
+          <Extra />
+          <Date>2014-12-03</Date>
+          <Author>Kentaro Sekimoto</Author>
+        </VersionDependency>
+        <ComponentType xmlns="http://schemas.microsoft.com/netmf/InventoryFormat.xsd">Processor</ComponentType>
+      </MFComponent>
+    </ProcessorSpecific>
+    <Directory>DeviceCode\OS\mbed\libraries\mbed\common</Directory>
+    <OutputType>Library</OutputType>
+    <PlatformIndependentBuild>false</PlatformIndependentBuild>
+    <Version>4.0.0.0</Version>
+  </PropertyGroup>
+  <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Settings" />
+  <PropertyGroup />
+  <ItemGroup>
+    <Compile Include="assert.c" />
+    <Compile Include="board.c" />
+    <Compile Include="BusIn.cpp" />
+    <Compile Include="BusOut.cpp" />
+    <Compile Include="CallChain.cpp" />
+    <Compile Include="CAN.cpp" />
+    <Compile Include="error.c" />
+    <Compile Include="Ethernet.cpp" />
+    <Compile Include="exit.c" />
+    <Compile Include="FileBase.cpp" />
+    <Compile Include="FileLike.cpp" />
+    <Compile Include="FilePath.cpp" />
+    <Compile Include="FileSystemLike.cpp" />
+    <Compile Include="FunctionPointer.cpp" />
+    <Compile Include="gpio.c" />
+    <Compile Include="I2C.cpp" />
+    <Compile Include="I2CSlave.cpp" />
+    <Compile Include="InterruptIn.cpp" />
+    <Compile Include="InterruptManager.cpp" />
+    <Compile Include="LocalFileSystem.cpp" />
+    <Compile Include="mbed_interface.c" />
+    <Compile Include="pinmap_common.c" />
+    <Compile Include="RawSerial.cpp" />
+    <Compile Include="retarget.cpp" />
+    <Compile Include="rtc_time.c" />
+    <Compile Include="semihost_api.c" />
+    <Compile Include="Serial.cpp" />
+    <Compile Include="SerialBase.cpp" />
+    <Compile Include="SPI.cpp" />
+    <Compile Include="SPISlave.cpp" />
+    <Compile Include="Stream.cpp" />
+    <Compile Include="Ticker.cpp" />
+    <Compile Include="Timeout.cpp" />
+    <Compile Include="Timer.cpp" />
+    <Compile Include="TimerEvent.cpp" />
+    <Compile Include="us_ticker_api.c" />
+    <Compile Include="wait_api.c" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Targets" />
+</Project>
