@@ -33,7 +33,7 @@
 // Port to TOPPERS-RTOS and the .NET Micro Framework
 // Copyright (c) Microsoft Open Technologies
 #include <tinyhal.h>
-#include <TOPPERS_os_cpp.h>
+#include <toppers_os_cpp.h>
 #include <ctime>
 #include <mutex>
 #include <new>
@@ -50,6 +50,8 @@
 #include "arch/gcc/tool_stddef.h"
 #include "include/t_stddef.h"
 #include "include/kernel.h"
+#include "kernel/kernel_impl.h"
+#include "kernel_cfg.h"
 #include "kernel/semaphore.h"
 #include "kernel/mailbox.h"
 #include "kernel/time_event.h"
@@ -116,10 +118,10 @@ namespace
 //#endif
     
     // timeout support for Toppers
-    typedef Timeout<MsOpenTech::Toppers_RTOS::Timer> OsTimeout;
-    HAL_DblLinkedList<OsTimeout> MasterTimeoutQueue;
+    // typedef Timeout<MsOpenTech::Toppers_RTOS::Timer> OsTimeout;
+    // HAL_DblLinkedList<OsTimeout> MasterTimeoutQueue;
     
-    osPoolDef( sys_pool_timeout, MEMP_NUM_SYS_TIMEOUT, OsTimeout );
+    // osPoolDef( sys_pool_timeout, MEMP_NUM_SYS_TIMEOUT, OsTimeout );
     osPoolId  sys_pool_timeout;
 }
 extern "C"
@@ -183,7 +185,7 @@ extern "C"
         // sys_pool_timeout = osPoolCreate( osPool( sys_pool_timeout ) );
         // kernel/time_event.h
         initialize_tmevt();
-        MasterTimeoutQueue.Initialize();
+        // MasterTimeoutQueue.Initialize();
     }
     
     err_t sys_sem_new( sys_sem_t *sem, u8_t count )
@@ -236,7 +238,8 @@ extern "C"
         // endtime = HAL_Time_CurrentTime( );
         // /* return the time we waited for the sem */
         // int64_t waittime = endtime - starttime;
-        return  waittime > UINT32_MAX ? UINT32_MAX : waittime;
+        // return waittime > UINT32_MAX ? UINT32_MAX : waittime;
+    	return 0;
     }
 
     void sys_sem_signal( sys_sem_t *sem )
@@ -333,7 +336,8 @@ extern "C"
         // def->instances = 1;
         // id = osThreadCreate( def, arg );
         // 
-        return id;
+        // return id;
+    	return 0;
     }
 
 #endif /* TOPPERS_RTOS_COMPATIBLE */

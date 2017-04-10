@@ -51,7 +51,7 @@
         <POS_DEPENDENT></POS_DEPENDENT>
         <POS_INDEPENDENT>-fpic</POS_INDEPENDENT>
         <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'!='rza1'"     >$(CC_CPP_COMMON_FLAGS) -mabi=aapcs -ffunction-sections -fdata-sections -fomit-frame-pointer -mlong-calls -fdollars-in-identifiers -fshort-wchar -fno-exceptions -funsigned-char -mstructure-size-boundary=8</CC_CPP_COMMON_FLAGS>
-        <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='rza1'"     >$(CC_CPP_COMMON_FLAGS) -fdollars-in-identifiers -fshort-wchar -fno-exceptions  -funsigned-char</CC_CPP_COMMON_FLAGS>
+        <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='rza1'"     >$(CC_CPP_COMMON_FLAGS) -fdollars-in-identifiers -fshort-wchar -fno-exceptions  -funsigned-char -fpermissive</CC_CPP_COMMON_FLAGS>
         <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='rza1'"     >$(CC_CPP_COMMON_FLAGS) -fno-strict-aliasing -fno-rtti -fno-exceptions -fno-delete-null-pointer-checks -fmessage-length=0 -fno-builtin -mno-unaligned-access</CC_CPP_COMMON_FLAGS>
         
         <CC_CPP_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='RTM'"          >$(CC_CPP_TARGETTYPE_FLAGS) -O3</CC_CPP_TARGETTYPE_FLAGS>
@@ -73,27 +73,7 @@
         <!-- http://stackoverflow.com/questions/24881/how-do-i-fix-for-loop-initial-declaration-used-outside-c99-mode-gcc-error -->
         <!-- Toppers Custom -->
         <CTOPPERS_EV3_WARNING_OFF_FLAGS>-Wimplicit-function-declaration</CTOPPERS_EV3_WARNING_OFF_FLAGS>
-        
-        <!-- lcd build -->
-        <!-- kernel/task.c build flag : -DALLFUNC -->
-        <!-- target_config.c build flag : -DBUILD_EV3_PLATFORM -->
-        <!-- __TARGET_ARCH_ARM parameter -->
-        <!-- http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0472lj/chr1359125007083_00018.html -->
-        <!-- EV3 -->
-        <!-- <CTOPPERS_EV3_FLAGS>-g -std=gnu99 -DBUILD_EV3_PLATFORM -DCONFIG_FB_DEFERRED_IO -D__KERNEL__ -DSUPPORT_XLOG_SYS -Dgcc -DALLFUNC -D__TARGET_ARCH_ARM=5 $(CTOPPERS_EV3_WARNING_OFF_FLAGS)</CTOPPERS_EV3_FLAGS> -->
-        <!-- GR-PEACH -->
-        <CTOPPERS_EV3_FLAGS>-g -std=gnu99 -mfloat-abi=softfp -march=armv7-a -mfpu=neon $(ARCH_TYPE_FLAGS) -mlittle-endian -DCONFIG_FB_DEFERRED_IO -D__KERNEL__ -DSUPPORT_XLOG_SYS -Dgcc -DALLFUNC -D__TARGET_ARCH_ARM=7 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM $(CTOPPERS_EV3_WARNING_OFF_FLAGS)</CTOPPERS_EV3_FLAGS>
-        
-        <!-- -std=gnu++11 ng -->
         <CXXTOPPERS_EV3_WARNING_OFF_FLAGS></CXXTOPPERS_EV3_WARNING_OFF_FLAGS>
-        <!-- EV3 -->
-        <!-- <CXXTOPPERS_EV3_FLAGS>-fPIC -mno-pic-data-is-text-relative -nostdlib -fno-strict-aliasing -D__TARGET_ARCH_ARM=5 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM</CXXTOPPERS_EV3_FLAGS> -->
-        <!-- GR-PEACH -->
-        <CXXTOPPERS_EV3_FLAGS>-std=gnu++11 -Dgcc -D__TARGET_ARCH_ARM=7 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM $(CXXTOPPERS_EV3_WARNING_OFF_FLAGS)</CXXTOPPERS_EV3_FLAGS>
-        
-        <!-- Toppers Add -->
-        <CC_FLAGS>$(CC_FLAGS) -xc $(CTOPPERS_EV3_FLAGS)</CC_FLAGS>
-        <CPP_FLAGS>$(CPP_FLAGS) -xc++ -Wno-invalid-offsetof -fcheck-new $(CXXTOPPERS_EV3_FLAGS)</CPP_FLAGS>
         
         <!--
             <FLOATING_POINT_FLAG Condition="'$(INSTRUCTION_SET)'=='thumb'  and'$(PLATFORM_EMULATED_FLOATINGPOINT)'!='true'">-mfloat-abi=soft</FLOATING_POINT_FLAG>
@@ -106,11 +86,30 @@
         <FLOATING_POINT_FLAG Condition="('$(PLATFORM_EMULATED_FLOATINGPOINT)'!='true' and '$(DEVICE_TYPE)' == 'cortex-m4') or '$(INSTRUCTION_SET)'=='thumb2fp'">-mfloat-abi=hard -mfpu=fpv4-sp-d16</FLOATING_POINT_FLAG>
         <FLOATING_POINT_FLAG Condition="'$(PLATFORM_EMULATED_FLOATINGPOINT)'=='true'">-mfloat-abi=softfp -mfpu=fpv4-sp-d16</FLOATING_POINT_FLAG>
         <FLOATING_POINT_FLAG Condition="'$(INSTRUCTION_SET)'=='rza1' and '$(PLATFORM_EMULATED_FLOATINGPOINT)'!='true'"> -mfloat-abi=softfp -march=armv7-a -mfpu=neon </FLOATING_POINT_FLAG>
-        
+
         <AS_CC_CPP_COMMON_FLAGS>$(AS_CC_CPP_COMMON_FLAGS) $(FLOATING_POINT_FLAG) </AS_CC_CPP_COMMON_FLAGS>
         <AS_CC_CPP_COMMON_FLAGS>$(AS_CC_CPP_COMMON_FLAGS) $(ARCH_TYPE_FLAGS)</AS_CC_CPP_COMMON_FLAGS>
         <AS_CC_CPP_COMMON_FLAGS Condition="'$(ENDIANNESS)'=='le'">$(AS_CC_CPP_COMMON_FLAGS) -mlittle-endian</AS_CC_CPP_COMMON_FLAGS>
         <AS_CC_CPP_COMMON_FLAGS Condition="'$(ENDIANNESS)'=='be'">$(AS_CC_CPP_COMMON_FLAGS) -mbig-endian</AS_CC_CPP_COMMON_FLAGS>
+
+        <!-- lcd build -->
+        <!-- kernel/task.c build flag : -DALLFUNC -->
+        <!-- target_config.c build flag : -DBUILD_EV3_PLATFORM -->
+        <!-- __TARGET_ARCH_ARM parameter -->
+        <!-- http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0472lj/chr1359125007083_00018.html -->
+        <!-- EV3 -->
+        <!-- <CTOPPERS_EV3_FLAGS>-g -std=gnu99 -DBUILD_EV3_PLATFORM -DCONFIG_FB_DEFERRED_IO -D__KERNEL__ -DSUPPORT_XLOG_SYS -Dgcc -DALLFUNC -D__TARGET_ARCH_ARM=5 $(CTOPPERS_EV3_WARNING_OFF_FLAGS)</CTOPPERS_EV3_FLAGS> -->
+        <!-- GR-PEACH -->
+        <CTOPPERS_EV3_FLAGS>-g -std=gnu99 $(AS_CC_CPP_COMMON_FLAGS) -DCONFIG_FB_DEFERRED_IO -D__KERNEL__ -DSUPPORT_XLOG_SYS -Dgcc -DALLFUNC -D__TARGET_ARCH_ARM=7 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM $(CTOPPERS_EV3_WARNING_OFF_FLAGS)</CTOPPERS_EV3_FLAGS>
+        <!-- -std=gnu++11 ng? -->
+        <!-- EV3 -->
+        <!-- <CXXTOPPERS_EV3_FLAGS>-fPIC -mno-pic-data-is-text-relative -nostdlib -fno-strict-aliasing -D__TARGET_ARCH_ARM=5 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM</CXXTOPPERS_EV3_FLAGS> -->
+        <!-- GR-PEACH -->
+        <CXXTOPPERS_EV3_FLAGS>$(CC_CPP_COMMON_FLAGS) $(AS_CC_CPP_COMMON_FLAGS) -DCONFIG_FB_DEFERRED_IO -D__KERNEL__ -DSUPPORT_XLOG_SYS -Dgcc -D__TARGET_ARCH_ARM=7 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM $(CXXTOPPERS_EV3_WARNING_OFF_FLAGS)</CXXTOPPERS_EV3_FLAGS>
+        
+        <!-- Toppers Add -->
+        <CC_FLAGS>$(CC_FLAGS) -xc $(CTOPPERS_EV3_FLAGS)</CC_FLAGS>
+        <CPP_FLAGS>$(CPP_FLAGS) -xc++ -Wno-invalid-offsetof -fcheck-new $(CXXTOPPERS_EV3_FLAGS)</CPP_FLAGS>
     </PropertyGroup>
     
     <!-- Assembler flags -->
@@ -203,17 +202,22 @@
         
         <CC_CPP_COMMON_FLAGS>$(CC_CPP_COMMON_FLAGS) @(CC_CPP_Defines->'-D%(filename)',' ')</CC_CPP_COMMON_FLAGS>
         
-        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(CLRROOT)\$(Directory)</CC_CPP_INCS>
-        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)\DeviceCode\include</CC_CPP_INCS>
-        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)\DeviceCode\Cores\arm</CC_CPP_INCS>
-        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)\Support\Include  </CC_CPP_INCS>
-        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)\crypto\inc </CC_CPP_INCS>
-        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)\CLR\Include</CC_CPP_INCS>
-        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)\CLR\Libraries\CorLib</CC_CPP_INCS>
-        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)\CLR\Libraries\SPOT</CC_CPP_INCS>
-        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)\CLR\Libraries\SPOT_Hardware</CC_CPP_INCS>
-        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)\CLR\Libraries\SPOT_Graphics</CC_CPP_INCS>
-        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)\CLR\Libraries\SPOT_Net</CC_CPP_INCS>
+        <!-- custom(GR-PEACH) -->
+        <OBJ_DIR2>$(DST_DIR)/$(OBJEXT)/DeviceCode/Targets/OS/Toppers/$(TOPPERS_OSTYPE)/$(APPNAME)</OBJ_DIR2>
+
+        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(CLRROOT)/$(Directory)</CC_CPP_INCS>
+        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)/DeviceCode/include</CC_CPP_INCS>
+        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)/DeviceCode/Cores/arm</CC_CPP_INCS>
+        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)/Support/Include  </CC_CPP_INCS>
+        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)/crypto/inc </CC_CPP_INCS>
+        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)/CLR/Include</CC_CPP_INCS>
+        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)/CLR/Libraries/CorLib</CC_CPP_INCS>
+        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)/CLR/Libraries/SPOT</CC_CPP_INCS>
+        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)/CLR/Libraries/SPOT_Hardware</CC_CPP_INCS>
+        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)/CLR/Libraries/SPOT_Graphics</CC_CPP_INCS>
+        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)/CLR/Libraries/SPOT_Net</CC_CPP_INCS>
+        <!-- add cfg output files -->
+        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(OBJ_DIR2)</CC_CPP_INCS>
         <CC_CPP_INCS>$(CC_CPP_INCS) -I"$(ARMINC)"</CC_CPP_INCS>
         <CC_CPP_INCS>$(CC_CPP_INCS) @(IncludePaths->'-I$(CLRROOT)\%(relativedir)%(filename)',' ')</CC_CPP_INCS>
         <CC_CPP_INCS>$(CC_CPP_INCS) @(DirectIncludePaths->'-I%(FullPath)',' ')</CC_CPP_INCS>
@@ -251,7 +255,10 @@
     <PropertyGroup>
         <EXEName>$(BIN_DIR)\$(AssemblyName)</EXEName>
     
-        <TargetRule Condition="'$(OutputType)'=='Library'">ArmBuildLib</TargetRule>
+        <TargetRule Condition="'$(OutputType)'=='Library' and '$(AssemblyName)'!='ToppersASP_RTX'">ArmBuildLib</TargetRule>
+        <!-- OS Build -->
+        <TargetRule Condition="'$(OutputType)'=='Library' and '$(AssemblyName)'=='ToppersASP_RTX'">ArmBuildLib4</TargetRule>
+
         <TargetRule Condition="'$(OutputType)'=='Executable'">BuildAXF</TargetRule>
         <TargetRule Condition="'$(OutputType)'=='Configure'">BuildAXF</TargetRule>
     
@@ -339,9 +346,9 @@
         <Delete Condition="EXISTS(@(TargetLib->'%(FullPath).manifest', ' '))" Files="@(TargetLib->'%(FullPath).manifest', ' ')" ContinueOnError="true" />
     </Target>
     
+    <!-- <Target Name="ArmBuildLib" Condition="'$(OutputType)'=='Library'" DependsOnTargets="kernel_cfg1;ArmAssemble2;kernel_cfg2;FindCompileFilesExistence;FindFastCompileFilesExistence;DelBuildLib2;ArmCompileC2;ArmCompileCPP;CreateLibManifest;libkernel;kernel_cfg3;$(ExtraTargets);" Inputs="@(ObjFiles)" Outputs="@(TargetLib);@(TargetLib->'%(FullPath).manifest')"> -->
     <!-- org -->
-    <!-- <Target Name="ArmBuildLib" Condition="'$(OutputType)'=='Library'" DependsOnTargets="FindCompileFilesExistence;FindFastCompileFilesExistence;DelBuildLib;ArmCompileC;ArmCompileCPP;ArmAssemble;CreateLibManifest;$(ExtraTargets);" Inputs="@(ObjFiles)" Outputs="@(TargetLib);@(TargetLib->'%(FullPath).manifest')"> -->
-    <Target Name="ArmBuildLib" Condition="'$(OutputType)'=='Library'" DependsOnTargets="kernel_cfg1;ArmAssemble2;kernel_cfg2;FindCompileFilesExistence;FindFastCompileFilesExistence;DelBuildLib2;ArmCompileC2;ArmCompileCPP;CreateLibManifest;libkernel;kernel_cfg3;$(ExtraTargets);" Inputs="@(ObjFiles)" Outputs="@(TargetLib);@(TargetLib->'%(FullPath).manifest')">
+    <Target Name="ArmBuildLib" Condition="'$(OutputType)'=='Library'" DependsOnTargets="FindCompileFilesExistence;FindFastCompileFilesExistence;DelBuildLib;ArmCompileC;ArmCompileCPP;ArmAssemble;CreateLibManifest;$(ExtraTargets);" Inputs="@(ObjFiles)" Outputs="@(TargetLib);@(TargetLib->'%(FullPath).manifest')">
         <Exec WorkingDirectory="$(OBJ_DIR)" Condition="'@(FilesExist)'!=''" Command="$(AR) $(ARFLAGS) @(TargetLib) @(ObjFiles->'%(FileName)%(Extension)',' ') "/>
         <!-- <Exec Condition="'@(FilesExist)'!=''" Command="$(AR) $(ARFLAGS) @(TargetLib) @(ObjFiles->'%(FileName)%(Extension)',' ') "/> -->
     </Target>
@@ -378,6 +385,12 @@
         <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="diff cfg2_out.syms $(TOPPERS_OSTYPE).syms" /> -->
         <!-- use PowerShell(Error) -->
         <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="powershell -NonInteractive -executionpolicy Unrestricted -command &quot;Compare-Object $(cat cfg2_out.syms) $(cat $(TOPPERS_OSTYPE).syms)&quot;"/> -->
+    </Target>
+    
+    <!-- os(lib) -->
+    <Target Name="ArmBuildLib4" Condition="'$(OutputType)'=='Library'" DependsOnTargets="kernel_cfg1;ArmAssemble2;kernel_cfg2;FindCompileFilesExistence;FindFastCompileFilesExistence;DelBuildLib2;ArmCompileC2;ArmCompileCPP;CreateLibManifest;libkernel;kernel_cfg3;$(ExtraTargets);" Inputs="@(ObjFiles)" Outputs="@(TargetLib);@(TargetLib->'%(FullPath).manifest')">
+        <Exec WorkingDirectory="$(OBJ_DIR)" Condition="'@(FilesExist)'!=''" Command="$(AR) $(ARFLAGS) @(TargetLib) @(ObjFiles->'%(FileName)%(Extension)',' ') "/>
+        <!-- <Exec Condition="'@(FilesExist)'!=''" Command="$(AR) $(ARFLAGS) @(TargetLib) @(ObjFiles->'%(FileName)%(Extension)',' ') "/> -->
     </Target>
     
     <!-- EV3 only -->

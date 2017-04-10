@@ -114,9 +114,10 @@
         <When Condition=" '$(TOPPERS_MODULES)'=='EV3' and '$(TOPPERS_OSTYPE)'=='hrp2'">
             <PropertyGroup>
                 <!-- Toppers HRP2 + EV3 -->
+                <APPNAME>app</APPNAME>
                 <CFGINCLUDE             Condition="'$(CFGINCLUDE)'==''">-I$(SRCDIR) -I$(SRCDIR)/arch -I$(SRCDIR)/include -I$(KERNELDIR) -I$(SRCDIR)/workspace/common -I$(SRCDIR)/arch/arm_gcc/am1808 -I$(SRCDIR)/arch/arm_gcc/common -I$(TARGETDIR) -I$(TARGETDIR)/api -I$(TARGETDIR)/api/include -I$(TARGETDIR)/drivers/common/include -I$(TARGETDIR)/TLSF-2.4.6/include -I$(TARGETDIR)/platform/include -I$(TARGETDIR)/pil/include</CFGINCLUDE>
                 <CFG1COMPILEINCLUDE     Condition="'$(CFG1COMPILEINCLUDE)'==''">-I$(SRCDIR) -I$(SRCDIR)/arch -I$(SRCDIR)/include -I$(KERNELDIR) -I$(SRCDIR)/workspace/common -I$(SRCDIR)/arch/arm_gcc/am1808 -I$(SRCDIR)/arch/arm_gcc/common -I$(TARGETDIR) -I$(TARGETDIR)/api -I$(TARGETDIR)/api/include -I$(TARGETDIR)/drivers/common/include -I$(TARGETDIR)/TLSF-2.4.6/include -I$(TARGETDIR)/platform/include -I$(TARGETDIR)/pil/include -I$(TARGETDIR)/dmloader/app -I$(TARGETDIR)/drivers/common/include -I$(TARGETDIR)/drivers/platform/include -I$(TARGETDIR)/drivers/linux/arch/arm/mach-davinci/include -I$(TARGETDIR)/drivers/linux/arch/arm/include -I$(TARGETDIR)/drivers/linux/include -I$(TARGETDIR)/drivers/common/virtual-linux-kernel/include -I$(TARGETDIR)/drivers -I$(TARGETDIR)/drivers/common/include -I$(TARGETDIR)/drivers/gpio/include -I$(TARGETDIR)/drivers/brick/include -I$(TARGETDIR)/drivers/common/include -I$(TARGETDIR)/drivers/console/include -I$(TARGETDIR)/drivers/fatfs/include  -I$(TARGETDIR)/drivers/lcd/include -I$(TARGETDIR)/drivers/motor/include -I$(TARGETDIR)/drivers/newlib/include -I$(TARGETDIR)/drivers/sensor/include -I$(TARGETDIR)/drivers/soc/include -I$(TARGETDIR)/drivers/sound/include -I$(TARGETDIR)/drivers/soc/AM1808_StarterWare_1_00_03_03/include -I$(TARGETDIR)/drivers/soc/AM1808_StarterWare_1_00_03_03/include/hw -I$(TARGETDIR)/drivers/soc/AM1808_StarterWare_1_00_03_03/include -I$(TARGETDIR)/drivers/sensor/analog/include -I$(TARGETDIR)/drivers/sensor/uart/include -I$(TARGETDIR)/drivers/bluetooth/include -I$(TARGETDIR)/api -I$(SPOCLIENT)/$(Directory)</CFG1COMPILEINCLUDE>
-                <APPLNAME               Condition="'$(APPLNAME)'==''">$(SPOCLIENT)/$(Directory)/app</APPLNAME>
+                <APPLNAME               Condition="'$(APPLNAME)'==''">$(SPOCLIENT)/$(Directory)/$(APPNAME)</APPLNAME>
                 <APPL_CFG>$(APPLNAME).cfg</APPL_CFG>
                 <APPL_CDL>$(APPLNAME).cdl</APPL_CDL>
                 <APPL_ASMOBJS />
@@ -234,9 +235,10 @@
         <When Condition=" '$(TOPPERS_MODULES)'=='zynq' and '$(TOPPERS_OSTYPE)'=='fmp' ">
             <PropertyGroup>
                 <!-- Toppers FMP + Zynq -->
+                <APPNAME>sample1</APPNAME>
                 <CFGINCLUDE             Condition="'$(CFGINCLUDE)'==''">-I$(SRCDIR) -I$(SRCDIR)/arch -I$(SRCDIR)/include -I$(KERNELDIR) -I$(SRCDIR)/arch/arm_gcc/mpcore -I$(SRCDIR)/arch/arm_gcc/common -I$(TARGETDIR)</CFGINCLUDE>
                 <CFG1COMPILEINCLUDE     Condition="'$(CFG1COMPILEINCLUDE)'==''">-I$(SRCDIR) -I$(SRCDIR)/arch -I$(SRCDIR)/include -I$(KERNELDIR) -I$(SRCDIR)/arch/arm_gcc/mpcore -I$(SRCDIR)/arch/arm_gcc/common -I$(TARGETDIR) -I$(SPOCLIENT)/$(Directory)</CFG1COMPILEINCLUDE>
-                <APPLNAME               Condition="'$(APPLNAME)'==''">$(SPOCLIENT)/$(Directory)/sample1</APPLNAME>
+                <APPLNAME               Condition="'$(APPLNAME)'==''">$(SPOCLIENT)/$(Directory)/$(APPNAME)</APPLNAME>
                 <APPL_CFG>$(APPLNAME).cfg</APPL_CFG>
                 <APPL_CDL>$(APPLNAME).cdl</APPL_CDL>
                 <APPL_ASMOBJS />
@@ -294,9 +296,10 @@
             <PropertyGroup>
                 <!-- Toppers ASP + GR-PEACH -->
                 <!-- base "http://www.toppers.jp/download.cgi/asp_gr_peach_gcc-20160315.zip" -->
+                <APPNAME>sample1</APPNAME>
                 <CFGINCLUDE             Condition="'$(CFGINCLUDE)'==''">-I$(SRCDIR) -I$(SRCDIR)/arch -I$(SRCDIR)/include -I$(KERNELDIR) -I$(SRCDIR)/arch/arm_gcc/rza1 -I$(SRCDIR)/arch/arm_gcc/common -I$(SRCDIR)/arch/arm_gcc/at91sam7s -I$(TARGETDIR)</CFGINCLUDE>
                 <CFG1COMPILEINCLUDE     Condition="'$(CFG1COMPILEINCLUDE)'==''">-I$(SRCDIR) -I$(SRCDIR)/arch -I$(SRCDIR)/include -I$(KERNELDIR) -I$(SRCDIR)/arch/arm_gcc/rza1 -I$(SRCDIR)/arch/arm_gcc/common -I$(TARGETDIR) -I$(SPOCLIENT)/$(Directory)</CFG1COMPILEINCLUDE>
-                <APPLNAME               Condition="'$(APPLNAME)'==''">$(SPOCLIENT)/$(Directory)/sample1</APPLNAME>
+                <APPLNAME               Condition="'$(APPLNAME)'==''">$(SPOCLIENT)/$(Directory)/$(APPNAME)</APPLNAME>
                 <APPL_CFG>$(APPLNAME).cfg</APPL_CFG>
                 <APPL_CDL>$(APPLNAME).cdl</APPL_CDL>
                 <APPL_ASMOBJS />
