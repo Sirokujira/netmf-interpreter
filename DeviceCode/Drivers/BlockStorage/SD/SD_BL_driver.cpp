@@ -364,7 +364,7 @@ BOOL SD_BS_Driver::ChipInitialize(void *context)
         
         // send CMD16, set block length to 512
 #ifdef SD_DEBUG
-        debug_printf" SD SendCmdWithR1Resp: SD_SET_BLOCKLEN[512] -> R1_IN_READY_STATUS\r\n");
+        debug_printf(" SD SendCmdWithR1Resp: SD_SET_BLOCKLEN[512] -> R1_IN_READY_STATUS\r\n");
 #endif
 
         response = SD_SendCmdWithR1Resp(SD_SET_BLOCKLEN, 512, 0xFF, R1_IN_READY_STATUS);

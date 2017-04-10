@@ -1,19 +1,27 @@
 $ 
-$     ¥Ñ¥¹2¤Î¥³¥¢°ÍÂ¸¥Æ¥ó¥×¥ì¡¼¥È¡ÊARMÍÑ¡Ë
+$     ãƒ‘ã‚¹2ã®ã‚³ã‚¢ä¾å­˜ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆï¼ˆARMç”¨ï¼‰
 $ 
 
 $ 
-$ DEF_EXC¤Ç»ÈÍÑ¤Ç¤­¤ëCPUÎã³°¥Ï¥ó¥É¥éÈÖ¹æ
+$ DEF_EXCã§ä½¿ç”¨ã§ãã‚‹CPUä¾‹å¤–ãƒãƒ³ãƒ‰ãƒ©ç•ªå·
 $ 
 $EXCNO_DEFEXC_VALID = EXCNO_VALID$
 
 $ 
-$  É¸½à¥Æ¥ó¥×¥ì¡¼¥È¥Õ¥¡¥¤¥ë¤Î¥¤¥ó¥¯¥ë¡¼¥É
+$  æ¨™æº–ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰
 $ 
 $INCLUDE "kernel/kernel.tf"$
 
+$DEFAULT_EXC_HANDLER[0] = "default_exc_handler"$
+$DEFAULT_EXC_HANDLER[1] = "default_undef_handler"$
+$DEFAULT_EXC_HANDLER[2] = "default_swi_handler"$
+$DEFAULT_EXC_HANDLER[3] = "default_prefetchabort_handler"$
+$DEFAULT_EXC_HANDLER[4] = "default_dataabort_handler"$
+$DEFAULT_EXC_HANDLER[5] = "default_exc_handler"$
+$DEFAULT_EXC_HANDLER[6] = "default_exc_handler"$
+
 $ 
-$  Îã³°¥Ï¥ó¥É¥é¥Æ¡¼¥Ö¥ë
+$  ä¾‹å¤–ãƒãƒ³ãƒ‰ãƒ©ãƒ†ãƒ¼ãƒ–ãƒ«
 $ 
 $FOREACH prcid RANGE(1, TNUM_PRCID)$
 
@@ -23,7 +31,7 @@ $JOINEACH excno {0,1,...,6} ",\n"$
 	$IF LENGTH(EXC.EXCNO[number])$
 		$TAB$(FP)($EXC.EXCHDR[number]$)
 	$ELSE$
-		$TAB$(FP)(_kernel_default_exc_handler)
+		$TAB$(FP)(_kernel_$DEFAULT_EXC_HANDLER[excno]$)
 	$END$
 	$SPC$$FORMAT("/* %d */", +excno)$
 $END$
@@ -33,7 +41,7 @@ $NL$
 $END$
 
 $ 
-$  Îã³°¥Ï¥ó¥É¥é¥¢¥¯¥»¥¹¥Æ¡¼¥Ö¥ë
+$  ä¾‹å¤–ãƒãƒ³ãƒ‰ãƒ©ã‚¢ã‚¯ã‚»ã‚¹ãƒ†ãƒ¼ãƒ–ãƒ«
 $ 
 const FP* const _kernel_p_exch_table[TNUM_PRCID] = {$NL$
 $JOINEACH prcid RANGE(1, TNUM_PRCID) ",\n"$

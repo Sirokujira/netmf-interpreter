@@ -85,7 +85,8 @@ BOOL BlockStorageUpdate::InitializeFiles( UINT32 blockTypes )
             }
         }
         else if(freeListIdx < ARRAYSIZE(g_BlockStorageUpdate.m_freeList))
-        {
+        {
+
             int size = g_BlockStorageUpdate.m_freeList[freeListIdx].File.Size;
             
             if(size == 0)

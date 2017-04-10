@@ -3,393 +3,53 @@
  *      Toyohashi Open Platform for Embedded Real-Time Systems/
  *      Flexible MultiProcessor Kernel
  *
- *  Copyright (C) 2006-2015 by Embedded and Real-Time Systems Laboratory
+ *  Copyright (C) 2006-2016 by Embedded and Real-Time Systems Laboratory
  *              Graduate School of Information Science, Nagoya Univ., JAPAN
  *
- *  ╛х╡н├°║ю╕в╝╘д╧бд░╩▓╝д╬(1)б┴(4)д╬╛Є╖ядЄ╦■д┐д╣╛ь╣чд╦╕┬дъбд╦▄е╜е╒е╚ежез
- *  евб╩╦▄е╜е╒е╚ежезевдЄ▓■╩╤д╖д┐дтд╬дЄ┤▐дрбе░╩▓╝╞▒д╕б╦дЄ╗╚═╤бж╩г└╜бж▓■
- *  ╩╤бж║╞╟█╔█б╩░╩▓╝бд═°═╤д╚╕╞д╓б╦д╣дыд│д╚дЄ╠╡╜■д╟╡Ў┬·д╣дыбе
- *  (1) ╦▄е╜е╒е╚ежезевдЄе╜б╝е╣е│б╝е╔д╬╖┴д╟═°═╤д╣ды╛ь╣чд╦д╧бд╛х╡нд╬├°║ю
- *      ╕в╔╜╝ибдд│д╬═°═╤╛Є╖ядкдшд╙▓╝╡нд╬╠╡╩▌╛┌╡м─ъдмбдд╜д╬д▐д▐д╬╖┴д╟е╜б╝
- *      е╣е│б╝е╔├цд╦┤▐д▐дьд╞дддыд│д╚бе
- *  (2) ╦▄е╜е╒е╚ежезевдЄбдещеде╓ещеъ╖┴╝░д╩д╔бд┬╛д╬е╜е╒е╚ежезев│л╚пд╦╗╚
- *      ═╤д╟днды╖┴д╟║╞╟█╔█д╣ды╛ь╣чд╦д╧бд║╞╟█╔█д╦╚╝дже╔енехесеєе╚б╩═°═╤
- *      ╝╘е▐е╦ехевеыд╩д╔б╦д╦бд╛х╡нд╬├°║ю╕в╔╜╝ибдд│д╬═°═╤╛Є╖ядкдшд╙▓╝╡н
- *      д╬╠╡╩▌╛┌╡м─ъдЄ╖╟║▄д╣дыд│д╚бе
- *  (3) ╦▄е╜е╒е╚ежезевдЄбд╡б┤яд╦┴╚д▀╣■дрд╩д╔бд┬╛д╬е╜е╒е╚ежезев│л╚пд╦╗╚
- *      ═╤д╟днд╩дд╖┴д╟║╞╟█╔█д╣ды╛ь╣чд╦д╧бд╝бд╬ддд║дьдлд╬╛Є╖ядЄ╦■д┐д╣д│
- *      д╚бе
- *    (a) ║╞╟█╔█д╦╚╝дже╔енехесеєе╚б╩═°═╤╝╘е▐е╦ехевеыд╩д╔б╦д╦бд╛х╡нд╬├°
- *        ║ю╕в╔╜╝ибдд│д╬═°═╤╛Є╖ядкдшд╙▓╝╡нд╬╠╡╩▌╛┌╡м─ъдЄ╖╟║▄д╣дыд│д╚бе
- *    (b) ║╞╟█╔█д╬╖┴┬╓дЄбд╩╠д╦─ъдсды╩¤╦бд╦дшд├д╞бдTOPPERSе╫еэе╕езепе╚д╦
- *        ╩є╣Ёд╣дыд│д╚бе
- *  (4) ╦▄е╜е╒е╚ежезевд╬═°═╤д╦дшдъ─╛└▄┼кд▐д┐д╧┤╓└▄┼кд╦└╕д╕дыдддлд╩ды┬╗
- *      │▓длдщдтбд╛х╡н├°║ю╕в╝╘дкдшд╙TOPPERSе╫еэе╕езепе╚дЄ╠╚└╒д╣дыд│д╚бе
- *      д▐д┐бд╦▄е╜е╒е╚ежезевд╬ецб╝е╢д▐д┐д╧еиеєе╔ецб╝е╢длдщд╬дддлд╩ды═¤
- *      ═│д╦┤Ёд┼дп└┴╡сдлдщдтбд╛х╡н├°║ю╕в╝╘дкдшд╙TOPPERSе╫еэе╕езепе╚дЄ
- *      ╠╚└╒д╣дыд│д╚бе
+ *  ф╕КшиШшСЧф╜ЬцийшАЕуБпя╝Мф╗еф╕ЛуБо(1)я╜Ю(4)уБоцЭбф╗╢уВТц║АуБЯуБЩха┤хРИуБлщЩРуВКя╝МцЬмуВ╜уГХуГИуВжуВз
+ *  уВвя╝ИцЬмуВ╜уГХуГИуВжуВзуВвуВТцФ╣хдЙуБЧуБЯуВВуБоуВТхРлуВАя╝Оф╗еф╕ЛхРМуБШя╝ЙуВТф╜┐чФиуГ╗шдЗшг╜уГ╗цФ╣
+ *  хдЙуГ╗хЖНщЕНх╕Гя╝Иф╗еф╕Ля╝МхИйчФиуБихС╝уБ╢я╝ЙуБЩуВЛуБУуБиуВТчДбхДЯуБзши▒шл╛уБЩуВЛя╝О
+ *  (1) цЬмуВ╜уГХуГИуВжуВзуВвуВТуВ╜уГ╝уВ╣уВ│уГ╝уГЙуБох╜вуБзхИйчФиуБЩуВЛха┤хРИуБлуБпя╝Мф╕КшиШуБошСЧф╜Ь
+ *      цийшбичд║я╝МуБУуБохИйчФицЭбф╗╢уБКуВИуБ│ф╕ЛшиШуБочДбф┐Эши╝шжПхоЪуБМя╝МуБЭуБоуБ╛уБ╛уБох╜вуБзуВ╜уГ╝
+ *      уВ╣уВ│уГ╝уГЙф╕нуБлхРлуБ╛уВМуБжуБДуВЛуБУуБия╝О
+ *  (2) цЬмуВ╜уГХуГИуВжуВзуВвуВТя╝МуГйуВдуГЦуГйуГкх╜вх╝ПуБкуБйя╝Мф╗ЦуБоуВ╜уГХуГИуВжуВзуВвщЦЛчЩ║уБлф╜┐
+ *      чФиуБзуБНуВЛх╜вуБзхЖНщЕНх╕ГуБЩуВЛха┤хРИуБлуБпя╝МхЖНщЕНх╕ГуБлф╝┤уБЖуГЙуВнуГеуГбуГ│уГИя╝ИхИйчФи
+ *      шАЕуГЮуГЛуГеуВвуГлуБкуБйя╝ЙуБля╝Мф╕КшиШуБошСЧф╜Ьцийшбичд║я╝МуБУуБохИйчФицЭбф╗╢уБКуВИуБ│ф╕ЛшиШ
+ *      уБочДбф┐Эши╝шжПхоЪуВТцО▓ш╝ЙуБЩуВЛуБУуБия╝О
+ *  (3) цЬмуВ╜уГХуГИуВжуВзуВвуВТя╝МцйЯхЩиуБлч╡ДуБ┐ш╛╝уВАуБкуБйя╝Мф╗ЦуБоуВ╜уГХуГИуВжуВзуВвщЦЛчЩ║уБлф╜┐
+ *      чФиуБзуБНуБкуБДх╜вуБзхЖНщЕНх╕ГуБЩуВЛха┤хРИуБлуБпя╝МцмбуБоуБДуБЪуВМуБЛуБоцЭбф╗╢уВТц║АуБЯуБЩуБУ
+ *      уБия╝О
+ *    (a) хЖНщЕНх╕ГуБлф╝┤уБЖуГЙуВнуГеуГбуГ│уГИя╝ИхИйчФишАЕуГЮуГЛуГеуВвуГлуБкуБйя╝ЙуБля╝Мф╕КшиШуБошСЧ
+ *        ф╜Ьцийшбичд║я╝МуБУуБохИйчФицЭбф╗╢уБКуВИуБ│ф╕ЛшиШуБочДбф┐Эши╝шжПхоЪуВТцО▓ш╝ЙуБЩуВЛуБУуБия╝О
+ *    (b) хЖНщЕНх╕ГуБох╜вцЕЛуВТя╝МхИеуБлхоЪуВБуВЛцЦ╣ц│ХуБлуВИуБгуБжя╝МTOPPERSуГЧуГнуВ╕уВзуВпуГИуБл
+ *        ха▒хСКуБЩуВЛуБУуБия╝О
+ *  (4) цЬмуВ╜уГХуГИуВжуВзуВвуБохИйчФиуБлуВИуВКчЫ┤цОечЪДуБ╛уБЯуБпщЦУцОечЪДуБлчФЯуБШуВЛуБДуБЛуБкуВЛцРН
+ *      хо│уБЛуВЙуВВя╝Мф╕КшиШшСЧф╜ЬцийшАЕуБКуВИуБ│TOPPERSуГЧуГнуВ╕уВзуВпуГИуВТхЕНш▓муБЩуВЛуБУуБия╝О
+ *      уБ╛уБЯя╝МцЬмуВ╜уГХуГИуВжуВзуВвуБоуГжуГ╝уВ╢уБ╛уБЯуБпуВиуГ│уГЙуГжуГ╝уВ╢уБЛуВЙуБоуБДуБЛуБкуВЛчРЖ
+ *      чФ▒уБлхЯ║уБеуБПшлЛц▒ВуБЛуВЙуВВя╝Мф╕КшиШшСЧф╜ЬцийшАЕуБКуВИуБ│TOPPERSуГЧуГнуВ╕уВзуВпуГИуВТ
+ *      хЕНш▓муБЩуВЛуБУуБия╝О
  *
- *  ╦▄е╜е╒е╚ежезевд╧бд╠╡╩▌╛┌д╟─є╢бд╡дьд╞дддыдтд╬д╟двдыбе╛х╡н├°║ю╕в╝╘дк
- *  дшд╙TOPPERSе╫еэе╕езепе╚д╧бд╦▄е╜е╒е╚ежезевд╦┤╪д╖д╞бд╞├─ъд╬╗╚═╤╠▄┼к
- *  д╦┬╨д╣ды┼м╣ч└ндт┤▐дсд╞бддддлд╩ды╩▌╛┌дт╣╘дяд╩ддбед▐д┐бд╦▄е╜е╒е╚ежез
- *  евд╬═°═╤д╦дшдъ─╛└▄┼кд▐д┐д╧┤╓└▄┼кд╦└╕д╕д┐дддлд╩ды┬╗│▓д╦┤╪д╖д╞дтбдд╜
- *  д╬└╒╟ддЄ╔щдяд╩ддбе
+ *  цЬмуВ╜уГХуГИуВжуВзуВвуБпя╝МчДбф┐Эши╝уБзцПРф╛ЫуБХуВМуБжуБДуВЛуВВуБоуБзуБВуВЛя╝Оф╕КшиШшСЧф╜ЬцийшАЕуБК
+ *  уВИуБ│TOPPERSуГЧуГнуВ╕уВзуВпуГИуБпя╝МцЬмуВ╜уГХуГИуВжуВзуВвуБлщЦвуБЧуБжя╝МчЙ╣хоЪуБоф╜┐чФичЫочЪД
+ *  уБлхп╛уБЩуВЛщБйхРИцАзуВВхРлуВБуБжя╝МуБДуБЛуБкуВЛф┐Эши╝уВВшбМуВПуБкуБДя╝ОуБ╛уБЯя╝МцЬмуВ╜уГХуГИуВжуВз
+ *  уВвуБохИйчФиуБлуВИуВКчЫ┤цОечЪДуБ╛уБЯуБпщЦУцОечЪДуБлчФЯуБШуБЯуБДуБЛуБкуВЛцРНхо│уБлщЦвуБЧуБжуВВя╝МуБЭ
+ *  уБош▓мф╗╗уВТш▓ауВПуБкуБДя╝О
  *
- *  @(#) $Id: mpcore.c 1084 2015-01-13 09:04:09Z ertl-honda $
+ *  @(#) $Id: mpcore.c 1202 2016-07-18 06:36:33Z ertl-honda $
  */
 
 #include "kernel_impl.h"
 
 /*
- *  DIC CPUедеєе┐е╒езб╝е╣┤╪╧в
+ * SCUщЦвщАгуБощЦвцХ░
  */
 
 /*
- *  CPUедеєе┐е╒езб╝е╣д╬╜щ┤№▓╜
- */
-void
-dic_cpu_init(void)
-{
-	/* CPUедеєе┐е╒езб╝е╣дЄ╠╡╕·д╦ */
-	sil_wrw_mem((void *)DIC_CPUIF_CR, 0);
-
-	/* ║╟─у═е└ш┼┘д╦└▀─ъ */
-	dic_cpu_set_priority(DIC_MIN_PRIORITY);
-
-	/* │ф╣■д▀═е└ш┼┘д╬┴┤е╙е├е╚═н╕·д╦ */
-	dic_cpu_set_bp(DIC_CPUIF_BPR_ALL);
-
-	/* е┌еєе╟егеєе░д╖д╞ддды▓─╟╜└ндмдвдыд╬д╟бдEOI д╦дшдъепеъев */
-	sil_wrw_mem((void *)DIC_CPUIF_EOI,
-				sil_rew_mem((void *)DIC_CPUIF_IAR));
-
-	/* CPUедеєе┐е╒езб╝е╣дЄ═н╕·д╦ */
-#ifdef TOPPERS_SAFEG_SECURE
-    sil_wrw_mem((void *)DIC_CPUIF_CR, (DIC_CPUIF_CR_EN_S|DIC_CPUIF_CR_EN_NS|DIC_CPUIF_CR_FIQEN) );
-#else /* !TOPPERS_SAFEG_SECURE */
-	sil_wrw_mem((void *)DIC_CPUIF_CR, DIC_CPUIF_CR_EN);
-#endif /* TOPPERS_SAFEG_SECURE */
-}
-
-/*
- *  CPUедеєе┐е╒езб╝е╣д╬╜к╬╗
- */
-void
-dic_cpu_stop(void)
-{
-	/* CPUедеєе┐е╒езб╝е╣дЄ╠╡╕·д╦ */
-	sil_wrw_mem((void *)(DIC_CPUIF_CR), 0);
-}
-
-
-/*
- * DIC DISедеєе┐е╒езб╝е╣┤╪╧в
- */
-
-/*
- *  │ф╣■д▀╢╪╗▀
- */
-void
-dic_disable_int(uint8_t id)
-{
-	uint16_t offset_addr;
-	uint16_t offset_bit;
-
-	offset_addr = (id / 32) * 4;
-	offset_bit  = id % 32;
-
-	sil_wrw_mem((void *)(DIC_CE + offset_addr), (1 << offset_bit));
-}
-
-/*
- *  │ф╣■д▀╡Ў▓─
- */
-void
-dic_enable_int(uint8_t id)
-{
-	uint16_t offset_addr;
-	uint16_t offset_bit;
-
-	offset_addr = (id / 32) * 4;
-	offset_bit  = id % 32;
-
-	sil_wrw_mem((void *)(DIC_SE + offset_addr), (1 << offset_bit));
-}
-
-/*
- * │ф╣■д▀е┌еєе╟егеєе░епеъев
- */
-void
-dic_clear_pending(uint8_t id)
-{
-	uint16_t offset_addr;
-	uint16_t offset_bit;
-
-	offset_addr = (id / 32) * 4;
-	offset_bit  = id % 32;
-
-	sil_wrw_mem((void *)(DIC_CP + offset_addr), (1 << offset_bit));
-}
-
-/*
- *  │ф╣■д▀е┌еєе╟егеєе░е╗е├е╚
- */
-void
-dic_set_pending(uint8_t id){
-	uint16_t offset_addr;
-	uint16_t offset_bit;
-
-	offset_addr = (id / 32) * 4;
-	offset_bit  = id % 32;
-
-	sil_wrw_mem((void *)(DIC_SP + offset_addr), (1 << offset_bit));
-}
-
-/*
- *  │ф╣■д▀═╫╡сд╬е┴езе├еп
- */
-bool_t
-dic_probe_int(uint8_t id){
-	uint32_t state;
-	uint16_t offset_addr;
-	uint16_t offset_bit;
-
-	offset_addr = (id / 32) * 4;
-	offset_bit  = id % 32;
-
-	state = sil_rew_mem((void *)(DIC_SP + offset_addr));
-
-	if ((state & (1 << offset_bit)) == (1 << offset_bit)) {
-		return(true);
-	}
-	else {
-		return(false);
-	}
-}
-
-/*
- *  │ф╣■д▀е│еєе╒егеоехеьб╝е╖ечеє└▀─ъ
- */
-void
-dic_config(uint8_t id, uint8_t config){
-	uint16_t offset_addr;
-	uint16_t offset_bit;
-	uint32_t cfgr_reg_val;
-	SIL_PRE_LOC;
-
-	offset_addr = (id / 16) * 4;
-	offset_bit  = (id % 16) * 2;
-
-	SIL_LOC_SPN();
-	cfgr_reg_val  = sil_rew_mem((void *)(DIC_ICR + offset_addr));
-	cfgr_reg_val &= ~(0x03U << offset_bit);
-	cfgr_reg_val |= (0x03U & config) << offset_bit;
-	sil_wrw_mem((void *)(DIC_ICR + offset_addr), cfgr_reg_val);
-	SIL_UNL_SPN();
-}
-
-/*
- *  │ф╣■д▀═е└ш┼┘д╬е╗е├е╚
- *  ╞т╔Ї╔╜╕╜д╟┼╧д╣бе
- */
-void
-dic_set_priority(uint8_t id, int pri){
-	uint16_t offset_addr;
-	uint16_t offset_bit;
-	uint32_t pr_reg_val;
-	SIL_PRE_LOC;
-
-	offset_addr = (id / 4) * 4;
-	offset_bit  = ((id % 4) * 8) + IPM_BIT_OFFSET;
-
-	SIL_LOC_SPN();
-	pr_reg_val  = sil_rew_mem((void *)(DIC_IPR + offset_addr));
-	pr_reg_val &= ~(IPM_BIT_MASK << offset_bit);
-	pr_reg_val |= (IPM_BIT_MASK & pri) << (offset_bit);
-	sil_wrw_mem((void *)(DIC_IPR + offset_addr), pr_reg_val);
-	SIL_UNL_SPN();
-}
-
-/*
- *  DIC│ф╣■д▀е┐б╝е▓е├е╚д╬└▀─ъ
- *  cpusд╧е┐б╝е▓е├е╚д╚д╣дыCPUд╬е╙е├е╚е╤е┐б╝еєд╟╗╪─ъ
- *   CPU0 : 0x01
- *   CPU1 : 0x02
- *   CPU2 : 0x04
- *   CPU3 : 0x08
- */
-void
-dic_set_target(uint8_t id, uint8_t cpus)
-{
-	uint32_t offset_addr;
-	uint32_t offset_bit;
-	uint32_t itr_reg_val;
-	SIL_PRE_LOC;
-
-	offset_addr = (id / 4) * 4;
-	offset_bit  = (id % 4) * 8;
-
-	SIL_LOC_SPN();
-	itr_reg_val  = sil_rew_mem((void *)(DIC_ITR + offset_addr));
-	itr_reg_val &= ~(0xf << offset_bit);
-	itr_reg_val |= (cpus << offset_bit);
-	sil_wrw_mem((void *)(DIC_ITR + offset_addr), itr_reg_val);
-	SIL_UNL_SPN();
-}
-
-/*
- *  DICедеєе┐е╒езб╝е╣д╬╜щ┤№▓╜(SPIд╬д▀╜щ┤№▓╜)
- */
-void
-dic_init(void)
-{
-	int i;
-
-	/* DICедеєе┐е╒езб╝е╣дЄ╠╡╕·д╦ */
-	sil_wrw_mem((void *)(DIC_CR), 0);
-
-#if __TARGET_ARCH_ARM == 7
-#ifdef TOPPERS_SAFEG_SECURE
-	/* │ф╣■д▀е╗енехеъе╞егдЄ┴┤д╞NonSecureд╦ */
-	for(i = TMIN_GLOBAL_INTNO/32; i <= DIC_TNUM_INT/32; i++){
-		sil_wrw_mem((void *)(DIC_SEC + (4 * i)), 0xffffffff);
-	}
-#endif /* TOPPERS_SAFEG_SECURE */
-#endif /* __TARGET_ARCH_ARM == 7 */
-
-	/* │ф╣■д▀дЄ┴┤д╞╢╪╗▀ */
-	for(i = TMIN_GLOBAL_INTNO/32; i < DIC_TNUM_INT/32; i++){
-		sil_wrw_mem((void *)(DIC_CE + (4 * i)), 0xffffffff);
-	}
-
-	/* е┌еєе╟егеєе░дЄепеъев */
-	for(i = TMIN_GLOBAL_INTNO/32; i < DIC_TNUM_INT/32; i++){
-		sil_wrw_mem((void *)(DIC_CP + (4 * i)), 0xffffffff);
-	}
-
-	/* ═е└ш┼┘║╟─уд╦└▀─ъ  */
-	for(i = TMIN_GLOBAL_INTNO/4; i < DIC_TNUM_INT/4; i++){
-		sil_wrw_mem((void *)(DIC_IPR + (4 * i)), 0xffffffff);
-	}
-
-	/* е┐б╝е▓е├е╚╜щ┤№▓╜б╩┴┤д╞CPU0д╪б╦ */
-	for(i = TMIN_GLOBAL_INTNO/4; i < DIC_TNUM_INT/4; i++){
-		sil_wrw_mem((void *)(DIC_ITR + (4 * i)), 0x01010101);
-	}
-
-	/* етб╝е╔╜щ┤№▓╜(1-N Level) */
-	for(i = TMIN_GLOBAL_INTNO/16; i < DIC_TNUM_INT/16; i++){
-		sil_wrw_mem((void *)(DIC_ICR + (4 * i)), 0x55555555);
-	}
-
-	/* DICедеєе┐е╒езб╝е╣дЄ═н╕·д╦ */
-	sil_wrw_mem((void *)(DIC_CR), DIC_CR_ENABLE);
-}
-
-/*
- *  │╞е│евд╟╝┬╣╘д╣дыDICедеєе┐е╒езб╝е╣д╬SGIд╚PPIд╬╜щ┤№▓╜
- */
-void
-dic_sgi_ppi_init(void)
-{
-	int i;
-#ifdef TOPPERS_SAFEG_SECURE
-	/*
-	 *  ┴┤д╞Non-Secureд╦д╣ды
-	 */
-	/* SGIд╬└▀─ъ */
-	for(i = 0; i < 16; i++) {
-		dic_set_security(i, 1);
-	}
-	/* PPIд╬└▀─ъ */
-	dic_set_security(27, 1);
-	dic_set_security(28, 1);
-	dic_set_security(29, 1);
-	dic_set_security(29, 1);
-	dic_set_security(30, 1);
-	dic_set_security(31, 1);
-#endif /* TOPPERS_SAFEG_SECURE */
-
-	/* │ф╣■д▀дЄ┴┤д╞╢╪╗▀ */
-	for(i = 0; i < TMIN_GLOBAL_INTNO/32; i++){
-		sil_wrw_mem((void *)(DIC_CE + (4 * i)), 0xffffffff);
-	}
-
-	/* е┌еєе╟егеєе░дЄепеъев */
-	for(i = 0; i < TMIN_GLOBAL_INTNO/32; i++){
-		sil_wrw_mem((void *)(DIC_CP + (4 * i)), 0xffffffff);
-	}
-
-#ifdef TOPPERS_SAFEG_SECURE
-	/* ═е└ш┼┘║╟─уд╦└▀─ъ  */
-    /* Linuxдм╜щ┤№▓╜д╖д╩ддд┐дс┬хдядъд╦╜щ┤№▓╜ */
-	for(i = 0; i < 32/4; i++){
-        /*
-         * ╦▄═шд╧0xffffffffд╟дшдддмбдLinuxдме╗елеєе└еъе│ев░╩╣▀д╬
-         * е│евд╬│ф╣■д▀═е└ш┼┘дЄ└▀─ъд╖д╩ддд┐дсбдд│д│д╟└▀─ъд╣дыбе
-         * (Linuxд╟д╧бд0xa0a0a0a0д╟д╣д┘д╞д╬│ф╣■д▀дЄ╜щ┤№▓╜д╖д╞дддыдм
-         *  е╬еєе╗енехев┬ждлдщд╬═е└ш┼┘│ф╣■д▀д╧е╗енехев┬ждлдщ╕лдыд╚
-         *  1е╙е├е╚е╖е╒е╚д╖бд╛х░╠е╙е├е╚дм1д╚д╩д├д┐дтд╬д╦╕лдидыд┐дс
-         *  0xd0d0d0d0д╬├═д╦д╩ды)
-         */
-		sil_wrw_mem((void *)(DIC_IPR + (4 * i)), 0xd0d0d0d0);
-	}
-#else /* !TOPPERS_SAFEG_SECURE */
-	/* ═е└ш┼┘║╟─уд╦└▀─ъ  */
-	for(i = 0; i < TMIN_GLOBAL_INTNO/4; i++){
-		sil_wrw_mem((void *)(DIC_IPR + (4 * i)), 0xffffffff);
-	}
-#endif /* TOPPERS_SAFEG_SECURE */
-
-	/* етб╝е╔╜щ┤№▓╜(1-N Level) */
-	for(i = 0; i < TMIN_GLOBAL_INTNO/16; i++){
-		sil_wrw_mem((void *)(DIC_ICR + (4 * i)), 0x55555555);
-	}
-}
-
-#if __TARGET_ARCH_ARM == 7
-/*
- * │ф╣■д▀е╗енехеъе╞ег└▀─ъ
- * │ф╣■д▀╚╓╣цд╚д╜д╬е╗енехеъе╞егд╟╗╪─ъ
- * ░·┐Ї ns (non secure bit) :
- *     0 -> secure(FIQ) setting
- *     1 -> non-secure(IRQ) setting
- */
-void
-dic_set_security(int intno, unsigned int ns){
-	unsigned int reg = DIC_SEC + ((intno/32)*4);
-	if (ns == 1) {
-		sil_wrw_mem((void *)(reg),
-					sil_rew_mem((void *)(reg)) | (1 << (intno%32)));
-	}
-	else {
-		sil_wrw_mem((void *)(reg),
-					sil_rew_mem((void *)(reg)) & ~(1 << (intno%32)));
-	}
-}
-#endif /* __TARGET_ARCH_ARM == 7 */
-
-/*
- *  DICедеєе┐е╒езб╝е╣д╬╜к╬╗
- */
-void
-dic_stop(void)
-{
-	/* DICедеєе┐е╒езб╝е╣дЄ╠╡╕·д╦ */
-	sil_wrw_mem((void *)(DIC_CR), 0);
-}
-
-/*
- *
- * SCU┤╪╧вд╬┤╪┐Ї
- *
- */
-
-/*
- *  CP15д╬AUXILIARYеье╕е╣е┐д╬SAе╙е├е╚д╚FWе╙е├е╚дЄе╗е├е╚д╖д╞SMPетб╝е╔д╦д╣ды
+ *  CP15уБоAUXILIARYуГмуВ╕уВ╣уВ┐уБоSAуГУуГГуГИуБиFWуГУуГГуГИуВТуВ╗уГГуГИуБЧуБжSMPуГвуГ╝уГЙуБлуБЩуВЛ
  */
 Inline void
 enable_sa(void){
+#if (__TARGET_ARCH_ARM == 6) || (__TARGET_ARCH_ARM == 7)
 	uint32_t bits;
 
 	CP15_AUXILIARY_READ(bits);
@@ -398,320 +58,90 @@ enable_sa(void){
 	bits |= CP15_AUXILIARY_FW_BIT;
 #endif /* __TARGET_ARCH_ARM == 7 */
 	CP15_AUXILIARY_WRITE(bits);
+#elif (__TARGET_ARCH_ARM == 8)
+	uint32_t cpuectlr_l, cpuectlr_h;
+
+	CP15_CPUECTLR_READ(cpuectlr_l, cpuectlr_h);
+	cpuectlr_l |= CPUECTLR_SMPEN;
+	CP15_CPUECTLR_WRITE(cpuectlr_l, cpuectlr_h);
+#endif /* (__TARGET_ARCH_ARM == 6) || (__TARGET_ARCH_ARM == 7) */
 }
 
 Inline void
 scu_enable(void){
 	uint32_t scu_ctrl;
 
-	/* SCUд╬ tag RAMS дЄ╠╡╕·д╦ */
+	/* SCUуБо tag RAMS уВТчДбхК╣уБл */
 	sil_wrw_mem((void*)MPCORE_SCU_IALL, MPCORE_SCU_IALL_WAYS);
 
-	/* SCUдЄ═н╕·д╦ */
+	/* SCUуВТцЬЙхК╣уБл */
 	scu_ctrl  = sil_rew_mem((void *)MPCORE_SCU_CTRL);
 	scu_ctrl |= MPCORE_SCU_CTRL_EN;
 	sil_wrw_mem((void *)MPCORE_SCU_CTRL, scu_ctrl);
 }
 
 /*
- *  SCUд╬╜щ┤№▓╜╜ш═¤б╩е▐е╣е┐е╫еэе╗е├е╡д╬д▀╝┬╣╘б╦
+ *  SCUуБохИЭцЬЯхМЦхЗжчРЖя╝ИуГЮуВ╣уВ┐уГЧуГнуВ╗уГГуВ╡уБоуБ┐хоЯшбМя╝Й
  */
 void
 scu_init(void){
-	/* SCU дЄ═н╕·д╦ */
+	/* SCU уВТцЬЙхК╣уБл */
 	scu_enable();
 
-	/* ┴┤д╞д╬е│евд╬етб╝е╔дЄNORMALд╚д╣ды */
+	/* хЕиуБжуБоуВ│уВвуБоуГвуГ╝уГЙуВТNORMALуБиуБЩуВЛ */
 	sil_wrw_mem((void *)MPCORE_SCU_CPUST, 0x00U);
 
 #ifdef TOPPERS_SAFEG_SECURE
-	/* е╬еєе╚еще╣е╚┬ждлдщд╬A9╞т┬ве┐еде▐д╪д╬евепе╗е╣дЄ╡Ў▓─ */
-	sil_wrw_mem((void *)MPCORE_SCU_SNSAC, 0xFFF); // ┴┤CPUдЄ╡Ў▓─
+	/* уГОуГ│уГИуГйуВ╣уГИхБ┤уБЛуВЙуБоA9хЖЕшФ╡уГЧуГйуВдуГЩуГ╝уГИуВ┐уВдуГЮуБиWDTуБ╕уБоуВвуВпуВ╗уВ╣уВТши▒хПп */
+	sil_wrw_mem((void *)MPCORE_SCU_SNSAC, 0xFF); // хЕиCPUуВТши▒хПп
 #endif /* TOPPERS_SAFEG_SECURE */
 }
 
 /*
- *  SMPетб╝е╔д╦└▀─ъд╣ды
+ *  SMPуГвуГ╝уГЙуБлшинхоЪуБЩуВЛ
  */
 void
-mpcore_smp_mode_enable(void){
+smp_mode_enable(void){
 	uint32_t sr;
 
-	/* ┴┤│ф╣■д▀╢╪╗▀ */
+	/* хЕихЙ▓ш╛╝уБ┐чжБцнв */
 	sr = current_sr();
 	set_sr(sr|CPSR_IRQ_BIT|CPSR_FIQ_BIT);
 
-	/* енеуе╖ехдЄ╠╡╕· */
-	mpcore_dcache_clean_and_invalidate();
-	mpcore_icache_invalidate();
+	/* уВнуГгуВ╖уГеуВТчДбхК╣ */
+	dcache_clean_and_invalidate();
+	icache_invalidate();
 
 	/* Data Synchronization Barrier */
-	mpcore_data_sync_barrier();
+	data_sync_barrier();
 
-	/* TLBд╬╜щ┤№▓╜ */
-	mpcore_invalidate_unfied_tlb();
+	/* TLBуБохИЭцЬЯхМЦ */
+	invalidate_unfied_tlb();
 
 #ifndef TOPPERS_SAFEG_NONSECURE
-	/* CP15д╬SMP/nAMP bit дЄе╗е├е╚д╣ды */
+	/* CP15уБоSMP/nAMP bit уВТуВ╗уГГуГИуБЩуВЛ */
 	enable_sa();
 #endif /* TOPPERS_SAFEG_NONSECURE */
 
-	/* │ф╣■д▀╢╪╗▀╛ї┬╓дЄ╕╡д╦╠сд╣ */
+	/* хЙ▓ш╛╝уБ┐чжБцнвчК╢цЕЛуВТхЕГуБлцИ╗уБЩ */
 	set_sr(sr);
 }
 
-/*
- *  Dенеуе├е╖ехдЄ│л╗╧
- */
-void
-mpcore_dcache_enable(void)
-{
-	uint32_t bits;
-
-	CP15_CONTROL_READ(bits);
-
-	/* д╣д╟д╦ONд╩дщеъе┐б╝еє */
-	if (bits & CP15_CONTROL_C_BIT){
-		return;
-	}
-
-	mpcore_dcache_invalidate();
-
-	bits |= CP15_CONTROL_C_BIT;
-	CP15_CONTROL_WRITE(bits);
-}
-
-/*
- *  Dенеуе├е╖ехдЄ─ф╗▀д╖д╞╠╡╕·д╚д╣дыбе
- *  CA9д╟д╧бдDенеуе├е╖ехдм╠╡╕·д╩╛ї┬╓д╟Clean and Invalidate()дЄ╝┬╣╘д╣дыд╚бд
- *  ╦╜┴Ўд╣дыд┐дсбдDенеуе├е╖ехд╬╛ї┬╓дЄ╚╜├╟д╖д╞бд╠╡╕·д╩╛ь╣чд╧бдInvalidate
- *  д╬д▀дЄ╣╘джбе
- */
-void
-mpcore_dcache_disable(void)
-{
-	uint32_t bits;
-
-	CP15_CONTROL_READ(bits);
-	if( bits & CP15_CONTROL_C_BIT ){
-		bits &= ~CP15_CONTROL_C_BIT;
-		CP15_CONTROL_WRITE(bits);
-		mpcore_dcache_clean_and_invalidate();
-	}
-	else{
-		mpcore_dcache_invalidate();
-	}
-}
-
-/*
- * Iенеуе├е╖ехд╬│л╗╧
- */
-void mpcore_icache_enable (void)
-{
-	uint32_t bits;
-
-	CP15_CONTROL_READ(bits);
-
-	/*
-	 *  д╣д╟д╦═н╕·д╩дщеъе┐б╝еє
-	 */
-	if(bits & CP15_CONTROL_I_BIT){
-		return;
-	}
-
-	mpcore_icache_invalidate();
-
-	bits |= CP15_CONTROL_I_BIT;
-	CP15_CONTROL_WRITE(bits);
-}
-
-/*
- *  Iенеуе├е╖ехдЄ─ф╗▀
- */
-void
-mpcore_icache_disable (void)
-{
-	uint32_t bits;
-
-	CP15_CONTROL_READ(bits);
-	bits &= ~CP15_CONTROL_I_BIT;
-	CP15_CONTROL_WRITE(bits);
-
-	mpcore_icache_invalidate();
-}
-
-/*
- *  I/Dенеуе├е╖ехдЄ╬╛╩¤дЄ═н╕·д╦
- */
-void
-mpcore_cache_enable(void)
-{
-	mpcore_dcache_enable();
-	mpcore_icache_enable();
-}
-
-/*
- *  I/Dенеуе├е╖ехдЄ╬╛╩¤дЄ╠╡╕·д╦
- */
-void
-mpcore_cache_disable(void)
-{
-	mpcore_dcache_disable();
-	mpcore_icache_disable();
-}
-
-/*
- *  MMU┤╪╧вд╬е╔ещеде╨
- */
-
-/*
-ARMv7д╬Sectionе╞б╝е╓еыд╬╗┼══
-  31:20 : Section base address
-  19    : NS
-  17    : nG
-  16    :  S
-  15    : AP[2]
-  14:12 : TEX[2:0]
-  11:10 : AP[1:0]
-  8:5   : Domain
-  4     : XN
-  3     : C
-  2     : B
-  0     : PXN
-
- */
-
-#define DOMAIN_NO  1
-#define PAGE_TABLE_SIZE  0x00004000 /* 4KB */
-
-/*
- * е┌б╝е╕е╞б╝е╓еы
- */
-static uint8_t PageTable[TNUM_PRCID][PAGE_TABLE_SIZE]  __attribute__ ((aligned (0x4000)));
-
-#define my_PageTable (PageTable[x_prc_index()])
-
-#define SIZE_1M    0x00100000
-
-/*
- * ╗╪─ъд╦╜╛дд,есетеъд╬е▐е├е╘еєе░дЄ╣╘дж
- * е▐е├е╘еєе░д╬├▒░╠д╧1MB
- */
-void
-mmu_map_memory(MEMORY_ATTRIBUTE *m_attribute)
-{
-	uint32_t size;
-	uintptr_t va;
-	uintptr_t pa;
-	uint32_t ttb;
-	uint32_t *sptr;
-	uint32_t fix_val;
-
-	size = m_attribute->size;
-	va   = m_attribute->va;
-	pa   = m_attribute->pa;
-
-	/* MB├▒░╠д╦д╩дыдшджд╦е╡еде║дЄ└▀─ъ */
-	size = (size + 0x000FFFFF) & ~0x000FFFFF;
-
-	/*
-	 * е┌б╝е╕е╞б╝е╓еыд╬е┘б╝е╣еве╔еье╣дЄ╝ш╞└
-	 */
-	CP15_TTB0_READ(ttb);
-
-	fix_val =  (m_attribute->s << 16) | (m_attribute->tex << 12) | (m_attribute->ap << 10)
-		        | (m_attribute->c << 3) | (m_attribute->b << 2) | (1 << 1);
-#if __TARGET_ARCH_ARM == 7
-	fix_val |= (m_attribute->ns << 19);
-#endif /* __TARGET_ARCH_ARM == 7 */
-	sptr  = (uint32_t *)((ttb & 0xFFFFC000) | (((va & 0xFFF00000) >> 20) << 2));
-
-	while(size > 0) {
-		*sptr++ = pa | fix_val;
-		va   += SIZE_1M;
-		pa   += SIZE_1M;
-		size -= SIZE_1M;
-	}
-}
-
-/*
- *  MMUд╬╜щ┤№▓╜
- */
-void
-mpcore_mmu_init(void)
-{
-	uint32_t bits = 0;
-
-	/*
-	 * Disabling MMU
-	 */
-	CP15_CONTROL_READ(bits);
-	bits &= ~CP15_CONTROL_M_BIT;
-	CP15_CONTROL_WRITE(bits);
-
-	/*
-	 * Invalidate ALL TLB
-	 */
-	CP15_DATA_SYNC_BARRIER();
-	CP15_TLB_INVALIDATE_ALL();
-	CP15_DATA_SYNC_BARRIER();
-	mpcore_pbuffer_flash();
-
-	/*
-	 * TTBR0дЄ═╤ддды═╤д╦╗╪─ъ
-	 */
-	CP15_TTBCR_WRITE(0);
-
-	/*
-	 * ╩╤┤╣е╞б╝е╓еы(TT)д╚д╖д╞бдPageTableдЄ╗╚═╤д╣ды
-	 * Sharedе╙е├е╚дЄе╗е├е╚
-	 */
-#if __TARGET_ARCH_ARM == 6
-	CP15_TTB0_WRITE((((uint32_t)my_PageTable)|CP15_TTB0_RGN_S|CP15_TTB0_RGN_WBWA));
-#else /* __TARGET_ARCH_ARM == 7 */
-	CP15_TTB0_WRITE((((uint32_t)my_PageTable)|CP15_TTB0_RGN_S|CP15_TTB0_RGN_WBWA|CP15_TTB0_IRGN_WBWA));
-#endif /* __TARGET_ARCH_ARM == 7 */
-
-	/* е╫еъе╒езе├е┴е╨е├е╒ебдЄепеъев */
-	mpcore_pbuffer_flash();
-
-	/*
-	 *  е┐б╝е▓е├е╚░═┬╕╔Їд╟д╬MMUд╬╜щ┤№▓╜
-	 */
-	target_mmu_init();
-
-	/* е╫еъе╒езе├е┴е╨е├е╒ебдЄепеъев */
-	mpcore_pbuffer_flash();
-
-	/*
-	 * е╔еседеє╚╓╣цдЄе╗е├е╚
-	 */
-	CP15_DOMAINS_WRITE(DOMAIN_NO);
-
-	/*
-	 * CONTROLе│е╫еэе╗е├е╡д╬ Mе╙е├е╚бдXPе╙е├е╚дЄе╗е├е╚д╖д╞бд
-	 * MMUдЄ═н╕·д╦д╣ды
-	 */
-	CP15_CONTROL_READ(bits);
-	bits |= CP15_CONTROL_M_BIT | CP15_CONTROL_XP_BIT;
-	CP15_CONTROL_WRITE(bits);
-}
-
 #if __TARGET_ARCH_ARM == 6
 /*
- * SCUележеєе┐д╬╜щ┤№▓╜б╩MN0дЄ╗╚═╤б╦
+ * SCUуВлуВжуГ│уВ┐уБохИЭцЬЯхМЦя╝ИMN0уВТф╜┐чФия╝Й
  */
 void
 scu_counter_init(void)
 {
 	/*
-	 *  MN0дЄ Cycle Count д╦└▀─ъ
+	 *  MN0уВТ Cycle Count уБлшинхоЪ
 	 */
 	sil_wrw_mem((void *)MPCORE_SCU_PM_EVT0,
 				sil_rew_mem((void *)MPCORE_SCU_PM_EVT0) | MPCORE_SCU_PM_EVT_CYC_COUNT0_4);
 
 	/*
-	 *  еъе╗е├е╚д╚е╣е┐б╝е╚
+	 *  уГкуВ╗уГГуГИуБиуВ╣уВ┐уГ╝уГИ
 	 */
 	sil_wrw_mem((void *)MPCORE_SCU_PM_CTRL,
 			sil_rew_mem((void *)MPCORE_SCU_PM_CTRL) | MPCORE_SCU_PM_CTRL_RST | MPCORE_SCU_PM_CTRL_ENA);

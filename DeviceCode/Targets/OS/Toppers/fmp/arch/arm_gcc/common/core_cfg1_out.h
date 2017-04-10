@@ -3,7 +3,7 @@
  */
 
 /*
- *		cfg1_out.c¤ò¥ê¥ó¥¯¤¹¤ë¤¿¤á¤ËÉ¬Í×¤Ê¥¹¥¿¥Ö¤ÎÄêµÁ
+ *		cfg1_out.cã‚’ãƒªãƒ³ã‚¯ã™ã‚‹ãŸã‚ã«å¿…è¦ãªã‚¹ã‚¿ãƒ–ã®å®šç¾©
  */
 
 void sta_ker(void){}
@@ -12,7 +12,7 @@ uint_t _kernel_start_sync;
 STK_T *const	_kernel_istkpt_table[TNUM_PRCID];
 
 /*
- *  ¥ª¥Õ¥»¥Ã¥È¥Õ¥¡¥¤¥ë¤òÀ¸À®¤¹¤ë¤¿¤á¤ÎÄêµÁ
+ *  ã‚ªãƒ•ã‚»ãƒƒãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç”Ÿæˆã™ã‚‹ãŸã‚ã®å®šç¾©
  */
 const uint8_t   MAGIC_1 = 0x12;
 const uint16_t  MAGIC_2 = 0x1234;
@@ -42,7 +42,7 @@ const exc_frame_t exc_frame_cpsr = {
 	0U, /* r12 */
 	0U, /* lr */
 	0U, /* pc */
-#else /* (__TARGET_ARCH_ARM == 6) || (__TARGET_ARCH_ARM == 7) */
+#else /* (__TARGET_ARCH_ARM == 6) || (__TARGET_ARCH_ARM == 7) || (__TARGET_ARCH_ARM == 8) */
 #ifdef USE_GIC_CPULOCK
 	0U, /* saved_iipm */
 	0U, /* lock_flag */
@@ -68,6 +68,6 @@ const exc_frame_t exc_frame_cpsr = {
 	0U, /* lr */
 	0U, /* pc */
 	1U, /* cpsr */
-#endif /* (__TARGET_ARCH_ARM == 6) || (__TARGET_ARCH_ARM == 7) */
+#endif /* (__TARGET_ARCH_ARM == 6) || (__TARGET_ARCH_ARM == 7) || (__TARGET_ARCH_ARM == 8) */
 };
 

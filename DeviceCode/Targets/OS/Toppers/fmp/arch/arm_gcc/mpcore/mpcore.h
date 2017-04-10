@@ -3,43 +3,43 @@
  *      Toyohashi Open Platform for Embedded Real-Time Systems/
  *      Flexible MultiProcessor Kernel
  *
- *  Copyright (C) 2006-2015 by Embedded and Real-Time Systems Laboratory
+ *  Copyright (C) 2006-2016 by Embedded and Real-Time Systems Laboratory
  *              Graduate School of Information Science, Nagoya Univ., JAPAN
  *
- *  ╛х╡н├°║ю╕в╝╘д╧бд░╩▓╝д╬(1)б┴(4)д╬╛Є╖ядЄ╦■д┐д╣╛ь╣чд╦╕┬дъбд╦▄е╜е╒е╚ежез
- *  евб╩╦▄е╜е╒е╚ежезевдЄ▓■╩╤д╖д┐дтд╬дЄ┤▐дрбе░╩▓╝╞▒д╕б╦дЄ╗╚═╤бж╩г└╜бж▓■
- *  ╩╤бж║╞╟█╔█б╩░╩▓╝бд═°═╤д╚╕╞д╓б╦д╣дыд│д╚дЄ╠╡╜■д╟╡Ў┬·д╣дыбе
- *  (1) ╦▄е╜е╒е╚ежезевдЄе╜б╝е╣е│б╝е╔д╬╖┴д╟═°═╤д╣ды╛ь╣чд╦д╧бд╛х╡нд╬├°║ю
- *      ╕в╔╜╝ибдд│д╬═°═╤╛Є╖ядкдшд╙▓╝╡нд╬╠╡╩▌╛┌╡м─ъдмбдд╜д╬д▐д▐д╬╖┴д╟е╜б╝
- *      е╣е│б╝е╔├цд╦┤▐д▐дьд╞дддыд│д╚бе
- *  (2) ╦▄е╜е╒е╚ежезевдЄбдещеде╓ещеъ╖┴╝░д╩д╔бд┬╛д╬е╜е╒е╚ежезев│л╚пд╦╗╚
- *      ═╤д╟днды╖┴д╟║╞╟█╔█д╣ды╛ь╣чд╦д╧бд║╞╟█╔█д╦╚╝дже╔енехесеєе╚б╩═°═╤
- *      ╝╘е▐е╦ехевеыд╩д╔б╦д╦бд╛х╡нд╬├°║ю╕в╔╜╝ибдд│д╬═°═╤╛Є╖ядкдшд╙▓╝╡н
- *      д╬╠╡╩▌╛┌╡м─ъдЄ╖╟║▄д╣дыд│д╚бе
- *  (3) ╦▄е╜е╒е╚ежезевдЄбд╡б┤яд╦┴╚д▀╣■дрд╩д╔бд┬╛д╬е╜е╒е╚ежезев│л╚пд╦╗╚
- *      ═╤д╟днд╩дд╖┴д╟║╞╟█╔█д╣ды╛ь╣чд╦д╧бд╝бд╬ддд║дьдлд╬╛Є╖ядЄ╦■д┐д╣д│
- *      д╚бе
- *    (a) ║╞╟█╔█д╦╚╝дже╔енехесеєе╚б╩═°═╤╝╘е▐е╦ехевеыд╩д╔б╦д╦бд╛х╡нд╬├°
- *        ║ю╕в╔╜╝ибдд│д╬═°═╤╛Є╖ядкдшд╙▓╝╡нд╬╠╡╩▌╛┌╡м─ъдЄ╖╟║▄д╣дыд│д╚бе
- *    (b) ║╞╟█╔█д╬╖┴┬╓дЄбд╩╠д╦─ъдсды╩¤╦бд╦дшд├д╞бдTOPPERSе╫еэе╕езепе╚д╦
- *        ╩є╣Ёд╣дыд│д╚бе
- *  (4) ╦▄е╜е╒е╚ежезевд╬═°═╤д╦дшдъ─╛└▄┼кд▐д┐д╧┤╓└▄┼кд╦└╕д╕дыдддлд╩ды┬╗
- *      │▓длдщдтбд╛х╡н├°║ю╕в╝╘дкдшд╙TOPPERSе╫еэе╕езепе╚дЄ╠╚└╒д╣дыд│д╚бе
- *      д▐д┐бд╦▄е╜е╒е╚ежезевд╬ецб╝е╢д▐д┐д╧еиеєе╔ецб╝е╢длдщд╬дддлд╩ды═¤
- *      ═│д╦┤Ёд┼дп└┴╡сдлдщдтбд╛х╡н├°║ю╕в╝╘дкдшд╙TOPPERSе╫еэе╕езепе╚дЄ
- *      ╠╚└╒д╣дыд│д╚бе
+ *  ф╕КшиШшСЧф╜ЬцийшАЕуБпя╝Мф╗еф╕ЛуБо(1)я╜Ю(4)уБоцЭбф╗╢уВТц║АуБЯуБЩха┤хРИуБлщЩРуВКя╝МцЬмуВ╜уГХуГИуВжуВз
+ *  уВвя╝ИцЬмуВ╜уГХуГИуВжуВзуВвуВТцФ╣хдЙуБЧуБЯуВВуБоуВТхРлуВАя╝Оф╗еф╕ЛхРМуБШя╝ЙуВТф╜┐чФиуГ╗шдЗшг╜уГ╗цФ╣
+ *  хдЙуГ╗хЖНщЕНх╕Гя╝Иф╗еф╕Ля╝МхИйчФиуБихС╝уБ╢я╝ЙуБЩуВЛуБУуБиуВТчДбхДЯуБзши▒шл╛уБЩуВЛя╝О
+ *  (1) цЬмуВ╜уГХуГИуВжуВзуВвуВТуВ╜уГ╝уВ╣уВ│уГ╝уГЙуБох╜вуБзхИйчФиуБЩуВЛха┤хРИуБлуБпя╝Мф╕КшиШуБошСЧф╜Ь
+ *      цийшбичд║я╝МуБУуБохИйчФицЭбф╗╢уБКуВИуБ│ф╕ЛшиШуБочДбф┐Эши╝шжПхоЪуБМя╝МуБЭуБоуБ╛уБ╛уБох╜вуБзуВ╜уГ╝
+ *      уВ╣уВ│уГ╝уГЙф╕нуБлхРлуБ╛уВМуБжуБДуВЛуБУуБия╝О
+ *  (2) цЬмуВ╜уГХуГИуВжуВзуВвуВТя╝МуГйуВдуГЦуГйуГкх╜вх╝ПуБкуБйя╝Мф╗ЦуБоуВ╜уГХуГИуВжуВзуВвщЦЛчЩ║уБлф╜┐
+ *      чФиуБзуБНуВЛх╜вуБзхЖНщЕНх╕ГуБЩуВЛха┤хРИуБлуБпя╝МхЖНщЕНх╕ГуБлф╝┤уБЖуГЙуВнуГеуГбуГ│уГИя╝ИхИйчФи
+ *      шАЕуГЮуГЛуГеуВвуГлуБкуБйя╝ЙуБля╝Мф╕КшиШуБошСЧф╜Ьцийшбичд║я╝МуБУуБохИйчФицЭбф╗╢уБКуВИуБ│ф╕ЛшиШ
+ *      уБочДбф┐Эши╝шжПхоЪуВТцО▓ш╝ЙуБЩуВЛуБУуБия╝О
+ *  (3) цЬмуВ╜уГХуГИуВжуВзуВвуВТя╝МцйЯхЩиуБлч╡ДуБ┐ш╛╝уВАуБкуБйя╝Мф╗ЦуБоуВ╜уГХуГИуВжуВзуВвщЦЛчЩ║уБлф╜┐
+ *      чФиуБзуБНуБкуБДх╜вуБзхЖНщЕНх╕ГуБЩуВЛха┤хРИуБлуБпя╝МцмбуБоуБДуБЪуВМуБЛуБоцЭбф╗╢уВТц║АуБЯуБЩуБУ
+ *      уБия╝О
+ *    (a) хЖНщЕНх╕ГуБлф╝┤уБЖуГЙуВнуГеуГбуГ│уГИя╝ИхИйчФишАЕуГЮуГЛуГеуВвуГлуБкуБйя╝ЙуБля╝Мф╕КшиШуБошСЧ
+ *        ф╜Ьцийшбичд║я╝МуБУуБохИйчФицЭбф╗╢уБКуВИуБ│ф╕ЛшиШуБочДбф┐Эши╝шжПхоЪуВТцО▓ш╝ЙуБЩуВЛуБУуБия╝О
+ *    (b) хЖНщЕНх╕ГуБох╜вцЕЛуВТя╝МхИеуБлхоЪуВБуВЛцЦ╣ц│ХуБлуВИуБгуБжя╝МTOPPERSуГЧуГнуВ╕уВзуВпуГИуБл
+ *        ха▒хСКуБЩуВЛуБУуБия╝О
+ *  (4) цЬмуВ╜уГХуГИуВжуВзуВвуБохИйчФиуБлуВИуВКчЫ┤цОечЪДуБ╛уБЯуБпщЦУцОечЪДуБлчФЯуБШуВЛуБДуБЛуБкуВЛцРН
+ *      хо│уБЛуВЙуВВя╝Мф╕КшиШшСЧф╜ЬцийшАЕуБКуВИуБ│TOPPERSуГЧуГнуВ╕уВзуВпуГИуВТхЕНш▓муБЩуВЛуБУуБия╝О
+ *      уБ╛уБЯя╝МцЬмуВ╜уГХуГИуВжуВзуВвуБоуГжуГ╝уВ╢уБ╛уБЯуБпуВиуГ│уГЙуГжуГ╝уВ╢уБЛуВЙуБоуБДуБЛуБкуВЛчРЖ
+ *      чФ▒уБлхЯ║уБеуБПшлЛц▒ВуБЛуВЙуВВя╝Мф╕КшиШшСЧф╜ЬцийшАЕуБКуВИуБ│TOPPERSуГЧуГнуВ╕уВзуВпуГИуВТ
+ *      хЕНш▓муБЩуВЛуБУуБия╝О
  *
- *  ╦▄е╜е╒е╚ежезевд╧бд╠╡╩▌╛┌д╟─є╢бд╡дьд╞дддыдтд╬д╟двдыбе╛х╡н├°║ю╕в╝╘дк
- *  дшд╙TOPPERSе╫еэе╕езепе╚д╧бд╦▄е╜е╒е╚ежезевд╦┤╪д╖д╞бд╞├─ъд╬╗╚═╤╠▄┼к
- *  д╦┬╨д╣ды┼м╣ч└ндт┤▐дсд╞бддддлд╩ды╩▌╛┌дт╣╘дяд╩ддбед▐д┐бд╦▄е╜е╒е╚ежез
- *  евд╬═°═╤д╦дшдъ─╛└▄┼кд▐д┐д╧┤╓└▄┼кд╦└╕д╕д┐дддлд╩ды┬╗│▓д╦┤╪д╖д╞дтбдд╜
- *  д╬└╒╟ддЄ╔щдяд╩ддбе
+ *  цЬмуВ╜уГХуГИуВжуВзуВвуБпя╝МчДбф┐Эши╝уБзцПРф╛ЫуБХуВМуБжуБДуВЛуВВуБоуБзуБВуВЛя╝Оф╕КшиШшСЧф╜ЬцийшАЕуБК
+ *  уВИуБ│TOPPERSуГЧуГнуВ╕уВзуВпуГИуБпя╝МцЬмуВ╜уГХуГИуВжуВзуВвуБлщЦвуБЧуБжя╝МчЙ╣хоЪуБоф╜┐чФичЫочЪД
+ *  уБлхп╛уБЩуВЛщБйхРИцАзуВВхРлуВБуБжя╝МуБДуБЛуБкуВЛф┐Эши╝уВВшбМуВПуБкуБДя╝ОуБ╛уБЯя╝МцЬмуВ╜уГХуГИуВжуВз
+ *  уВвуБохИйчФиуБлуВИуВКчЫ┤цОечЪДуБ╛уБЯуБпщЦУцОечЪДуБлчФЯуБШуБЯуБДуБЛуБкуВЛцРНхо│уБлщЦвуБЧуБжуВВя╝МуБЭ
+ *  уБош▓мф╗╗уВТш▓ауВПуБкуБДя╝О
  *
- *  @(#) $Id: mpcore.h 1084 2015-01-13 09:04:09Z ertl-honda $
+ *  @(#) $Id: mpcore.h 1202 2016-07-18 06:36:33Z ertl-honda $
  */
 
 /*
- *  MPCORE д╬е╧б╝е╔ежезев╗ё╕╗д╬─ъ╡┴
+ *  MPCORE уБоуГПуГ╝уГЙуВжуВзуВвш│Зц║РуБохоЪч╛й
  */
 
 #ifndef TOPPERS_MPCORE_H
@@ -48,208 +48,25 @@
 #include <sil.h>
 
 /*
- *  MPCORE д╬е╧б╝е╔ежезев╗ё╕╗д╬е─б╝еы░═┬╕╔Їд╬─ъ╡┴
+ *  MPCORE уБоуГПуГ╝уГЙуВжуВзуВвш│Зц║РуБоуГДуГ╝уГлф╛ЭхнШщГиуБохоЪч╛й
  */
 #include <mpcore_tool.h>
 
-
-#ifndef TOPPERS_MACRO_ONLY
-
 /*
- *  е│е╫еэд╬е╙е├е╚─ъ╡┴
+ * хЙ▓ш╛╝уБ┐чХкхП╖
  */
-#define CP15_CONTROL_XP_BIT   (1 << 23)
-#define CP15_CONTROL_V_BIT    (1 << 13)
-#define CP15_CONTROL_I_BIT    (1 << 12)
-#define CP15_CONTROL_C_BIT    (1 <<  2)
-#define CP15_CONTROL_M_BIT    (1 <<  0)
-
-#if __TARGET_ARCH_ARM == 6
-#define CP15_AUXILIARY_SA_BIT (1 << 5)
-#define CP15_CPUID_BIT        (0x0f)
-#else /* __TARGET_ARCH_ARM == 7 */
-#define CP15_AUXILIARY_SA_BIT (1 << 6)
-#define CP15_AUXILIARY_EX_BIT (1 << 7)
-#define CP15_AUXILIARY_FW_BIT (1 << 0)
-#define CP15_CPUID_BIT        (0x03)
-#endif /* __TARGET_ARCH_ARM == 7 */
-
-#define CP15_TTB0_RGN_S       (1 << 1)
-#define CP15_TTB0_RGN_WBWA    (1 << 3)
-
-#if __TARGET_ARCH_ARM == 7
-#define CP15_TTB0_IRGN_WBWA   ((1 << 6)|(0))
-#endif /* __TARGET_ARCH_ARM == 7 */
-
-
+#define IRQNO_MPCORE_GTM     27
+#define IRQNO_MPCORE_TM      29
+#define IRQNO_MPCORE_WDT     30
+#define IRQNO_GTIM           29
+ 
 /*
- *  е│е╫еэдЄ═╤ддд┐еыб╝е┴еє
+ *  хЖЕшФ╡уВ┐уВдуГЮщЦвщАгуБохоЪч╛й
  */
-
-/*
- *  High exception vector дЄ╗╚дждлд╬└▀─ъ
- */
-Inline void
-set_high_vector(bool_t enable)
-{
-	uint32_t control;
-
-	CP15_CONTROL_READ(control);
-
-	if (enable) {
-		control |= CP15_CONTROL_V_BIT;
-	}
-	else {
-		control &= ~CP15_CONTROL_V_BIT;
-	}
-
-	CP15_CONTROL_WRITE(control);
-}
-
-/*
- *  е╫еэе╗е├е╡INDEXб╩0екеъе╕еєб╦д╬╝ш╞└
- */
-Inline uint32_t
-x_prc_index(void)
-{
-	uint32_t index;
-
-	CP15_CPUID_READ(index);
-	return((index & 0x0fU));
-}
-
-/*
- *  Data Synchronization Barrier
- *  бж└шд╦╚п╣╘д╡дьд┐ read д╚ write д╬╜к╬╗дЄ┬╘д─
- *  бженеуе├е╖ехбде╓ещеєе┴е╫еъе╟егепе╖ечеєбдTLBд╬┴р║юд╬╜к╬╗дЄ┬╘д─
- *  бжд│д╬╠┐╬сд╬╕хд╦╜ёдлдьд┐╠┐╬сд╧╝┬╣╘д╡дьд╩дд
- */
-Inline void
-mpcore_data_sync_barrier(void)
-{
-	CP15_DATA_SYNC_BARRIER();
-}
-
-/*
- *  Data Memory Barrier
- *  бже╫еэе░ещерд╬╡н╜╥д╦╜╛д├д╞бд└шд╦╜ёдлдьд┐╠┐╬сд╟д╬есетеъевепе╗е╣дм
- *     ╜к╬╗д╣дыд▐д╟┬╘д─бе
- *
- */
-Inline void
-mpcore_data_memory_barrier(void)
-{
-	CP15_DATA_MEMORY_BARRIER();
-}
-
-/*
- *  TLBд╬╠╡╕·▓╜
- */
-Inline void
-mpcore_invalidate_unfied_tlb(void)
-{
-	CP15_DATA_SYNC_BARRIER();
-}
-
-/*
- *  Dенеуе├е╖ехд╬╠╡╕·▓╜
- */
-Inline void
-mpcore_dcache_invalidate(void)
-{
-#if __TARGET_ARCH_ARM == 6
-	CP15_DCACHE_INVALIDATE();
-#elif __TARGET_ARCH_ARM == 7
-	uint32_t bits = 0;
-	uint32_t ways = 0;
-	uint32_t sets = 0;
-
-	CP15_CACHE_SIZE_SELECTION_WRITE(0);
-	CP15_PBUFFER_FLUSH();
-	for (ways = 0; ways < 4; ways++){
-		for (sets = 0; sets < 256; sets++){
-			bits = ways << 30 | sets << 5;
-			CP15_DCACHE_INVALIDATE(bits);
-		}
-	}
-#endif /* __TARGET_ARCH_ARM == 7 */
-}
-
-/*
- *  Dенеуе├е╖ехд╬епеъб╝еєд╚╠╡╕·▓╜
- */
-Inline void
-mpcore_dcache_clean_and_invalidate(void)
-{
-#if __TARGET_ARCH_ARM == 6
-	CP15_DCACHE_CLEAN_AND_INVALIDATE();
-#elif __TARGET_ARCH_ARM == 7
-	uint32_t bits = 0;
-	uint32_t  ways = 0;
-	uint32_t sets = 0;
-
-	CP15_CACHE_SIZE_SELECTION_WRITE(0);
-	CP15_PBUFFER_FLUSH();
-	for (ways = 0; ways < 4; ways++){
-		for (sets = 0; sets < 256; sets++){
-			bits = ways << 30 | sets << 5;
-			CP15_DCACHE_CLEAN_AND_INVALIDATE(bits);
-		}
-	}
-#endif /* __TARGET_ARCH_ARM == 7 */
-}
-
-/*
- *  Dенеуе├е╖ехд╬епеъб╝еє
- */
-Inline void
-mpcore_dcache_clean(void)
-{
-#if __TARGET_ARCH_ARM == 6
-#error
-#elif __TARGET_ARCH_ARM == 7
-    uint32_t bits = 0;
-    uint32_t  ways = 0;
-    uint32_t sets = 0;
-
-    CP15_CACHE_SIZE_SELECTION_WRITE(0);
-    CP15_PBUFFER_FLUSH();
-    for (ways = 0; ways < 4; ways++){
-        for (sets = 0; sets < 256; sets++){
-            bits = ways << 30 | sets << 5;
-            CP15_DCACHE_CLEAN(bits);
-        }
-    }
-#endif /* __TARGET_ARCH_ARM == 7 */
-}
-
-/*
- *  Iенеуе├е╖ехд╬╠╡╕·▓╜
- */
-Inline void
-mpcore_icache_invalidate(void)
-{
-	CP15_ICACHE_INVALIDATE();
-}
-
-/*
- *  е╫еъе╒езе├е┴е╨е├е╒ебдЄепеъев
- */
-Inline void
-mpcore_pbuffer_flash(void)
-{
-	CP15_PBUFFER_FLUSH();
-}
-
-#endif /* TOPPERS_MACRO_ONLY */
-
-/*
- *  ╞т┬ве┐еде▐┤╪╧вд╬─ъ╡┴
- */
-#define MPCORE_TM_LR     (MPCORE_PMR_BASE + 0x0600)  /* еэб╝е╔еье╕е╣е┐           */
-#define MPCORE_TM_COUNT  (MPCORE_PMR_BASE + 0x0604)  /* ележеєе┐б╝еье╕е╣е┐       */
-#define MPCORE_TM_CNT    (MPCORE_PMR_BASE + 0x0608)  /* е│еєе╚еэб╝еыеье╕е╣е┐     */
-#define MPCORE_TM_ISR    (MPCORE_PMR_BASE + 0x060C)  /* │ф╣■д▀е╣е╞б╝е┐е╣еье╕е╣е┐ */
+#define MPCORE_TM_LR     (MPCORE_PMR_BASE + 0x0600)  /* уГнуГ╝уГЙуГмуВ╕уВ╣уВ┐           */
+#define MPCORE_TM_COUNT  (MPCORE_PMR_BASE + 0x0604)  /* уВлуВжуГ│уВ┐уГ╝уГмуВ╕уВ╣уВ┐       */
+#define MPCORE_TM_CNT    (MPCORE_PMR_BASE + 0x0608)  /* уВ│уГ│уГИуГнуГ╝уГлуГмуВ╕уВ╣уВ┐     */
+#define MPCORE_TM_ISR    (MPCORE_PMR_BASE + 0x060C)  /* хЙ▓ш╛╝уБ┐уВ╣уГЖуГ╝уВ┐уВ╣уГмуВ╕уВ╣уВ┐ */
 
 #define MPCORE_TM_CNT_EN        0x1
 #define MPCORE_TM_CNT_AR        0x2
@@ -260,65 +77,73 @@ mpcore_pbuffer_flash(void)
 
 #if __TARGET_ARCH_ARM == 7
 /*
- * Global Timer┤╪╧вд╬─ъ╡┴б╩r1░╩╛хд╟е╡е▌б╝е╚б╦
+ * Global TimerщЦвщАгуБохоЪч╛йя╝Иr1ф╗еф╕КуБзуВ╡уГЭуГ╝уГИя╝Й
  */
-#define MPCORE_GTC_COUNT_L (MPCORE_PMR_BASE + 0x0200)  /* ележеєе┐б╝еье╕е╣е┐L       */
-#define MPCORE_GTC_COUNT_U (MPCORE_PMR_BASE + 0x0204)  /* ележеєе┐б╝еье╕е╣е┐H       */
-#define MPCORE_GTC_CNT     (MPCORE_PMR_BASE + 0x0208)  /* е│еєе╚еэб╝еыеье╕е╣е┐      */
-#define MPCORE_GTC_COMPV_L (MPCORE_PMR_BASE + 0x0210)  /* е│еєе┌еве╨еъехб╝еье╕е╣е┐L */
-#define MPCORE_GTC_COMPV_U (MPCORE_PMR_BASE + 0x0214)  /* е│еєе┌еве╨еъехб╝еье╕е╣е┐H */
+#define MPCORE_GTM_COUNT_L (MPCORE_PMR_BASE + 0x0200)  /* уВлуВжуГ│уВ┐уГ╝уГмуВ╕уВ╣уВ┐L       */
+#define MPCORE_GTM_COUNT_U (MPCORE_PMR_BASE + 0x0204)  /* уВлуВжуГ│уВ┐уГ╝уГмуВ╕уВ╣уВ┐H       */
+#define MPCORE_GTM_CNT     (MPCORE_PMR_BASE + 0x0208)  /* уВ│уГ│уГИуГнуГ╝уГлуГмуВ╕уВ╣уВ┐      */
+#define MPCORE_GTM_ISR     (MPCORE_PMR_BASE + 0x020C)  /* хЙ▓ш╛╝уБ┐уВ╣уГЖуГ╝уВ┐уВ╣уГмуВ╕уВ╣уВ┐  */
+#define MPCORE_GTM_COMPV_L (MPCORE_PMR_BASE + 0x0210)  /* уВ│уГ│уГЪуВвуГРуГкуГеуГ╝уГмуВ╕уВ╣уВ┐L */
+#define MPCORE_GTM_COMPV_U (MPCORE_PMR_BASE + 0x0214)  /* уВ│уГ│уГЪуВвуГРуГкуГеуГ╝уГмуВ╕уВ╣уВ┐H */
+#define MPCORE_GTM_AIR     (MPCORE_PMR_BASE + 0x0218)  /* уВкуГ╝уГИуВдуГ│уВпуГкуГбуГ│уГИуГмуВ╕уВ╣уВ┐уГ╝ */
 
-#define MPCORE_GTC_CNT_TIMENA 0x01 /* е┐еде▐б╝еде═б╝е╓еы */
+#define MPCORE_GTM_ISR_EF        0x01
+
+#define MPCORE_GTM_CNT_EN        0x01
+#define MPCORE_GTM_CNT_CE        0x02
+#define MPCORE_GTM_CNT_IEN       0x04
+#define MPCORE_GTM_CNT_AI        0x08
+#define MPCORE_GTM_CNT_PS_OFFSET   8
 
 #endif /* __TARGET_ARCH_ARM == 7 */
 
 /*
  *  Snoop Control Unit
  */
-#define MPCORE_SCU_CTRL    (MPCORE_PMR_BASE + 0x0000)  /* е│еєе╚еэб╝еыеье╕е╣е┐ */
-#define MPCORE_SCU_CONFIG  (MPCORE_PMR_BASE + 0x0004)  /* е│еєе╒егеоехеьб╝е╖ечеєеье╕е╣е┐ */
-#define MPCORE_SCU_CPUST   (MPCORE_PMR_BASE + 0x0008)  /* CPUе╣е╞б╝е┐е╣ */
-#define MPCORE_SCU_IALL    (MPCORE_PMR_BASE + 0x000C)  /* едеєе╨еъе├е╔екб╝еы */
+#define MPCORE_SCU_CTRL    (MPCORE_PMR_BASE + 0x0000)  /* уВ│уГ│уГИуГнуГ╝уГлуГмуВ╕уВ╣уВ┐ */
+#define MPCORE_SCU_CONFIG  (MPCORE_PMR_BASE + 0x0004)  /* уВ│уГ│уГХуВгуВоуГеуГмуГ╝уВ╖уГзуГ│уГмуВ╕уВ╣уВ┐ */
+#define MPCORE_SCU_CPUST   (MPCORE_PMR_BASE + 0x0008)  /* CPUуВ╣уГЖуГ╝уВ┐уВ╣ */
+#define MPCORE_SCU_IALL    (MPCORE_PMR_BASE + 0x000C)  /* уВдуГ│уГРуГкуГГуГЙуВкуГ╝уГл */
 #if __TARGET_ARCH_ARM == 6
-#define MPCORE_SCU_PM_CTRL (MPCORE_PMR_BASE + 0x0010)  /* е╤е╒ейб╝е▐еєе╣ете╦е┐└й╕цеье╕е╣е┐ */
-#define MPCORE_SCU_PM_EVT0 (MPCORE_PMR_BASE + 0x0014)  /* ете╦е┐ележеєе┐еде┘еєе╚0 */
-#define MPCORE_SCU_PM_EVT1 (MPCORE_PMR_BASE + 0x0018)  /* ете╦е┐ележеєе┐еде┘еєе╚1 */
-#define MPCORE_SCU_PM_MN0  (MPCORE_PMR_BASE + 0x001C)  /* ете╦е┐ележеєе┐0 */
-#define MPCORE_SCU_PM_MN1  (MPCORE_PMR_BASE + 0x0020)  /* ете╦е┐ележеєе┐1 */
-#define MPCORE_SCU_PM_MN2  (MPCORE_PMR_BASE + 0x0024)  /* ете╦е┐ележеєе┐2 */
-#define MPCORE_SCU_PM_MN3  (MPCORE_PMR_BASE + 0x0028)  /* ете╦е┐ележеєе┐3 */
-#define MPCORE_SCU_PM_MN4  (MPCORE_PMR_BASE + 0x002C)  /* ете╦е┐ележеєе┐4 */
-#define MPCORE_SCU_PM_MN5  (MPCORE_PMR_BASE + 0x0030)  /* ете╦е┐ележеєе┐5 */
-#define MPCORE_SCU_PM_MN6  (MPCORE_PMR_BASE + 0x0034)  /* ете╦е┐ележеєе┐6 */
-#define MPCORE_SCU_PM_MN7  (MPCORE_PMR_BASE + 0x0038)  /* ете╦е┐ележеєе┐7 */
+#define MPCORE_SCU_PM_CTRL (MPCORE_PMR_BASE + 0x0010)  /* уГСуГХуВйуГ╝уГЮуГ│уВ╣уГвуГЛуВ┐хИ╢х╛буГмуВ╕уВ╣уВ┐ */
+#define MPCORE_SCU_PM_EVT0 (MPCORE_PMR_BASE + 0x0014)  /* уГвуГЛуВ┐уВлуВжуГ│уВ┐уВдуГЩуГ│уГИ0 */
+#define MPCORE_SCU_PM_EVT1 (MPCORE_PMR_BASE + 0x0018)  /* уГвуГЛуВ┐уВлуВжуГ│уВ┐уВдуГЩуГ│уГИ1 */
+#define MPCORE_SCU_PM_MN0  (MPCORE_PMR_BASE + 0x001C)  /* уГвуГЛуВ┐уВлуВжуГ│уВ┐0 */
+#define MPCORE_SCU_PM_MN1  (MPCORE_PMR_BASE + 0x0020)  /* уГвуГЛуВ┐уВлуВжуГ│уВ┐1 */
+#define MPCORE_SCU_PM_MN2  (MPCORE_PMR_BASE + 0x0024)  /* уГвуГЛуВ┐уВлуВжуГ│уВ┐2 */
+#define MPCORE_SCU_PM_MN3  (MPCORE_PMR_BASE + 0x0028)  /* уГвуГЛуВ┐уВлуВжуГ│уВ┐3 */
+#define MPCORE_SCU_PM_MN4  (MPCORE_PMR_BASE + 0x002C)  /* уГвуГЛуВ┐уВлуВжуГ│уВ┐4 */
+#define MPCORE_SCU_PM_MN5  (MPCORE_PMR_BASE + 0x0030)  /* уГвуГЛуВ┐уВлуВжуГ│уВ┐5 */
+#define MPCORE_SCU_PM_MN6  (MPCORE_PMR_BASE + 0x0034)  /* уГвуГЛуВ┐уВлуВжуГ│уВ┐6 */
+#define MPCORE_SCU_PM_MN7  (MPCORE_PMR_BASE + 0x0038)  /* уГвуГЛуВ┐уВлуВжуГ│уВ┐7 */
 #endif /* __TARGET_ARCH_ARM == 6 */
-#define MPCORE_SCU_SNSAC   (MPCORE_PMR_BASE + 0x0054)  /* е╬еєе╗енехевевепе╗е╣е│еєе╚еэб╝еыеье╕е╣е┐*/
+#define MPCORE_SCU_SNSAC   (MPCORE_PMR_BASE + 0x0054)  /* уГОуГ│уВ╗уВнуГеуВвуВвуВпуВ╗уВ╣уВ│уГ│уГИуГнуГ╝уГлуГмуВ╕уВ╣уВ┐*/
 
 
-#define MPCORE_SCU_CTRL_EN (1 << 0)   /* SCUеде═б╝е╓еы */
+#define MPCORE_SCU_CTRL_EN (1 << 0)   /* SCUуВдуГНуГ╝уГЦуГл */
 
-#define MPCORE_SCU_PM_CTRL_ENA  (1 << 0)    /* е╤е╒ейб╝е▐еєе╣ете╦е┐═н╕·▓╜ */
-#define MPCORE_SCU_PM_CTRL_RST  (1 << 1)    /* е╤е╒ейб╝е▐еєе╣ете╦е┐еъе╗е├е╚ */
+#define MPCORE_SCU_PM_CTRL_ENA  (1 << 0)    /* уГСуГХуВйуГ╝уГЮуГ│уВ╣уГвуГЛуВ┐цЬЙхК╣хМЦ */
+#define MPCORE_SCU_PM_CTRL_RST  (1 << 1)    /* уГСуГХуВйуГ╝уГЮуГ│уВ╣уГвуГЛуВ┐уГкуВ╗уГГуГИ */
 
-#define MPCORE_SCU_PM_EVT_CYC_COUNT0_4 (31 << 0) /* е╡едепеыележеєе╚╗╪─ъ */
+#define MPCORE_SCU_PM_EVT_CYC_COUNT0_4 (31 << 0) /* уВ╡уВдуВпуГлуВлуВжуГ│уГИцМЗхоЪ */
 
 #define MPCORE_SCU_IALL_WAYS   (0x0000ffffU)
 
 #ifndef TOPPERS_MACRO_ONLY
 
 /*
- *  SCUд╬╜щ┤№▓╜
+ *  SCUуБохИЭцЬЯхМЦ
  */
 extern void scu_init(void);
 
 #if __TARGET_ARCH_ARM == 6
 /*
- * SCUележеєе┐д╬╜щ┤№▓╜б╩MN0дЄ╗╚═╤б╦
+ * SCUуВлуВжуГ│уВ┐уБохИЭцЬЯхМЦя╝ИMN0уВТф╜┐чФия╝Й
  */
 extern void scu_counter_init(void);
 
 /*
- * SCUе┐еде▐д╬еъе╗е├е╚
+ * SCUуВ┐уВдуГЮуБоуГкуВ╗уГГуГИ
  */
 Inline void
 scu_counter_reset(void)
@@ -328,7 +153,7 @@ scu_counter_reset(void)
 }
 
 /*
- * SCUе┐еде▐д╬╕╜║▀├═дЄ╞╔др
+ * SCUуВ┐уВдуГЮуБочП╛хЬихАдуВТшкнуВА
  */
 Inline uint_t
 scu_counter_get_current(void)
@@ -336,332 +161,11 @@ scu_counter_get_current(void)
 	return (sil_rew_mem((void *)MPCORE_SCU_PM_MN0));
 }
 #endif /* __TARGET_ARCH_ARM == 6 */
-#endif /* TOPPERS_MACRO_ONLY */
 
 /*
- *  Distributed Interrupt Controller CPU Interface
- *
- *  ═е└ш┼┘д╧бд0x0б┴0xF д╬16├╩│мбе
- *  0x0дм║╟╣т═е└ш┼┘д╟бд0xFдм║╟─у═е└ш┼┘бе
+ *  SMPуГвуГ╝уГЙуБоцЬЙхК╣хМЦ
  */
-#define DIC_CPUIF_CR   (MPCORE_PMR_BASE + 0x0100)  /* е│еєе╚еэб╝еыеье╕е╣е┐ */
-#define DIC_CPUIF_PMR  (MPCORE_PMR_BASE + 0x0104)  /* ═е└ш┼┘е▐е╣епеье╕е╣е┐ */
-#define DIC_CPUIF_BPR  (MPCORE_PMR_BASE + 0x0108)  /* е╨еде╩еъе▌едеєе╚еье╕е╣е┐ */
-#define DIC_CPUIF_IAR  (MPCORE_PMR_BASE + 0x010C)  /* Interrupt Acknowledge Register */
-#define DIC_CPUIF_EOI  (MPCORE_PMR_BASE + 0x0110)  /* End of Interrupt Register */
-#define DIC_CPUIF_RII  (MPCORE_PMR_BASE + 0x0114)  /* Running Interrupt Register */
-
-#define DIC_CPUIF_CR_EN          0x01 /* д│д╬е╙е├е╚д╧бвnon-secureд╟д╬д▀═н╕· */
-#define DIC_CPUIF_CR_EN_S        0x01
-#define DIC_CPUIF_CR_EN_NS       0x02
-#define DIC_CPUIF_CR_EN_ACKCTL   0x04
-#define DIC_CPUIF_CR_FIQEN       0x08
-#define DIC_CPUIF_CR_EN_SBPR     0x10
-
-#if __TARGET_ARCH_ARM == 6
-#define DIC_CPUIF_PMR_OFFSET 0x04
-#define DIC_CPUIF_BPR_ALL    0x03  /* ┴┤д╞д╬е╙е├е╚дм═н╕· */
-#define DIC_CPUIF_BPR_3      0x04  /* 3е╙е├е╚═н╕·        */
-#define DIC_CPUIF_BPR_2      0x05  /* 2е╙е├е╚═н╕·        */
-#define DIC_CPUIF_BPR_1      0x06  /* 1е╙е├е╚═н╕·        */
-#elif __TARGET_ARCH_ARM == 7
-#define DIC_CPUIF_PMR_OFFSET 0x03
-#define DIC_CPUIF_BPR_ALL    0x00  /* ┴┤д╞д╬е╙е├е╚дм═н╕· */
-#define DIC_CPUIF_BPR_4      0x03  /* 4е╙е├е╚═н╕·        */
-#define DIC_CPUIF_BPR_3      0x04  /* 3е╙е├е╚═н╕·        */
-#define DIC_CPUIF_BPR_2      0x05  /* 2е╙е├е╚═н╕·        */
-#define DIC_CPUIF_BPR_1      0x06  /* 1е╙е├е╚═н╕·        */
-#endif /* __TARGET_ARCH_ARM == 7 */
-
-
-/*
- *  Distributed Interrupt Controller
- */
-#define DIC_CR     (MPCORE_PMR_BASE + 0x1000)  /* е│еєе╚еэб╝еыеье╕е╣е┐ */
-#define DIC_ICT    (MPCORE_PMR_BASE + 0x1004)  /* Interrupt Controller е┐еде╫еье╕е╣е┐ */
-#if __TARGET_ARCH_ARM == 7
-#define DIC_IID    (MPCORE_PMR_BASE + 0x1008)  /* Distributor Implementer ID */
-#define DIC_SEC    (MPCORE_PMR_BASE + 0x1080)  /* │ф╣■д▀е╗енехеъе╞ег */
-#endif /* __TARGET_ARCH_ARM == 7 */
-#define DIC_SE     (MPCORE_PMR_BASE + 0x1100)  /* │ф╣■д▀еде═б╝е╓еые╗е├е╚   */
-#define DIC_CE     (MPCORE_PMR_BASE + 0x1180)  /* │ф╣■д▀еде═б╝е╓еыепеъевб╝ */
-#define DIC_SP     (MPCORE_PMR_BASE + 0x1200)  /* │ф╣■д▀е╗е├е╚е┌еєе╟егеєе░ */
-#define DIC_CP     (MPCORE_PMR_BASE + 0x1280)  /* │ф╣■д▀епеъевб╝е┌еєе╟егеєе░ */
-#define DIC_IPR    (MPCORE_PMR_BASE + 0x1400)  /* │ф╣■д▀═е└ш┼┘еье╕е╣е┐ */
-#define DIC_ITR    (MPCORE_PMR_BASE + 0x1800)  /* │ф╣■д▀е┐б╝е▓е├е╚еье╕е╣е┐/CA9д╧SPIе┐б╝е▓е├е╚еье╕е╣е┐ */
-#define DIC_ICR    (MPCORE_PMR_BASE + 0x1C00)  /* │ф╣■д▀е│еєе╒егеоехеьб╝е╖ечеєеье╕е╣е┐ */
-#define DIC_SIR    (MPCORE_PMR_BASE + 0x1F00)  /* е╜е╒е╚ежезев│ф╣■д▀еье╕е╣е┐  */
-#if __TARGET_ARCH_ARM == 7
-#define DIC_PPIS   (MPCORE_PRM_BASE + 0x1D00)  /* PPIе╣е╞б╝е┐е╣ */
-#define DIC_SPIS   (MPCORE_PRM_BASE + 0x1D04)  /* SPIе╣е╞б╝е┐е╣ */
-#endif /* __TARGET_ARCH_ARM == 7 */
-
-#define DIC_CR_ENABLE 0x01
-#define DIC_CR_NS_ENABLE 0x02
-
-/*
- *  │ф╣■д▀└шд╬е╫еэе╗е├е╡д╬╗╪─ъ
- */
-#define DIC_ITR_CPU0  0x01
-#define DIC_ITR_CPU1  0x02
-#define DIC_ITR_CPU2  0x04
-#define DIC_ITR_CPU3  0x08
-
-#define DIC_SIR_CPU0  0x01
-#define DIC_SIR_CPU1  0x02
-#define DIC_SIR_CPU2  0x04
-#define DIC_SIR_CPU3  0x08
-#define DIC_SIR_CPUS  0x0f
-
-#define DIC_SIR_CPU_OFFSET 16
-
-/*
- *  │ф╣■д▀═е└ш┼┘
- */
-#define DIC_MAX_PRIORITY  0x00
-#if __TARGET_ARCH_ARM == 6
-#define DIC_MIN_PRIORITY  0x0f
-#elif __TARGET_ARCH_ARM == 7
-#define DIC_MIN_PRIORITY  0x1f
-#endif /* __TARGET_ARCH_ARM == 7 */
-
-/*
- *  е│еєе╒егеоехеьб╝е╖ечеєеье╕е╣е┐д╬└▀─ъ├═
- */
-#define DIC_ICR_EDGE     0x03   /* еие├е╕│ф╣■д▀ */
-#define DIC_ICR_LEVEL    0x01   /* еье┘еы│ф╣■д▀ */
-
-/*
- *  DICд╟е╡е▌б╝е╚д╖д╞ддды│ф╣■д▀┐Ї
- */
-#define DIC_TMIN_INTNO      0U
-
-#ifndef DIC_TMAX_INTNO
-#define DIC_TMAX_INTNO    255U
-#endif /* DIC_TMAX_INTNO */
-
-#ifndef DIC_TNUM_INT
-#define DIC_TNUM_INT      256U
-#endif /* DIC_TNUM_INT */
-
-/*
- *  е░еэб╝е╨еы│ф╣■д▀д╬│л╗╧╚╓╣ц
- */
-#define TMIN_GLOBAL_INTNO   32U
-
-/*
- * │ф╣■д▀╚╓╣ц(DICд╟д╬╚╓╣ц)
- */
-#define DIC_IRQNO_IPI0     0
-#define DIC_IRQNO_IPI1     1
-#define DIC_IRQNO_IPI2     2
-#define DIC_IRQNO_IPI3     3
-#define DIC_IRQNO_IPI4     4
-#define DIC_IRQNO_IPI5     5
-#define DIC_IRQNO_IPI6     6
-#define DIC_IRQNO_IPI7     7
-#define DIC_IRQNO_IPI8     8
-#define DIC_IRQNO_IPI9     9
-#define DIC_IRQNO_IPI10   10
-#define DIC_IRQNO_IPI11   11
-#define DIC_IRQNO_IPI12   12
-#define DIC_IRQNO_IPI13   13
-#define DIC_IRQNO_IPI14   14
-#define DIC_IRQNO_IPI15   15
-
-#define DIC_IRQNO_TM      29
-#define DIC_IRQNO_WDT     30
-
-#ifndef TOPPERS_MACRO_ONLY
-/*
- *  DIC CPUедеєе┐е╒езб╝е╣┤╪╧вд╬е╔ещеде╨
- */
-/*
- *  CPUд╬│ф╣■д▀═е└ш┼┘е▐е╣епдЄ└▀─ъ
- */
-Inline void
-dic_cpu_set_priority(int pri)
-{
-	sil_wrw_mem((void *)DIC_CPUIF_PMR,
-				(pri << DIC_CPUIF_PMR_OFFSET));
-
-	/*
-	 * └▀─ъдм╚┐▒╟д╡дьд╞длдщ╝бд╬╠┐╬сдЄ╝┬╣╘д╣дыдшджд╦есетеъе╨еъевдЄ╝┬╣╘
-	 */
-	mpcore_data_sync_barrier();
-}
-
-
-/*
- *  CPUд╬│ф╣■д▀═е└ш┼┘е▐е╣епдЄ╝ш╞└
- */
-Inline int
-dic_cpu_current_priority(void)
-{
-	return (sil_rew_mem((void *)(DIC_CPUIF_PMR)) >>
-			DIC_CPUIF_PMR_OFFSET);
-}
-
-/*
- *  │ф╣■д▀е╧еєе╔ещд╬╜╨╕¤д╟╔м═╫д╩IRC┴р║ю
- */
-Inline void
-dic_cpu_end_int(uint8_t id)
-{
-	sil_wrw_mem((void *)(DIC_CPUIF_EOI), id);
-}
-
-/*
- *  DICд╬е╫еэе╗е├е╡д╬│ф╣■д▀═е└ш┼┘д╬д╔д╬е╙е├е╚дЄ╗╚═╤д╣дыдл
- */
-Inline void
-dic_cpu_set_bp(int mask_bit)
-{
-	sil_wrw_mem((void *)DIC_CPUIF_BPR, mask_bit);
-}
-
-/*
- *  CPUедеєе┐е╒езб╝е╣д╬╜щ┤№▓╜
- */
-extern void dic_cpu_init(void);
-
-/*
- *  CPUедеєе┐е╒езб╝е╣д╬╜к╬╗
- */
-extern void dic_cpu_stop(void);
-
-/*
- *  DIC DISедеєе┐е╒езб╝е╣┤╪╧вд╬е╔ещеде╨
- */
-
-/*
- *  │ф╣■д▀╢╪╗▀
- */
-extern void dic_disable_int(uint8_t id);
-
-/*
- *  │ф╣■д▀╡Ў▓─
- */
-extern void dic_enable_int(uint8_t id);
-
-/*
- *  │ф╣■д▀е┌еєе╟егеєе░епеъев
- */
-extern void dic_clear_pending(uint8_t id);
-
-/*
- *  │ф╣■д▀е┌еєе╟егеєе░е╗е├е╚
- */
-extern void dic_set_pending(uint8_t id);
-
-/*
- *  │ф╣■д▀═╫╡сд╬е┴езе├еп
- */
-extern bool_t dic_probe_int(uint8_t id);
-
-/*
- *  │ф╣■д▀└▀─ъд╬е╗е├е╚
- */
-extern void dic_config(uint8_t id, uint8_t config);
-
-/*
- *  │ф╣■д▀═е└ш┼┘д╬е╗е├е╚
- *  ╞т╔Ї╔╜╕╜д╟┼╧д╣бе
- */
-extern void dic_set_priority(uint8_t id, int pri);
-
-/*
- *  DIC│ф╣■д▀е┐б╝е▓е├е╚д╬└▀─ъ
- *  CPUд╧ORд╟╗╪─ъ
- */
-extern void dic_set_target(uint8_t id, uint8_t cpus);
-
-/*
- *  DICедеєе┐е╒езб╝е╣д╬╜щ┤№▓╜(SPIд╬д▀╜щ┤№▓╜)
- */
-extern void dic_init(void);
-
-/*
- *  │╞е│евд╟╝┬╣╘д╣дыDICедеєе┐е╒езб╝е╣д╬SGIд╚PPIд╬╜щ┤№▓╜
- */
-extern void dic_sgi_ppi_init(void);
-
-/*
- * GICд╬│ф╣■д▀е╗енехеъе╞ег└▀─ъ
- * │ф╣■д▀╚╓╣цд╚д╜д╬е╗енехеъе╞егд╟╗╪─ъ
- * ░·┐Ї ns (non secure bit) :
- *     0 -> secure(FIQ) setting
- *     1 -> non-secure(IRQ) setting
- */
-extern void dic_set_security(int intno, unsigned int ns);
-
-/*
- *  DICедеєе┐е╒езб╝е╣д╬╜к╬╗
- */
-extern void dic_stop(void);
-
-/*
- *  е╜е╒е╚ежезев│ф╣■д▀дЄ╚п╣╘
- */
-Inline void
-dic_swi(int cpu, int id)
-{
-	CP15_DATA_SYNC_BARRIER();
-	sil_wrw_mem((void *)DIC_SIR, (cpu << DIC_SIR_CPU_OFFSET)|id);
-	CP15_DATA_SYNC_BARRIER();
-}
-
-/*
- *  SMPетб╝е╔д╬═н╕·▓╜
- */
-extern void mpcore_smp_mode_enable(void);
-
-/*
- *  MMU┤╪╧в
- */
-
-/*
- * ╩╤┤╣е╞б╝е╓еыд╪д╬└▀─ъ╞т═╞
- * va   : ▓╛┴█еве╔еье╣
- * pa   : ╩к═¤еве╔еье╣
- * size : е╡еде║
- * s    : ╢ж═н╗╪─ъ
- * tex  : C Bд╚д╬┴╚д▀╣чдяд╗д╟╩╤▓╜
- * ap   : евепе╗е╣╕в
- * c    : енеуе├е╖ех
- * b    : е╨е├е╒еб
- */
-typedef struct{
-	uintptr_t   va;
-	uintptr_t   pa;
-	uint32_t    size;
-	uint8_t     ns;
-	uint8_t     s;
-	uint8_t     tex;
-	uint8_t     ap;
-	uint8_t     c;
-	uint8_t     b;
-}MEMORY_ATTRIBUTE;
-
-/*
- *  MMUд╬╜щ┤№▓╜
- */
-extern void mpcore_mmu_init(void);
-
-/*
- *  MMUд╦дшдыесетеъд╬е▐е├е╘еєе░
- */
-extern void mmu_map_memory(MEMORY_ATTRIBUTE *m_attribute);
-
-/*
- *  I/Dенеуе├е╖ехдЄ╬╛╩¤дЄ═н╕·д╦
- */
-extern void mpcore_cache_enable(void);
-
-/*
- *  I/Dенеуе├е╖ехдЄ╬╛╩¤дЄ╠╡╕·д╦
- */
-extern void mpcore_cache_disable(void);
+extern void smp_mode_enable(void);
 
 #endif /* TOPPERS_MACRO_ONLY */
 #endif /* TOPPERS_MPCORE_H */

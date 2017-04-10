@@ -1,11 +1,11 @@
 <Project  xmlns="http://schemas.microsoft.com/developer/msbuild/2003"  ToolsVersion="4.0">
 
-
  <!-- base on cpu type, setup compiler-->
 
   <!-- set up the base DST_DIR path base on different INSTRUCTION_SET -->  
   <PropertyGroup>
-    <OBJ_EXT>obj</OBJ_EXT>
+    <!-- <OBJ_EXT>obj</OBJ_EXT> -->
+    <OBJ_EXT>o</OBJ_EXT>
     <LIB_EXT>lib</LIB_EXT>
     <EXE_EXT>axf</EXE_EXT>
     <SCATTER_EXT>xml</SCATTER_EXT>
@@ -25,15 +25,26 @@
 
   <ItemGroup>
     <IncludePaths Include="DeviceCode\Cores\arm"/>
-
-
     <IncludePaths Include="DeviceCode\Cores\arm\Include"/>
-
 
     <IncludePaths Include="DeviceCode"/>
     <IncludePaths Include="DeviceCode\Include"/>
     <IncludePaths Include="CLR\Include"/>
-    
+    <!-- Add GR-PEACH OS -->
+    <!--
+    <IncludePaths Include="DeviceCode\pal\lwip_1_4_1_os\LWIP\src\include" />
+    <IncludePaths Include="DeviceCode\pal\lwip_1_4_1_os\lwip\src\include\lwip" />
+    <IncludePaths Include="DeviceCode\pal\lwip_1_4_1_os\config" />
+    <IncludePaths Include="DeviceCode\pal\lwip_1_4_1_os\lwip\src\include\ipv4" />
+    <IncludePaths Include="DeviceCode\Targets\OS\CMSIS_RTOS\DeviceCode\lwip_1_4_1_os" />
+    -->
+    <!-- Add GR-PEACH Native -->
+    <!--
+    <IncludePaths Include="DeviceCode\pal\lwip\LWIP\src\include" />
+    <IncludePaths Include="DeviceCode\pal\lwip\LWIP\contrib\ports\arm" />
+    <IncludePaths Include="DeviceCode\pal\lwip\LWIP\src\include\ipv4" />
+    <IncludePaths Include="CMSIS\CMSIS\RTOS\RTX\INC" />
+    -->
   </ItemGroup>
 
 </Project>

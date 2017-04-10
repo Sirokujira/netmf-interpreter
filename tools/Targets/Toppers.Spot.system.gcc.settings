@@ -24,11 +24,7 @@
 
   <ItemGroup>
     <IncludePaths Include="DeviceCode\Cores\arm"/>
-
-
     <IncludePaths Include="DeviceCode\Cores\arm\Include"/>
-
-
     <IncludePaths Include="DeviceCode"/>
     <IncludePaths Include="DeviceCode\Include"/>
     <IncludePaths Include="CLR\Include"/>

@@ -6,40 +6,40 @@
  *  Copyright (C) 2007-2015 by Embedded and Real-Time Systems Laboratory
  *              Graduate School of Information Science, Nagoya Univ., JAPAN
  * 
- *  ¾åµ­Ãøºî¸¢¼Ô¤Ï¡¤°Ê²¼¤Î(1)¡Á(4)¤Î¾ò·ï¤òËş¤¿¤¹¾ì¹ç¤Ë¸Â¤ê¡¤ËÜ¥½¥Õ¥È¥¦¥§
- *  ¥¢¡ÊËÜ¥½¥Õ¥È¥¦¥§¥¢¤ò²şÊÑ¤·¤¿¤â¤Î¤ò´Ş¤à¡¥°Ê²¼Æ±¤¸¡Ë¤ò»ÈÍÑ¡¦Ê£À½¡¦²ş
- *  ÊÑ¡¦ºÆÇÛÉÛ¡Ê°Ê²¼¡¤ÍøÍÑ¤È¸Æ¤Ö¡Ë¤¹¤ë¤³¤È¤òÌµ½ş¤ÇµöÂú¤¹¤ë¡¥
- *  (1) ËÜ¥½¥Õ¥È¥¦¥§¥¢¤ò¥½¡¼¥¹¥³¡¼¥É¤Î·Á¤ÇÍøÍÑ¤¹¤ë¾ì¹ç¤Ë¤Ï¡¤¾åµ­¤ÎÃøºî
- *      ¸¢É½¼¨¡¤¤³¤ÎÍøÍÑ¾ò·ï¤ª¤è¤Ó²¼µ­¤ÎÌµÊİ¾Úµ¬Äê¤¬¡¤¤½¤Î¤Ş¤Ş¤Î·Á¤Ç¥½¡¼
- *      ¥¹¥³¡¼¥ÉÃæ¤Ë´Ş¤Ş¤ì¤Æ¤¤¤ë¤³¤È¡¥
- *  (2) ËÜ¥½¥Õ¥È¥¦¥§¥¢¤ò¡¤¥é¥¤¥Ö¥é¥ê·Á¼°¤Ê¤É¡¤Â¾¤Î¥½¥Õ¥È¥¦¥§¥¢³«È¯¤Ë»È
- *      ÍÑ¤Ç¤­¤ë·Á¤ÇºÆÇÛÉÛ¤¹¤ë¾ì¹ç¤Ë¤Ï¡¤ºÆÇÛÉÛ¤ËÈ¼¤¦¥É¥­¥å¥á¥ó¥È¡ÊÍøÍÑ
- *      ¼Ô¥Ş¥Ë¥å¥¢¥ë¤Ê¤É¡Ë¤Ë¡¤¾åµ­¤ÎÃøºî¸¢É½¼¨¡¤¤³¤ÎÍøÍÑ¾ò·ï¤ª¤è¤Ó²¼µ­
- *      ¤ÎÌµÊİ¾Úµ¬Äê¤ò·ÇºÜ¤¹¤ë¤³¤È¡¥
- *  (3) ËÜ¥½¥Õ¥È¥¦¥§¥¢¤ò¡¤µ¡´ï¤ËÁÈ¤ß¹ş¤à¤Ê¤É¡¤Â¾¤Î¥½¥Õ¥È¥¦¥§¥¢³«È¯¤Ë»È
- *      ÍÑ¤Ç¤­¤Ê¤¤·Á¤ÇºÆÇÛÉÛ¤¹¤ë¾ì¹ç¤Ë¤Ï¡¤¼¡¤Î¤¤¤º¤ì¤«¤Î¾ò·ï¤òËş¤¿¤¹¤³
- *      ¤È¡¥
- *    (a) ºÆÇÛÉÛ¤ËÈ¼¤¦¥É¥­¥å¥á¥ó¥È¡ÊÍøÍÑ¼Ô¥Ş¥Ë¥å¥¢¥ë¤Ê¤É¡Ë¤Ë¡¤¾åµ­¤ÎÃø
- *        ºî¸¢É½¼¨¡¤¤³¤ÎÍøÍÑ¾ò·ï¤ª¤è¤Ó²¼µ­¤ÎÌµÊİ¾Úµ¬Äê¤ò·ÇºÜ¤¹¤ë¤³¤È¡¥
- *    (b) ºÆÇÛÉÛ¤Î·ÁÂÖ¤ò¡¤ÊÌ¤ËÄê¤á¤ëÊıË¡¤Ë¤è¤Ã¤Æ¡¤TOPPERS¥×¥í¥¸¥§¥¯¥È¤Ë
- *        Êó¹ğ¤¹¤ë¤³¤È¡¥
- *  (4) ËÜ¥½¥Õ¥È¥¦¥§¥¢¤ÎÍøÍÑ¤Ë¤è¤êÄ¾ÀÜÅª¤Ş¤¿¤Ï´ÖÀÜÅª¤ËÀ¸¤¸¤ë¤¤¤«¤Ê¤ëÂ»
- *      ³²¤«¤é¤â¡¤¾åµ­Ãøºî¸¢¼Ô¤ª¤è¤ÓTOPPERS¥×¥í¥¸¥§¥¯¥È¤òÌÈÀÕ¤¹¤ë¤³¤È¡¥
- *      ¤Ş¤¿¡¤ËÜ¥½¥Õ¥È¥¦¥§¥¢¤Î¥æ¡¼¥¶¤Ş¤¿¤Ï¥¨¥ó¥É¥æ¡¼¥¶¤«¤é¤Î¤¤¤«¤Ê¤ëÍı
- *      Í³¤Ë´ğ¤Å¤¯ÀÁµá¤«¤é¤â¡¤¾åµ­Ãøºî¸¢¼Ô¤ª¤è¤ÓTOPPERS¥×¥í¥¸¥§¥¯¥È¤ò
- *      ÌÈÀÕ¤¹¤ë¤³¤È¡¥
+ *  ä¸Šè¨˜è‘—ä½œæ¨©è€…ã¯ï¼Œä»¥ä¸‹ã®(1)ï½(4)ã®æ¡ä»¶ã‚’æº€ãŸã™å ´åˆã«é™ã‚Šï¼Œæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§
+ *  ã‚¢ï¼ˆæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’æ”¹å¤‰ã—ãŸã‚‚ã®ã‚’å«ã‚€ï¼ä»¥ä¸‹åŒã˜ï¼‰ã‚’ä½¿ç”¨ãƒ»è¤‡è£½ãƒ»æ”¹
+ *  å¤‰ãƒ»å†é…å¸ƒï¼ˆä»¥ä¸‹ï¼Œåˆ©ç”¨ã¨å‘¼ã¶ï¼‰ã™ã‚‹ã“ã¨ã‚’ç„¡å„Ÿã§è¨±è«¾ã™ã‚‹ï¼
+ *  (1) æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’ã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰ã®å½¢ã§åˆ©ç”¨ã™ã‚‹å ´åˆã«ã¯ï¼Œä¸Šè¨˜ã®è‘—ä½œ
+ *      æ¨©è¡¨ç¤ºï¼Œã“ã®åˆ©ç”¨æ¡ä»¶ãŠã‚ˆã³ä¸‹è¨˜ã®ç„¡ä¿è¨¼è¦å®šãŒï¼Œãã®ã¾ã¾ã®å½¢ã§ã‚½ãƒ¼
+ *      ã‚¹ã‚³ãƒ¼ãƒ‰ä¸­ã«å«ã¾ã‚Œã¦ã„ã‚‹ã“ã¨ï¼
+ *  (2) æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’ï¼Œãƒ©ã‚¤ãƒ–ãƒ©ãƒªå½¢å¼ãªã©ï¼Œä»–ã®ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢é–‹ç™ºã«ä½¿
+ *      ç”¨ã§ãã‚‹å½¢ã§å†é…å¸ƒã™ã‚‹å ´åˆã«ã¯ï¼Œå†é…å¸ƒã«ä¼´ã†ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆï¼ˆåˆ©ç”¨
+ *      è€…ãƒãƒ‹ãƒ¥ã‚¢ãƒ«ãªã©ï¼‰ã«ï¼Œä¸Šè¨˜ã®è‘—ä½œæ¨©è¡¨ç¤ºï¼Œã“ã®åˆ©ç”¨æ¡ä»¶ãŠã‚ˆã³ä¸‹è¨˜
+ *      ã®ç„¡ä¿è¨¼è¦å®šã‚’æ²è¼‰ã™ã‚‹ã“ã¨ï¼
+ *  (3) æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’ï¼Œæ©Ÿå™¨ã«çµ„ã¿è¾¼ã‚€ãªã©ï¼Œä»–ã®ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢é–‹ç™ºã«ä½¿
+ *      ç”¨ã§ããªã„å½¢ã§å†é…å¸ƒã™ã‚‹å ´åˆã«ã¯ï¼Œæ¬¡ã®ã„ãšã‚Œã‹ã®æ¡ä»¶ã‚’æº€ãŸã™ã“
+ *      ã¨ï¼
+ *    (a) å†é…å¸ƒã«ä¼´ã†ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆï¼ˆåˆ©ç”¨è€…ãƒãƒ‹ãƒ¥ã‚¢ãƒ«ãªã©ï¼‰ã«ï¼Œä¸Šè¨˜ã®è‘—
+ *        ä½œæ¨©è¡¨ç¤ºï¼Œã“ã®åˆ©ç”¨æ¡ä»¶ãŠã‚ˆã³ä¸‹è¨˜ã®ç„¡ä¿è¨¼è¦å®šã‚’æ²è¼‰ã™ã‚‹ã“ã¨ï¼
+ *    (b) å†é…å¸ƒã®å½¢æ…‹ã‚’ï¼Œåˆ¥ã«å®šã‚ã‚‹æ–¹æ³•ã«ã‚ˆã£ã¦ï¼ŒTOPPERSãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã«
+ *        å ±å‘Šã™ã‚‹ã“ã¨ï¼
+ *  (4) æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã®åˆ©ç”¨ã«ã‚ˆã‚Šç›´æ¥çš„ã¾ãŸã¯é–“æ¥çš„ã«ç”Ÿã˜ã‚‹ã„ã‹ãªã‚‹æ
+ *      å®³ã‹ã‚‰ã‚‚ï¼Œä¸Šè¨˜è‘—ä½œæ¨©è€…ãŠã‚ˆã³TOPPERSãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã‚’å…è²¬ã™ã‚‹ã“ã¨ï¼
+ *      ã¾ãŸï¼Œæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã®ãƒ¦ãƒ¼ã‚¶ã¾ãŸã¯ã‚¨ãƒ³ãƒ‰ãƒ¦ãƒ¼ã‚¶ã‹ã‚‰ã®ã„ã‹ãªã‚‹ç†
+ *      ç”±ã«åŸºã¥ãè«‹æ±‚ã‹ã‚‰ã‚‚ï¼Œä¸Šè¨˜è‘—ä½œæ¨©è€…ãŠã‚ˆã³TOPPERSãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã‚’
+ *      å…è²¬ã™ã‚‹ã“ã¨ï¼
  * 
- *  ËÜ¥½¥Õ¥È¥¦¥§¥¢¤Ï¡¤ÌµÊİ¾Ú¤ÇÄó¶¡¤µ¤ì¤Æ¤¤¤ë¤â¤Î¤Ç¤¢¤ë¡¥¾åµ­Ãøºî¸¢¼Ô¤ª
- *  ¤è¤ÓTOPPERS¥×¥í¥¸¥§¥¯¥È¤Ï¡¤ËÜ¥½¥Õ¥È¥¦¥§¥¢¤Ë´Ø¤·¤Æ¡¤ÆÃÄê¤Î»ÈÍÑÌÜÅª
- *  ¤ËÂĞ¤¹¤ëÅ¬¹çÀ­¤â´Ş¤á¤Æ¡¤¤¤¤«¤Ê¤ëÊİ¾Ú¤â¹Ô¤ï¤Ê¤¤¡¥¤Ş¤¿¡¤ËÜ¥½¥Õ¥È¥¦¥§
- *  ¥¢¤ÎÍøÍÑ¤Ë¤è¤êÄ¾ÀÜÅª¤Ş¤¿¤Ï´ÖÀÜÅª¤ËÀ¸¤¸¤¿¤¤¤«¤Ê¤ëÂ»³²¤Ë´Ø¤·¤Æ¤â¡¤¤½
- *  ¤ÎÀÕÇ¤¤òÉé¤ï¤Ê¤¤¡¥
+ *  æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã¯ï¼Œç„¡ä¿è¨¼ã§æä¾›ã•ã‚Œã¦ã„ã‚‹ã‚‚ã®ã§ã‚ã‚‹ï¼ä¸Šè¨˜è‘—ä½œæ¨©è€…ãŠ
+ *  ã‚ˆã³TOPPERSãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã¯ï¼Œæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã«é–¢ã—ã¦ï¼Œç‰¹å®šã®ä½¿ç”¨ç›®çš„
+ *  ã«å¯¾ã™ã‚‹é©åˆæ€§ã‚‚å«ã‚ã¦ï¼Œã„ã‹ãªã‚‹ä¿è¨¼ã‚‚è¡Œã‚ãªã„ï¼ã¾ãŸï¼Œæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§
+ *  ã‚¢ã®åˆ©ç”¨ã«ã‚ˆã‚Šç›´æ¥çš„ã¾ãŸã¯é–“æ¥çš„ã«ç”Ÿã˜ãŸã„ã‹ãªã‚‹æå®³ã«é–¢ã—ã¦ã‚‚ï¼Œã
+ *  ã®è²¬ä»»ã‚’è² ã‚ãªã„ï¼
  * 
  *  @(#) $Id: trace_dump.c 1087 2015-02-03 01:04:34Z ertl-honda $
  */
 
 /*
- *		¥È¥ì¡¼¥¹¥í¥°¤Î¥À¥ó¥×
+ *		ãƒˆãƒ¬ãƒ¼ã‚¹ãƒ­ã‚°ã®ãƒ€ãƒ³ãƒ—
  */
 
 #include "kernel_impl.h"
@@ -49,7 +49,7 @@
 #include <log_output.h>
 
 /* 
- *  ¥«¡¼¥Í¥ë¾ğÊó¤Î¼è½Ğ¤·
+ *  ã‚«ãƒ¼ãƒãƒ«æƒ…å ±ã®å–å‡ºã—
  */
 static intptr_t
 get_tskid(intptr_t info)
@@ -98,7 +98,7 @@ get_tskstat(intptr_t info)
 }
 
 /*
- *  ¥¿¥¹¥¯´ÉÍı¡¦¥¿¥¹¥¯ÉÕÂ°Æ±´üµ¡Ç½ - Æş¸ı¥í¥°
+ *  ã‚¿ã‚¹ã‚¯ç®¡ç†ãƒ»ã‚¿ã‚¹ã‚¯ä»˜å±åŒæœŸæ©Ÿèƒ½ - å…¥å£ãƒ­ã‚°
  */
 static intptr_t
 trace_print_tskenter(TRACE *trace, intptr_t *info)
@@ -110,7 +110,7 @@ trace_print_tskenter(TRACE *trace, intptr_t *info)
 
 	switch (type) {
           
-		/* ¥¿¥¹¥¯´ÉÍıµ¡Ç½ */
+		/* ã‚¿ã‚¹ã‚¯ç®¡ç†æ©Ÿèƒ½ */
 	  case TFN_MIG_TSK:
 		info[0] = (intptr_t)trace->loginfo[1];
 		info[1] = (intptr_t)trace->loginfo[2];
@@ -160,13 +160,13 @@ trace_print_tskenter(TRACE *trace, intptr_t *info)
 		tracemsg = "enter to get_inf p_exinf=%d.";
 		break;
 
-		/*  ¥¿¥¹¥¯¾õÂÖ»²¾Èµ¡Ç½ */
+		/*  ã‚¿ã‚¹ã‚¯çŠ¶æ…‹å‚ç…§æ©Ÿèƒ½ */
 	  case TFN_REF_TSK: 
 		info[0] = (intptr_t)trace->loginfo[1]; 
 		tracemsg = "enter to ref_tsk tskid=%d."; 
 		break; 
         
-		/* ¥¿¥¹¥¯ÉÕÂ°Æ±´üµ¡Ç½ */
+		/* ã‚¿ã‚¹ã‚¯ä»˜å±åŒæœŸæ©Ÿèƒ½ */
 	case TFN_SLP_TSK:
 		tracemsg = "enter to slp_tsk.";
 		break;
@@ -216,7 +216,7 @@ trace_print_tskenter(TRACE *trace, intptr_t *info)
 
 
 /*
- *  ¥¿¥¹¥¯´ÉÍı¡¦¥¿¥¹¥¯ÉÕÂ°Æ±´üµ¡Ç½ - ½Ğ¸ı¥í¥°
+ *  ã‚¿ã‚¹ã‚¯ç®¡ç†ãƒ»ã‚¿ã‚¹ã‚¯ä»˜å±åŒæœŸæ©Ÿèƒ½ - å‡ºå£ãƒ­ã‚°
  */
 static intptr_t
 trace_print_tskleave(TRACE *trace, intptr_t *info)
@@ -228,7 +228,7 @@ trace_print_tskleave(TRACE *trace, intptr_t *info)
 
 	switch (type) {
 
-		/* ¥¿¥¹¥¯´ÉÍıµ¡Ç½ */
+		/* ã‚¿ã‚¹ã‚¯ç®¡ç†æ©Ÿèƒ½ */
 	  case TFN_MIG_TSK:
 		info[0] = (intptr_t)trace->loginfo[1];
 		tracemsg = "leave from mig_tsk ercd=%d.";
@@ -276,13 +276,13 @@ trace_print_tskleave(TRACE *trace, intptr_t *info)
 		tracemsg = "leave from get_inf ercd=%d. exinf=%d.";
 		break;
 
-		/*  ¥¿¥¹¥¯¾õÂÖ»²¾Èµ¡Ç½ */
+		/*  ã‚¿ã‚¹ã‚¯çŠ¶æ…‹å‚ç…§æ©Ÿèƒ½ */
 	  case TFN_REF_TSK: 
 		info[0] = (intptr_t)trace->loginfo[1]; 
 		tracemsg = "leave from ref_tsk ercd=%d."; 
 		break;
         
-		/* ¥¿¥¹¥¯ÉÕÂ°Æ±´üµ¡Ç½ */
+		/* ã‚¿ã‚¹ã‚¯ä»˜å±åŒæœŸæ©Ÿèƒ½ */
 	  case TFN_SLP_TSK:
 		info[0] = (intptr_t)trace->loginfo[1];
 		tracemsg = "leave from slp_tsk ercd=%d.";
@@ -333,7 +333,7 @@ trace_print_tskleave(TRACE *trace, intptr_t *info)
 
 
 /*
- *  ¥¿¥¹¥¯Îã³°½èÍıµ¡Ç½ - Æş¸ı¥í¥°
+ *  ã‚¿ã‚¹ã‚¯ä¾‹å¤–å‡¦ç†æ©Ÿèƒ½ - å…¥å£ãƒ­ã‚°
  */
 static intptr_t
 trace_print_texenter(TRACE *trace, intptr_t *info)
@@ -375,7 +375,7 @@ trace_print_texenter(TRACE *trace, intptr_t *info)
 
 
 /*
- *  ¥¿¥¹¥¯Îã³°½èÍıµ¡Ç½ - ½Ğ¸ı¥í¥°
+ *  ã‚¿ã‚¹ã‚¯ä¾‹å¤–å‡¦ç†æ©Ÿèƒ½ - å‡ºå£ãƒ­ã‚°
  */
 static intptr_t
 trace_print_texleave(TRACE *trace, intptr_t *info)
@@ -420,7 +420,7 @@ trace_print_texleave(TRACE *trace, intptr_t *info)
 
 
 /*
- *  ¥»¥Ş¥Õ¥©µ¡Ç½ - Æş¸ı¥í¥°
+ *  ã‚»ãƒãƒ•ã‚©æ©Ÿèƒ½ - å…¥å£ãƒ­ã‚°
  */
 static intptr_t
 trace_print_sementer(TRACE *trace, intptr_t *info)
@@ -469,7 +469,7 @@ trace_print_sementer(TRACE *trace, intptr_t *info)
 
 
 /*
- *  ¥»¥Ş¥Õ¥©µ¡Ç½ - ½Ğ¸ı¥í¥°
+ *  ã‚»ãƒãƒ•ã‚©æ©Ÿèƒ½ - å‡ºå£ãƒ­ã‚°
  */
 static intptr_t
 trace_print_semleave(TRACE *trace, intptr_t *info)
@@ -518,7 +518,7 @@ trace_print_semleave(TRACE *trace, intptr_t *info)
 
 
 /*
- *  ¥¤¥Ù¥ó¥È¥Õ¥é¥°µ¡Ç½ - Æş¸ı¥í¥°
+ *  ã‚¤ãƒ™ãƒ³ãƒˆãƒ•ãƒ©ã‚°æ©Ÿèƒ½ - å…¥å£ãƒ­ã‚°
  */
 static intptr_t
 trace_print_flgenter(TRACE *trace, intptr_t *info)
@@ -584,7 +584,7 @@ trace_print_flgenter(TRACE *trace, intptr_t *info)
 
 
 /*
- *  ¥¤¥Ù¥ó¥È¥Õ¥é¥°µ¡Ç½ - ½Ğ¸ı¥í¥°
+ *  ã‚¤ãƒ™ãƒ³ãƒˆãƒ•ãƒ©ã‚°æ©Ÿèƒ½ - å‡ºå£ãƒ­ã‚°
  */
 static intptr_t
 trace_print_flgleave(TRACE *trace, intptr_t *info)
@@ -640,7 +640,7 @@ trace_print_flgleave(TRACE *trace, intptr_t *info)
 
 
 /*
- *  ¥Ç¡¼¥¿¥­¥å¡¼µ¡Ç½ - Æş¸ı¥í¥°
+ *  ãƒ‡ãƒ¼ã‚¿ã‚­ãƒ¥ãƒ¼æ©Ÿèƒ½ - å…¥å£ãƒ­ã‚°
  */
 static intptr_t
 trace_print_dtqenter(TRACE *trace, intptr_t *info)
@@ -716,7 +716,7 @@ trace_print_dtqenter(TRACE *trace, intptr_t *info)
 
 
 /*
- *  ¥Ç¡¼¥¿¥­¥å¡¼µ¡Ç½ - ½Ğ¸ı¥í¥°
+ *  ãƒ‡ãƒ¼ã‚¿ã‚­ãƒ¥ãƒ¼æ©Ÿèƒ½ - å‡ºå£ãƒ­ã‚°
  */
 static intptr_t
 trace_print_dtqleave(TRACE *trace, intptr_t *info)
@@ -783,7 +783,7 @@ trace_print_dtqleave(TRACE *trace, intptr_t *info)
 }
 
 /*
- *  Í¥ÀèÅÙ¥Ç¡¼¥¿¥­¥å¡¼µ¡Ç½ -Æş¸ı¥í¥°
+ *  å„ªå…ˆåº¦ãƒ‡ãƒ¼ã‚¿ã‚­ãƒ¥ãƒ¼æ©Ÿèƒ½ -å…¥å£ãƒ­ã‚°
  */
 static intptr_t
 trace_print_pdqenter(TRACE *trace, intptr_t *info)
@@ -856,7 +856,7 @@ trace_print_pdqenter(TRACE *trace, intptr_t *info)
 
 
 /*
- *  Í¥ÀèÅÙ¥Ç¡¼¥¿¥­¥å¡¼µ¡Ç½ - ½Ğ¸ı¥í¥°
+ *  å„ªå…ˆåº¦ãƒ‡ãƒ¼ã‚¿ã‚­ãƒ¥ãƒ¼æ©Ÿèƒ½ - å‡ºå£ãƒ­ã‚°
  */
 static intptr_t
 trace_print_pdqleave(TRACE *trace, intptr_t *info)
@@ -919,7 +919,7 @@ trace_print_pdqleave(TRACE *trace, intptr_t *info)
 
 
 /*
- *  ¥á¡¼¥ë¥Ü¥Ã¥¯¥¹µ¡Ç½ - Æş¸ı¥í¥°
+ *  ãƒ¡ãƒ¼ãƒ«ãƒœãƒƒã‚¯ã‚¹æ©Ÿèƒ½ - å…¥å£ãƒ­ã‚°
  */
 static intptr_t
 trace_print_mbxenter(TRACE *trace, intptr_t *info)
@@ -969,7 +969,7 @@ trace_print_mbxenter(TRACE *trace, intptr_t *info)
 
 
 /*
- *  ¥á¡¼¥ë¥Ü¥Ã¥¯¥¹µ¡Ç½ - ½Ğ¸ı¥í¥°
+ *  ãƒ¡ãƒ¼ãƒ«ãƒœãƒƒã‚¯ã‚¹æ©Ÿèƒ½ - å‡ºå£ãƒ­ã‚°
  */
 static intptr_t
 trace_print_mbxleave(TRACE *trace, intptr_t *info)
@@ -1017,7 +1017,7 @@ trace_print_mbxleave(TRACE *trace, intptr_t *info)
 
 
 /*
- *  ¥¹¥Ô¥ó¥í¥Ã¥¯µ¡Ç½ - Æş¸ı¥í¥°
+ *  ã‚¹ãƒ”ãƒ³ãƒ­ãƒƒã‚¯æ©Ÿèƒ½ - å…¥å£ãƒ­ã‚°
  */
 static intptr_t
 trace_print_spnenter(TRACE *trace, intptr_t *info)
@@ -1066,7 +1066,7 @@ trace_print_spnenter(TRACE *trace, intptr_t *info)
 
 
 /*
- *  ¥¹¥Ô¥ó¥í¥Ã¥¯µ¡Ç½ - ½Ğ¸ı¥í¥°
+ *  ã‚¹ãƒ”ãƒ³ãƒ­ãƒƒã‚¯æ©Ÿèƒ½ - å‡ºå£ãƒ­ã‚°
  */
 static intptr_t
 trace_print_spnleave(TRACE *trace, intptr_t *info)
@@ -1115,7 +1115,7 @@ trace_print_spnleave(TRACE *trace, intptr_t *info)
 
 
 /*
- *  ¸ÇÄêÄ¹¥á¥â¥ê¥×¡¼¥ëµ¡Ç½ - Æş¸ı¥í¥°
+ *  å›ºå®šé•·ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«æ©Ÿèƒ½ - å…¥å£ãƒ­ã‚°
  */
 static intptr_t
 trace_print_mpfenter(TRACE *trace, intptr_t *info)
@@ -1165,7 +1165,7 @@ trace_print_mpfenter(TRACE *trace, intptr_t *info)
 
 
 /*
- *  ¸ÇÄêÄ¹¥á¥â¥ê¥×¡¼¥ëµ¡Ç½ - ½Ğ¸ı¥í¥°
+ *  å›ºå®šé•·ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«æ©Ÿèƒ½ - å‡ºå£ãƒ­ã‚°
  */
 static intptr_t
 trace_print_mpfleave(TRACE *trace, intptr_t *info)
@@ -1213,7 +1213,7 @@ trace_print_mpfleave(TRACE *trace, intptr_t *info)
 
 
 /*
- *  ¥·¥¹¥Æ¥à»ş¹ï´ÉÍıµ¡Ç½ - Æş¸ı¥í¥°
+ *  ã‚·ã‚¹ãƒ†ãƒ æ™‚åˆ»ç®¡ç†æ©Ÿèƒ½ - å…¥å£ãƒ­ã‚°
  */
 static intptr_t
 trace_print_timenter(TRACE *trace, intptr_t *info)
@@ -1242,7 +1242,7 @@ trace_print_timenter(TRACE *trace, intptr_t *info)
 
 
 /*
- *  ¥·¥¹¥Æ¥à»ş¹ï´ÉÍıµ¡Ç½ - ½Ğ¸ı¥í¥°
+ *  ã‚·ã‚¹ãƒ†ãƒ æ™‚åˆ»ç®¡ç†æ©Ÿèƒ½ - å‡ºå£ãƒ­ã‚°
  */
 static intptr_t
 trace_print_timleave(TRACE *trace, intptr_t *info)
@@ -1273,7 +1273,7 @@ trace_print_timleave(TRACE *trace, intptr_t *info)
 
 
 /*
- *  ¼ş´ü¥Ï¥ó¥É¥éµ¡Ç½ - Æş¸ı¥í¥°
+ *  å‘¨æœŸãƒãƒ³ãƒ‰ãƒ©æ©Ÿèƒ½ - å…¥å£ãƒ­ã‚°
  */
 static intptr_t
 trace_print_cycenter(TRACE *trace, intptr_t *info)
@@ -1311,7 +1311,7 @@ trace_print_cycenter(TRACE *trace, intptr_t *info)
 
 
 /*
- *  ¼ş´ü¥Ï¥ó¥É¥éµ¡Ç½ - ½Ğ¸ı¥í¥°
+ *  å‘¨æœŸãƒãƒ³ãƒ‰ãƒ©æ©Ÿèƒ½ - å‡ºå£ãƒ­ã‚°
  */
 static intptr_t
 trace_print_cycleave(TRACE *trace, intptr_t *info)
@@ -1349,7 +1349,7 @@ trace_print_cycleave(TRACE *trace, intptr_t *info)
 
 
 /*
- *  ¥¢¥é¡¼¥à¥Ï¥ó¥É¥éµ¡Ç½ - Æş¸ı¥í¥°
+ *  ã‚¢ãƒ©ãƒ¼ãƒ ãƒãƒ³ãƒ‰ãƒ©æ©Ÿèƒ½ - å…¥å£ãƒ­ã‚°
  */
 static intptr_t
 trace_print_almenter(TRACE *trace, intptr_t *info)
@@ -1404,7 +1404,7 @@ trace_print_almenter(TRACE *trace, intptr_t *info)
 
 
 /*
- *  ¥¢¥é¡¼¥à¥Ï¥ó¥É¥éµ¡Ç½ - ½Ğ¸ı¥í¥°
+ *  ã‚¢ãƒ©ãƒ¼ãƒ ãƒãƒ³ãƒ‰ãƒ©æ©Ÿèƒ½ - å‡ºå£ãƒ­ã‚°
  */
 static intptr_t
 trace_print_almleave(TRACE *trace, intptr_t *info)
@@ -1453,7 +1453,7 @@ trace_print_almleave(TRACE *trace, intptr_t *info)
 
 
 /*
- *  ³ä¹ş¤ß´ÉÍıµ¡Ç½ - Æş¸ı¥í¥°
+ *  å‰²è¾¼ã¿ç®¡ç†æ©Ÿèƒ½ - å…¥å£ãƒ­ã‚°
  */
 static intptr_t
 trace_print_intenter(TRACE *trace, intptr_t *info)
@@ -1490,7 +1490,7 @@ trace_print_intenter(TRACE *trace, intptr_t *info)
 
 
 /*
- *  ³ä¹ş¤ß´ÉÍıµ¡Ç½ - ½Ğ¸ı¥í¥°
+ *  å‰²è¾¼ã¿ç®¡ç†æ©Ÿèƒ½ - å‡ºå£ãƒ­ã‚°
  */
 static intptr_t
 trace_print_intleave(TRACE *trace, intptr_t *info)
@@ -1528,7 +1528,7 @@ trace_print_intleave(TRACE *trace, intptr_t *info)
 
 
 /*
- *  CPUÎã³°½èÍıµ¡Ç½ - Æş¸ı¥í¥°
+ *  CPUä¾‹å¤–å‡¦ç†æ©Ÿèƒ½ - å…¥å£ãƒ­ã‚°
  */
 static intptr_t
 trace_print_dpnenter(TRACE *trace, intptr_t *info)
@@ -1557,7 +1557,7 @@ trace_print_dpnenter(TRACE *trace, intptr_t *info)
 
 
 /*
- *  CPUÎã³°½èÍıµ¡Ç½ - ½Ğ¸ı¥í¥°
+ *  CPUä¾‹å¤–å‡¦ç†æ©Ÿèƒ½ - å‡ºå£ãƒ­ã‚°
  */
 static intptr_t
 trace_print_dpnleave(TRACE *trace, intptr_t *info)
@@ -1586,7 +1586,7 @@ trace_print_dpnleave(TRACE *trace, intptr_t *info)
 
 
 /*
- *  ¥·¥¹¥Æ¥à¾õÂÖ´ÉÍıµ¡Ç½ - Æş¸ı¥í¥°
+ *  ã‚·ã‚¹ãƒ†ãƒ çŠ¶æ…‹ç®¡ç†æ©Ÿèƒ½ - å…¥å£ãƒ­ã‚°
  */
 static intptr_t
 trace_print_sysenter(TRACE *trace, intptr_t *info)
@@ -1674,7 +1674,7 @@ trace_print_sysenter(TRACE *trace, intptr_t *info)
 
 
 /*
- * ¥·¥¹¥Æ¥à¾õÂÖ´ÉÍıµ¡Ç½ - ½Ğ¸ı¥í¥°
+ * ã‚·ã‚¹ãƒ†ãƒ çŠ¶æ…‹ç®¡ç†æ©Ÿèƒ½ - å‡ºå£ãƒ­ã‚°
  */
 static intptr_t
 trace_print_sysleave(TRACE *trace, intptr_t *info)
@@ -1776,7 +1776,7 @@ trace_print_sysleave(TRACE *trace, intptr_t *info)
 
 
 /* 
- *  ¥«¡¼¥Í¥ë¤Î½é´ü²½¤È½ªÎ»½èÍı - Æş¸ı¥í¥°
+ *  ã‚«ãƒ¼ãƒãƒ«ã®åˆæœŸåŒ–ã¨çµ‚äº†å‡¦ç† - å…¥å£ãƒ­ã‚°
  */ 
 static intptr_t 
 trace_print_kerenter(TRACE *trace, intptr_t *info) 
@@ -1798,7 +1798,7 @@ trace_print_kerenter(TRACE *trace, intptr_t *info)
 }
 
 /*
- *  ¥·¥¹¥Æ¥à¥³¡¼¥ë¤ÎÆş¸ı¥í¥°(LOG_TYPE_SVC|ENTER)
+ *  ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«ã®å…¥å£ãƒ­ã‚°(LOG_TYPE_SVC|ENTER)
  */
 static intptr_t
 trace_print_svcenter(TRACE *trace, intptr_t *info)
@@ -1810,7 +1810,7 @@ trace_print_svcenter(TRACE *trace, intptr_t *info)
 
 	switch (type) {
 
-		/*¥¿¥¹¥¯´ÉÍı¡¦¥¿¥¹¥¯ÉÕÂ°Æ±´üµ¡Ç½ */
+		/*ã‚¿ã‚¹ã‚¯ç®¡ç†ãƒ»ã‚¿ã‚¹ã‚¯ä»˜å±åŒæœŸæ©Ÿèƒ½ */
 	  case TFN_MIG_TSK:
 	  case TFN_ACT_TSK:
 	  case TFN_IACT_TSK:
@@ -1836,7 +1836,7 @@ trace_print_svcenter(TRACE *trace, intptr_t *info)
 		tracemsg = (const char*)trace_print_tskenter(trace, info);
 		break;
 
-		/* ¥¿¥¹¥¯Îã³°½èÍıµ¡Ç½ */
+		/* ã‚¿ã‚¹ã‚¯ä¾‹å¤–å‡¦ç†æ©Ÿèƒ½ */
 	  case TFN_RAS_TEX:
 	  case TFN_IRAS_TEX:
 	  case TFN_DIS_TEX:
@@ -1846,7 +1846,7 @@ trace_print_svcenter(TRACE *trace, intptr_t *info)
 		tracemsg = (const char*)trace_print_texenter(trace, info);
 		break;
 
-		/* ¥»¥Ş¥Õ¥©µ¡Ç½ */
+		/* ã‚»ãƒãƒ•ã‚©æ©Ÿèƒ½ */
 	  case TFN_SIG_SEM:
 	  case TFN_ISIG_SEM:
 	  case TFN_WAI_SEM:
@@ -1857,7 +1857,7 @@ trace_print_svcenter(TRACE *trace, intptr_t *info)
 		tracemsg = (const char*)trace_print_sementer(trace, info);
 		break;
 
-		/* ¥¤¥Ù¥ó¥È¥Õ¥é¥°µ¡Ç½ */
+		/* ã‚¤ãƒ™ãƒ³ãƒˆãƒ•ãƒ©ã‚°æ©Ÿèƒ½ */
 	  case TFN_SET_FLG:
 	  case TFN_ISET_FLG:
 	  case TFN_CLR_FLG:
@@ -1869,7 +1869,7 @@ trace_print_svcenter(TRACE *trace, intptr_t *info)
 		tracemsg = (const char*)trace_print_flgenter(trace, info);
 		break;
 
-		/* ¥Ç¡¼¥¿¥­¥å¡¼µ¡Ç½ */
+		/* ãƒ‡ãƒ¼ã‚¿ã‚­ãƒ¥ãƒ¼æ©Ÿèƒ½ */
 	  case TFN_SND_DTQ:
 	  case TFN_PSND_DTQ:
 	  case TFN_IPSND_DTQ:
@@ -1884,7 +1884,7 @@ trace_print_svcenter(TRACE *trace, intptr_t *info)
 		tracemsg = (const char*)trace_print_dtqenter(trace, info);
 		break;
 
-		/* Í¥ÀèÅÙ¥Ç¡¼¥¿¥­¥å¡¼µ¡Ç½ */
+		/* å„ªå…ˆåº¦ãƒ‡ãƒ¼ã‚¿ã‚­ãƒ¥ãƒ¼æ©Ÿèƒ½ */
 	  case TFN_SND_PDQ:
 	  case TFN_PSND_PDQ:
 	  case TFN_IPSND_PDQ:
@@ -1897,7 +1897,7 @@ trace_print_svcenter(TRACE *trace, intptr_t *info)
 		tracemsg = (const char*)trace_print_pdqenter(trace, info);
 		break;
 
-		/* ¸ÇÄêÄ¹¥á¥â¥ê¥×¡¼¥ëµ¡Ç½ */
+		/* å›ºå®šé•·ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«æ©Ÿèƒ½ */
 	  case TFN_GET_MPF:
 	  case TFN_PGET_MPF:
 	  case TFN_TGET_MPF:
@@ -1907,13 +1907,13 @@ trace_print_svcenter(TRACE *trace, intptr_t *info)
 		tracemsg = (const char*)trace_print_mpfenter(trace, info);
 		break;
 
-		/* ¥·¥¹¥Æ¥à»ş¹ï´ÉÍıµ¡Ç½  */
+		/* ã‚·ã‚¹ãƒ†ãƒ æ™‚åˆ»ç®¡ç†æ©Ÿèƒ½  */
 	  case TFN_GET_TIM:
 	  case TFN_GET_UTM:
 		tracemsg = (const char*)trace_print_timenter(trace, info);
 		break;
 
-		/* ¼ş´ü¥Ï¥ó¥É¥éµ¡Ç½ */
+		/* å‘¨æœŸãƒãƒ³ãƒ‰ãƒ©æ©Ÿèƒ½ */
 	  case TFN_STA_CYC:
 	  case TFN_STP_CYC:
 	  case TFN_REF_CYC:
@@ -1921,7 +1921,7 @@ trace_print_svcenter(TRACE *trace, intptr_t *info)
 		tracemsg = (const char*)trace_print_cycenter(trace, info);
 		break;
 
-		/* ¥¢¥é¡¼¥à¥Ï¥ó¥É¥éµ¡Ç½ */
+		/* ã‚¢ãƒ©ãƒ¼ãƒ ãƒãƒ³ãƒ‰ãƒ©æ©Ÿèƒ½ */
 	  case TFN_STA_ALM:
 	  case TFN_ISTA_ALM:
 	  case TFN_STP_ALM:
@@ -1932,7 +1932,7 @@ trace_print_svcenter(TRACE *trace, intptr_t *info)
 		tracemsg = (const char*)trace_print_almenter(trace, info);
 		break;
 
-		/* ¥á¡¼¥ë¥Ü¥Ã¥¯¥¹µ¡Ç½ */
+		/* ãƒ¡ãƒ¼ãƒ«ãƒœãƒƒã‚¯ã‚¹æ©Ÿèƒ½ */
 	  case TFN_SND_MBX:
 	  case TFN_RCV_MBX:
 	  case TFN_PRCV_MBX:
@@ -1942,7 +1942,7 @@ trace_print_svcenter(TRACE *trace, intptr_t *info)
 		tracemsg = (const char*)trace_print_mbxenter(trace, info);
 		break;
 
-		/* ¥¹¥Ô¥ó¥í¥Ã¥¯µ¡Ç½ */
+		/* ã‚¹ãƒ”ãƒ³ãƒ­ãƒƒã‚¯æ©Ÿèƒ½ */
 	  case TFN_LOC_SPN:
 	  case TFN_ILOC_SPN:
 	  case TFN_TRY_SPN:
@@ -1952,7 +1952,7 @@ trace_print_svcenter(TRACE *trace, intptr_t *info)
 		tracemsg = (const char*)trace_print_spnenter(trace, info);
 		break;
 
-		/* ³ä¹ş¤ß´ÉÍıµ¡Ç½ */
+		/* å‰²è¾¼ã¿ç®¡ç†æ©Ÿèƒ½ */
 	  case TFN_DIS_INT:
 	  case TFN_ENA_INT:
 	  case TFN_CHG_IPM:
@@ -1960,13 +1960,13 @@ trace_print_svcenter(TRACE *trace, intptr_t *info)
 		tracemsg = (const char*)trace_print_intenter(trace, info);
 		break;
           
-		/* CPUÎã³°½èÍı */
+		/* CPUä¾‹å¤–å‡¦ç† */
 	  case TFN_XSNS_DPN:
 	  case TFN_XSNS_XPN:
 		tracemsg = (const char*)trace_print_dpnenter(trace, info);
 		break;
 
-		/* ¥·¥¹¥Æ¥à¾õÂÖ´ÉÍıµ¡Ç½ */
+		/* ã‚·ã‚¹ãƒ†ãƒ çŠ¶æ…‹ç®¡ç†æ©Ÿèƒ½ */
 	  case TFN_ROT_RDQ:
 	  case TFN_IROT_RDQ:
 	  case TFN_MROT_RDQ:
@@ -1989,7 +1989,7 @@ trace_print_svcenter(TRACE *trace, intptr_t *info)
 		tracemsg = (const char*)trace_print_sysenter(trace, info);
 		break;
 
-		/* ¥«¡¼¥Í¥ë¤Î½é´ü²½¤È½ªÎ»½èÍı */ 
+		/* ã‚«ãƒ¼ãƒãƒ«ã®åˆæœŸåŒ–ã¨çµ‚äº†å‡¦ç† */ 
 	  case TFN_EXT_KER: 
 		tracemsg = (const char*)trace_print_kerenter(trace, info); 
 		break; 
@@ -2003,7 +2003,7 @@ trace_print_svcenter(TRACE *trace, intptr_t *info)
 
 
 /*
- *  ¥·¥¹¥Æ¥à¥³¡¼¥ë¤Î½Ğ¸ı¥í¥°(LOG_TYPE_SVC|LEAVE)
+ *  ã‚·ã‚¹ãƒ†ãƒ ã‚³ãƒ¼ãƒ«ã®å‡ºå£ãƒ­ã‚°(LOG_TYPE_SVC|LEAVE)
  */
 static intptr_t
 trace_print_svcleave(TRACE *trace, intptr_t *info)
@@ -2015,7 +2015,7 @@ trace_print_svcleave(TRACE *trace, intptr_t *info)
 
 	switch (type) {
 
-		/* ¥¿¥¹¥¯´ÉÍı¡¦¥¿¥¹¥¯ÉÕÂ°Æ±´üµ¡Ç½ */
+		/* ã‚¿ã‚¹ã‚¯ç®¡ç†ãƒ»ã‚¿ã‚¹ã‚¯ä»˜å±åŒæœŸæ©Ÿèƒ½ */
 	  case TFN_MIG_TSK:
 	  case TFN_ACT_TSK:
 	  case TFN_IACT_TSK:
@@ -2041,7 +2041,7 @@ trace_print_svcleave(TRACE *trace, intptr_t *info)
 		tracemsg = (const char*)trace_print_tskleave(trace, info);
 		break;
 
-		/* ¥¿¥¹¥¯Îã³°½èÍıµ¡Ç½ */
+		/* ã‚¿ã‚¹ã‚¯ä¾‹å¤–å‡¦ç†æ©Ÿèƒ½ */
 	  case TFN_RAS_TEX:
 	  case TFN_IRAS_TEX:
 	  case TFN_DIS_TEX:
@@ -2051,7 +2051,7 @@ trace_print_svcleave(TRACE *trace, intptr_t *info)
 		tracemsg = (const char*)trace_print_texleave(trace, info);
 		break;
           
-		/* ¥»¥Ş¥Õ¥©µ¡Ç½ */
+		/* ã‚»ãƒãƒ•ã‚©æ©Ÿèƒ½ */
 	  case TFN_SIG_SEM:
 	  case TFN_ISIG_SEM:
 	  case TFN_WAI_SEM:
@@ -2062,7 +2062,7 @@ trace_print_svcleave(TRACE *trace, intptr_t *info)
 		tracemsg = (const char*)trace_print_semleave(trace, info);
 		break;
 
-		/* ¥¤¥Ù¥ó¥È¥Õ¥é¥°µ¡Ç½ */
+		/* ã‚¤ãƒ™ãƒ³ãƒˆãƒ•ãƒ©ã‚°æ©Ÿèƒ½ */
 	  case TFN_SET_FLG:
 	  case TFN_ISET_FLG:
 	  case TFN_CLR_FLG:
@@ -2074,7 +2074,7 @@ trace_print_svcleave(TRACE *trace, intptr_t *info)
 		tracemsg = (const char*)trace_print_flgleave(trace, info);
 		break;
 
-		/* ¥Ç¡¼¥¿¥­¥å¡¼µ¡Ç½ */
+		/* ãƒ‡ãƒ¼ã‚¿ã‚­ãƒ¥ãƒ¼æ©Ÿèƒ½ */
 	  case TFN_SND_DTQ:
 	  case TFN_PSND_DTQ:
 	  case TFN_IPSND_DTQ:
@@ -2089,7 +2089,7 @@ trace_print_svcleave(TRACE *trace, intptr_t *info)
 		tracemsg = (const char*)trace_print_dtqleave(trace, info);
 		break;
 
-		/* Í¥ÀèÅÙ¥Ç¡¼¥¿¥­¥å¡¼µ¡Ç½ */
+		/* å„ªå…ˆåº¦ãƒ‡ãƒ¼ã‚¿ã‚­ãƒ¥ãƒ¼æ©Ÿèƒ½ */
 	  case TFN_SND_PDQ:
 	  case TFN_PSND_PDQ:
 	  case TFN_IPSND_PDQ:
@@ -2102,7 +2102,7 @@ trace_print_svcleave(TRACE *trace, intptr_t *info)
 		tracemsg = (const char*)trace_print_pdqleave(trace, info);
 		break;
 
-		/* ¸ÇÄêÄ¹¥á¥â¥ê¥×¡¼¥ëµ¡Ç½ */
+		/* å›ºå®šé•·ãƒ¡ãƒ¢ãƒªãƒ—ãƒ¼ãƒ«æ©Ÿèƒ½ */
 	  case TFN_GET_MPF:
 	  case TFN_PGET_MPF:
 	  case TFN_TGET_MPF:
@@ -2112,13 +2112,13 @@ trace_print_svcleave(TRACE *trace, intptr_t *info)
 		tracemsg = (const char*)trace_print_mpfleave(trace, info);
 		break;
 
-		/* ¥·¥¹¥Æ¥à»ş¹ï´ÉÍıµ¡Ç½  */
+		/* ã‚·ã‚¹ãƒ†ãƒ æ™‚åˆ»ç®¡ç†æ©Ÿèƒ½  */
 	  case TFN_GET_TIM:
 	  case TFN_GET_UTM:
 		tracemsg = (const char*)trace_print_timleave(trace, info);
 		break;
 
-		/* ¼ş´ü¥Ï¥ó¥É¥éµ¡Ç½ */
+		/* å‘¨æœŸãƒãƒ³ãƒ‰ãƒ©æ©Ÿèƒ½ */
 	  case TFN_STA_CYC:
 	  case TFN_STP_CYC:
 	  case TFN_REF_CYC:
@@ -2126,7 +2126,7 @@ trace_print_svcleave(TRACE *trace, intptr_t *info)
 		tracemsg = (const char*)trace_print_cycleave(trace, info);
 		break;
 
-		/* ¥¢¥é¡¼¥à¥Ï¥ó¥É¥éµ¡Ç½ */
+		/* ã‚¢ãƒ©ãƒ¼ãƒ ãƒãƒ³ãƒ‰ãƒ©æ©Ÿèƒ½ */
 	  case TFN_STA_ALM:
 	  case TFN_ISTA_ALM:
 	  case TFN_STP_ALM:
@@ -2137,7 +2137,7 @@ trace_print_svcleave(TRACE *trace, intptr_t *info)
 		tracemsg = (const char*)trace_print_almleave(trace, info);
 		break;
 
-		/* ¥á¡¼¥ë¥Ü¥Ã¥¯¥¹µ¡Ç½ */
+		/* ãƒ¡ãƒ¼ãƒ«ãƒœãƒƒã‚¯ã‚¹æ©Ÿèƒ½ */
 	  case TFN_SND_MBX:
 	  case TFN_RCV_MBX:
 	  case TFN_PRCV_MBX:
@@ -2147,7 +2147,7 @@ trace_print_svcleave(TRACE *trace, intptr_t *info)
 		tracemsg = (const char*)trace_print_mbxleave(trace, info);
 		break;
 
-		/* ¥¹¥Ô¥ó¥í¥Ã¥¯µ¡Ç½ */
+		/* ã‚¹ãƒ”ãƒ³ãƒ­ãƒƒã‚¯æ©Ÿèƒ½ */
 	  case TFN_LOC_SPN:
 	  case TFN_ILOC_SPN:
 	  case TFN_TRY_SPN:
@@ -2157,7 +2157,7 @@ trace_print_svcleave(TRACE *trace, intptr_t *info)
 		tracemsg = (const char*)trace_print_spnleave(trace, info);
 		break;
 
-		/* ³ä¹ş¤ß´ÉÍıµ¡Ç½ */
+		/* å‰²è¾¼ã¿ç®¡ç†æ©Ÿèƒ½ */
 	  case TFN_DIS_INT:
 	  case TFN_ENA_INT:
 	  case TFN_CHG_IPM:
@@ -2165,13 +2165,13 @@ trace_print_svcleave(TRACE *trace, intptr_t *info)
 		tracemsg = (const char*)trace_print_intleave(trace, info);
 		break;
 
-		/* CPUÎã³°½èÍıµ¡Ç½ */
+		/* CPUä¾‹å¤–å‡¦ç†æ©Ÿèƒ½ */
 	  case TFN_XSNS_DPN:
 	  case TFN_XSNS_XPN:
 		tracemsg = (const char*)trace_print_dpnleave(trace, info);
 		break;
 
-		/* ¥·¥¹¥Æ¥à¾õÂÖ´ÉÍıµ¡Ç½ */
+		/* ã‚·ã‚¹ãƒ†ãƒ çŠ¶æ…‹ç®¡ç†æ©Ÿèƒ½ */
 	  case TFN_ROT_RDQ:
 	  case TFN_IROT_RDQ:
 	  case TFN_MROT_RDQ:
@@ -2204,7 +2204,7 @@ trace_print_svcleave(TRACE *trace, intptr_t *info)
 
 
 /* 
- *  ¥È¥ì¡¼¥¹¥í¥°¤ÎÉ½¼¨
+ *  ãƒˆãƒ¬ãƒ¼ã‚¹ãƒ­ã‚°ã®è¡¨ç¤º
  */
 static void
 trace_print(TRACE *p_trace, void (*putc)(char))
@@ -2332,7 +2332,7 @@ trace_print(TRACE *p_trace, void (*putc)(char))
 }
 
 /* 
- *  ¥È¥ì¡¼¥¹¥í¥°¤Î¥À¥ó¥×
+ *  ãƒˆãƒ¬ãƒ¼ã‚¹ãƒ­ã‚°ã®ãƒ€ãƒ³ãƒ—
  */
 void
 trace_dump(intptr_t exinf)

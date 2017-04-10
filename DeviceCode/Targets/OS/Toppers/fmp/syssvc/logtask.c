@@ -8,40 +8,40 @@
  *  Copyright (C) 2005-2015 by Embedded and Real-Time Systems Laboratory
  *              Graduate School of Information Science, Nagoya Univ., JAPAN
  * 
- *  �嵭����Ԥϡ��ʲ���(1)��(4)�ξ������������˸¤ꡤ�ܥ��եȥ���
- *  �����ܥ��եȥ���������Ѥ�����Τ�ޤࡥ�ʲ�Ʊ���ˤ���ѡ�ʣ������
- *  �ѡ������ۡʰʲ������ѤȸƤ֡ˤ��뤳�Ȥ�̵���ǵ������롥
- *  (1) �ܥ��եȥ������򥽡��������ɤη������Ѥ�����ˤϡ��嵭������
- *      ��ɽ�����������Ѿ�浪��Ӳ�����̵�ݾڵ��꤬�����Τޤޤη��ǥ���
- *      ����������˴ޤޤ�Ƥ��뤳�ȡ�
- *  (2) �ܥ��եȥ������򡤥饤�֥������ʤɡ�¾�Υ��եȥ�������ȯ�˻�
- *      �ѤǤ�����Ǻ����ۤ�����ˤϡ������ۤ�ȼ���ɥ�����ȡ�����
- *      �ԥޥ˥奢��ʤɡˤˡ��嵭�����ɽ�����������Ѿ�浪��Ӳ���
- *      ��̵�ݾڵ����Ǻܤ��뤳�ȡ�
- *  (3) �ܥ��եȥ������򡤵�����Ȥ߹���ʤɡ�¾�Υ��եȥ�������ȯ�˻�
- *      �ѤǤ��ʤ����Ǻ����ۤ�����ˤϡ����Τ����줫�ξ�����������
- *      �ȡ�
- *    (a) �����ۤ�ȼ���ɥ�����ȡ����Ѽԥޥ˥奢��ʤɡˤˡ��嵭����
- *        �ɽ�����������Ѿ�浪��Ӳ�����̵�ݾڵ����Ǻܤ��뤳�ȡ�
- *    (b) �����ۤη��֤��̤�������ˡ�ˤ�äơ�TOPPERS�ץ��������Ȥ�
- *        ��𤹤뤳�ȡ�
- *  (4) �ܥ��եȥ����������Ѥˤ��ľ��Ū�ޤ��ϴ���Ū�������뤤���ʤ�»
- *      ������⡤�嵭����Ԥ����TOPPERS�ץ��������Ȥ����դ��뤳�ȡ�
- *      �ޤ����ܥ��եȥ������Υ桼���ޤ��ϥ���ɥ桼������Τ����ʤ���
- *      ͳ�˴�Ť����ᤫ��⡤�嵭����Ԥ����TOPPERS�ץ��������Ȥ�
- *      ���դ��뤳�ȡ�
+ *  上記著作権者は，以下の(1)～(4)の条件を満たす場合に限り，本ソフトウェ
+ *  ア（本ソフトウェアを改変したものを含む．以下同じ）を使用・複製・改
+ *  変・再配布（以下，利用と呼ぶ）することを無償で許諾する．
+ *  (1) 本ソフトウェアをソースコードの形で利用する場合には，上記の著作
+ *      権表示，この利用条件および下記の無保証規定が，そのままの形でソー
+ *      スコード中に含まれていること．
+ *  (2) 本ソフトウェアを，ライブラリ形式など，他のソフトウェア開発に使
+ *      用できる形で再配布する場合には，再配布に伴うドキュメント（利用
+ *      者マニュアルなど）に，上記の著作権表示，この利用条件および下記
+ *      の無保証規定を掲載すること．
+ *  (3) 本ソフトウェアを，機器に組み込むなど，他のソフトウェア開発に使
+ *      用できない形で再配布する場合には，次のいずれかの条件を満たすこ
+ *      と．
+ *    (a) 再配布に伴うドキュメント（利用者マニュアルなど）に，上記の著
+ *        作権表示，この利用条件および下記の無保証規定を掲載すること．
+ *    (b) 再配布の形態を，別に定める方法によって，TOPPERSプロジェクトに
+ *        報告すること．
+ *  (4) 本ソフトウェアの利用により直接的または間接的に生じるいかなる損
+ *      害からも，上記著作権者およびTOPPERSプロジェクトを免責すること．
+ *      また，本ソフトウェアのユーザまたはエンドユーザからのいかなる理
+ *      由に基づく請求からも，上記著作権者およびTOPPERSプロジェクトを
+ *      免責すること．
  * 
- *  �ܥ��եȥ������ϡ�̵�ݾڤ��󶡤���Ƥ����ΤǤ��롥�嵭����Ԥ�
- *  ���TOPPERS�ץ��������Ȥϡ��ܥ��եȥ������˴ؤ��ơ�����λ�����Ū
- *  ���Ф���Ŭ������ޤ�ơ������ʤ��ݾڤ�Ԥ�ʤ����ޤ����ܥ��եȥ���
- *  �������Ѥˤ��ľ��Ū�ޤ��ϴ���Ū�������������ʤ�»���˴ؤ��Ƥ⡤��
- *  ����Ǥ�����ʤ���
+ *  本ソフトウェアは，無保証で提供されているものである．上記著作権者お
+ *  よびTOPPERSプロジェクトは，本ソフトウェアに関して，特定の使用目的
+ *  に対する適合性も含めて，いかなる保証も行わない．また，本ソフトウェ
+ *  アの利用により直接的または間接的に生じたいかなる損害に関しても，そ
+ *  の責任を負わない．
  * 
  *  @(#) $Id: logtask.c 1087 2015-02-03 01:04:34Z ertl-honda $
  */
 
 /*
- *		�����ƥ����������
+ *		システムログタスク
  */
 
 #include <kernel.h>
@@ -52,7 +52,7 @@
 #include "logtask.h"
 
 /*
- *  �����ƥ�������������ѿ����֤Υǥ��ե�������
+ *  システムログタスクの変数配置のディフォルト定義
  */
 #ifndef SEC_LOGTASK
 #define SEC_LOGTASK(type, variable) type variable
@@ -115,7 +115,7 @@
 #endif /* SEC_PREC4_LOGTASK_END */
 
 /*
- *  �����ƥ�����������ν�����Υݡ���ID�Υơ��֥�
+ *  システムログタスクの出力先のポートIDのテーブル
  */
 #ifdef G_SYSLOG
 
@@ -170,7 +170,7 @@ static ID* const	p_logtask_portid_table[] = {
 #endif /* G_SYSLOG */
 
 /*
- *  �������Υݡ���ID�ؤΥ��������ޥ���
+ *  自コアのポートIDへのアクセスマクロ
  */
 #ifdef G_SYSLOG
 
@@ -209,7 +209,7 @@ set_my_logtask_portid(ID id)
 #endif /* G_SYSLOG */
 
 /*
- *  ���ꥢ�륤�󥿥ե������ؤ�1ʸ������
+ *  シリアルインタフェースへの1文字出力
  */
 static void
 logtask_putc(char c)
@@ -220,7 +220,7 @@ logtask_putc(char c)
 }
 
 /*
- *  �����ƥ�������Ϥ��Ԥ���碌
+ *  システムログ出力の待ち合わせ
  */
 ER
 logtask_flush(uint_t count)
@@ -242,8 +242,8 @@ logtask_flush(uint_t count)
 			if (rlog.count <= count) {
 				if (count == 0U) {
 					/*
-					 *  count��0�ξ��ˤϡ����ꥢ��Хåե����������
-					 *  ǧ���롥
+					 *  countが0の場合には，シリアルバッファが空かを確
+					 *  認する．
 					 */
 					if (serial_ref_por(my_logtask_portid, &rpor) < 0) {
 						ercd = E_SYS;
@@ -261,7 +261,7 @@ logtask_flush(uint_t count)
 			}
 
 			/*
-			 *  LOGTASK_FLUSH_WAIT�ߥ����Ԥġ�
+			 *  LOGTASK_FLUSH_WAITミリ秒待つ．
 			 */
 			rercd = dly_tsk(LOGTASK_FLUSH_WAIT);
 			if (rercd < 0) {
@@ -276,7 +276,7 @@ logtask_flush(uint_t count)
 }
 
 /*
- *  �����ƥ����������������
+ *  システムログタスクの本体
  */
 void
 logtask_main(intptr_t exinf)
@@ -289,7 +289,7 @@ logtask_main(intptr_t exinf)
 	my_logtask_portid = (ID) exinf;
 	set_my_logtask_portid(my_logtask_portid);
 	serial_opn_por(my_logtask_portid);
-	syslog_msk_log(LOG_UPTO(LOG_NOTICE), LOG_UPTO(LOG_EMERG));
+//	syslog_msk_log(LOG_UPTO(LOG_NOTICE), LOG_UPTO(LOG_EMERG));
 	syslog_1(LOG_NOTICE, "System logging task is started on port %d.",
 													my_logtask_portid);
 	for (;;) {
@@ -315,7 +315,7 @@ logtask_main(intptr_t exinf)
 }
 
 /*
- *  �����ƥ�����������ν�λ����
+ *  システムログタスクの終了処理
  */
 void
 logtask_terminate(intptr_t exinf)
@@ -327,22 +327,22 @@ logtask_terminate(intptr_t exinf)
 	ID my_logtask_portid = get_my_logtask_portid();
 
 	/*
-	 *  ���ꥢ�륤�󥿥ե������ɥ饤�Ф������Хåե������Ѥ��줿�ǡ���
-	 *  �����٥���ϵ�ǽ���Ѥ��ƽ��Ϥ��롥
+	 *  シリアルインタフェースドライバの送信バッファに蓄積されたデータ
+	 *  を，低レベル出力機能を用いて出力する．
 	 */
 	while (serial_get_chr(my_logtask_portid, &c)) {
 		target_fput_log(c);
 	}
 
 	/*
-	 *  �����Хåե��˵�Ͽ���줿������������٥���ϵ�ǽ���Ѥ��ƽ�
-	 *  �Ϥ��롥
+	 *  ログバッファに記録されたログ情報を，低レベル出力機能を用いて出
+	 *  力する．
 	 */
 	while ((rercd = syslog_rea_log(&logbuf)) >= 0) {
 		if (!msgflg) {
 			/*
-			 *  �����Хåե��˻Ĥä���������Ǥ��뤳�Ȥ򼨤�ʸ������
-			 *  �Ϥ��롥
+			 *  ログバッファに残ったログ情報であることを示す文字列を出
+			 *  力する．
 			 */
 			syslog_printf("-- buffered messages --\n", NULL, target_fput_log);
 			msgflg = true;

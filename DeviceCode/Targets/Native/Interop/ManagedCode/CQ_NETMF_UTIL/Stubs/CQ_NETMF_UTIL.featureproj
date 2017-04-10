@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <FeatureName>CQ_NETMF_UTIL</FeatureName>
+    <Guid>{637f6663-017c-4271-aa2e-29f0357f997d}</Guid>
+    <Description>&lt;Add Feature Description Here&gt;</Description>
+    <Groups />
+    <CQ_NETMF_UTIL_FEATUREPROJ>True</CQ_NETMF_UTIL_FEATUREPROJ>
+  </PropertyGroup>
+  <ItemGroup>
+    <DriverLibs Include="CQ_NETMF_UTIL.$(LIB_EXT)" />
+    <InteropFeature Include="CQ_NETMF_UTIL" />
+    <MMP_DAT_CreateDatabase Include="$(BUILD_TREE_CLIENT)\pe\$(ENDIANNESS)\CQ_NETMF_UTIL.pe" />
+    <RequiredProjects Include="Stubs\Stubs\dotnetmf.proj" />
+  </ItemGroup>
+</Project>

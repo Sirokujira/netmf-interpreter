@@ -24,20 +24,17 @@
     <EnableI2C>true</EnableI2C>
     <EnableI2CSW>false</EnableI2CSW>
     <EnableInk>false</EnableInk>
-    <!-- <EnableLCD>true</EnableLCD> -->
-    <EnableLCD>false</EnableLCD>
+    <EnableLCD>true</EnableLCD>
     <EnableLEDMATRIX>false</EnableLEDMATRIX>
     <EnableLEDMATRIXAF>false</EnableLEDMATRIXAF>
-    <!-- <EnableLWIP>true</EnableLWIP> -->
-    <EnableLWIP>false</EnableLWIP>
+    <EnableLWIP>true</EnableLWIP>
     <EnableMP3>false</EnableMP3>
     <EnableOneWire>true</EnableOneWire>
     <EnableOpenSSL>false</EnableOpenSSL>
     <EnablePKTest>false</EnablePKTest>
     <EnablePWM>true</EnablePWM>
     <EnableRPC>true</EnableRPC>
-    <!-- <EnableSD>true</EnableSD> -->
-    <EnableSD>false</EnableSD>
+    <EnableSD>true</EnableSD>
     <EnableSecurity>false</EnableSecurity>
     <EnableSerialization>true</EnableSerialization>
     <EnableSPI>true</EnableSPI>
@@ -49,7 +46,7 @@
     <EnableXML>true</EnableXML>
     <EnableWatchdog>false</EnableWatchdog>
     <EnableTinylib>false</EnableTinylib>
-    <EnableCQLCD>false</EnableCQLCD>
+    <EnableCQLCD>true</EnableCQLCD>
     <LCDController>ILI9325_P8</LCDController>
     <LCDController0>TS8026Y</LCDController0>
     <LCDController0>T18SPI</LCDController0>
@@ -62,7 +59,8 @@
     <IsSolutionWizardVisible>True</IsSolutionWizardVisible>
     <OutputType>Executable</OutputType>
     <IntelHexFormat>true</IntelHexFormat>
-    <MultipleOutputSections Condition="'$(MEMORY)'=='FLASH'">true</MultipleOutputSections>
+    <!-- <MultipleOutputSections Condition="'$(MEMORY)'=='FLASH'">true</MultipleOutputSections> -->
+    <MultipleOutputSections Condition="'$(MEMORY)'=='FLASH'">false</MultipleOutputSections>
     <ADD_LOAD_IMAGE_CRC>true</ADD_LOAD_IMAGE_CRC>
     <ExtraTargets>BuildSigFiles</ExtraTargets>
     <ExtraEXETargets>MetaDataProcessorDat;TinyClrDat</ExtraEXETargets>
@@ -76,6 +74,8 @@
   <ItemGroup Condition="'$(EnableOpenSSL)'=='true'" >
     <IncludePaths Include="DeviceCode\PAL\OpenSSL" />
     <IncludePaths Include="DeviceCode\PAL\OpenSSL\OpenSSL_1_0" />
+    <IncludePaths Include="DeviceCode\pal\lwip_1_4_1_os\LWIP\src\include" />
+    <IncludePaths Include="DeviceCode\pal\lwip_1_4_1_os\config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="allocator.cpp" />
@@ -84,6 +84,8 @@
     <IncludePaths Include="DeviceCode\PAL" />
     <IncludePaths Include="DeviceCode\PAL\OpenSSL" />
     <IncludePaths Include="DeviceCode\PAL\OpenSSL\OpenSSL_1_0" />
+    <IncludePaths Include="DeviceCode\pal\lwip_1_4_1_os\LWIP\src\include" />
+    <IncludePaths Include="DeviceCode\pal\lwip_1_4_1_os\config" />
     <ObjFiles Include="$(OBJ_DIR)\tinyclr_dat.$(OBJ_EXT)" />
     <ScatterFileReferences Include="$(SRC_DIR)\scatterfile_tinyclr_$(COMPILER_TOOL).$(SCATTER_EXT)" />
   </ItemGroup>
@@ -101,6 +103,7 @@
   <Import Project="$(SPOCLIENT)\Framework\Features\InterruptHandler.featureproj" />
   <Import Project="$(SPOCLIENT)\Framework\Features\NativeEventDispatcher.featureproj" />
   <Import Project="$(SPOCLIENT)\Framework\Features\Network.featureproj" Condition="'$(EnableLWIP)'=='RIP'" />
+  <Import Project="$(SPOCLIENT)\Framework\Features\Network_LWIP_OS.featureproj" Condition="'$(EnableLWIP)'=='true'" />
   <Import Project="$(SPOCLIENT)\Framework\Features\OneWire.featureproj" Condition="'$(EnableOneWire)'=='true'" />
   <Import Project="$(SPOCLIENT)\Framework\Features\PWM.featureproj" Condition="'$(EnablePWM)'=='true'" />
   <Import Project="$(SPOCLIENT)\Framework\Features\RPC.featureproj" Condition="'$(EnableRPC)'=='true'" />
@@ -110,9 +113,13 @@
   <Import Project="$(SPOCLIENT)\Framework\Features\SerialPort.featureproj" />
   <Import Project="$(SPOCLIENT)\Framework\Features\SOCKETS_Port.featureproj" />
   <Import Project="$(SPOCLIENT)\Framework\Features\SPI.featureproj" Condition="'$(EnableSPI)'=='true'" />
-  <Import Project="$(SPOCLIENT)\Framework\Features\SSL_Open.featureproj" Condition="'$(EnableSecurity)'=='true'" />
+  <!-- 4.4 -->
+  <!-- native? -->
+  <!-- <Import Project="$(SPOCLIENT)\Framework\Features\SSL_Open.featureproj" Condition="'$(EnableSecurity)'=='true'" /> -->
+  <Import Project="$(SPOCLIENT)\Framework\Features\SSL_Open_lwip_os.featureproj" Condition="'$(EnableSecurity)'=='true'" />
   <Import Project="$(SPOCLIENT)\Framework\Features\Stream.featureproj" Condition="'$(EnableStream)'=='true'" />
   <Import Project="$(SPOCLIENT)\Framework\Features\TimeService.featureproj" Condition="'$(EnableTimeService)'=='true' and '$(EnableLWIP)'=='true'" />
+  <!-- <Import Project="$(SPOCLIENT)\Framework\Features\TimeService.featureproj" /> -->
   <Import Project="$(SPOCLIENT)\Framework\Features\TinyCore.featureproj" Condition="'$(EnableGraphics)'=='true'" />
   <Import Project="$(SPOCLIENT)\Framework\Features\TouchScreen.featureproj" Condition="'$(EnableTouchPanel)'=='true'" />
   <Import Project="$(SPOCLIENT)\Framework\Features\Usb.featureproj" Condition="'$(EnableUSB)'=='true'" />
@@ -172,7 +179,7 @@
     <DriverLibs Include="x509_openssl.$(LIB_EXT)" />
     <DriverLibs Include="x509v3_openssl.$(LIB_EXT)" />
   </ItemGroup>
-    <ItemGroup>
+  <ItemGroup>
     <DriverLibs Include="mbed_common.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\OS\mbed\libraries\mbed\common\dotNetMF.proj" />
   </ItemGroup>
@@ -334,10 +341,6 @@
     <PlatformIndependentLibs Include="SPOT_Net_Security.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\CLR\libraries\spot_net_security\dotNetMF.proj" />
   </ItemGroup>
-  <ItemGroup Condition="'$(EnableTimeService)'=='true' and '$(EnableLWIP)'=='true'">
-    <RequiredProjects Include="$(SPOCLIENT)\CLR\Libraries\SPOT_TimeService\dotnetmf.proj" />
-    <PlatformIndependentLibs Include="SPOT_TimeService.$(LIB_EXT)" />
-  </ItemGroup>
   <ItemGroup Condition="'$(EnableTouchPanel)'=='true'">
     <PlatformIndependentLibs Include="SPOT_Touch.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\CLR\Libraries\SPOT_Touch\dotnetmf.proj" />
@@ -432,18 +435,13 @@
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Drivers\Display\TextFonts\Font8x8K\dotNetMF.proj" />
   </ItemGroup>
 -->
-  <!-- 6x12 to 8x15 -->
   <ItemGroup Condition="'$(EnableLCD)'=='true'">
-    <DriverLibs Include="Display_Font8x15.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Drivers\Display\TextFonts\Font8x15\dotNetMF.proj" />
+    <DriverLibs Include="Display_Font6x12.$(LIB_EXT)" />
+    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Drivers\Display\TextFonts\Font6x12\dotNetMF.proj" />
   </ItemGroup>
   <ItemGroup Condition="'$(EnableLCD)'!='true'">
     <DriverLibs Include="lcd_hal_stubs.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Drivers\Display\stubs\dotNetMF.proj" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(EnableLWIP)'=='true'">
-    <DriverLibs Include="ETHERNET_loopback_lwip.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Drivers\Ethernet\Loopback_lwip\dotNetMF.proj" />
   </ItemGroup>
   <ItemGroup Condition="'$(EnableFileSystem)'=='true'">
     <DriverLibs Include="FS_FAT.$(LIB_EXT)" />
@@ -513,10 +511,6 @@
     <DriverLibs Include="cpu_watchdog_stubs.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Drivers\stubs\Processor\stubs_watchdog\dotNetMF.proj" />
   </ItemGroup>
-  <ItemGroup Condition="'$(EnableLWIP)'=='true'">
-    <DriverLibs Include="timeservice_hal_stubs.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\devicecode\drivers\timeservice\stubs\dotNetMF.proj" />
-  </ItemGroup>
   <ItemGroup>
     <DriverLibs Include="system_initialization_hal.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Initialization\dotNetMF.proj" />
@@ -562,6 +556,14 @@
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\PAL\COM\Sockets\ssl\stubs\dotNetMF.proj" />
   </ItemGroup>
   <ItemGroup Condition="'$(EnableLWIP)'=='true'">
+    <DriverLibs Include="ETHERNET_loopback_lwip.$(LIB_EXT)" />
+    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Drivers\Ethernet\Loopback_lwip\dotNetMF.proj" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(EnableLWIP)'=='true'">
+    <DriverLibs Include="timeservice_hal_stubs.$(LIB_EXT)" />
+    <RequiredProjects Include="$(SPOCLIENT)\devicecode\drivers\timeservice\stubs\dotNetMF.proj" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(EnableLWIP)'=='true'">
     <DriverLibs Include="ssl_pal_stubs.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\PAL\COM\Sockets\ssl\stubs\dotNetMF.proj" />
   </ItemGroup>
@@ -570,8 +572,8 @@
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\PAL\COM\sockets\stubs\dotNetMF.proj" />
   </ItemGroup>
   <ItemGroup Condition="'$(EnableLWIP)'=='true'">
-    <DriverLibs Include="sockets_pal_lwip.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\PAL\COM\Sockets_lwip\dotNetMF.proj" />
+    <DriverLibs Include="sockets_pal_lwip_os.$(LIB_EXT)" />
+    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\PAL\COM\sockets_lwip_os\dotNetMF.proj" />
   </ItemGroup>
   <ItemGroup Condition="'$(EnableUSART)'=='true'" >
     <DriverLibs Include="usart_pal.$(LIB_EXT)" />
@@ -641,30 +643,42 @@
     <DriverLibs Include="Ink_pal_stubs.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Pal\Ink\stubs\dotNetMF.proj" />
   </ItemGroup>
+  <!-- changed 4.4 -->
+  <!-- os library use -->
   <ItemGroup Condition="'$(EnableLWIP)'=='true'">
-    <DriverLibs Include="sockets_hal_DHCP_LWIP.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\pal\lwip\LWIP\src\dotnetmf_dhcp.proj" />
+    <DriverLibs Include="sockets_hal_dhcp_LWIP_os.$(LIB_EXT)" />
+    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\pal\lwip_1_4_1_os\LWIP\src\dotnetmf_dhcp.proj" />
   </ItemGroup>
   <ItemGroup Condition="'$(EnableLWIP)'=='true'">
-    <DriverLibs Include="sockets_hal_sockets_lwIP.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\pal\lwip\LWIP\src\dotnetmf_sockets.proj" />
+    <DriverLibs Include="sockets_hal_sockets_lwIP_os.$(LIB_EXT)" />
+    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\pal\lwip_1_4_1_os\LWIP\src\dotnetmf_sockets.proj" />
   </ItemGroup>
   <ItemGroup Condition="'$(EnableLWIP)'=='true'">
-    <DriverLibs Include="sockets_hal_tcp_lwIP.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\pal\lwip\LWIP\src\dotnetmf_tcp.proj" />
+    <DriverLibs Include="sockets_hal_tcp_lwIP_os.$(LIB_EXT)" />
+    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\pal\lwip_1_4_1_os\LWIP\src\dotnetmf_tcp.proj" />
   </ItemGroup>
   <ItemGroup Condition="'$(EnableLWIP)'=='true'">
-    <DriverLibs Include="sockets_hal_udp_lwIP.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\pal\lwip\LWIP\src\dotnetmf_udp.proj" />
+    <DriverLibs Include="sockets_hal_udp_lwIP_os.$(LIB_EXT)" />
+    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\pal\lwip_1_4_1_os\LWIP\src\dotnetmf_udp.proj" />
   </ItemGroup>
   <ItemGroup Condition="'$(EnableLWIP)'=='true'">
-    <DriverLibs Include="sockets_lwIP_pal.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\pal\lwip\SocketsDriver\dotnetmf.proj" />
+    <DriverLibs Include="SocketsDriver_pal_lwip_os.$(LIB_EXT)" />
+    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\pal\lwip_1_4_1_os\SocketsDriver\dotnetmf.proj" />
   </ItemGroup>
+  <!-- Add -->
+  <!-- use CMSIS RTOS -->
+  <!--
   <ItemGroup Condition="'$(EnableLWIP)'=='true'">
-    <DriverLibs Include="sockets_hal_async_LWIP.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\pal\lwip\tinyCLR\dotnetmf.proj" />
+    <DriverLibs Include="lwip_1_4_1_os_CMSIS_RTOS.$(LIB_EXT)" />
+    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\OS\CMSIS_RTOS\DeviceCode\lwip_1_4_1_os\dotnetmf.proj" />
   </ItemGroup>
+  -->
+  <!-- use Toppers RTOS? -->
+  <ItemGroup Condition="'$(EnableLWIP)'=='true'">
+    <DriverLibs Include="lwip_1_4_1_os_TOPPERS_RTOS.$(LIB_EXT)" />
+    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\OS\TOPPERS_RTOS\DeviceCode\lwip_1_4_1_os\dotnetmf.proj" />
+  </ItemGroup>
+
   <ItemGroup>
     <DriverLibs Include="MFUpdate_PAL_stub.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\PAL\MFUpdate\stubs\dotnetmf.proj" />
@@ -720,6 +734,10 @@
   <ItemGroup>
     <DriverLibs Include="Time_pal.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Pal\Time\dotNetMF.proj" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(EnableTimeService)'=='true' and '$(EnableLWIP)'=='true'">
+    <RequiredProjects Include="$(SPOCLIENT)\CLR\Libraries\SPOT_TimeService\dotnetmf.proj" />
+    <PlatformIndependentLibs Include="SPOT_TimeService.$(LIB_EXT)" />
   </ItemGroup>
   <ItemGroup Condition="'$(EnableTimeService)'=='true' and '$(EnableLWIP)'=='true'">
     <DriverLibs Include="TimeService_pal.$(LIB_EXT)" />
@@ -895,7 +913,7 @@
     <DriverLibs Include="FS_Config.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH\DeviceCode\FS\dotNetMF.proj" />
   </ItemGroup>
-    <ItemGroup Condition="'$(EnableLWIP)'=='true'">
+  <ItemGroup Condition="'$(EnableLWIP)'=='true'">
     <DriverLibs Include="LAN8700i_LWIP.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH\DeviceCode\EPHY_LWIP\dotNetMF.proj" />
   </ItemGroup>
@@ -940,11 +958,11 @@
   <!-- CMSIS(over Version 5.0.0?) -->
   <!--
   <ItemGroup>
-    <RequiredProjects Include="$(SPOCLIENT)\CMSIS\CMSIS\RTOS\RTX\dotNetMF.proj" />
+    <RequiredProjects Include="$(SPOCLIENT)/DeviceCode/Targets/OS/Toppers/asp\RTOS\RTX\dotNetMF.proj" />
     <DriverLibs Include="CMSIS_RTX.$(LIB_EXT)" />
   </ItemGroup>
   <ItemGroup>
-    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH\DeviceCode\CMSIS_RTX_Config\dotNetMF.proj" />
+    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH\DeviceCode\TOPPERS_RTX_Config\dotNetMF.proj" />
     <DriverLibs Include="CMSIS_RTX_CONFIG.$(LIB_EXT)" />
   </ItemGroup>
   -->

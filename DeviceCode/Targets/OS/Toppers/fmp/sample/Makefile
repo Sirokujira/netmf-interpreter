@@ -5,58 +5,58 @@
 # 
 #  Copyright (C) 2000-2003 by Embedded and Real-Time Systems Laboratory
 #                              Toyohashi Univ. of Technology, JAPAN
-#  Copyright (C) 2006-2015 by Embedded and Real-Time Systems Laboratory
+#  Copyright (C) 2006-2017 by Embedded and Real-Time Systems Laboratory
 #              Graduate School of Information Science, Nagoya Univ., JAPAN
 # 
-#  ¾åµ­Ãøºî¸¢¼Ô¤Ï¡¤°Ê²¼¤Î(1)¡Á(4)¤Î¾ò·ï¤òËş¤¿¤¹¾ì¹ç¤Ë¸Â¤ê¡¤ËÜ¥½¥Õ¥È¥¦¥§
-#  ¥¢¡ÊËÜ¥½¥Õ¥È¥¦¥§¥¢¤ò²şÊÑ¤·¤¿¤â¤Î¤ò´Ş¤à¡¥°Ê²¼Æ±¤¸¡Ë¤ò»ÈÍÑ¡¦Ê£À½¡¦²ş
-#  ÊÑ¡¦ºÆÇÛÉÛ¡Ê°Ê²¼¡¤ÍøÍÑ¤È¸Æ¤Ö¡Ë¤¹¤ë¤³¤È¤òÌµ½ş¤ÇµöÂú¤¹¤ë¡¥
-#  (1) ËÜ¥½¥Õ¥È¥¦¥§¥¢¤ò¥½¡¼¥¹¥³¡¼¥É¤Î·Á¤ÇÍøÍÑ¤¹¤ë¾ì¹ç¤Ë¤Ï¡¤¾åµ­¤ÎÃøºî
-#      ¸¢É½¼¨¡¤¤³¤ÎÍøÍÑ¾ò·ï¤ª¤è¤Ó²¼µ­¤ÎÌµÊİ¾Úµ¬Äê¤¬¡¤¤½¤Î¤Ş¤Ş¤Î·Á¤Ç¥½¡¼
-#      ¥¹¥³¡¼¥ÉÃæ¤Ë´Ş¤Ş¤ì¤Æ¤¤¤ë¤³¤È¡¥
-#  (2) ËÜ¥½¥Õ¥È¥¦¥§¥¢¤ò¡¤¥é¥¤¥Ö¥é¥ê·Á¼°¤Ê¤É¡¤Â¾¤Î¥½¥Õ¥È¥¦¥§¥¢³«È¯¤Ë»È
-#      ÍÑ¤Ç¤­¤ë·Á¤ÇºÆÇÛÉÛ¤¹¤ë¾ì¹ç¤Ë¤Ï¡¤ºÆÇÛÉÛ¤ËÈ¼¤¦¥É¥­¥å¥á¥ó¥È¡ÊÍøÍÑ
-#      ¼Ô¥Ş¥Ë¥å¥¢¥ë¤Ê¤É¡Ë¤Ë¡¤¾åµ­¤ÎÃøºî¸¢É½¼¨¡¤¤³¤ÎÍøÍÑ¾ò·ï¤ª¤è¤Ó²¼µ­
-#      ¤ÎÌµÊİ¾Úµ¬Äê¤ò·ÇºÜ¤¹¤ë¤³¤È¡¥
-#  (3) ËÜ¥½¥Õ¥È¥¦¥§¥¢¤ò¡¤µ¡´ï¤ËÁÈ¤ß¹ş¤à¤Ê¤É¡¤Â¾¤Î¥½¥Õ¥È¥¦¥§¥¢³«È¯¤Ë»È
-#      ÍÑ¤Ç¤­¤Ê¤¤·Á¤ÇºÆÇÛÉÛ¤¹¤ë¾ì¹ç¤Ë¤Ï¡¤¼¡¤Î¤¤¤º¤ì¤«¤Î¾ò·ï¤òËş¤¿¤¹¤³
-#      ¤È¡¥
-#    (a) ºÆÇÛÉÛ¤ËÈ¼¤¦¥É¥­¥å¥á¥ó¥È¡ÊÍøÍÑ¼Ô¥Ş¥Ë¥å¥¢¥ë¤Ê¤É¡Ë¤Ë¡¤¾åµ­¤ÎÃø
-#        ºî¸¢É½¼¨¡¤¤³¤ÎÍøÍÑ¾ò·ï¤ª¤è¤Ó²¼µ­¤ÎÌµÊİ¾Úµ¬Äê¤ò·ÇºÜ¤¹¤ë¤³¤È¡¥
-#    (b) ºÆÇÛÉÛ¤Î·ÁÂÖ¤ò¡¤ÊÌ¤ËÄê¤á¤ëÊıË¡¤Ë¤è¤Ã¤Æ¡¤TOPPERS¥×¥í¥¸¥§¥¯¥È¤Ë
-#        Êó¹ğ¤¹¤ë¤³¤È¡¥
-#  (4) ËÜ¥½¥Õ¥È¥¦¥§¥¢¤ÎÍøÍÑ¤Ë¤è¤êÄ¾ÀÜÅª¤Ş¤¿¤Ï´ÖÀÜÅª¤ËÀ¸¤¸¤ë¤¤¤«¤Ê¤ëÂ»
-#      ³²¤«¤é¤â¡¤¾åµ­Ãøºî¸¢¼Ô¤ª¤è¤ÓTOPPERS¥×¥í¥¸¥§¥¯¥È¤òÌÈÀÕ¤¹¤ë¤³¤È¡¥
-#      ¤Ş¤¿¡¤ËÜ¥½¥Õ¥È¥¦¥§¥¢¤Î¥æ¡¼¥¶¤Ş¤¿¤Ï¥¨¥ó¥É¥æ¡¼¥¶¤«¤é¤Î¤¤¤«¤Ê¤ëÍı
-#      Í³¤Ë´ğ¤Å¤¯ÀÁµá¤«¤é¤â¡¤¾åµ­Ãøºî¸¢¼Ô¤ª¤è¤ÓTOPPERS¥×¥í¥¸¥§¥¯¥È¤ò
-#      ÌÈÀÕ¤¹¤ë¤³¤È¡¥
+#  ä¸Šè¨˜è‘—ä½œæ¨©è€…ã¯ï¼Œä»¥ä¸‹ã®(1)ï½(4)ã®æ¡ä»¶ã‚’æº€ãŸã™å ´åˆã«é™ã‚Šï¼Œæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§
+#  ã‚¢ï¼ˆæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’æ”¹å¤‰ã—ãŸã‚‚ã®ã‚’å«ã‚€ï¼ä»¥ä¸‹åŒã˜ï¼‰ã‚’ä½¿ç”¨ãƒ»è¤‡è£½ãƒ»æ”¹
+#  å¤‰ãƒ»å†é…å¸ƒï¼ˆä»¥ä¸‹ï¼Œåˆ©ç”¨ã¨å‘¼ã¶ï¼‰ã™ã‚‹ã“ã¨ã‚’ç„¡å„Ÿã§è¨±è«¾ã™ã‚‹ï¼
+#  (1) æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’ã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰ã®å½¢ã§åˆ©ç”¨ã™ã‚‹å ´åˆã«ã¯ï¼Œä¸Šè¨˜ã®è‘—ä½œ
+#      æ¨©è¡¨ç¤ºï¼Œã“ã®åˆ©ç”¨æ¡ä»¶ãŠã‚ˆã³ä¸‹è¨˜ã®ç„¡ä¿è¨¼è¦å®šãŒï¼Œãã®ã¾ã¾ã®å½¢ã§ã‚½ãƒ¼
+#      ã‚¹ã‚³ãƒ¼ãƒ‰ä¸­ã«å«ã¾ã‚Œã¦ã„ã‚‹ã“ã¨ï¼
+#  (2) æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’ï¼Œãƒ©ã‚¤ãƒ–ãƒ©ãƒªå½¢å¼ãªã©ï¼Œä»–ã®ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢é–‹ç™ºã«ä½¿
+#      ç”¨ã§ãã‚‹å½¢ã§å†é…å¸ƒã™ã‚‹å ´åˆã«ã¯ï¼Œå†é…å¸ƒã«ä¼´ã†ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆï¼ˆåˆ©ç”¨
+#      è€…ãƒãƒ‹ãƒ¥ã‚¢ãƒ«ãªã©ï¼‰ã«ï¼Œä¸Šè¨˜ã®è‘—ä½œæ¨©è¡¨ç¤ºï¼Œã“ã®åˆ©ç”¨æ¡ä»¶ãŠã‚ˆã³ä¸‹è¨˜
+#      ã®ç„¡ä¿è¨¼è¦å®šã‚’æ²è¼‰ã™ã‚‹ã“ã¨ï¼
+#  (3) æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’ï¼Œæ©Ÿå™¨ã«çµ„ã¿è¾¼ã‚€ãªã©ï¼Œä»–ã®ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢é–‹ç™ºã«ä½¿
+#      ç”¨ã§ããªã„å½¢ã§å†é…å¸ƒã™ã‚‹å ´åˆã«ã¯ï¼Œæ¬¡ã®ã„ãšã‚Œã‹ã®æ¡ä»¶ã‚’æº€ãŸã™ã“
+#      ã¨ï¼
+#    (a) å†é…å¸ƒã«ä¼´ã†ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆï¼ˆåˆ©ç”¨è€…ãƒãƒ‹ãƒ¥ã‚¢ãƒ«ãªã©ï¼‰ã«ï¼Œä¸Šè¨˜ã®è‘—
+#        ä½œæ¨©è¡¨ç¤ºï¼Œã“ã®åˆ©ç”¨æ¡ä»¶ãŠã‚ˆã³ä¸‹è¨˜ã®ç„¡ä¿è¨¼è¦å®šã‚’æ²è¼‰ã™ã‚‹ã“ã¨ï¼
+#    (b) å†é…å¸ƒã®å½¢æ…‹ã‚’ï¼Œåˆ¥ã«å®šã‚ã‚‹æ–¹æ³•ã«ã‚ˆã£ã¦ï¼ŒTOPPERSãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã«
+#        å ±å‘Šã™ã‚‹ã“ã¨ï¼
+#  (4) æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã®åˆ©ç”¨ã«ã‚ˆã‚Šç›´æ¥çš„ã¾ãŸã¯é–“æ¥çš„ã«ç”Ÿã˜ã‚‹ã„ã‹ãªã‚‹æ
+#      å®³ã‹ã‚‰ã‚‚ï¼Œä¸Šè¨˜è‘—ä½œæ¨©è€…ãŠã‚ˆã³TOPPERSãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã‚’å…è²¬ã™ã‚‹ã“ã¨ï¼
+#      ã¾ãŸï¼Œæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã®ãƒ¦ãƒ¼ã‚¶ã¾ãŸã¯ã‚¨ãƒ³ãƒ‰ãƒ¦ãƒ¼ã‚¶ã‹ã‚‰ã®ã„ã‹ãªã‚‹ç†
+#      ç”±ã«åŸºã¥ãè«‹æ±‚ã‹ã‚‰ã‚‚ï¼Œä¸Šè¨˜è‘—ä½œæ¨©è€…ãŠã‚ˆã³TOPPERSãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã‚’
+#      å…è²¬ã™ã‚‹ã“ã¨ï¼
 # 
-#  ËÜ¥½¥Õ¥È¥¦¥§¥¢¤Ï¡¤ÌµÊİ¾Ú¤ÇÄó¶¡¤µ¤ì¤Æ¤¤¤ë¤â¤Î¤Ç¤¢¤ë¡¥¾åµ­Ãøºî¸¢¼Ô¤ª
-#  ¤è¤ÓTOPPERS¥×¥í¥¸¥§¥¯¥È¤Ï¡¤ËÜ¥½¥Õ¥È¥¦¥§¥¢¤Ë´Ø¤·¤Æ¡¤ÆÃÄê¤Î»ÈÍÑÌÜÅª
-#  ¤ËÂĞ¤¹¤ëÅ¬¹çÀ­¤â´Ş¤á¤Æ¡¤¤¤¤«¤Ê¤ëÊİ¾Ú¤â¹Ô¤ï¤Ê¤¤¡¥¤Ş¤¿¡¤ËÜ¥½¥Õ¥È¥¦¥§
-#  ¥¢¤ÎÍøÍÑ¤Ë¤è¤êÄ¾ÀÜÅª¤Ş¤¿¤Ï´ÖÀÜÅª¤ËÀ¸¤¸¤¿¤¤¤«¤Ê¤ëÂ»³²¤Ë´Ø¤·¤Æ¤â¡¤¤½
-#  ¤ÎÀÕÇ¤¤òÉé¤ï¤Ê¤¤¡¥
+#  æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã¯ï¼Œç„¡ä¿è¨¼ã§æä¾›ã•ã‚Œã¦ã„ã‚‹ã‚‚ã®ã§ã‚ã‚‹ï¼ä¸Šè¨˜è‘—ä½œæ¨©è€…ãŠ
+#  ã‚ˆã³TOPPERSãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã¯ï¼Œæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã«é–¢ã—ã¦ï¼Œç‰¹å®šã®ä½¿ç”¨ç›®çš„
+#  ã«å¯¾ã™ã‚‹é©åˆæ€§ã‚‚å«ã‚ã¦ï¼Œã„ã‹ãªã‚‹ä¿è¨¼ã‚‚è¡Œã‚ãªã„ï¼ã¾ãŸï¼Œæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§
+#  ã‚¢ã®åˆ©ç”¨ã«ã‚ˆã‚Šç›´æ¥çš„ã¾ãŸã¯é–“æ¥çš„ã«ç”Ÿã˜ãŸã„ã‹ãªã‚‹æå®³ã«é–¢ã—ã¦ã‚‚ï¼Œã
+#  ã®è²¬ä»»ã‚’è² ã‚ãªã„ï¼
 # 
-#  @(#) $Id: Makefile 62 2009-01-08 15:48:42Z ertl-honda $
+#  @(#) $Id: Makefile 1203 2016-07-18 07:05:08Z ertl-honda $
 # 
 
 #
-#  ¥¿¡¼¥²¥Ã¥È¤Î»ØÄê¡ÊMakefile.target¤Ç¾å½ñ¤­¤µ¤ì¤ë¤Î¤òËÉ¤°¤¿¤á¡Ë
+#  ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®æŒ‡å®šï¼ˆMakefile.targetã§ä¸Šæ›¸ãã•ã‚Œã‚‹ã®ã‚’é˜²ããŸã‚ï¼‰
 #
 all:
 
 #
-#  ¥¿¡¼¥²¥Ã¥ÈÎ¬¾Î¤ÎÄêµÁ
+#  ã‚¿ãƒ¼ã‚²ãƒƒãƒˆç•¥ç§°ã®å®šç¾©
 #
 TARGET = @(TARGET)
 
 #
-#  ¥×¥í¥»¥Ã¥µ¿ô¡ÊÄêµÁ¤·¤Ê¤±¤ì¤Ğ¥¿¡¼¥²¥Ã¥È°ÍÂ¸Éô¤Î¥Ç¥£¥Õ¥©¥ë¥ÈÃÍ¤¬»ÈÍÑ¤µ¤ì¤ë¡Ë
+#  ãƒ—ãƒ­ã‚»ãƒƒã‚µæ•°ï¼ˆå®šç¾©ã—ãªã‘ã‚Œã°ã‚¿ãƒ¼ã‚²ãƒƒãƒˆä¾å­˜éƒ¨ã®ãƒ‡ã‚£ãƒ•ã‚©ãƒ«ãƒˆå€¤ãŒä½¿ç”¨ã•ã‚Œã‚‹ï¼‰
 # 
 PRC_NUM = @(PRC_NUM)
 
 #
-#  ¥×¥í¥°¥é¥ß¥ó¥°¸À¸ì¤ÎÄêµÁ
+#  ãƒ—ãƒ­ã‚°ãƒ©ãƒŸãƒ³ã‚°è¨€èªã®å®šç¾©
 #
 SRCLANG = @(SRCLANG)
 ifeq ($(SRCLANG),c)
@@ -69,48 +69,48 @@ ifeq ($(SRCLANG),c++)
 endif
 
 #
-#  ¥½¡¼¥¹¥Õ¥¡¥¤¥ë¤Î¥Ç¥£¥ì¥¯¥È¥ê¤ÎÄêµÁ
+#  ã‚½ãƒ¼ã‚¹ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®å®šç¾©
 #
 SRCDIR = @(SRCDIR)
 
 #
-#  ¥ª¥Ö¥¸¥§¥¯¥È¥Õ¥¡¥¤¥ëÌ¾¤Î³ÈÄ¥»Ò¤ÎÀßÄê
+#  ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ•ã‚¡ã‚¤ãƒ«åã®æ‹¡å¼µå­ã®è¨­å®š
 #
 OBJEXT = @(OBJEXT)
 
 #
-#  ¼Â¹Ô´Ä¶­¤ÎÄêµÁ¡Ê¥¿¡¼¥²¥Ã¥È°ÍÂ¸¤Ë¾å½ñ¤­¤µ¤ì¤ë¾ì¹ç¤¬¤¢¤ë¡Ë
+#  å®Ÿè¡Œç’°å¢ƒã®å®šç¾©ï¼ˆã‚¿ãƒ¼ã‚²ãƒƒãƒˆä¾å­˜ã«ä¸Šæ›¸ãã•ã‚Œã‚‹å ´åˆãŒã‚ã‚‹ï¼‰
 #
 DBGENV := @(DBGENV)
 
 #
-#  ¥«¡¼¥Í¥ë¥é¥¤¥Ö¥é¥ê¡Êlibkernel.a¡Ë¤Î¥Ç¥£¥ì¥¯¥È¥êÌ¾
-#  ¡Ê¥«¡¼¥Í¥ë¥é¥¤¥Ö¥é¥ê¤âmakeÂĞ¾İ¤Ë¤¹¤ë»ş¤Ï¡¤¶õ¤ËÄêµÁ¤¹¤ë¡Ë
+#  ã‚«ãƒ¼ãƒãƒ«ãƒ©ã‚¤ãƒ–ãƒ©ãƒªï¼ˆlibkernel.aï¼‰ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå
+#  ï¼ˆã‚«ãƒ¼ãƒãƒ«ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã‚‚makeå¯¾è±¡ã«ã™ã‚‹æ™‚ã¯ï¼Œç©ºã«å®šç¾©ã™ã‚‹ï¼‰
 #
 KERNEL_LIB = @(KERNEL_LIB)
 
 #
-#  ¥«¡¼¥Í¥ë¤ò´Ø¿ôÃ±°Ì¤Ç¥³¥ó¥Ñ¥¤¥ë¤¹¤ë¤«¤É¤¦¤«¤ÎÄêµÁ
+#  ã‚«ãƒ¼ãƒãƒ«ã‚’é–¢æ•°å˜ä½ã§ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã™ã‚‹ã‹ã©ã†ã‹ã®å®šç¾©
 #
 KERNEL_FUNCOBJS = @(KERNEL_FUNCOBJS)
 
 #
-#  ¥È¥ì¡¼¥¹¥í¥°¤ò¼èÆÀ¤¹¤ë¤«¤É¤¦¤«¤ÎÄêµÁ
+#  ãƒˆãƒ¬ãƒ¼ã‚¹ãƒ­ã‚°ã‚’å–å¾—ã™ã‚‹ã‹ã©ã†ã‹ã®å®šç¾©
 #
 ENABLE_TRACE = @(ENABLE_TRACE)
 
 #
-# ¥·¥¹¥Æ¥à¥í¥°µ¡Ç½¤Î¥í¡¼¥«¥ëÊı¼°¤òÍÑ¤¤¤ë¤«¤É¤¦¤«¤ÎÄêµÁ
+# ã‚·ã‚¹ãƒ†ãƒ ãƒ­ã‚°æ©Ÿèƒ½ã®ãƒ­ãƒ¼ã‚«ãƒ«æ–¹å¼ã‚’ç”¨ã„ã‚‹ã‹ã©ã†ã‹ã®å®šç¾©
 #
 ENABLE_G_SYSLOG = @(ENABLE_G_SYSLOG)
 
 #
-#  ¥æ¡¼¥Æ¥£¥ê¥Æ¥£¥×¥í¥°¥é¥à¤ÎÌ¾¾Î
+#  ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã®åç§°
 #
 PERL = @(PERL)
 CFG = @(CFG)
 
-#  ¥ª¥Ö¥¸¥§¥¯¥È¥Õ¥¡¥¤¥ëÌ¾¤ÎÄêµÁ
+#  ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ•ã‚¡ã‚¤ãƒ«åã®å®šç¾©
 #
 OBJNAME = fmp
 ifdef OBJEXT
@@ -122,17 +122,25 @@ else
 endif
 
 #
-#  ¥¿¡¼¥²¥Ã¥È°ÍÂ¸Éô¤Î¥Ç¥£¥ì¥¯¥È¥ê¤ÎÄêµÁ
+#   ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå‡ºåŠ›ãƒ•ã‚©ãƒ«ãƒ€
+#
+OBJDIR = obj
+ifeq "$(strip $(OBJDIR))" ""
+  OBJDIR  = .
+endif
+
+#
+#  ã‚¿ãƒ¼ã‚²ãƒƒãƒˆä¾å­˜éƒ¨ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®å®šç¾©
 #
 TARGETDIR = $(SRCDIR)/target/$(TARGET)
 
 #
-#  ¥¿¡¼¥²¥Ã¥È°ÍÂ¸¤ÎÄêµÁ¤Î¥¤¥ó¥¯¥ë¡¼¥É
+#  ã‚¿ãƒ¼ã‚²ãƒƒãƒˆä¾å­˜ã®å®šç¾©ã®ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰
 #
 include $(TARGETDIR)/Makefile.target
 
 #
-#  ¥³¥ó¥Õ¥£¥®¥å¥ì¡¼¥¿´Ø·¸¤ÎÊÑ¿ô¤ÎÄêµÁ
+#  ã‚³ãƒ³ãƒ•ã‚£ã‚®ãƒ¥ãƒ¬ãƒ¼ã‚¿é–¢ä¿‚ã®å¤‰æ•°ã®å®šç¾©
 #
 CFG_TABS := --api-table $(SRCDIR)/kernel/kernel_api.csv \
 			--cfg1-def-table $(SRCDIR)/kernel/kernel_def.csv $(CFG_TABS)
@@ -142,9 +150,9 @@ CFG_OBJS := $(CFG_ASMOBJS) $(CFG_COBJS)
 CFG2_OUT_SRCS := kernel_cfg.h kernel_cfg.c $(CFG2_OUT_SRCS)
 
 #
-#  ¶¦ÄÌ¥³¥ó¥Ñ¥¤¥ë¥ª¥×¥·¥ç¥ó¤ÎÄêµÁ
+#  å…±é€šã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã®å®šç¾©
 #
-COPTS := $(COPTS) -g  @(COPTS)
+COPTS := $(COPTS) -g -MD @(COPTS)
 ifndef OMIT_WARNING_ALL
   COPTS := $(COPTS) -Wall
 endif
@@ -159,7 +167,7 @@ LIBS := $(LIBS) $(CXXLIBS)
 CFLAGS = $(COPTS) $(CDEFS) $(INCLUDES)
 
 #
-#  ¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¥×¥í¥°¥é¥à¤Ë´Ø¤¹¤ëÄêµÁ
+#  ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã«é–¢ã™ã‚‹å®šç¾©
 #
 APPLNAME = @(APPLNAME)
 APPLDIR = @(APPLDIR)
@@ -181,7 +189,7 @@ ifdef APPLDIR
 endif
 
 #
-#  ¥·¥¹¥Æ¥à¥µ¡¼¥Ó¥¹¤Ë´Ø¤¹¤ëÄêµÁ
+#  ã‚·ã‚¹ãƒ†ãƒ ã‚µãƒ¼ãƒ“ã‚¹ã«é–¢ã™ã‚‹å®šç¾©
 #
 SYSSVC_DIR := $(SYSSVC_DIR) $(SRCDIR)/syssvc $(SRCDIR)/library
 SYSSVC_ASMOBJS := $(SYSSVC_ASMOBJS)
@@ -196,19 +204,19 @@ ifeq ($(ENABLE_G_SYSLOG),true)
 endif
 
 #
-#  ¥«¡¼¥Í¥ë¤Ë´Ø¤¹¤ëÄêµÁ
+#  ã‚«ãƒ¼ãƒãƒ«ã«é–¢ã™ã‚‹å®šç¾©
 #
-#  KERNEL_ASMOBJS: ¥«¡¼¥Í¥ë¥é¥¤¥Ö¥é¥ê¤Ë´Ş¤á¤ë¡¤¥½¡¼¥¹¤¬¥¢¥»¥ó¥Ö¥ê¸À¸ì¤Î
-#				   ¥ª¥Ö¥¸¥§¥¯¥È¥Õ¥¡¥¤¥ë¡¥
-#  KERNEL_COBJS: ¥«¡¼¥Í¥ë¤Î¥é¥¤¥Ö¥é¥ê¤Ë´Ş¤á¤ë¡¤¥½¡¼¥¹¤¬C¸À¸ì¤Ç¡¤¥½¡¼¥¹
-#				 ¥Õ¥¡¥¤¥ë¤È1ÂĞ1¤ËÂĞ±ş¤¹¤ë¥ª¥Ö¥¸¥§¥¯¥È¥Õ¥¡¥¤¥ë¡¥
-#  KERNEL_LCSRCS: ¥«¡¼¥Í¥ë¤Î¥é¥¤¥Ö¥é¥ê¤Ë´Ş¤á¤ëC¸À¸ì¤Î¥½¡¼¥¹¥Õ¥¡¥¤¥ë¤Ç¡¤
-#				  1¤Ä¤Î¥½¡¼¥¹¥Õ¥¡¥¤¥ë¤«¤éÊ£¿ô¤Î¥ª¥Ö¥¸¥§¥¯¥È¥Õ¥¡¥¤¥ë¤òÀ¸
-#				  À®¤¹¤ë¤â¤Î¡¥
-#  KERNEL_LCOBJS: ¾å¤Î¥½¡¼¥¹¥Õ¥¡¥¤¥ë¤«¤éÀ¸À®¤µ¤ì¤ë¥ª¥Ö¥¸¥§¥¯¥È¥Õ¥¡¥¤¥ë¡¥
-#  KERNEL_AUX_COBJS: ¥í¡¼¥É¥â¥¸¥å¡¼¥ë¤Ë´Ş¤á¤Ê¤¤¤¬¡¤¥«¡¼¥Í¥ë¤Î¥½¡¼¥¹¥Õ¥¡
-#					 ¥¤¥ë¤ÈÆ±¤¸¥ª¥×¥·¥ç¥ó¤òÅ¬ÍÑ¤·¤Æ¥³¥ó¥Ñ¥¤¥ë¤¹¤Ù¤­¡¤¥½¡¼
-#					 ¥¹¤¬C¸À¸ì¤Î¥ª¥Ö¥¸¥§¥¯¥È¥Õ¥¡¥¤¥ë¡¥
+#  KERNEL_ASMOBJS: ã‚«ãƒ¼ãƒãƒ«ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã«å«ã‚ã‚‹ï¼Œã‚½ãƒ¼ã‚¹ãŒã‚¢ã‚»ãƒ³ãƒ–ãƒªè¨€èªã®
+#				   ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ï¼
+#  KERNEL_COBJS: ã‚«ãƒ¼ãƒãƒ«ã®ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã«å«ã‚ã‚‹ï¼Œã‚½ãƒ¼ã‚¹ãŒCè¨€èªã§ï¼Œã‚½ãƒ¼ã‚¹
+#				 ãƒ•ã‚¡ã‚¤ãƒ«ã¨1å¯¾1ã«å¯¾å¿œã™ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ï¼
+#  KERNEL_LCSRCS: ã‚«ãƒ¼ãƒãƒ«ã®ãƒ©ã‚¤ãƒ–ãƒ©ãƒªã«å«ã‚ã‚‹Cè¨€èªã®ã‚½ãƒ¼ã‚¹ãƒ•ã‚¡ã‚¤ãƒ«ã§ï¼Œ
+#				  1ã¤ã®ã‚½ãƒ¼ã‚¹ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰è¤‡æ•°ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç”Ÿ
+#				  æˆã™ã‚‹ã‚‚ã®ï¼
+#  KERNEL_LCOBJS: ä¸Šã®ã‚½ãƒ¼ã‚¹ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ç”Ÿæˆã•ã‚Œã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ï¼
+#  KERNEL_AUX_COBJS: ãƒ­ãƒ¼ãƒ‰ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã«å«ã‚ãªã„ãŒï¼Œã‚«ãƒ¼ãƒãƒ«ã®ã‚½ãƒ¼ã‚¹ãƒ•ã‚¡
+#					 ã‚¤ãƒ«ã¨åŒã˜ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã‚’é©ç”¨ã—ã¦ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã™ã¹ãï¼Œã‚½ãƒ¼
+#					 ã‚¹ãŒCè¨€èªã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ï¼
 #
 KERNEL_DIR := $(KERNEL_DIR) $(SRCDIR)/kernel
 KERNEL_ASMOBJS := $(KERNEL_ASMOBJS)
@@ -224,30 +232,48 @@ endif
 endif
 
 #
-#  ¥¿¡¼¥²¥Ã¥È¥Õ¥¡¥¤¥ë¡ÊÊ£¿ô¤òÆ±»ş¤ËÁªÂò¤·¤Æ¤Ï¤Ê¤é¤Ê¤¤¡Ë
+#  ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ•ã‚¡ã‚¤ãƒ«ï¼ˆè¤‡æ•°ã‚’åŒæ™‚ã«é¸æŠã—ã¦ã¯ãªã‚‰ãªã„ï¼‰
 #
 all: $(OBJFILE)
 #all: $(OBJNAME).bin
 #all: $(OBJNAME).srec
 
-##### °Ê²¼¤ÏÊÔ½¸¤·¤Ê¤¤¤³¤È #####
+##### ä»¥ä¸‹ã¯ç·¨é›†ã—ãªã„ã“ã¨ #####
 
 #
-#  ´Ä¶­¤Ë°ÍÂ¸¤¹¤ë¥³¥ó¥Ñ¥¤¥ë¥ª¥×¥·¥ç¥ó¤ÎÄêµÁ
+#  ãƒ—ãƒ©ãƒƒãƒˆãƒ›ãƒ¼ãƒ ã®åˆ¤å®š
+#
+ifneq (,$(findstring /cygdrive/,$(PATH)))
+    UNAME := Cygwin
+else
+ifeq ($(OS),Windows_NT)
+    UNAME := Windows
+else
+ifeq ($(UNAME),Linux)
+    UNAME := Linux
+ifeq ($(UNAME),Darwin)
+    UNAME := Darwin
+endif
+endif
+endif
+endif
+
+#
+#  ç’°å¢ƒã«ä¾å­˜ã™ã‚‹ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã®å®šç¾©
 #
 ifdef DBGENV
   CDEFS := $(CDEFS) -D$(DBGENV)
 endif
 
 #
-#  ¥×¥í¥»¥Ã¥µ¿ô
+#  ãƒ—ãƒ­ã‚»ãƒƒã‚µæ•°
 #
 ifdef PRC_NUM
   CDEFS := $(CDEFS) -DTNUM_PRCID=$(PRC_NUM)
 endif
 
 #
-#  ¥«¡¼¥Í¥ë¤Î¥Õ¥¡¥¤¥ë¹½À®¤ÎÄêµÁ
+#  ã‚«ãƒ¼ãƒãƒ«ã®ãƒ•ã‚¡ã‚¤ãƒ«æ§‹æˆã®å®šç¾©
 #
 include $(SRCDIR)/kernel/Makefile.kernel
 ifdef KERNEL_FUNCOBJS
@@ -260,14 +286,38 @@ else
 endif
 
 #
-#  ¥½¡¼¥¹¥Õ¥¡¥¤¥ë¤Î¤¢¤ë¥Ç¥£¥ì¥¯¥È¥ê¤Ë´Ø¤¹¤ëÄêµÁ
+#  ã‚½ãƒ¼ã‚¹ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚ã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«é–¢ã™ã‚‹å®šç¾©
 #
 vpath %.c $(KERNEL_DIR) $(SYSSVC_DIR) $(APPL_DIR)
 vpath %.S $(KERNEL_DIR) $(SYSSVC_DIR) $(APPL_DIR)
 vpath %.cfg $(APPL_DIR)
 
 #
-#  ¥³¥ó¥Ñ¥¤¥ë¤Î¤¿¤á¤ÎÊÑ¿ô¤ÎÄêµÁ
+#  ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å‡ºåŠ›å…ˆ
+#
+CFLAGS :=  $(CFLAGS) -L $(OBJDIR)
+
+KERNEL_ASMOBJS := $(addprefix $(OBJDIR)/, $(KERNEL_ASMOBJS))
+KERNEL_COBJS   := $(addprefix $(OBJDIR)/, $(KERNEL_COBJS))
+KERNEL_LCOBJS  := $(addprefix $(OBJDIR)/, $(KERNEL_LCOBJS))
+SYSSVC_ASMOBJS := $(addprefix $(OBJDIR)/, $(SYSSVC_ASMOBJS))
+SYSSVC_COBJS   := $(addprefix $(OBJDIR)/, $(SYSSVC_COBJS))
+APPL_ASMOBJS   := $(addprefix $(OBJDIR)/, $(APPL_ASMOBJS))
+APPL_COBJS     := $(addprefix $(OBJDIR)/, $(APPL_COBJS))
+APPL_CXXOBJS   := $(addprefix $(OBJDIR)/, $(APPL_CXXOBJS))
+START_OBJS     := $(addprefix $(OBJDIR)/, $(START_OBJS))
+CFG_OBJS       := $(addprefix $(OBJDIR)/, $(CFG_OBJS))
+CFG_COBJS      := $(addprefix $(OBJDIR)/, $(CFG_COBJS))
+END_OBJS       := $(addprefix $(OBJDIR)/, $(END_OBJS))
+
+ifeq ($(UNAME), Windows)
+	MKOBJDIR_P = @[ -d $(OBJDIR) ] || mkdir $(OBJDIR) > nul 2>&1 || (exit 0) 
+else
+	MKOBJDIR_P = @[ -d $(OBJDIR) ] || mkdir -p $(OBJDIR)
+endif
+
+#
+#  ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã®ãŸã‚ã®å¤‰æ•°ã®å®šç¾©
 #
 KERNEL_LIB_OBJS = $(KERNEL_ASMOBJS) $(KERNEL_COBJS) $(KERNEL_LCOBJS)
 SYSSVC_OBJS = $(SYSSVC_ASMOBJS) $(SYSSVC_COBJS)
@@ -298,7 +348,7 @@ ifdef LDSCRIPT
 endif
 
 #
-#  ¥ª¥Õ¥»¥Ã¥È¥Õ¥¡¥¤¥ë¡Êoffset.h¡Ë¤ÎÀ¸À®µ¬Â§ 
+#  ã‚ªãƒ•ã‚»ãƒƒãƒˆãƒ•ã‚¡ã‚¤ãƒ«ï¼ˆoffset.hï¼‰ã®ç”Ÿæˆè¦å‰‡ 
 # 
 ifdef OFFSET_TF 
 offset.h: $(APPL_CFG) kernel_cfg.timestamp 
@@ -311,37 +361,42 @@ offset.h: makeoffset.s $(SRCDIR)/utils/genoffset
 endif
 
 #
-#  ¥«¡¼¥Í¥ë¤Î¥³¥ó¥Õ¥£¥®¥å¥ì¡¼¥·¥ç¥ó¥Õ¥¡¥¤¥ë¤ÎÀ¸À®
+#  ã‚«ãƒ¼ãƒãƒ«ã®ã‚³ãƒ³ãƒ•ã‚£ã‚®ãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ãƒ•ã‚¡ã‚¤ãƒ«ã®ç”Ÿæˆ
 #
 cfg1_out.c: $(APPL_CFG)
 	$(CFG) --pass 1 --kernel fmp $(INCLUDES) $(CFG_TABS) $<
 
 $(CFG2_OUT_SRCS): kernel_cfg.timestamp
 kernel_cfg.timestamp: $(APPL_CFG) \
-						$(START_OBJS) cfg1_out.o $(END_OBJS) $(HIDDEN_OBJS)
+						$(START_OBJS) $(OBJDIR)/cfg1_out.o $(END_OBJS) $(HIDDEN_OBJS)
 	$(LINK) $(CFLAGS) $(CFG1_OUT_LDFLAGS) -o $(CFG1_OUT) \
-						$(START_OBJS) cfg1_out.o $(END_OBJS)
+						$(START_OBJS) $(OBJDIR)/cfg1_out.o $(END_OBJS)
 	$(NM) -n $(CFG1_OUT) > cfg1_out.syms
 	$(OBJCOPY) -O srec -S $(CFG1_OUT) cfg1_out.srec
 	$(CFG) --pass 2 --kernel fmp $(INCLUDES) \
 				-T $(TARGETDIR)/target.tf $(CFG_TABS) $<
+ifeq ($(UNAME), Windows)
+	cmd.exe /C copy /B kernel_cfg.c +,,
+	cmd.exe /C echo  -n > kernel_cfg.timestamp
+else
 	touch -r kernel_cfg.c kernel_cfg.timestamp
+endif
 
 #
-#  ¥«¡¼¥Í¥ë¥é¥¤¥Ö¥é¥ê¥Õ¥¡¥¤¥ë¤ÎÀ¸À®
+#  ã‚«ãƒ¼ãƒãƒ«ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãƒ•ã‚¡ã‚¤ãƒ«ã®ç”Ÿæˆ
 #
 libkernel.a: $(OFFSET_H) $(KERNEL_LIB_OBJS)
-	rm -f libkernel.a
+	-rm -f libkernel.a
 	$(AR) -rcs libkernel.a $(KERNEL_LIB_OBJS)
 	$(RANLIB) libkernel.a
 
 #
-#  ÆÃÊÌ¤Ê°ÍÂ¸´Ø·¸¤ÎÄêµÁ
+#  ç‰¹åˆ¥ãªä¾å­˜é–¢ä¿‚ã®å®šç¾©
 #
 banner.o: kernel_cfg.timestamp $(filter-out banner.o,$(ALL_OBJS)) $(LIBS_DEP)
 
 #
-#  Á´ÂÎ¤Î¥ê¥ó¥¯
+#  å…¨ä½“ã®ãƒªãƒ³ã‚¯
 #
 $(OBJFILE): $(APPL_CFG) kernel_cfg.timestamp $(ALL_OBJS) $(LIBS_DEP)
 	$(LINK) $(CFLAGS) $(LDFLAGS) -o $(OBJFILE) $(START_OBJS) \
@@ -353,117 +408,84 @@ $(OBJFILE): $(APPL_CFG) kernel_cfg.timestamp $(ALL_OBJS) $(LIBS_DEP)
 				-T $(TARGETDIR)/target_check.tf $(CFG_TABS) $<
 
 #
-#  ¥Ğ¥¤¥Ê¥ê¥Õ¥¡¥¤¥ë¤ÎÀ¸À®
+#  ãƒã‚¤ãƒŠãƒªãƒ•ã‚¡ã‚¤ãƒ«ã®ç”Ÿæˆ
 #
 $(OBJNAME).bin: $(OBJFILE)
 	$(OBJCOPY) -O binary -S $(OBJFILE) $(OBJNAME).bin
 
 #
-#  S¥ì¥³¡¼¥É¥Õ¥¡¥¤¥ë¤ÎÀ¸À®
+#  Sãƒ¬ã‚³ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«ã®ç”Ÿæˆ
 #
 $(OBJNAME).srec: $(OBJFILE)
 	$(OBJCOPY) -O srec -S $(OBJFILE) $(OBJNAME).srec
 
 #
-#  ¥³¥ó¥Ñ¥¤¥ë·ë²Ì¤Î¾Ãµî
+#  ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«çµæœã®æ¶ˆå»
 #
 .PHONY: clean
 clean:
-	rm -f \#* *~ *.o $(CLEAN_FILES)
-	rm -f $(OBJFILE) $(OBJNAME).syms $(OBJNAME).srec $(OBJNAME).bin
-	rm -f kernel_cfg.timestamp $(CFG2_OUT_SRCS)
-	rm -f cfg1_out.c $(CFG1_OUT) cfg1_out.syms cfg1_out.srec
+	-rm -f $(OBJDIR)/*.o $(OBJDIR)/*.d $(CLEAN_FILES)
+	-rm -f $(OBJFILE) $(OBJNAME).syms $(OBJNAME).srec $(OBJNAME).bin
+	-rm -f kernel_cfg.timestamp $(CFG2_OUT_SRCS)
+	-rm -f cfg1_out.c $(CFG1_OUT) cfg1_out.syms cfg1_out.srec
 ifndef KERNEL_LIB
-	rm -f libkernel.a
+	-rm -f libkernel.a
 endif
-	rm -f makeoffset.s offset.h $(CLEAN_FILES)
+	-rm -f makeoffset.s offset.h $(CLEAN_FILES)
 
 .PHONY: cleankernel
 cleankernel:
-	rm -rf $(KERNEL_LIB_OBJS)
-	rm -f makeoffset.s offset.h
+	-rm -rf $(KERNEL_LIB_OBJS)
+	-rm -f makeoffset.s offset.h
 
 .PHONY: cleandep
 cleandep:
 	if ! [ -f Makefile.depend ]; then \
-		rm -f kernel_cfg.timestamp $(CFG2_OUT_SRCS); \
-		rm -f cfg1_out.c cfg1_out.o $(CFG1_OUT) cfg1_out.syms cfg1_out.srec; \
-		rm -f makeoffset.s offset.h; \
+		-rm -f kernel_cfg.timestamp $(CFG2_OUT_SRCS); \
+		-rm -f cfg1_out.c $(OBJDIR)/cfg1_out.o $(CFG1_OUT) cfg1_out.syms cfg1_out.srec; \
+		-rm -f makeoffset.s offset.h; \
 	fi
-	rm -f Makefile.depend
+	-rm -f Makefile.depend
 
 .PHONY: realclean
 realclean: cleandep clean
-	rm -f $(REALCLEAN_FILES)
+	-rm -f $(REALCLEAN_FILES)
 
 #
-#  ¥³¥ó¥Õ¥£¥®¥å¥ì¡¼¥¿¤¬À¸À®¤·¤¿¥Õ¥¡¥¤¥ë¤Î¥³¥ó¥Ñ¥¤¥ë¥ë¡¼¥ë¤È°ÍÂ¸´Ø·¸ºîÀ®
-#  ¥ë¡¼¥ë¤ÎÄêµÁ
+#  ã‚³ãƒ³ãƒ•ã‚£ã‚®ãƒ¥ãƒ¬ãƒ¼ã‚¿ãŒç”Ÿæˆã—ãŸãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ãƒ«ãƒ¼ãƒ«ã¨ä¾å­˜é–¢ä¿‚ä½œæˆ
+#  ãƒ«ãƒ¼ãƒ«ã®å®šç¾©
 #
-#  ¥³¥ó¥Õ¥£¥®¥å¥ì¡¼¥¿¤¬À¸À®¤·¤¿¥Õ¥¡¥¤¥ë¤Ï¡¤¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¥×¥í¥°¥é¥àÍÑ¡¤
-#  ¥·¥¹¥Æ¥à¥µ¡¼¥Ó¥¹ÍÑ¡¤¥«¡¼¥Í¥ëÍÑ¤Î¤¹¤Ù¤Æ¤Î¥ª¥×¥·¥ç¥ó¤òÉÕ¤±¤Æ¥³¥ó¥Ñ¥¤¥ë
-#  ¤¹¤ë¡¥
+#  ã‚³ãƒ³ãƒ•ã‚£ã‚®ãƒ¥ãƒ¬ãƒ¼ã‚¿ãŒç”Ÿæˆã—ãŸãƒ•ã‚¡ã‚¤ãƒ«ã¯ï¼Œã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãƒ—ãƒ­ã‚°ãƒ©ãƒ ç”¨ï¼Œ
+#  ã‚·ã‚¹ãƒ†ãƒ ã‚µãƒ¼ãƒ“ã‚¹ç”¨ï¼Œã‚«ãƒ¼ãƒãƒ«ç”¨ã®ã™ã¹ã¦ã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã‚’ä»˜ã‘ã¦ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
+#  ã™ã‚‹ï¼
 #
-ALL_CFG_COBJS = $(CFG_COBJS) cfg1_out.o
+ALL_CFG_COBJS = $(CFG_COBJS) $(OBJDIR)/cfg1_out.o
 ALL_CFG_ASMOBJS = $(CFG_ASMOBJS)
 CFG_CFLAGS = $(APPL_CFLAGS) $(SYSSVC_CFLAGS) $(KERNEL_CFLAGS)
 
-$(ALL_CFG_COBJS): %.o: %.c
-	$(CC) -c $(CFLAGS) $(CFG_CFLAGS) $<
+$(ALL_CFG_COBJS): $(OBJDIR)/%.o: %.c
+	${MKOBJDIR_P}
+	$(CC) -o $@ -c $(CFLAGS) $(CFG_CFLAGS) $<
 
-$(ALL_CFG_COBJS:.o=.s): %.s: %.c
-	$(CC) -S $(CFLAGS) $(CFG_CFLAGS) $<
+$(ALL_CFG_COBJS:.o=.s): $(OBJDIR)/%.s: %.c
+	${MKOBJDIR_P}
+	$(CC) -o $@ -S $(CFLAGS) $(CFG_CFLAGS) $<
 
-$(ALL_CFG_COBJS:.o=.d): %.d: %.c
-	@$(PERL) $(SRCDIR)/utils/makedep -C $(CC) $(MAKEDEP_OPTS) \
-		-O "$(CFLAGS) $(CFG_CFLAGS)" $< >> Makefile.depend
-
-$(ALL_CFG_ASMOBJS): %.o: %.S
-	$(CC) -c $(CFLAGS) $(CFG_CFLAGS) $<
-
-$(ALL_CFG_ASMOBJS:.o=.d): %.d: %.S
-	@$(PERL) $(SRCDIR)/utils/makedep -C $(CC) $(MAKEDEP_OPTS) \
-		-O "$(CFLAGS) $(CFG_CFLAGS)" $< >> Makefile.depend
+$(ALL_CFG_ASMOBJS): $(OBJDIR)/%.o: %.S
+	${MKOBJDIR_P}
+	$(CC) -o $@ -c $(CFLAGS) $(CFG_CFLAGS) $<
 
 #
-#  ÆÃ¼ì¤Ê°ÍÂ¸´Ø·¸ºîÀ®¥ë¡¼¥ë¤ÎÄêµÁ
+#  ä¾å­˜é–¢ä¿‚ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰
 #
-cfg1_out.depend: $(APPL_CFG)
-	@$(CFG) -M cfg1_out.c $(INCLUDES) $< >> Makefile.depend
-
-makeoffset.d: makeoffset.c
-	@$(PERL) $(SRCDIR)/utils/makedep -C $(CC) $(MAKEDEP_OPTS) \
-		-T "makeoffset.s" -O "$(CFLAGS) $(KERNEL_CFLAGS)" $< >> Makefile.depend
+-include $(OBJDIR)/*.d
 
 #
-#  °ÍÂ¸´Ø·¸¥Õ¥¡¥¤¥ë¤ÎÀ¸À®
-#
-.PHONY: gendepend
-gendepend:
-	@echo "Generating Makefile.depend."
-
-ifdef KERNEL_LIB
-depend: cleandep kernel_cfg.timestamp gendepend \
-		cfg1_out.depend cfg1_out.d \
-		$(ALL_OBJS:.o=.d)
-else
-depend: cleandep $(OFFSET_H) kernel_cfg.timestamp gendepend \
-		cfg1_out.depend cfg1_out.d \
-		$(KERNEL_AUX_COBJS:.o=.d) $(KERNEL_ASMOBJS:.o=.d) \
-		$(KERNEL_COBJS:.o=.d) $(KERNEL_LCSRCS:.c=.d) $(ALL_OBJS:.o=.d)
-endif
-
-#
-#  °ÍÂ¸´Ø·¸¥Õ¥¡¥¤¥ë¤ò¥¤¥ó¥¯¥ë¡¼¥É
-#
--include Makefile.depend
-
-#
-#  ³«È¯¥Ä¡¼¥ë¤Î¥³¥Ş¥ó¥ÉÌ¾¤ÎÄêµÁ
+#  é–‹ç™ºãƒ„ãƒ¼ãƒ«ã®ã‚³ãƒãƒ³ãƒ‰åã®å®šç¾©
 #
 ifeq ($(TOOL),gcc)
   #
-  #  GNU³«È¯´Ä¶­ÍÑ
+  #  GNUé–‹ç™ºç’°å¢ƒç”¨
   #
   ifdef GCC_TARGET
     GCC_TARGET_PREFIX = $(GCC_TARGET)-
@@ -488,103 +510,86 @@ else
 endif
 
 #
-#  ¥³¥ó¥Ñ¥¤¥ë¥ë¡¼¥ë¤ÎÄêµÁ
+#  ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ãƒ«ãƒ¼ãƒ«ã®å®šç¾©
 #
 KERNEL_ALL_COBJS = $(KERNEL_COBJS) $(KERNEL_AUX_COBJS)
 
-$(KERNEL_ALL_COBJS): %.o: %.c
-	$(CC) -c $(CFLAGS) $(KERNEL_CFLAGS) $<
+$(KERNEL_ALL_COBJS): $(OBJDIR)/%.o: %.c
+	${MKOBJDIR_P}
+	$(CC) -o $@ -c $(CFLAGS) $(KERNEL_CFLAGS) $<
 
-$(KERNEL_ALL_COBJS:.o=.s): %.s: %.c
-	$(CC) -S $(CFLAGS) $(KERNEL_CFLAGS) $<
+$(KERNEL_ALL_COBJS:.o=.s): $(OBJDIR)/%.s: %.c
+	${MKOBJDIR_P}
+	$(CC) -o $@ -S $(CFLAGS) $(KERNEL_CFLAGS) $<
 
-$(KERNEL_LCOBJS): %.o:
+$(KERNEL_LCOBJS): $(OBJDIR)/%.o:
+	${MKOBJDIR_P}
 	$(CC) -DTOPPERS_$(*F) -o $@ -c $(CFLAGS) $(KERNEL_CFLAGS) $<
 
-$(KERNEL_LCOBJS:.o=.s): %.s:
+$(KERNEL_LCOBJS:.o=.s): $(OBJDIR)/$(OBJDIR)/%.s:
+	${MKOBJDIR_P}
 	$(CC) -DTOPPERS_$(*F) -o $@ -S $(CFLAGS) $(KERNEL_CFLAGS) $<
 
-$(KERNEL_ASMOBJS): %.o: %.S
-	$(CC) -c $(CFLAGS) $(KERNEL_CFLAGS) $<
+$(KERNEL_ASMOBJS): $(OBJDIR)/%.o: %.S
+	${MKOBJDIR_P}
+	$(CC) -o $@ -c $(CFLAGS) $(KERNEL_CFLAGS) $<
 
-$(SYSSVC_COBJS): %.o: %.c
-	$(CC) -c $(CFLAGS) $(SYSSVC_CFLAGS) $<
+$(SYSSVC_COBJS): $(OBJDIR)/%.o: %.c
+	${MKOBJDIR_P}
+	$(CC) -o $@ -c $(CFLAGS) $(SYSSVC_CFLAGS) $<
 
-$(SYSSVC_COBJS:.o=.s): %.s: %.c
-	$(CC) -S $(CFLAGS) $(SYSSVC_CFLAGS) $<
+$(SYSSVC_COBJS:.o=.s): $(OBJDIR)/%.s: %.c
+	${MKOBJDIR_P}
+	$(CC) -o $@ -S $(CFLAGS) $(SYSSVC_CFLAGS) $<
 
-$(SYSSVC_ASMOBJS): %.o: %.S
-	$(CC) -c $(CFLAGS) $(SYSSVC_CFLAGS) $<
+$(SYSSVC_ASMOBJS): $(OBJDIR)/%.o: %.S
+	${MKOBJDIR_P}
+	$(CC) -o $@ -c $(CFLAGS) $(SYSSVC_CFLAGS) $<
 
-$(APPL_COBJS): %.o: %.c
-	$(CC) -c $(CFLAGS) $(APPL_CFLAGS) $<
+$(APPL_COBJS): $(OBJDIR)/%.o: %.c
+	${MKOBJDIR_P}
+	$(CC) -o $@ -c $(CFLAGS) $(APPL_CFLAGS) $<
 
-$(APPL_COBJS:.o=.s): %.s: %.c
-	$(CC) -S $(CFLAGS) $(APPL_CFLAGS) $<
+$(APPL_COBJS:.o=.s): $(OBJDIR)/%.s: %.c
+	${MKOBJDIR_P}
+	$(CC) -o $@ -S $(CFLAGS) $(APPL_CFLAGS) $<
 
-$(APPL_CXXOBJS): %.o: %.cpp
-	$(CXX) -c $(CFLAGS) $(APPL_CFLAGS) $<
+$(APPL_CXXOBJS): $(OBJDIR)/%.o: %.cpp
+	${MKOBJDIR_P}
+	$(CXX) -o $@ -c $(CFLAGS) $(APPL_CFLAGS) $<
 
-$(APPL_CXXOBJS:.o=.s): %.s: %.cpp
-	$(CXX) -S $(CFLAGS) $(APPL_CFLAGS) $<
+$(APPL_CXXOBJS:.o=.s): $(OBJDIR)/%.s: %.cpp
+	${MKOBJDIR_P}
+	$(CXX) -o $@ -S $(CFLAGS) $(APPL_CFLAGS) $<
 
-$(APPL_ASMOBJS): %.o: %.S
-	$(CC) -c $(CFLAGS) $(APPL_CFLAGS) $<
-
-#
-#  °ÍÂ¸´Ø·¸ºîÀ®¥ë¡¼¥ë¤ÎÄêµÁ
-#
-$(KERNEL_COBJS:.o=.d): %.d: %.c
-	@$(PERL) $(SRCDIR)/utils/makedep -C $(CC) $(MAKEDEP_OPTS) \
-		-O "$(CFLAGS) $(KERNEL_CFLAGS)" $< >> Makefile.depend
-
-$(KERNEL_LCSRCS:.c=.d): %.d: %.c
-	@$(PERL) $(SRCDIR)/utils/makedep -C $(CC) $(MAKEDEP_OPTS) -T "$($*)" \
-		-O "-DALLFUNC $(CFLAGS) $(KERNEL_CFLAGS)" $< >> Makefile.depend
-
-$(KERNEL_ASMOBJS:.o=.d): %.d: %.S
-	@$(PERL) $(SRCDIR)/utils/makedep -C $(CC) $(MAKEDEP_OPTS) \
-		-O "$(CFLAGS) $(KERNEL_CFLAGS)" $< >> Makefile.depend
-
-$(SYSSVC_COBJS:.o=.d): %.d: %.c
-	@$(PERL) $(SRCDIR)/utils/makedep -C $(CC) $(MAKEDEP_OPTS) \
-		-O "$(CFLAGS) $(SYSSVC_CFLAGS)" $< >> Makefile.depend
-
-$(SYSSVC_ASMOBJS:.o=.d): %.d: %.S
-	@$(PERL) $(SRCDIR)/utils/makedep -C $(CC) $(MAKEDEP_OPTS) \
-		-O "$(CFLAGS) $(SYSSVC_CFLAGS)" $< >> Makefile.depend
-
-$(APPL_COBJS:.o=.d): %.d: %.c
-	@$(PERL) $(SRCDIR)/utils/makedep -C $(CC) $(MAKEDEP_OPTS) \
-		-O "$(CFLAGS) $(APPL_CFLAGS)" $< >> Makefile.depend
-
-$(APPL_CXXOBJS:.o=.d): %.d: %.cpp
-	@$(PERL) $(SRCDIR)/utils/makedep -C $(CXX) $(MAKEDEP_OPTS) \
-		-O "$(CFLAGS) $(APPL_CFLAGS)" $< >> Makefile.depend
-
-$(APPL_ASMOBJS:.o=.d): %.d: %.S
-	@$(PERL) $(SRCDIR)/utils/makedep -C $(CC) $(MAKEDEP_OPTS) \
-		-O "$(CFLAGS) $(APPL_CFLAGS)" $< >> Makefile.depend
+$(APPL_ASMOBJS): $(OBJDIR)/%.o: %.S
+	${MKOBJDIR_P}
+	$(CC) -o $@ -c $(CFLAGS) $(APPL_CFLAGS) $<
 
 #
-#  ¥Ç¥Õ¥©¥ë¥È¥³¥ó¥Ñ¥¤¥ë¥ë¡¼¥ë¤ò¾å½ñ¤­
+#  ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ãƒ«ãƒ¼ãƒ«ã‚’ä¸Šæ›¸ã
 #
-%.o: %.c
+$(OBJDIR)/%.o: %.c
 	@echo "*** Default compile rules should not be used."
-	$(CC) -c $(CFLAGS) $<
+	${MKOBJDIR_P}
+	$(CC) -o $@ -c $(CFLAGS) $<
 
-%.s: %.c
+$(OBJDIR)/%.s: %.c
 	@echo "*** Default compile rules should not be used."
-	$(CC) -S $(CFLAGS) $<
+	${MKOBJDIR_P}
+	$(CC) -o $@ -S $(CFLAGS) $<
 
-%.o: %.cpp
+$(OBJDIR)/%.o: %.cpp
 	@echo "*** Default compile rules should not be used."
-	$(CXX) -c $(CFLAGS) $<
+	${MKOBJDIR_P}
+	$(CXX) -o $@ -c $(CFLAGS) $<
 
-%.s: %.cpp
+$(OBJDIR)/%.s: %.cpp
 	@echo "*** Default compile rules should not be used."
-	$(CXX) -S $(CFLAGS) $<
+	${MKOBJDIR_P}
+	$(CXX) -o $@ -S $(CFLAGS) $<
 
-%.o: %.S
+$(OBJDIR)/%.o: %.S
 	@echo "*** Default compile rules should not be used."
-	$(CC) -c $(CFLAGS) $<
+	${MKOBJDIR_P}
+	$(CC) -o $@ -c $(CFLAGS) $<

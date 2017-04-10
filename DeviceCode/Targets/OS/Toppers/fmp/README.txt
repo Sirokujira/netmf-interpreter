@@ -1,46 +1,46 @@
 
-	TOPPERS/FMP Kernel��Release 1.3.0��
+	TOPPERS/FMP Kernel（Release 1.4.0）
 		Toyohashi Open Platform for Embedded Real-Time Systems/
 		Flexible MultiProcessor Kernel
 
-TOPPERS/FMP�����ͥ�ʰʲ���FMP�����ͥ�ˤϡ�TOPPERS�����奫���ͥ�Ȥ�
-�ơ�TOPPERS�ץ��������Ȥˤ����Ƴ�ȯ��Υޥ���ץ����å��ѤΥꥢ�륿��
-�५���ͥ�Ǥ���TOPPERS�����奫���ͥ�δ��פǤ��롤TOPPERS/ASP�����ͥ�
-��١����ˡ��ޥ���ץ����å������γ�ĥ�����ɤ�ä��Ƥ��ޤ���
+TOPPERS/FMPカーネル（以下，FMPカーネル）は，TOPPERS次世代カーネルとし
+て，TOPPERSプロジェクトにおいて開発中のマルチプロセッサ用のリアルタイ
+ムカーネルです．TOPPERS次世代カーネルの基盤である，TOPPERS/ASPカーネル
+をベースに，マルチプロセッサ向けの拡張・改良を加えています．
 
-�ںǽ���ɤ�٤��ɥ�����ȡ�
+【最初に読むべきドキュメント】
 
-FMP�����ͥ�Υ桼�������ޥ˥奢�뤬��doc/user.txt�ˤ���ޤ���FMP������
-�����Ѥ�����ˤϡ��ޤ��Ϥ��Υɥ�����Ȥ��餪�ɤ߲�������
+FMPカーネルのユーザーズマニュアルが，doc/user.txtにあります．FMPカーネ
+ルを使用する場合には，まずはこのドキュメントからお読み下さい．
 
-�ڥե�����α����ˤ����äơ�
+【ファイルの閲覧にあたって】
 
-FMP�����ͥ�Υɥ�����ȡʥץ졼��ƥ����ȥե�����ˤ���ӥ������ե���
-����ɤ�ݤˤϡ�TAB��4�����ꤷ�Ƥ���������
+FMPカーネルのドキュメント（プレーンテキストファイル）およびソースファイ
+ルを読む際には，TABを4に設定してください．
 
-���б����륳��ե�����졼����
+【対応するコンフィギュレータ】
 
-�ܥС��������б���������ե�����졼���ΥС������ϡ������̤�Ǥ���
+本バージョンに対応したコンフィギュレータのバージョンは．次の通りです．
 
    1.9.4
 
-�ڼ��䡦�Х���ݡ��ȡ��ո������������
+【質問・バグレポート・意見等の送付先】
 
-FMP�����ͥ�����ɤ���Τˤ��뤿��Τ��ո����򴿷ޤ��ޤ���ASP�����ͥ�
-�˴ؤ�������Х���ݡ��ȡ����ո����ϡ�TOPPERS�ץ��������Ȥβ����
-TOPPERS��ȯ�ԥ᡼��󥰥ꥹ�ȡ�dev@toppers.jp�˰��ޤ���ASP�����ͥ�Υ�
-���ȥ�å��󥰥����ƥ��Trac�ˤˡ�����¾������TOPPERS�桼�������᡼���
-���ꥹ�ȡ�users@toppers.jp�˰��ˤ��ꤤ���ޤ���
+FMPカーネルをより良いものにするためのご意見等を歓迎します．ASPカーネル
+に関する質問やバグレポート，ご意見等は，TOPPERSプロジェクトの会員は
+TOPPERS開発者メーリングリスト（dev@toppers.jp）宛またはASPカーネルのバ
+グトラッキングシステム（Trac）に，その他の方はTOPPERSユーザーズメーリン
+グリスト（users@toppers.jp）宛にお願いします．
 
-TOPPERS�桼�������᡼��󥰥ꥹ�Ȥؤ���Ͽ��ˡ�ˤĤ��Ƥϡ��ʲ��Υڡ�����
-����������ޤ���
+TOPPERSユーザーズメーリングリストへの登録方法については，以下のページに
+説明があります．
 
 	http://www.toppers.jp/community.html
 
-�ڥݡ��ƥ��󥰤ˤ����äơ�
+【ポーティングにあたって】
 
-FMP�����ͥ��TOPPERS�ץ��������Ȥ��饪���ץ󥽡����ˤ��뤳�Ȥ�����ˡ�
-̤���ݡ��ȤΥ������åȤ˥ݡ��ƥ��󥰤������ˤϡ����餫���ᤴ���̤�
-������ȹ����Ǥ���
+FMPカーネルを，TOPPERSプロジェクトからオープンソースにすることを前提に，
+未サポートのターゲットにポーティングされる場合には，あらかじめご相談く
+ださると幸いです．
 
-�ʾ�
+以上

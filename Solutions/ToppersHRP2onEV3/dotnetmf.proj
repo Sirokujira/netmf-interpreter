@@ -1,23 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
-    <Directory>Solutions\ToppersHRP2onEV3</Directory>
-    <MFSettingsFile>$(SPOCLIENT)\Solutions\ToppersHRP2onEV3\ToppersHRP2onEV3.settings</MFSettingsFile>
+    <Directory>Solutions/ToppersHRP2onEV3</Directory>
+    <MFSettingsFile>$(SPOCLIENT)/Solutions/ToppersHRP2onEV3/ToppersHRP2onEV3.settings</MFSettingsFile>
   </PropertyGroup>
   <ItemGroup>
     <!-- Build 出来るように対応していく -->
-    <!-- <RequiredProjects Include="PortBooter\portBooter.proj" /> -->
-    <!-- <RequiredProjects Include="TinyBooter\TinyBooter.proj" /> -->
-    <RequiredProjects Include="TinyCLR\TinyCLR.proj" />
-    <!-- <RequiredProjects Include="NativeSample\NativeSample.proj" /> -->
+    <!-- <RequiredProjects Include="TinyBooter/TinyBooter.proj" /> -->
+    <RequiredProjects Include="TinyCLR/TinyCLR.proj" />
 
     <!-- make dynamic loading Binary -->
-    <!-- <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\OS\Toppers\hrp2\sample\dotnetmf.proj" /> -->
-    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\OS\Toppers\hrp2\workspace\helloev3onnetmf\dotnetmf.proj" />
-    <!-- <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\OS\Toppers\hrp2\workspace\hwbrickbenchonnetmf\dotnetmf.proj" /> -->
+    <!-- <RequiredProjects Include="$(SPOCLIENT)/DeviceCode/Targets/OS/Toppers/hrp2/workspace/helloev3onnetmf/dotnetmf.proj" /> -->
   </ItemGroup>
-  <!-- <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Settings" /> -->
-  <Import Project="$(SPOCLIENT)\tools\targets\Toppers.SPOT.System.Settings" />
-  <!-- <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Targets" /> -->
-  <Import Project="$(SPOCLIENT)\tools\targets\Toppers.SPOT.System.Targets" />
+
+  <!-- <Import Project="$(SPOCLIENT)/tools/targets/Toppers.SPOT.System.Settings" /> -->
+  <!-- <Import Project="$(SPOCLIENT)/tools/targets/Toppers.SPOT.System.Targets" /> -->
+  <Import Project="$(SPOCLIENT)/tools/targets/Microsoft.SPOT.System.Settings" />
+  <Import Project="$(SPOCLIENT)/tools/targets/Microsoft.SPOT.System.Targets" />
 </Project>

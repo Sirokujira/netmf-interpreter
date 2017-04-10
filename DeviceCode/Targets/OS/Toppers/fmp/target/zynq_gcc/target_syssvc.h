@@ -80,61 +80,9 @@ extern void target_fput_log(char c);
 #ifdef G_SYSLOG
 #define TNUM_PORT       1
 #define TNUM_SIOP       1
-#else
+#else /* !G_SYSLOG */
 #define TNUM_PORT       TNUM_PRCID
 #define TNUM_SIOP       TNUM_PRCID
 #endif /* G_SYSLOG */
-
-/*
- *  UART base address definitions (used in target_serial.c)
- *
- *  Note: When using SafeG, G_SYSLOG is defined (see Makefile.target) so
- *  we select a single UART for each world (e.g. Secure uses UART0
- *  and Nonsecure uses UART1).
- */
-#ifdef TOPPERS_NOSAFEG
-#define     UART0_BASE  ZYNQ_UART1_BASE
-#define     UART1_BASE  ZYNQ_UART0_BASE
-#elif defined(TOPPERS_SAFEG_SECURE)
-#define     UART0_BASE  ZYNQ_UART0_BASE
-#elif defined(TOPPERS_SAFEG_NONSECURE)
-#define     UART0_BASE  ZYNQ_UART1_BASE
-#else
-#error "Check your Makefile.target"
-#endif
-
-/*
- *  UART interrupt handler definitions (used in target_serial.cfg)
- *     INHNO: interrupt handler number
- *     INTNO: interrupt number
- *     INTPRI: interrupt priority (lower means higher priority)
- *     INTATR: interrupt attributes (0 means not enabled at the beginning)
- *
- *  Note: When using SafeG, G_SYSLOG is defined (see Makefile.target) so
- *  we select a single UART for each world (e.g. Secure uses UART0
- *  and Nonsecure uses UART1).
- */
-#ifdef TOPPERS_NOSAFEG
-#define    INHNO_SIO0  ZYNQ_UART1_IRQ
-#define    INTNO_SIO0  ZYNQ_UART1_IRQ
-#define    INTPRI_SIO0    -3
-#define    INTATR_SIO0     0U
-#define    INHNO_SIO1  ZYNQ_UART0_IRQ
-#define    INTNO_SIO1  ZYNQ_UART0_IRQ
-#define    INTPRI_SIO1    -2
-#define    INTATR_SIO1     0U
-#elif defined(TOPPERS_SAFEG_SECURE)
-#define    INHNO_SIO0  ZYNQ_UART0_IRQ
-#define    INTNO_SIO0  ZYNQ_UART0_IRQ
-#define    INTPRI_SIO0    -19
-#define    INTATR_SIO0     0U
-#elif defined(TOPPERS_SAFEG_NONSECURE)
-#define    INHNO_SIO0  ZYNQ_UART1_IRQ
-#define    INTNO_SIO0  ZYNQ_UART1_IRQ
-#define    INTPRI_SIO0    -2
-#define    INTATR_SIO0     0U
-#else
-#error "Check your Makefile.target"
-#endif
 
 #endif /* TOPPERS_TARGET_SYSSVC_H */

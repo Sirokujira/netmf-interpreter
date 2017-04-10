@@ -5,7 +5,7 @@
  *
  *  Copyright (C) 2000-2003 by Embedded and Real-Time Systems Laboratory
  *                              Toyohashi Univ. of Technology, JAPAN
- *  Copyright (C) 2006-2015 by Embedded and Real-Time Systems Laboratory
+ *  Copyright (C) 2006-2017 by Embedded and Real-Time Systems Laboratory
  *              Graduate School of Information Science, Nagoya Univ., JAPAN
  *  Copyright (C) 2007-2010 by Industrial Technology Institute,
  *              Miyagi Prefectural Government, JAPAN
@@ -95,23 +95,6 @@
 
 #define UARTREG(x,y) *((volatile uint32_t *)(x->uart_base_address + y))
 #define REG(x) *((volatile uint32_t *)(x))
-
-/*
- * Definition of the 115200bps baud rate constants
- *        rate = clk / (CD * (BDIV + 1))
- *         clk = MR.CLKSEL? inclk : inclk/8  (e.g. inclk)
- *       inclk = MR.CCLK? uart_clock : apb clock (e.g. uart_clock=50MHz)
- *
- * Note: Linux values
- *   XUARTPS_BAUDGEN_REG: 0x3E
- *   XUARTPS_BAUDDIV_REG: 0x6
- *   XUARTPS_MR_REG: 0x20
- *   XUARTPS_RXWM_REG: 0x20
- *   XUARTPS_RXTOUT_REG: 0xA
- *   XUARTPS_CR_REG: 0x114
- */
-#define UART_BAUD_115K          0x56  /* 0x56 (50MHz) or 0x11 (33.3MHz) */
-#define UART_BAUDDIV_115K       0x4   /* 0x4 (50MHz) or 0x6 (33.3MHz) */
 
 /*
  * Module variables
@@ -260,6 +243,7 @@ xuartps_init()
 	/* Get the uart base address */
 	p_siopcb = get_siopcb(my_siopid);
 
+#ifdef UART0_MIO10_11
 	if (p_siopcb->uart_base_address == ZYNQ_UART0_BASE) {
 		/*
 		 * Map the UART0 to MIO 10-11
@@ -279,6 +263,7 @@ xuartps_init()
 		REG(MIO_PIN_11) = 0x16E0;
 		REG(SLCR_LOCK)  = 0x767B;
 	}
+#endif /* UART0_MIO10_11 */
 
 	/* Disable all interrupts */
 	UARTREG(p_siopcb, XUARTPS_IDR_REG) = 0x00001FFF;

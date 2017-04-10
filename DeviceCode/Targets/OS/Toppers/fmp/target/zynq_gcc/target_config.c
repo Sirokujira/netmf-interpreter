@@ -3,7 +3,7 @@
  *      Toyohashi Open Platform for Embedded Real-Time Systems/
  *      Flexible MultiProcessor Kernel
  *
- *  Copyright (C) 2007-2015 by Embedded and Real-Time Systems Laboratory
+ *  Copyright (C) 2007-2017 by Embedded and Real-Time Systems Laboratory
  *              Graduate School of Information Science, Nagoya Univ., JAPAN
  *
  *  上記著作権者は，以下の(1)〜(4)の条件を満たす場合に限り，本ソフトウェ
@@ -72,6 +72,10 @@ boot_second_core(uint32_t address) {
 void
 target_mprc_initialize(void)
 {
+	dcache_disable();
+	pl310_invalidate_all();
+	icache_disable();
+
 	chip_mprc_initialize();
 #if TNUM_PRCID >= 2
 	boot_second_core((uint32_t)start);
@@ -136,7 +140,7 @@ target_mmu_init(void)
 	m_attribute.ns   = 0;      /* 0=NonSecure */
 	m_attribute.s    = 1;      /* 1=Shared    */
 	m_attribute.ap   = 3;      /* Full access */
-	m_attribute.tex  = 0;
+	m_attribute.tex  = 1;
 	m_attribute.c    = 1;             
 	m_attribute.b    = 1;             
 
@@ -152,7 +156,7 @@ target_mmu_init(void)
 	m_attribute.ns   = 1;     /* 1=NonSecure */
 	m_attribute.s    = 1;     /* 1=Shared */
 	m_attribute.ap   = 3;     /* Full access */
-	m_attribute.tex  = 0;     /* Strongly Ordered */
+	m_attribute.tex  = 1;     /* Strongly Ordered */
 	m_attribute.c    = 1;     /* Inner Write-Back */
 	m_attribute.b    = 1;     /* Write Allocate */
 	mmu_map_memory(&m_attribute);
@@ -271,6 +275,10 @@ struct safeg_syscall boot_second_core_call = {
  */
 extern void xuartps_init();
 
+#if !defined(TOPPERS_SAFEG_SECURE)
+volatile uint32_t target_initialize_end[TNUM_PRCID];
+#endif /* !TOPPERS_SAFEG_SECURE */
+
 void
 target_initialize(void)
 {
@@ -314,10 +322,21 @@ target_initialize(void)
 #endif /*  TOPPERS_SAFEG_SECURE */
 
 #ifdef TOPPERS_NOSAFEG
+	/* Enable L2 cache by myself in case of without safeg or with safeg Non-Secure */
 	if (x_sense_mprc()) {
-		/* Enable L2 cache in case of without safeg */
-		pl310_init(0x72060000, 0xF0F0FFFF);
+		uint32_t i;
+		uint32_t sum = 0;
+		while(1) {
+			for(i = 1; i < TNUM_PRCID; i++) {
+				sum += target_initialize_end[i];
+			}
+			if (sum == (TNUM_PRCID - 1)) {
+				break;
+			}
+		}
+		pl310_init(0, ~0x0U);
 	}
+	target_initialize_end[x_prc_index()] = 1;
 #endif /* TOPPERS_NOSAFEG */
 }
 

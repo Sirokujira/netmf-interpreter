@@ -8,40 +8,40 @@
  *  Copyright (C) 2005-2015 by Embedded and Real-Time Systems Laboratory
  *              Graduate School of Information Science, Nagoya Univ., JAPAN
  * 
- *  �嵭����Ԥϡ��ʲ���(1)��(4)�ξ������������˸¤ꡤ�ܥ��եȥ���
- *  �����ܥ��եȥ���������Ѥ�����Τ�ޤࡥ�ʲ�Ʊ���ˤ���ѡ�ʣ������
- *  �ѡ������ۡʰʲ������ѤȸƤ֡ˤ��뤳�Ȥ�̵���ǵ������롥
- *  (1) �ܥ��եȥ������򥽡��������ɤη������Ѥ�����ˤϡ��嵭������
- *      ��ɽ�����������Ѿ�浪��Ӳ�����̵�ݾڵ��꤬�����Τޤޤη��ǥ���
- *      ����������˴ޤޤ�Ƥ��뤳�ȡ�
- *  (2) �ܥ��եȥ������򡤥饤�֥������ʤɡ�¾�Υ��եȥ�������ȯ�˻�
- *      �ѤǤ�����Ǻ����ۤ�����ˤϡ������ۤ�ȼ���ɥ�����ȡ�����
- *      �ԥޥ˥奢��ʤɡˤˡ��嵭�����ɽ�����������Ѿ�浪��Ӳ���
- *      ��̵�ݾڵ����Ǻܤ��뤳�ȡ�
- *  (3) �ܥ��եȥ������򡤵�����Ȥ߹���ʤɡ�¾�Υ��եȥ�������ȯ�˻�
- *      �ѤǤ��ʤ����Ǻ����ۤ�����ˤϡ����Τ����줫�ξ�����������
- *      �ȡ�
- *    (a) �����ۤ�ȼ���ɥ�����ȡ����Ѽԥޥ˥奢��ʤɡˤˡ��嵭����
- *        �ɽ�����������Ѿ�浪��Ӳ�����̵�ݾڵ����Ǻܤ��뤳�ȡ�
- *    (b) �����ۤη��֤��̤�������ˡ�ˤ�äơ�TOPPERS�ץ��������Ȥ�
- *        ��𤹤뤳�ȡ�
- *  (4) �ܥ��եȥ����������Ѥˤ��ľ��Ū�ޤ��ϴ���Ū�������뤤���ʤ�»
- *      ������⡤�嵭����Ԥ����TOPPERS�ץ��������Ȥ����դ��뤳�ȡ�
- *      �ޤ����ܥ��եȥ������Υ桼���ޤ��ϥ���ɥ桼������Τ����ʤ���
- *      ͳ�˴�Ť����ᤫ��⡤�嵭����Ԥ����TOPPERS�ץ��������Ȥ�
- *      ���դ��뤳�ȡ�
+ *  上記著作権者は，以下の(1)～(4)の条件を満たす場合に限り，本ソフトウェ
+ *  ア（本ソフトウェアを改変したものを含む．以下同じ）を使用・複製・改
+ *  変・再配布（以下，利用と呼ぶ）することを無償で許諾する．
+ *  (1) 本ソフトウェアをソースコードの形で利用する場合には，上記の著作
+ *      権表示，この利用条件および下記の無保証規定が，そのままの形でソー
+ *      スコード中に含まれていること．
+ *  (2) 本ソフトウェアを，ライブラリ形式など，他のソフトウェア開発に使
+ *      用できる形で再配布する場合には，再配布に伴うドキュメント（利用
+ *      者マニュアルなど）に，上記の著作権表示，この利用条件および下記
+ *      の無保証規定を掲載すること．
+ *  (3) 本ソフトウェアを，機器に組み込むなど，他のソフトウェア開発に使
+ *      用できない形で再配布する場合には，次のいずれかの条件を満たすこ
+ *      と．
+ *    (a) 再配布に伴うドキュメント（利用者マニュアルなど）に，上記の著
+ *        作権表示，この利用条件および下記の無保証規定を掲載すること．
+ *    (b) 再配布の形態を，別に定める方法によって，TOPPERSプロジェクトに
+ *        報告すること．
+ *  (4) 本ソフトウェアの利用により直接的または間接的に生じるいかなる損
+ *      害からも，上記著作権者およびTOPPERSプロジェクトを免責すること．
+ *      また，本ソフトウェアのユーザまたはエンドユーザからのいかなる理
+ *      由に基づく請求からも，上記著作権者およびTOPPERSプロジェクトを
+ *      免責すること．
  * 
- *  �ܥ��եȥ������ϡ�̵�ݾڤ��󶡤���Ƥ����ΤǤ��롥�嵭����Ԥ�
- *  ���TOPPERS�ץ��������Ȥϡ��ܥ��եȥ������˴ؤ��ơ�����λ�����Ū
- *  ���Ф���Ŭ������ޤ�ơ������ʤ��ݾڤ�Ԥ�ʤ����ޤ����ܥ��եȥ���
- *  �������Ѥˤ��ľ��Ū�ޤ��ϴ���Ū�������������ʤ�»���˴ؤ��Ƥ⡤��
- *  ����Ǥ�����ʤ���
+ *  本ソフトウェアは，無保証で提供されているものである．上記著作権者お
+ *  よびTOPPERSプロジェクトは，本ソフトウェアに関して，特定の使用目的
+ *  に対する適合性も含めて，いかなる保証も行わない．また，本ソフトウェ
+ *  アの利用により直接的または間接的に生じたいかなる損害に関しても，そ
+ *  の責任を負わない．
  * 
  *  @(#) $Id: task.c 1087 2015-02-03 01:04:34Z ertl-honda $
  */
 
 /*
- *		�����������⥸�塼��
+ *		タスク管理モジュール
  */
 
 #include "kernel_impl.h"
@@ -51,7 +51,7 @@
 #include "mp.h"
 
 /*
- *  �ȥ졼�������ޥ����Υǥե�������
+ *  トレースログマクロのデフォルト定義
  */
 #ifndef LOG_TEX_ENTER
 #define LOG_TEX_ENTER(p_tcb, texptn)
@@ -64,7 +64,7 @@
 #ifdef TOPPERS_tskini
 
 /*
- *  �����������⥸�塼��ν����
+ *  タスク管理モジュールの初期化
  */
 void
 initialize_task(void)
@@ -77,7 +77,7 @@ initialize_task(void)
 
 	for (i = 0; i < tnum_tsk; i++) {
 		j = INDEX_TSK(torder_table[i]);
-		/* �������˳���դ��줿�������ν���� */
+		/* 自コアに割り付けれたタスクの初期化 */
 		if (tinib_table[j].iaffinity == ID_PRC(x_prc_index())) {
 			p_tcb = p_tcb_table[j];
 			p_tcb->p_tinib = &(tinib_table[j]);
@@ -95,22 +95,22 @@ initialize_task(void)
 #endif /* TOPPERS_tskini */
 
 /*
- *  �ӥåȥޥåץ������ؿ�
+ *  ビットマップサーチ関数
  *
- *  bitmap���1�ΥӥåȤ��⡤�ǤⲼ�̡ʱ��ˤΤ�Τ򥵡����������Υӥ�
- *  ���ֹ���֤����ӥå��ֹ�ϡ��ǲ��̥ӥåȤ�0�Ȥ��롥bitmap��0�����
- *  ���ƤϤʤ�ʤ������δؿ��Ǥϡ�bitmap��16�ӥåȤǤ��뤳�Ȥ��ꤷ��
- *  uint16_t���Ȥ��Ƥ��롥
+ *  bitmap内の1のビットの内，最も下位（右）のものをサーチし，そのビッ
+ *  ト番号を返す．ビット番号は，最下位ビットを0とする．bitmapに0を指定
+ *  してはならない．この関数では，bitmapが16ビットであることを仮定し，
+ *  uint16_t型としている．
  *
- *  �ӥåȥ�����̿�����ĥץ����å��Ǥϡ��ӥåȥ�����̿���Ȥ��褦��
- *  ��ľ����������Ψ���ɤ���礬���롥���Τ褦�ʾ��ˤϡ��������å�
- *  ��¸���ǥӥåȥ�����̿���Ȥä�bitmap_search���������
- *  OMIT_BITMAP_SEARCH��ޥ����������Ф褤���ޤ����ӥåȥ�����̿���
- *  �������������դʤɤ���ͳ��ͥ���٤ȥӥåȤȤ��б����ѹ�����������
- *  �ϡ�PRIMAP_BIT��ޥ����������Ф褤��
+ *  ビットサーチ命令を持つプロセッサでは，ビットサーチ命令を使うように
+ *  書き直した方が効率が良い場合がある．このような場合には，ターゲット
+ *  依存部でビットサーチ命令を使ったbitmap_searchを定義し，
+ *  OMIT_BITMAP_SEARCHをマクロ定義すればよい．また，ビットサーチ命令の
+ *  サーチ方向が逆などの理由で優先度とビットとの対応を変更したい場合に
+ *  は，PRIMAP_BITをマクロ定義すればよい．
  *
- *  �ޤ����饤�֥���ffs������ʤ顤���Τ褦��������ƥ饤�֥��ؿ��� 
- *  �Ȥä�������Ψ���ɤ���ǽ���⤢��
+ *  また，ライブラリにffsがあるなら，次のように定義してライブラリ関数を 
+ *  使った方が効率が良い可能性もある
  *		#define	bitmap_search(bitmap) (ffs(bitmap) - 1)
  */
 #ifndef PRIMAP_BIT
@@ -142,7 +142,7 @@ bitmap_search(uint16_t bitmap)
 #endif /* OMIT_BITMAP_SEARCH */
 
 /*
- *  ͥ���٥ӥåȥޥåפ������Υ����å�
+ *  優先度ビットマップが空かのチェック
  */
 Inline bool_t
 primap_empty(PCB *p_pcb)
@@ -151,7 +151,7 @@ primap_empty(PCB *p_pcb)
 }
 
 /*
- *  ͥ���٥ӥåȥޥåפΥ�����
+ *  優先度ビットマップのサーチ
  */
 Inline uint_t
 primap_search(PCB *p_pcb)
@@ -160,7 +160,7 @@ primap_search(PCB *p_pcb)
 }
 
 /*
- *  ͥ���٥ӥåȥޥåפΥ��å�
+ *  優先度ビットマップのセット
  */
 Inline void
 primap_set(PCB *p_pcb, uint_t pri)
@@ -169,7 +169,7 @@ primap_set(PCB *p_pcb, uint_t pri)
 }
 
 /*
- *  ͥ���٥ӥåȥޥåפΥ��ꥢ
+ *  優先度ビットマップのクリア
  */
 Inline void
 primap_clear(PCB *p_pcb, uint_t pri)
@@ -178,7 +178,7 @@ primap_clear(PCB *p_pcb, uint_t pri)
 }
 
 /*
- *  �ǹ�ͥ���̥������Υ�����
+ *  最高優先順位タスクのサーチ
  */
 #ifdef TOPPERS_tsksched
 
@@ -194,11 +194,11 @@ search_schedtsk(PCB *p_pcb)
 #endif /* TOPPERS_tsksched */
 
 /*
- *  �¹ԤǤ�����֤ؤΰܹ�
+ *  実行できる状態への移行
  *
- *  �ǹ�ͥ���̤Υ������򹹿�����Τϡ��¹ԤǤ��륿�������ʤ��ä����
- *  �ȡ�p_tcb��ͥ���٤��ǹ�ͥ���̤Υ�������ͥ���٤���⤤���Ǥ�
- *  �롥
+ *  最高優先順位のタスクを更新するのは，実行できるタスクがなかった場合
+ *  と，p_tcbの優先度が最高優先順位のタスクの優先度よりも高い場合であ
+ *  る．
  */
 #ifdef TOPPERS_tskrun
 
@@ -223,12 +223,12 @@ make_runnable(TCB *p_tcb)
 #endif /* TOPPERS_tskrun */
 
 /*
- *  �¹ԤǤ�����֤���¾�ξ��֤ؤΰܹ�
+ *  実行できる状態から他の状態への移行
  *
- *  �ǹ�ͥ���̤Υ������򹹿�����Τϡ�p_tcb���ǹ�ͥ���̤Υ�������
- *  ���ä����Ǥ��롥p_tcb��Ʊ��ͥ���٤Υ�������¾�ˤ�����ϡ�p_tcb
- *  �μ��Υ��������ǹ�ͥ���̤ˤʤ롥�����Ǥʤ����ϡ���ǥ����塼��
- *  ����������ɬ�פ����롥
+ *  最高優先順位のタスクを更新するのは，p_tcbが最高優先順位のタスクで
+ *  あった場合である．p_tcbと同じ優先度のタスクが他にある場合は，p_tcb
+ *  の次のタスクが最高優先順位になる．そうでない場合は，レディキューを
+ *  サーチする必要がある．
  */
 #ifdef TOPPERS_tsknrun
 
@@ -259,7 +259,7 @@ make_non_runnable(TCB *p_tcb)
 #endif /* TOPPERS_tsknrun */
 
 /*
- *  �ٻ߾��֤ؤΰܹ�
+ *  休止状態への移行
  */
 #ifdef TOPPERS_tskdmt
 
@@ -281,7 +281,7 @@ make_dormant(TCB *p_tcb)
 #endif /* TOPPERS_tskdmt */
 
 /*
- *  �ٻ߾��֤���¹ԤǤ�����֤ؤΰܹ�
+ *  休止状態から実行できる状態への移行
  */
 #ifdef TOPPERS_tskact
 
@@ -297,16 +297,16 @@ make_active(TCB *p_tcb)
 #endif /* TOPPERS_tskact */
 
 /*
- *  ��������ͥ���٤��ѹ�
+ *  タスクの優先度の変更
  *
- *  ���������¹ԤǤ�����֤ξ��ˤϡ���ǥ����塼����Ǥΰ��֤��ѹ���
- *  �롥���֥������Ȥ��Ԥ����塼������Ԥ����֤ˤʤäƤ�����ˤϡ���
- *  �����塼����Ǥΰ��֤��ѹ����롥
+ *  タスクが実行できる状態の場合には，レディキューの中での位置を変更す
+ *  る．オブジェクトの待ちキューの中で待ち状態になっている場合には，待
+ *  ちキューの中での位置を変更する．
  *
- *  �ǹ�ͥ���̤Υ������򹹿�����Τϡ�(1) p_tcb���ǹ�ͥ���̤Υ���
- *  ���Ǥ��äơ�����ͥ���٤򲼤�����硤(2) p_tcb���ǹ�ͥ���̤Υ���
- *  ���ǤϤʤ����ѹ����ͥ���٤��ǹ�ͥ���̤Υ�������ͥ���٤���⤤
- *  ���Ǥ��롥(1)�ξ��ˤϡ���ǥ����塼�򥵡�������ɬ�פ����롥
+ *  最高優先順位のタスクを更新するのは，(1) p_tcbが最高優先順位のタス
+ *  クであって，その優先度を下げた場合，(2) p_tcbが最高優先順位のタス
+ *  クではなく，変更後の優先度が最高優先順位のタスクの優先度よりも高い
+ *  場合である．(1)の場合には，レディキューをサーチする必要がある．
  */
 #ifdef TOPPERS_tskpri
 
@@ -322,7 +322,7 @@ change_priority(TCB *p_tcb, uint_t newpri)
 
 	if (TSTAT_RUNNABLE(p_tcb->tstat)) {
 		/*
-		 *  ���������¹ԤǤ�����֤ξ��
+		 *  タスクが実行できる状態の場合
 		 */
 		queue_delete(&(p_tcb->task_queue));
 		if (queue_empty(&((p_pcb->ready_queue)[oldpri]))) {
@@ -347,8 +347,8 @@ change_priority(TCB *p_tcb, uint_t newpri)
 	else {
 		if (TSTAT_WAIT_WOBJCB(p_tcb->tstat)) {
 			/*
-			 *  ����������Ʊ�����̿����֥������Ȥδ����֥��å��ζ�����
-			 *  ʬ��WOBJCB�ˤ��Ԥ����塼�ˤĤʤ���Ƥ�����
+			 *  タスクが，同期・通信オブジェクトの管理ブロックの共通部
+			 *  分（WOBJCB）の待ちキューにつながれている場合
 			 */
 			wobj_change_priority(p_tcb->p_wobjcb, p_tcb);
 		}
@@ -359,10 +359,10 @@ change_priority(TCB *p_tcb, uint_t newpri)
 #endif /* TOPPERS_tskpri */
 
 /*
- *  ��ǥ����塼�β�ž
+ *  レディキューの回転
  *
- *  �ǹ�ͥ���̤Υ������򹹿�����Τϡ��ǹ�ͥ���̤Υ���������������
- *  �塼�������˰�ư�������Ǥ��롥
+ *  最高優先順位のタスクを更新するのは，最高優先順位のタスクがタスクキ
+ *  ューの末尾に移動した場合である．
  *
  */
 #ifdef TOPPERS_tskrot
@@ -387,11 +387,11 @@ rotate_ready_queue(uint_t pri, PCB *p_pcb)
 #endif /* TOPPERS_tskrot */
 
 /*
- *  ͥ���̤�Ʊ��ͥ���٤Υ���������Ǻ����
+ *  優先順位を同一優先度のタスクの中で最低に
  *
- *  ����ͥ���٤Υ�ǥ����塼�κǸ�������³���롥 
- *  �ǹ�ͥ���̤Υ������򹹿�����Τϡ��ǹ�ͥ���̤Υ���������������
- *  �塼�������˰�ư�������Ǥ��롥
+ *  該当優先度のレディキューの最後尾に接続する． 
+ *  最高優先順位のタスクを更新するのは，最高優先順位のタスクがタスクキ
+ *  ューの末尾に移動した場合である．
  */
 #ifdef TOPPERS_tsklowprce
 
@@ -414,10 +414,10 @@ set_lowest_precedence(TCB *p_tcb, PCB *p_pcb)
 #endif /* TOPPERS_tsklowprce */
 
 /*
- *  �������㳰�����롼����θƽФ�
+ *  タスク例外処理ルーチンの呼出し
  *
- *  FMP�����ͥ�Ǥϡ��������㳰�����롼�������CPU���å����֤˰ܹԤ���
- *  ���ξ��֤��ᤵ���˥꥿���󤷤���硤�����ͥ뤬���ξ��֤��᤹��
+ *  FMPカーネルでは，タスク例外処理ルーチン内でCPUロック状態に移行し，
+ *  元の状態に戻さずにリターンした場合，カーネルが元の状態に戻す．
  */
 #ifdef TOPPERS_tsktex
 #ifndef OMIT_CALL_TEXRTN
@@ -435,7 +435,7 @@ call_texrtn(PCB *my_p_pcb)
 	do {
 		texptn = p_runtsk->texptn;
 		p_runtsk->texptn = 0U;
-		/* ���������å��β��� */
+		/* タスクロックの解放 */
 		release_tsk_lock(my_p_pcb);
 		t_unlock_cpu();
 
@@ -447,7 +447,7 @@ call_texrtn(PCB *my_p_pcb)
 		if (!t_sense_lock()) {
 			t_lock_cpu();
 		}
-		/* ���������å��μ��� */
+		/* タスクロックの取得 */
 		my_p_pcb = t_acquire_tsk_lock_self_without_runnable_check();
 		if (!my_p_pcb->ipmflg) {
 			t_set_ipm(TIPM_ENAALL);
@@ -458,10 +458,10 @@ call_texrtn(PCB *my_p_pcb)
 		p_runtsk->enatex = false;
 		force_unlock_spin(my_p_pcb);
 		if (p_runtsk != my_p_pcb->p_schedtsk && my_p_pcb->dspflg) {
-			/* ���������å��β�����CPU���å��ϲ�����ʤ��� */
+			/* タスクロックの解放（CPUロックは解除しない） */
 			release_tsk_lock(my_p_pcb);
 			dispatch();
-			/* ���������å��μ��� */
+			/* タスクロックの取得 */
 			my_p_pcb = t_acquire_tsk_lock_self_without_runnable_check();
 		}
 	} while (p_runtsk->texptn != 0U);
@@ -469,21 +469,21 @@ call_texrtn(PCB *my_p_pcb)
 }
 
 /*
- *  �ǥ����ѥå��㡼����Υ������㳰�����롼����θƤӽФ�
+ *  ディスパッチャーからのタスク例外処理ルーチンの呼び出し
  *
- *  ���������å���������Ƥ��� call_texrtn() ��ƤӽФ��� 
+ *  タスクロックを取得してから call_texrtn() を呼び出す． 
  */
 void
 dispatch_call_texrtn(void)
 {
 	PCB		*my_p_pcb;
 
-	/* ���������å��μ��� */
+	/* タスクロックの取得 */
 	my_p_pcb = t_acquire_tsk_lock_self_without_runnable_check();
 	call_texrtn(my_p_pcb);
-	/* �ޥ����졼����󤵤�Ƥ����ǽ��������ΤǺƼ��� */
+	/* マイグレーションされている可能性があるので再取得 */
 	my_p_pcb = get_my_p_pcb();
-	/* ���������å��β��� */
+	/* タスクロックの解放 */
 	release_tsk_lock(my_p_pcb);
 }
 
@@ -491,7 +491,7 @@ dispatch_call_texrtn(void)
 #endif /* OMIT_CALL_TEXRTN */
 
 /*
- *  �������㳰�����롼����ε�ư
+ *  タスク例外処理ルーチンの起動
  */
 #ifndef OMIT_CALLTEX
 
@@ -513,10 +513,10 @@ calltex(void)
 #ifdef TOPPERS_migrate_self
 
 /*
- *  ����������ƥ����ȤǤμ����������Ф���ޥ����졼��������
+ *  タスクコンテキストでの自タスクに対するマイグレーション処理
  *
- *  CPU���å�����ư���Ȱ�ư��Υ��������å��μ���������ƥ�����
- *  ����¸�����Τ����󥿥�������ƥ����ȤΥ����å�����뤳�ȡ� 
+ *  CPUロック，移動元と移動先のタスクロックの取得，コンテキスト
+ *  を保存したのち，非タスクコンテキストのスタックで来ること． 
  */
 void
 migrate_self(ID prcid)
@@ -528,29 +528,29 @@ migrate_self(ID prcid)
 	f_p_pcb = get_my_p_pcb();
 	p_tcb = f_p_pcb->p_runtsk;
 
-	/* ��ư��Υץ����å���PCB����� */
+	/* 移動先のプロセッサのPCBを取得 */
 	t_p_pcb = get_mp_p_pcb(prcid);
 
 	if (TSTAT_RUNNABLE(p_tcb->tstat)) {
-		/* ��ǥ������塼���鳰�� */
+		/* レディーキューから外す */
 		make_non_runnable(p_tcb);
-		/* pcb �ν񤭴��� */
+		/* pcb の書き換え */
 		p_tcb->p_pcb = t_p_pcb;
-		/* �ܹ���Υץ����å���make_runnable ����*/
+		/* 移行先のプロセッサでmake_runnable する*/
 		if (make_runnable(p_tcb)) {
 			dispatch_request(t_p_pcb);
 		}
 	}
 	else {
 		/*
-		 * CPU���å����ĥ��������å���������Ƥ��뤿��
-		 * ¾�ξ��֤ˤϤʤ�ʤ�
+		 * CPUロックかつタスクロックを取得しているため
+		 * 他の状態にはならない
 		 */
 		assert(0);
 	}
 	release_dual_tsk_lock(f_p_pcb, t_p_pcb);
 
-	/* �ǥ����ѥå��㡼�� */
+	/* ディスパッチャーへ */
 	exit_and_dispatch();
 	assert(0);
 }
@@ -560,11 +560,11 @@ migrate_self(ID prcid)
 #ifdef TOPPERS_exit_and_migrate_self
 
 /*
- *  ����������ƥ����ȤǤμ����������Ф��륳��ƥ����Ȥ��˴���
- *  �ޥ����졼��������
+ *  タスクコンテキストでの自タスクに対するコンテキストの破棄と
+ *  マイグレーション処理
  *
- *  CPU���å�����ư���Ȱ�ư��Υ��������å��μ��������Τ���
- *  �󥿥�������ƥ����ȤΥ����å�����뤳�ȡ� 
+ *  CPUロック，移動元と移動先のタスクロックの取得したのち，
+ *  非タスクコンテキストのスタックで来ること． 
  */
 void
 exit_and_migrate_self(ID prcid)
@@ -576,7 +576,7 @@ exit_and_migrate_self(ID prcid)
 	f_p_pcb = get_my_p_pcb();
 	p_tcb = f_p_pcb->p_runtsk;
 
-	/* ��ư��Υץ����å���PCB����� */
+	/* 移動先のプロセッサのPCBを取得 */
 	t_p_pcb = get_mp_p_pcb(prcid);
 
 	(void) make_non_runnable(p_tcb);
@@ -589,7 +589,7 @@ exit_and_migrate_self(ID prcid)
 	}
 	release_dual_tsk_lock(f_p_pcb, t_p_pcb);
 
-	/* �ǥ����ѥå��㡼�� */
+	/* ディスパッチャーへ */
 	exit_and_dispatch();
 	assert(0);
 }

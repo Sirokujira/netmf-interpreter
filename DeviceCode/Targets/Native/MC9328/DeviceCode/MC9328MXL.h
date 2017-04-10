@@ -14,7 +14,7 @@
 #ifndef _MC9328MXL_H_
 #define _MC9328MXL_H_ 1
 
-#include <cores\arm\include\cpu.h>
+#include <Cores\arm\Processors\ARM9\include\cpu.h>
 
 extern "C"
 {
@@ -2834,7 +2834,7 @@ private:
 // USB driver
 //
 
-#include <..\pal\com\usb\USB.h>
+#include <pal\COM\usb\USB.h>
 
 struct MC9328MXL_USB_Driver
 {

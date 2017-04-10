@@ -8,40 +8,40 @@
  *  Copyright (C) 2005-2010 by Embedded and Real-Time Systems Laboratory
  *              Graduate School of Information Science, Nagoya Univ., JAPAN
  * 
- *  �嵭����Ԥϡ��ʲ���(1)��(4)�ξ������������˸¤ꡤ�ܥ��եȥ���
- *  �����ܥ��եȥ���������Ѥ�����Τ�ޤࡥ�ʲ�Ʊ���ˤ���ѡ�ʣ������
- *  �ѡ������ۡʰʲ������ѤȸƤ֡ˤ��뤳�Ȥ�̵���ǵ������롥
- *  (1) �ܥ��եȥ������򥽡��������ɤη������Ѥ�����ˤϡ��嵭������
- *      ��ɽ�����������Ѿ�浪��Ӳ�����̵�ݾڵ��꤬�����Τޤޤη��ǥ���
- *      ����������˴ޤޤ�Ƥ��뤳�ȡ�
- *  (2) �ܥ��եȥ������򡤥饤�֥������ʤɡ�¾�Υ��եȥ�������ȯ�˻�
- *      �ѤǤ�����Ǻ����ۤ�����ˤϡ������ۤ�ȼ���ɥ�����ȡ�����
- *      �ԥޥ˥奢��ʤɡˤˡ��嵭�����ɽ�����������Ѿ�浪��Ӳ���
- *      ��̵�ݾڵ����Ǻܤ��뤳�ȡ�
- *  (3) �ܥ��եȥ������򡤵�����Ȥ߹���ʤɡ�¾�Υ��եȥ�������ȯ�˻�
- *      �ѤǤ��ʤ����Ǻ����ۤ�����ˤϡ����Τ����줫�ξ�����������
- *      �ȡ�
- *    (a) �����ۤ�ȼ���ɥ�����ȡ����Ѽԥޥ˥奢��ʤɡˤˡ��嵭����
- *        �ɽ�����������Ѿ�浪��Ӳ�����̵�ݾڵ����Ǻܤ��뤳�ȡ�
- *    (b) �����ۤη��֤��̤�������ˡ�ˤ�äơ�TOPPERS�ץ��������Ȥ�
- *        ��𤹤뤳�ȡ�
- *  (4) �ܥ��եȥ����������Ѥˤ��ľ��Ū�ޤ��ϴ���Ū�������뤤���ʤ�»
- *      ������⡤�嵭����Ԥ����TOPPERS�ץ��������Ȥ����դ��뤳�ȡ�
- *      �ޤ����ܥ��եȥ������Υ桼���ޤ��ϥ���ɥ桼������Τ����ʤ���
- *      ͳ�˴�Ť����ᤫ��⡤�嵭����Ԥ����TOPPERS�ץ��������Ȥ�
- *      ���դ��뤳�ȡ�
+ *  上記著作権者は，以下の(1)～(4)の条件を満たす場合に限り，本ソフトウェ
+ *  ア（本ソフトウェアを改変したものを含む．以下同じ）を使用・複製・改
+ *  変・再配布（以下，利用と呼ぶ）することを無償で許諾する．
+ *  (1) 本ソフトウェアをソースコードの形で利用する場合には，上記の著作
+ *      権表示，この利用条件および下記の無保証規定が，そのままの形でソー
+ *      スコード中に含まれていること．
+ *  (2) 本ソフトウェアを，ライブラリ形式など，他のソフトウェア開発に使
+ *      用できる形で再配布する場合には，再配布に伴うドキュメント（利用
+ *      者マニュアルなど）に，上記の著作権表示，この利用条件および下記
+ *      の無保証規定を掲載すること．
+ *  (3) 本ソフトウェアを，機器に組み込むなど，他のソフトウェア開発に使
+ *      用できない形で再配布する場合には，次のいずれかの条件を満たすこ
+ *      と．
+ *    (a) 再配布に伴うドキュメント（利用者マニュアルなど）に，上記の著
+ *        作権表示，この利用条件および下記の無保証規定を掲載すること．
+ *    (b) 再配布の形態を，別に定める方法によって，TOPPERSプロジェクトに
+ *        報告すること．
+ *  (4) 本ソフトウェアの利用により直接的または間接的に生じるいかなる損
+ *      害からも，上記著作権者およびTOPPERSプロジェクトを免責すること．
+ *      また，本ソフトウェアのユーザまたはエンドユーザからのいかなる理
+ *      由に基づく請求からも，上記著作権者およびTOPPERSプロジェクトを
+ *      免責すること．
  * 
- *  �ܥ��եȥ������ϡ�̵�ݾڤ��󶡤���Ƥ����ΤǤ��롥�嵭����Ԥ�
- *  ���TOPPERS�ץ��������Ȥϡ��ܥ��եȥ������˴ؤ��ơ�����λ�����Ū
- *  ���Ф���Ŭ������ޤ�ơ������ʤ��ݾڤ�Ԥ�ʤ����ޤ����ܥ��եȥ���
- *  �������Ѥˤ��ľ��Ū�ޤ��ϴ���Ū�������������ʤ�»���˴ؤ��Ƥ⡤��
- *  ����Ǥ�����ʤ���
+ *  本ソフトウェアは，無保証で提供されているものである．上記著作権者お
+ *  よびTOPPERSプロジェクトは，本ソフトウェアに関して，特定の使用目的
+ *  に対する適合性も含めて，いかなる保証も行わない．また，本ソフトウェ
+ *  アの利用により直接的または間接的に生じたいかなる損害に関しても，そ
+ *  の責任を負わない．
  * 
  *  @(#) $Id: cyclic.c 721 2010-10-14 02:53:19Z ertl-honda $
  */
 
 /*
- *		�����ϥ�ɥ鵡ǽ
+ *		周期ハンドラ機能
  */
 
 #include "kernel_impl.h"
@@ -51,7 +51,7 @@
 #include "spin_lock.h"
 
 /*
- *  �ȥ졼�������ޥ����Υǥե�������
+ *  トレースログマクロのデフォルト定義
  */
 #ifndef LOG_CYC_ENTER
 #define LOG_CYC_ENTER(p_cyccb)
@@ -98,18 +98,18 @@
 #endif /* LOG_REF_CYC_LEAVE */
 
 /*
- *  �����ϥ�ɥ�ο�
+ *  周期ハンドラの数
  */
 #define tnum_cyc	((uint_t)(tmax_cycid - TMIN_CYCID + 1))
 
 /*
- *  �����ϥ�ɥ�ID��������ϥ�ɥ�����֥��å�����Ф�����Υޥ���
+ *  周期ハンドラIDから周期ハンドラ管理ブロックを取り出すためのマクロ
  */
 #define INDEX_CYC(cycid)	((uint_t)((cycid) - TMIN_CYCID))
 #define get_cyccb(cycid)	(p_cyccb_table[INDEX_CYC(cycid)])
 
 /*
- *  �����ϥ�ɥ鵯ư�Τ���Υ����।�٥�ȥ֥��å�����Ͽ
+ *  周期ハンドラ起動のためのタイムイベントブロックの登録
  */
 Inline void
 tmevtb_enqueue_cyc(CYCCB *p_cyccb, EVTTIM evttim)
@@ -120,7 +120,7 @@ tmevtb_enqueue_cyc(CYCCB *p_cyccb, EVTTIM evttim)
 }
 
 /*
- *  �����ϥ�ɥ鵡ǽ�ν����
+ *  周期ハンドラ機能の初期化
  */
 #ifdef TOPPERS_cycini
 
@@ -142,7 +142,7 @@ initialize_cyclic(void)
 
 	for (i = 0; i < tnum_cyc; i++) {
 #ifdef TOPPERS_SYSTIM_LOCAL
-		/* �������˳���դ��줿�����ϥ�ɥ�ν���� */
+		/* 自コアに割り付けれた周期ハンドラの初期化 */
 		if(cycinib_table[i].iaffinity == ID_PRC(x_prc_index())){
 #endif /* TOPPERS_SYSTIM_LOCAL */
 			p_cyccb = p_cyccb_table[i];
@@ -164,7 +164,7 @@ initialize_cyclic(void)
 #endif /* TOPPERS_cycini */
 
 /*
- *  �����ϥ�ɥ��ư���
+ *  周期ハンドラの動作開始
  */
 #ifdef TOPPERS_sta_cyc
 
@@ -202,7 +202,7 @@ sta_cyc(ID cycid)
 
 
 /*
- *  �����ϥ�ɥ��ư���
+ *  周期ハンドラの動作開始
  */
 #ifdef TOPPERS_msta_cyc
 
@@ -234,7 +234,7 @@ msta_cyc(ID cycid, ID prcid)
 	}
 
 	LOG_CYCMIG(p_cyccb, f_p_pcb->prcid, prcid);
-	/* ��ư��� pcb ����Ͽ */
+	/* 移動先の pcb を登録 */
 	p_cyccb->p_pcb = t_p_pcb;
 
 	tmevtb_enqueue_cyc(p_cyccb, base_time(t_p_pcb->p_tevtcb) + p_cyccb->p_cycinib->cycphs);
@@ -265,7 +265,7 @@ msta_cyc(ID cycid, ID prcid)
 
 
 /*
- *  �����ϥ�ɥ��ư�����
+ *  周期ハンドラの動作停止
  */
 #ifdef TOPPERS_stp_cyc
 
@@ -299,7 +299,7 @@ stp_cyc(ID cycid)
 #endif /* TOPPERS_stp_cyc */
 
 /*
- *  �����ϥ�ɥ�ξ��ֻ���
+ *  周期ハンドラの状態参照
  */
 #ifdef TOPPERS_ref_cyc
 
@@ -337,7 +337,7 @@ ref_cyc(ID cycid, T_RCYC *pk_rcyc)
 #endif /* TOPPERS_ref_cyc */
 
 /*
- *  �����ϥ�ɥ鵯ư�롼����
+ *  周期ハンドラ起動ルーチン
  */
 #ifdef TOPPERS_cyccal
 
@@ -348,16 +348,16 @@ call_cychdr(CYCCB *p_cyccb)
 	PCB		*my_p_pcb;
 
 	/*
-	 *  ����ε�ư�Τ���Υ����।�٥�ȥ֥��å�����Ͽ���롥
+	 *  次回の起動のためのタイムイベントブロックを登録する．
 	 *
-	 *  Ʊ��������ƥ��å��Ǽ����ϥ�ɥ����ٵ�ư���٤����ˤϡ�����
-	 *  �ؿ�����signal_time����ä���ˡ����٤��δؿ����ƤФ�뤳�Ȥˤ�
-	 *  �롥
+	 *  同じタイムティックで周期ハンドラを再度起動すべき場合には，この
+	 *  関数からsignal_timeに戻った後に，再度この関数が呼ばれることにな
+	 *  る．
 	 */
 	tmevtb_enqueue_cyc(p_cyccb, p_cyccb->evttim + p_cyccb->p_cycinib->cyctim);
 
 	/*
-	 *  �����ϥ�ɥ��CPU���å�������֤ǸƤӽФ���
+	 *  周期ハンドラを，CPUロック解除状態で呼び出す．
 	 */
 	saved_ipm = i_get_ipm();
 	release_tsk_lock(p_cyccb->p_pcb);

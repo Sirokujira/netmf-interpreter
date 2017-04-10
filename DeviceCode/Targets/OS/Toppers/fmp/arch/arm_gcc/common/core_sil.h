@@ -7,40 +7,40 @@
  *  Copyright (C) 2004-2009 by Embedded and Real-Time Systems Laboratory
  *              Graduate School of Information Science, Nagoya Univ., JAPAN
  *
- *  ¾åµ­Ãøºî¸¢¼Ô¤Ï¡¤°Ê²¼¤Î(1)¡Á(4)¤Î¾ò·ï¤òËþ¤¿¤¹¾ì¹ç¤Ë¸Â¤ê¡¤ËÜ¥½¥Õ¥È¥¦¥§
- *  ¥¢¡ÊËÜ¥½¥Õ¥È¥¦¥§¥¢¤ò²þÊÑ¤·¤¿¤â¤Î¤ò´Þ¤à¡¥°Ê²¼Æ±¤¸¡Ë¤ò»ÈÍÑ¡¦Ê£À½¡¦²þ
- *  ÊÑ¡¦ºÆÇÛÉÛ¡Ê°Ê²¼¡¤ÍøÍÑ¤È¸Æ¤Ö¡Ë¤¹¤ë¤³¤È¤òÌµ½þ¤ÇµöÂú¤¹¤ë¡¥
- *  (1) ËÜ¥½¥Õ¥È¥¦¥§¥¢¤ò¥½¡¼¥¹¥³¡¼¥É¤Î·Á¤ÇÍøÍÑ¤¹¤ë¾ì¹ç¤Ë¤Ï¡¤¾åµ­¤ÎÃøºî
- *      ¸¢É½¼¨¡¤¤³¤ÎÍøÍÑ¾ò·ï¤ª¤è¤Ó²¼µ­¤ÎÌµÊÝ¾Úµ¬Äê¤¬¡¤¤½¤Î¤Þ¤Þ¤Î·Á¤Ç¥½¡¼
- *      ¥¹¥³¡¼¥ÉÃæ¤Ë´Þ¤Þ¤ì¤Æ¤¤¤ë¤³¤È¡¥
- *  (2) ËÜ¥½¥Õ¥È¥¦¥§¥¢¤ò¡¤¥é¥¤¥Ö¥é¥ê·Á¼°¤Ê¤É¡¤Â¾¤Î¥½¥Õ¥È¥¦¥§¥¢³«È¯¤Ë»È
- *      ÍÑ¤Ç¤­¤ë·Á¤ÇºÆÇÛÉÛ¤¹¤ë¾ì¹ç¤Ë¤Ï¡¤ºÆÇÛÉÛ¤ËÈ¼¤¦¥É¥­¥å¥á¥ó¥È¡ÊÍøÍÑ
- *      ¼Ô¥Þ¥Ë¥å¥¢¥ë¤Ê¤É¡Ë¤Ë¡¤¾åµ­¤ÎÃøºî¸¢É½¼¨¡¤¤³¤ÎÍøÍÑ¾ò·ï¤ª¤è¤Ó²¼µ­
- *      ¤ÎÌµÊÝ¾Úµ¬Äê¤ò·ÇºÜ¤¹¤ë¤³¤È¡¥
- *  (3) ËÜ¥½¥Õ¥È¥¦¥§¥¢¤ò¡¤µ¡´ï¤ËÁÈ¤ß¹þ¤à¤Ê¤É¡¤Â¾¤Î¥½¥Õ¥È¥¦¥§¥¢³«È¯¤Ë»È
- *      ÍÑ¤Ç¤­¤Ê¤¤·Á¤ÇºÆÇÛÉÛ¤¹¤ë¾ì¹ç¤Ë¤Ï¡¤¼¡¤Î¤¤¤º¤ì¤«¤Î¾ò·ï¤òËþ¤¿¤¹¤³
- *      ¤È¡¥
- *    (a) ºÆÇÛÉÛ¤ËÈ¼¤¦¥É¥­¥å¥á¥ó¥È¡ÊÍøÍÑ¼Ô¥Þ¥Ë¥å¥¢¥ë¤Ê¤É¡Ë¤Ë¡¤¾åµ­¤ÎÃø
- *        ºî¸¢É½¼¨¡¤¤³¤ÎÍøÍÑ¾ò·ï¤ª¤è¤Ó²¼µ­¤ÎÌµÊÝ¾Úµ¬Äê¤ò·ÇºÜ¤¹¤ë¤³¤È¡¥
- *    (b) ºÆÇÛÉÛ¤Î·ÁÂÖ¤ò¡¤ÊÌ¤ËÄê¤á¤ëÊýË¡¤Ë¤è¤Ã¤Æ¡¤TOPPERS¥×¥í¥¸¥§¥¯¥È¤Ë
- *        Êó¹ð¤¹¤ë¤³¤È¡¥
- *  (4) ËÜ¥½¥Õ¥È¥¦¥§¥¢¤ÎÍøÍÑ¤Ë¤è¤êÄ¾ÀÜÅª¤Þ¤¿¤Ï´ÖÀÜÅª¤ËÀ¸¤¸¤ë¤¤¤«¤Ê¤ëÂ»
- *      ³²¤«¤é¤â¡¤¾åµ­Ãøºî¸¢¼Ô¤ª¤è¤ÓTOPPERS¥×¥í¥¸¥§¥¯¥È¤òÌÈÀÕ¤¹¤ë¤³¤È¡¥
- *      ¤Þ¤¿¡¤ËÜ¥½¥Õ¥È¥¦¥§¥¢¤Î¥æ¡¼¥¶¤Þ¤¿¤Ï¥¨¥ó¥É¥æ¡¼¥¶¤«¤é¤Î¤¤¤«¤Ê¤ëÍý
- *      Í³¤Ë´ð¤Å¤¯ÀÁµá¤«¤é¤â¡¤¾åµ­Ãøºî¸¢¼Ô¤ª¤è¤ÓTOPPERS¥×¥í¥¸¥§¥¯¥È¤ò
- *      ÌÈÀÕ¤¹¤ë¤³¤È¡¥
+ *  ä¸Šè¨˜è‘—ä½œæ¨©è€…ã¯ï¼Œä»¥ä¸‹ã®(1)ï½ž(4)ã®æ¡ä»¶ã‚’æº€ãŸã™å ´åˆã«é™ã‚Šï¼Œæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§
+ *  ã‚¢ï¼ˆæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’æ”¹å¤‰ã—ãŸã‚‚ã®ã‚’å«ã‚€ï¼Žä»¥ä¸‹åŒã˜ï¼‰ã‚’ä½¿ç”¨ãƒ»è¤‡è£½ãƒ»æ”¹
+ *  å¤‰ãƒ»å†é…å¸ƒï¼ˆä»¥ä¸‹ï¼Œåˆ©ç”¨ã¨å‘¼ã¶ï¼‰ã™ã‚‹ã“ã¨ã‚’ç„¡å„Ÿã§è¨±è«¾ã™ã‚‹ï¼Ž
+ *  (1) æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’ã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰ã®å½¢ã§åˆ©ç”¨ã™ã‚‹å ´åˆã«ã¯ï¼Œä¸Šè¨˜ã®è‘—ä½œ
+ *      æ¨©è¡¨ç¤ºï¼Œã“ã®åˆ©ç”¨æ¡ä»¶ãŠã‚ˆã³ä¸‹è¨˜ã®ç„¡ä¿è¨¼è¦å®šãŒï¼Œãã®ã¾ã¾ã®å½¢ã§ã‚½ãƒ¼
+ *      ã‚¹ã‚³ãƒ¼ãƒ‰ä¸­ã«å«ã¾ã‚Œã¦ã„ã‚‹ã“ã¨ï¼Ž
+ *  (2) æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’ï¼Œãƒ©ã‚¤ãƒ–ãƒ©ãƒªå½¢å¼ãªã©ï¼Œä»–ã®ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢é–‹ç™ºã«ä½¿
+ *      ç”¨ã§ãã‚‹å½¢ã§å†é…å¸ƒã™ã‚‹å ´åˆã«ã¯ï¼Œå†é…å¸ƒã«ä¼´ã†ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆï¼ˆåˆ©ç”¨
+ *      è€…ãƒžãƒ‹ãƒ¥ã‚¢ãƒ«ãªã©ï¼‰ã«ï¼Œä¸Šè¨˜ã®è‘—ä½œæ¨©è¡¨ç¤ºï¼Œã“ã®åˆ©ç”¨æ¡ä»¶ãŠã‚ˆã³ä¸‹è¨˜
+ *      ã®ç„¡ä¿è¨¼è¦å®šã‚’æŽ²è¼‰ã™ã‚‹ã“ã¨ï¼Ž
+ *  (3) æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’ï¼Œæ©Ÿå™¨ã«çµ„ã¿è¾¼ã‚€ãªã©ï¼Œä»–ã®ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢é–‹ç™ºã«ä½¿
+ *      ç”¨ã§ããªã„å½¢ã§å†é…å¸ƒã™ã‚‹å ´åˆã«ã¯ï¼Œæ¬¡ã®ã„ãšã‚Œã‹ã®æ¡ä»¶ã‚’æº€ãŸã™ã“
+ *      ã¨ï¼Ž
+ *    (a) å†é…å¸ƒã«ä¼´ã†ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆï¼ˆåˆ©ç”¨è€…ãƒžãƒ‹ãƒ¥ã‚¢ãƒ«ãªã©ï¼‰ã«ï¼Œä¸Šè¨˜ã®è‘—
+ *        ä½œæ¨©è¡¨ç¤ºï¼Œã“ã®åˆ©ç”¨æ¡ä»¶ãŠã‚ˆã³ä¸‹è¨˜ã®ç„¡ä¿è¨¼è¦å®šã‚’æŽ²è¼‰ã™ã‚‹ã“ã¨ï¼Ž
+ *    (b) å†é…å¸ƒã®å½¢æ…‹ã‚’ï¼Œåˆ¥ã«å®šã‚ã‚‹æ–¹æ³•ã«ã‚ˆã£ã¦ï¼ŒTOPPERSãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã«
+ *        å ±å‘Šã™ã‚‹ã“ã¨ï¼Ž
+ *  (4) æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã®åˆ©ç”¨ã«ã‚ˆã‚Šç›´æŽ¥çš„ã¾ãŸã¯é–“æŽ¥çš„ã«ç”Ÿã˜ã‚‹ã„ã‹ãªã‚‹æ
+ *      å®³ã‹ã‚‰ã‚‚ï¼Œä¸Šè¨˜è‘—ä½œæ¨©è€…ãŠã‚ˆã³TOPPERSãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã‚’å…è²¬ã™ã‚‹ã“ã¨ï¼Ž
+ *      ã¾ãŸï¼Œæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã®ãƒ¦ãƒ¼ã‚¶ã¾ãŸã¯ã‚¨ãƒ³ãƒ‰ãƒ¦ãƒ¼ã‚¶ã‹ã‚‰ã®ã„ã‹ãªã‚‹ç†
+ *      ç”±ã«åŸºã¥ãè«‹æ±‚ã‹ã‚‰ã‚‚ï¼Œä¸Šè¨˜è‘—ä½œæ¨©è€…ãŠã‚ˆã³TOPPERSãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã‚’
+ *      å…è²¬ã™ã‚‹ã“ã¨ï¼Ž
  *
- *  ËÜ¥½¥Õ¥È¥¦¥§¥¢¤Ï¡¤ÌµÊÝ¾Ú¤ÇÄó¶¡¤µ¤ì¤Æ¤¤¤ë¤â¤Î¤Ç¤¢¤ë¡¥¾åµ­Ãøºî¸¢¼Ô¤ª
- *  ¤è¤ÓTOPPERS¥×¥í¥¸¥§¥¯¥È¤Ï¡¤ËÜ¥½¥Õ¥È¥¦¥§¥¢¤Ë´Ø¤·¤Æ¡¤ÆÃÄê¤Î»ÈÍÑÌÜÅª
- *  ¤ËÂÐ¤¹¤ëÅ¬¹çÀ­¤â´Þ¤á¤Æ¡¤¤¤¤«¤Ê¤ëÊÝ¾Ú¤â¹Ô¤ï¤Ê¤¤¡¥¤Þ¤¿¡¤ËÜ¥½¥Õ¥È¥¦¥§
- *  ¥¢¤ÎÍøÍÑ¤Ë¤è¤êÄ¾ÀÜÅª¤Þ¤¿¤Ï´ÖÀÜÅª¤ËÀ¸¤¸¤¿¤¤¤«¤Ê¤ëÂ»³²¤Ë´Ø¤·¤Æ¤â¡¤¤½
- *  ¤ÎÀÕÇ¤¤òÉé¤ï¤Ê¤¤¡¥
+ *  æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã¯ï¼Œç„¡ä¿è¨¼ã§æä¾›ã•ã‚Œã¦ã„ã‚‹ã‚‚ã®ã§ã‚ã‚‹ï¼Žä¸Šè¨˜è‘—ä½œæ¨©è€…ãŠ
+ *  ã‚ˆã³TOPPERSãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã¯ï¼Œæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã«é–¢ã—ã¦ï¼Œç‰¹å®šã®ä½¿ç”¨ç›®çš„
+ *  ã«å¯¾ã™ã‚‹é©åˆæ€§ã‚‚å«ã‚ã¦ï¼Œã„ã‹ãªã‚‹ä¿è¨¼ã‚‚è¡Œã‚ãªã„ï¼Žã¾ãŸï¼Œæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§
+ *  ã‚¢ã®åˆ©ç”¨ã«ã‚ˆã‚Šç›´æŽ¥çš„ã¾ãŸã¯é–“æŽ¥çš„ã«ç”Ÿã˜ãŸã„ã‹ãªã‚‹æå®³ã«é–¢ã—ã¦ã‚‚ï¼Œã
+ *  ã®è²¬ä»»ã‚’è² ã‚ãªã„ï¼Ž
  *
- *  @(#) $Id: core_sil.h 1067 2014-12-24 14:15:10Z ertl-honda $
+ *  @(#) $Id: core_sil.h 1202 2016-07-18 06:36:33Z ertl-honda $
  */
 
 /*
- *  sil.h¤Î¥³¥¢°ÍÂ¸Éô¡ÊARMÍÑ¡Ë
+ *  sil.hã®ã‚³ã‚¢ä¾å­˜éƒ¨ï¼ˆARMç”¨ï¼‰
  */
 
 #ifndef TOPPERS_CORE_SIL_H
@@ -49,29 +49,40 @@
 #ifndef TOPPERS_MACRO_ONLY
 
 /*
- *  ¥á¥â¥ê¤¬ÊÑ¹¹¤µ¤ì¤ë¤³¤È¤ò¥³¥ó¥Ñ¥¤¥é¤ËÅÁ¤¨¤ë¤¿¤á¤Î¥Þ¥¯¥í
+ *  ãƒ¡ãƒ¢ãƒªãŒå¤‰æ›´ã•ã‚Œã‚‹ã“ã¨ã‚’ã‚³ãƒ³ãƒ‘ã‚¤ãƒ©ã«ä¼ãˆã‚‹ãŸã‚ã®ãƒžã‚¯ãƒ­
  */
 #define ARM_MEMORY_CHANGED Asm("":::"memory")
 
+/*
+ *  Memory Synchronization
+ */
+#if __TARGET_ARCH_ARM == 6
+#define SIL_DMB  Asm("mcr p15, 0, %0, c7, c10, 5"::"r" (0));
+#define SIL_DSB  Asm("mcr	p15, 0, %0, c7, c10, 4"::"r"(0));
+#elif __TARGET_ARCH_ARM >= 7
+#define SIL_DMB  Asm("dmb");
+#define SIL_DSB  Asm("dsb");
+#endif /* __TARGET_ARCH_ARM >= 7 */
+
 #ifdef __thumb__
 /*
- *  À©¸æ¥ì¥¸¥¹¥¿¤ÎÁàºî´Ø¿ô
+ *  åˆ¶å¾¡ãƒ¬ã‚¸ã‚¹ã‚¿ã®æ“ä½œé–¢æ•°
  */
 
 /*
- *  ¥¹¥Æ¡¼¥¿¥¹¥ì¥¸¥¹¥¿¡ÊCPSR¡Ë¤Î¸½ºßÃÍ¤ÎÆÉ½Ð¤·
+ *  ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒ¬ã‚¸ã‚¹ã‚¿ï¼ˆCPSRï¼‰ã®ç¾åœ¨å€¤ã®èª­å‡ºã—
  */
 extern uint32_t current_sr(void);
 
 /*
- *  ¥¹¥Æ¡¼¥¿¥¹¥ì¥¸¥¹¥¿¡ÊCPSR¡Ë¤Î¸½ºßÃÍ¤ÎÊÑ¹¹
+ *  ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒ¬ã‚¸ã‚¹ã‚¿ï¼ˆCPSRï¼‰ã®ç¾åœ¨å€¤ã®å¤‰æ›´
  */
 extern void set_sr(uint32_t sr);
 #endif /* __thumb__ */
 
 #ifndef USE_GIC_CPULOCK
 /*
- *  ¤¹¤Ù¤Æ¤Î³ä¹þ¤ß¡ÊFIQ¤ÈIRQ¡Ë¤Î¶Ø»ß
+ *  ã™ã¹ã¦ã®å‰²è¾¼ã¿ï¼ˆFIQã¨IRQï¼‰ã®ç¦æ­¢
  */
 Inline uint32_t
 TOPPERS_disint(void)
@@ -80,22 +91,22 @@ TOPPERS_disint(void)
 	uint32_t  irq_fiq_mask;
 
 #ifndef __thumb__
-    Asm("mrs  %0,CPSR" : "=r"(cpsr));
-    irq_fiq_mask = cpsr & (0x40|0x80);
-    cpsr |= (0x40|0x80);
-    Asm("msr CPSR, %0" : : "r"(cpsr) :"memory", "cc");
+	Asm("mrs  %0,CPSR" : "=r"(cpsr));
+	irq_fiq_mask = cpsr & (0x40|0x80);
+	cpsr |= (0x40|0x80);
+	Asm("msr CPSR, %0" : : "r"(cpsr) :"memory", "cc");
 #else /* __thumb__ */
-    cpsr = current_sr();
-    irq_fiq_mask = cpsr & (0x40|0x80);
-    cpsr |= (0x40|0x80);
-    set_sr(cpsr);
+	cpsr = current_sr();
+	irq_fiq_mask = cpsr & (0x40|0x80);
+	cpsr |= (0x40|0x80);
+	set_sr(cpsr);
 #endif /* __thumb__ */
 
 	return(irq_fiq_mask);
 }
 
 /*
- *  FIQ,IRQ¤ÎÀßÄê
+ *  FIQ,IRQã®è¨­å®š
  */
 Inline void
 TOPPERS_set_fiq_irq(uint32_t TOPPERS_irq_fiq_mask)
@@ -103,28 +114,70 @@ TOPPERS_set_fiq_irq(uint32_t TOPPERS_irq_fiq_mask)
 	uint32_t  cpsr;
 
 #ifndef __thumb__
-    Asm("mrs  %0,CPSR" : "=r"(cpsr));
-    cpsr = cpsr & ~(0x40|0x80);
-    cpsr = cpsr | (TOPPERS_irq_fiq_mask & (0x40|0x80));
-    Asm("msr CPSR, %0" : : "r"(cpsr):"memory", "cc");
+	Asm("mrs  %0,CPSR" : "=r"(cpsr));
+	cpsr = cpsr & ~(0x40|0x80);
+	cpsr = cpsr | (TOPPERS_irq_fiq_mask & (0x40|0x80));
+	Asm("msr CPSR, %0" : : "r"(cpsr):"memory", "cc");
 #else /* __thumb__ */
-    cpsr = current_sr();
-    cpsr = cpsr &  ~(0x40|0x80);
-    cpsr = cpsr | (TOPPERS_irq_fiq_mask&  (0x40|0x80));
-    set_sr(cpsr);
+	cpsr = current_sr();
+	cpsr = cpsr &  ~(0x40|0x80);
+	cpsr = cpsr | (TOPPERS_irq_fiq_mask&  (0x40|0x80));
+	set_sr(cpsr);
 #endif /* __thumb__ */
 }
 
 /*
- *  Á´³ä¹þ¤ß¥í¥Ã¥¯¾õÂÖ¤ÎÀ©¸æ
+ *  å…¨å‰²è¾¼ã¿ãƒ­ãƒƒã‚¯çŠ¶æ…‹ã®åˆ¶å¾¡
  */
 #define SIL_PRE_LOC   uint32_t TOPPERS_irq_fiq_mask
 #define SIL_LOC_INT() ((void)(TOPPERS_irq_fiq_mask = TOPPERS_disint()))
 #define SIL_UNL_INT() (TOPPERS_set_fiq_irq(TOPPERS_irq_fiq_mask))
+
+#else /* USE_GIC_CPULOCK */
+
+#define SIL_DIC_CPUIF_PMR  (SIL_MPCORE_PMR_BASE + 0x0104)  /* å„ªå…ˆåº¦ãƒžã‚¹ã‚¯ãƒ¬ã‚¸ã‚¹ã‚¿ */
+
+#if __TARGET_ARCH_ARM == 6
+#define SIL_DIC_CPUIF_PMR_OFFSET 0x04
+#elif __TARGET_ARCH_ARM >= 7
+#define SIL_DIC_CPUIF_PMR_OFFSET 0x03
+#endif /* __TARGET_ARCH_ARM >= 7 */
+
+Inline void
+TOPPERS_set_iipm(uint8_t iipm)
+{
+	*((volatile uint32_t *)SIL_DIC_CPUIF_PMR) = iipm << SIL_DIC_CPUIF_PMR_OFFSET;
+}
+
+Inline uint8_t
+TOPPERS_get_iipm(void)
+{
+	return ((uint8_t)(*((volatile uint32_t *)SIL_DIC_CPUIF_PMR) >> SIL_DIC_CPUIF_PMR_OFFSET));
+}
+
+/*
+ *  ã™ã¹ã¦ã®å‰²è¾¼ã¿ã®ç¦æ­¢
+ */
+Inline uint8_t
+TOPPERS_disint(void)
+{
+	uint8_t iipm;
+	iipm = TOPPERS_get_iipm();
+	TOPPERS_set_iipm(0);
+	return iipm;
+}
+
+/*
+ *  å…¨å‰²è¾¼ã¿ãƒ­ãƒƒã‚¯çŠ¶æ…‹ã®åˆ¶å¾¡
+ */
+#define SIL_PRE_LOC   uint8_t TOPPERS_iipm
+#define SIL_LOC_INT() ((void)(TOPPERS_iipm = TOPPERS_disint()))
+#define SIL_UNL_INT() (TOPPERS_set_iipm(TOPPERS_iipm))
+
 #endif /* USE_GIC_CPULOCK */
 
 /*
- *  Èù¾¯»þ´ÖÂÔ¤Á
+ *  å¾®å°‘æ™‚é–“å¾…ã¡
  */
 #ifndef TOPPERS_CUSTOM_SILDLYNSE
 Inline void
@@ -134,6 +187,199 @@ sil_dly_nse(ulong_t dlytim)
 	Asm("bl _sil_dly_nse" : "=g"(r0) : "0"(r0) : "lr","cc");
 }
 #endif /* TOPPERS_CUSTOM_SILDLYNSE */
+
+#if __TARGET_ARCH_ARM >= 6
+/*
+ *  ãƒ—ãƒ­ã‚»ãƒƒã‚µIDã®å–å¾—
+ */
+Inline void
+sil_get_pid(ID *p_prcid)
+{
+	uint32_t index;
+
+	Asm("mrc p15, 0, %0, c0, c0, 5":"=r"(index));
+	*p_prcid = (index & 0x0f) + 1;
+}
+
+/*
+ *  ã‚¹ãƒ”ãƒ³ãƒ­ãƒƒã‚¯å¤‰æ•°ï¼ˆcore_config.cï¼‰
+ */
+extern uint32_t TOPPERS_spn_var;
+
+#ifndef USE_GIC_CPULOCK
+
+/*
+ *  ã‚¹ãƒ”ãƒ³ãƒ­ãƒƒã‚¯ã®å–å¾—
+ */
+Inline uint32_t
+TOPPERS_sil_loc_spn(void)
+{
+	uint32_t irq_fiq_mask;
+	uint32_t locked;
+	uint32_t pre_cpsr_c;
+	uint32_t dis_cpsr_c;
+	ID       prcid;
+
+	sil_get_pid(&prcid);
+
+	/* å‘¼ã³å‡ºã—æ™‚ã®cpsrã®bit0ï½ž7ã®çŠ¶æ…‹ */
+	Asm("mrs  %0,CPSR" : "=r"(pre_cpsr_c));
+
+	/* å…¨å‰²è¾¼ã¿ãƒ­ãƒƒã‚¯çŠ¶æ…‹ã¸ */
+	irq_fiq_mask = TOPPERS_disint();
+
+	/* å…¨å‰²è¾¼ã¿ãƒ­ãƒƒã‚¯çŠ¶æ…‹ç§»è¡Œå¾Œã®cpsrã®bit0ï½ž7ã®çŠ¶æ…‹ */
+	Asm("mrs  %0,CPSR" : "=r"(dis_cpsr_c));
+
+	while(true) {
+		/*
+		 * ã‚¹ãƒ”ãƒ³ãƒ­ãƒƒã‚¯ã®å–å¾—
+		 * ãƒ—ãƒ­ã‚»ãƒƒã‚µIDã‚’æ›¸ãè¾¼ã‚€
+		 */
+		Asm("   mov      r2, %4      \n"
+			"\t ldrex    r1, [%1]    \n"
+			"\t cmp      r1, #0x00   \n"
+			"\t msrne    cpsr_c, %2  \n" /* å‘¼ã³å‡ºã—æ™‚ã®çŠ¶æ…‹ã¸ï¼ˆå‰²è¾¼ã¿è¨±å¯ï¼‰ */
+			#ifndef TOPPERS_OMIT_USE_WFE
+			"\t wfene                \n"
+			#endif /* TOPPERS_OMIT_USE_WFE */
+			"\t msrne    cpsr_c, %3  \n" /* å…¨å‰²è¾¼ã¿ãƒ­ãƒƒã‚¯çŠ¶æ…‹ã¸ */
+			"\t strexeq  r1, r2,[%1] \n"
+			"\t mov      %0, r1      \n"
+			:"=r"(locked)
+			:"r"(&TOPPERS_spn_var),"r"(pre_cpsr_c),"r"(dis_cpsr_c),"r"(prcid)
+			:"r1","r2", "cc");
+
+		if (locked == 0) {
+			/* ã‚¹ãƒ”ãƒ³ãƒ­ãƒƒã‚¯ãŒå–å¾—æˆåŠŸ */
+			/* Data meory barrier */
+			SIL_DMB;
+			ARM_MEMORY_CHANGED;
+			return irq_fiq_mask;
+		}
+	}
+}
+
+/*
+ *  ã‚¹ãƒ”ãƒ³ãƒ­ãƒƒã‚¯ã®è¿”å´
+ */
+Inline void
+TOPPERS_sil_unl_spn(uint32_t irq_fiq_mask)
+{
+	/* ãƒ¡ãƒ¢ãƒªã®å†…å®¹ãŒæ›¸ãæ›ã‚ã‚‹å¯èƒ½æ€§ãŒã‚ã‚‹ */
+	ARM_MEMORY_CHANGED;
+	/* Data meory barrier */
+	SIL_DMB;
+	TOPPERS_spn_var = 0U;
+	/* Data Sync Barrier */
+	SIL_DSB;
+	/* ã‚¹ãƒ”ãƒ³ãƒ­ãƒƒã‚¯å¾…ã¡ã®ã‚¿ã‚¹ã‚¯ã¸ã‚¤ãƒ™ãƒ³ãƒˆã‚’é€ã‚‹ */
+	Asm("sev");
+
+	/* ã‚¹ãƒ”ãƒ³ãƒ­ãƒƒã‚¯ã®å–å¾—å‰ã®çŠ¶æ…‹ã¸ */
+	TOPPERS_set_fiq_irq(irq_fiq_mask);
+}
+
+/*
+ *  ã‚¹ãƒ”ãƒ³ãƒ­ãƒƒã‚¯
+ */
+#define SIL_LOC_SPN() ((void)(TOPPERS_irq_fiq_mask = TOPPERS_sil_loc_spn()))
+#define SIL_UNL_SPN() (TOPPERS_sil_unl_spn(TOPPERS_irq_fiq_mask))
+
+#else /* USE_GIC_CPULOCK */
+
+/*
+ *  ã‚¹ãƒ”ãƒ³ãƒ­ãƒƒã‚¯ã®å–å¾—(USE_GIC_CPULOCK)
+ */
+Inline uint8_t
+TOPPERS_sil_loc_spn(void)
+{
+	uint8_t  iipm;
+	uint32_t locked;
+	ID       prcid;
+
+	sil_get_pid(&prcid);
+
+	iipm = TOPPERS_get_iipm();
+
+	/* å…¨å‰²è¾¼ã¿ãƒ­ãƒƒã‚¯çŠ¶æ…‹ã¸ */
+	TOPPERS_set_iipm(0);
+
+	while(true) {
+		/*
+		 * ã‚¹ãƒ”ãƒ³ãƒ­ãƒƒã‚¯ã®å–å¾—
+		 * ãƒ—ãƒ­ã‚»ãƒƒã‚µIDã‚’æ›¸ãè¾¼ã‚€
+		 */
+		Asm("   mov      r2, %2      \n"
+			"\t ldrex    r1, [%1]    \n"
+			"\t cmp      r1, #0x00   \n"
+			"\t strexeq  r1, r2,[%1] \n"
+			"\t mov      %0, r1      \n"
+			:"=r"(locked)
+			:"r"(&TOPPERS_spn_var),"r"(prcid)
+			:"r1","r2", "cc");
+
+		if (locked == 0) {
+			/* ã‚¹ãƒ”ãƒ³ãƒ­ãƒƒã‚¯ãŒå–å¾—æˆåŠŸ */
+			/* Data meory barrier */
+			SIL_DMB;
+			ARM_MEMORY_CHANGED;
+			return iipm;
+		}else{
+			/* ä¸€æ—¦å‰²è¾¼ã¿ã‚’è¨±å¯ã«ã™ã‚‹ */
+			TOPPERS_set_iipm(iipm);
+			TOPPERS_set_iipm(0);
+		}
+	}
+}
+
+/*
+ *  ã‚¹ãƒ”ãƒ³ãƒ­ãƒƒã‚¯ã®è¿”å´(USE_GIC_CPULOCK)
+ */
+Inline void
+TOPPERS_sil_unl_spn(uint8_t iipm)
+{
+	/* ãƒ¡ãƒ¢ãƒªã®å†…å®¹ãŒæ›¸ãæ›ã‚ã‚‹å¯èƒ½æ€§ãŒã‚ã‚‹ */
+	ARM_MEMORY_CHANGED;
+	/* Data meory barrier */
+	SIL_DMB;
+	TOPPERS_spn_var = 0U;
+	/* Data Sync Barrier */
+	SIL_DSB;
+	/* ã‚¹ãƒ”ãƒ³ãƒ­ãƒƒã‚¯å¾…ã¡ã®ã‚¿ã‚¹ã‚¯ã¸ã‚¤ãƒ™ãƒ³ãƒˆã‚’é€ã‚‹ */
+	Asm("sev");
+
+	/* ã‚¹ãƒ”ãƒ³ãƒ­ãƒƒã‚¯ã®å–å¾—å‰ã®çŠ¶æ…‹ã¸ */
+	TOPPERS_set_iipm(iipm);
+}
+
+/*
+ *  ã‚¹ãƒ”ãƒ³ãƒ­ãƒƒã‚¯
+ */
+#define SIL_LOC_SPN() ((void)(TOPPERS_iipm = TOPPERS_sil_loc_spn()))
+#define SIL_UNL_SPN() (TOPPERS_sil_unl_spn(TOPPERS_iipm))
+
+#endif /* USE_GIC_CPULOCK */
+
+/*
+ *  ã‚¹ãƒ”ãƒ³ãƒ­ãƒƒã‚¯ã®å¼·åˆ¶è§£æ”¾
+ *  è‡ªãƒ—ãƒ­ã‚»ãƒƒã‚µãŒã‚¹ãƒ”ãƒ³ãƒ­ãƒƒã‚¯ã‚’å–å¾—ã—ã¦ã„ã‚‹å ´åˆã«è§£æ”¾ã™ã‚‹ï¼Ž
+ */
+Inline void
+TOPPERS_sil_force_unl_spn(void)
+{
+	ID prcid;
+
+	sil_get_pid(&prcid);
+
+	if (TOPPERS_spn_var == prcid) {
+		TOPPERS_spn_var = 0U;
+		/* ã‚¹ãƒ”ãƒ³ãƒ­ãƒƒã‚¯å¾…ã¡ã®ã‚¿ã‚¹ã‚¯ã¸ã‚¤ãƒ™ãƒ³ãƒˆã‚’é€ã‚‹ */
+		Asm("sev");
+	}
+}
+
+#endif /* __TARGET_ARCH_ARM >= 6 */
 
 #endif /* TOPPERS_MACRO_ONLY */
 

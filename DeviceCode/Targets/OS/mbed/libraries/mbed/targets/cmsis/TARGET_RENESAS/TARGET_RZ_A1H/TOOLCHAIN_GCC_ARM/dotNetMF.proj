@@ -55,9 +55,7 @@
   <PropertyGroup />
   <ItemGroup>
     <Compile Include="irqfiq_handler.s" />
-<!--
     <Compile Include="startup_RZA1H.s" />
--->
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Targets" />

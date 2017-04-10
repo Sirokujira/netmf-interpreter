@@ -1,41 +1,41 @@
 /*
- *  TOPPERS/ASP Kernel
+ *  TOPPERS/FMP Kernel
  *      Toyohashi Open Platform for Embedded Real-Time Systems/
- *      Advanced Standard Profile Kernel
+ *      Flexible MultiProcessor Kernel
  * 
- *  Copyright (C) 2013 by Embedded and Real-Time Systems Laboratory
+ *  Copyright (C) 2013-2017 by Embedded and Real-Time Systems Laboratory
  *              Graduate School of Information Science, Nagoya Univ., JAPAN
  * 
- *  ��L���쌠�҂́C�ȉ���(1)�`(4)�̏����𖞂����ꍇ�Ɍ���C�{�\�t�g�E�F
- *  �A�i�{�\�t�g�E�F�A�����ς������̂��܂ށD�ȉ������j���g�p�E�����E��
- *  �ρE�Ĕz�z�i�ȉ��C���p�ƌĂԁj���邱�Ƃ𖳏��ŋ�������D
- *  (1) �{�\�t�g�E�F�A���\�[�X�R�[�h�̌`�ŗ��p����ꍇ�ɂ́C��L�̒���
- *      ���\���C���̗��p��������щ��L�̖��ۏ؋K�肪�C���̂܂܂̌`�Ń\�[
- *      �X�R�[�h���Ɋ܂܂�Ă��邱�ƁD
- *  (2) �{�\�t�g�E�F�A���C���C�u�����`���ȂǁC���̃\�t�g�E�F�A�J���Ɏg
- *      �p�ł���`�ōĔz�z����ꍇ�ɂ́C�Ĕz�z�ɔ����h�L�������g�i���p
- *      �҃}�j���A���Ȃǁj�ɁC��L�̒��쌠�\���C���̗��p��������щ��L
- *      �̖��ۏ؋K����f�ڂ��邱�ƁD
- *  (3) �{�\�t�g�E�F�A���C�@��ɑg�ݍ��ނȂǁC���̃\�t�g�E�F�A�J���Ɏg
- *      �p�ł��Ȃ��`�ōĔz�z����ꍇ�ɂ́C���̂����ꂩ�̏����𖞂�����
- *      �ƁD
- *    (a) �Ĕz�z�ɔ����h�L�������g�i���p�҃}�j���A���Ȃǁj�ɁC��L�̒�
- *        �쌠�\���C���̗��p��������щ��L�̖��ۏ؋K����f�ڂ��邱�ƁD
- *    (b) �Ĕz�z�̌`�Ԃ��C�ʂɒ�߂���@�ɂ���āCTOPPERS�v���W�F�N�g��
- *        �񍐂��邱�ƁD
- *  (4) �{�\�t�g�E�F�A�̗��p�ɂ�蒼�ړI�܂��͊ԐړI�ɐ����邢���Ȃ鑹
- *      �Q������C��L���쌠�҂����TOPPERS�v���W�F�N�g��Ɛӂ��邱�ƁD
- *      �܂��C�{�\�t�g�E�F�A�̃��[�U�܂��̓G���h���[�U����̂����Ȃ闝
- *      �R�Ɋ�Â�����������C��L���쌠�҂����TOPPERS�v���W�F�N�g��
- *      �Ɛӂ��邱�ƁD
+ *  上記著作権者は，以下の(1)～(4)の条件を満たす場合に限り，本ソフトウェ
+ *  ア（本ソフトウェアを改変したものを含む．以下同じ）を使用・複製・改
+ *  変・再配布（以下，利用と呼ぶ）することを無償で許諾する．
+ *  (1) 本ソフトウェアをソースコードの形で利用する場合には，上記の著作
+ *      権表示，この利用条件および下記の無保証規定が，そのままの形でソー
+ *      スコード中に含まれていること．
+ *  (2) 本ソフトウェアを，ライブラリ形式など，他のソフトウェア開発に使
+ *      用できる形で再配布する場合には，再配布に伴うドキュメント（利用
+ *      者マニュアルなど）に，上記の著作権表示，この利用条件および下記
+ *      の無保証規定を掲載すること．
+ *  (3) 本ソフトウェアを，機器に組み込むなど，他のソフトウェア開発に使
+ *      用できない形で再配布する場合には，次のいずれかの条件を満たすこ
+ *      と．
+ *    (a) 再配布に伴うドキュメント（利用者マニュアルなど）に，上記の著
+ *        作権表示，この利用条件および下記の無保証規定を掲載すること．
+ *    (b) 再配布の形態を，別に定める方法によって，TOPPERSプロジェクトに
+ *        報告すること．
+ *  (4) 本ソフトウェアの利用により直接的または間接的に生じるいかなる損
+ *      害からも，上記著作権者およびTOPPERSプロジェクトを免責すること．
+ *      また，本ソフトウェアのユーザまたはエンドユーザからのいかなる理
+ *      由に基づく請求からも，上記著作権者およびTOPPERSプロジェクトを
+ *      免責すること．
  * 
- *  �{�\�t�g�E�F�A�́C���ۏ؂Œ񋟂���Ă�����̂ł���D��L���쌠�҂�
- *  ���TOPPERS�v���W�F�N�g�́C�{�\�t�g�E�F�A�Ɋւ��āC����̎g�p�ړI
- *  �ɑ΂���K�������܂߂āC�����Ȃ�ۏ؂��s��Ȃ��D�܂��C�{�\�t�g�E�F
- *  �A�̗��p�ɂ�蒼�ړI�܂��͊ԐړI�ɐ����������Ȃ鑹�Q�Ɋւ��Ă��C��
- *  �̐ӔC�𕉂�Ȃ��D
+ *  本ソフトウェアは，無保証で提供されているものである．上記著作権者お
+ *  よびTOPPERSプロジェクトは，本ソフトウェアに関して，特定の使用目的
+ *  に対する適合性も含めて，いかなる保証も行わない．また，本ソフトウェ
+ *  アの利用により直接的または間接的に生じたいかなる損害に関しても，そ
+ *  の責任を負わない．
  * 
- *  @(#) $Id: pl310.c 1019 2013-07-11 13:29:21Z ertl-honda $
+ *  @(#) $Id: pl310.c 1203 2016-07-18 07:05:08Z ertl-honda $
  */
 
 #include "pl310.h"
@@ -57,8 +57,8 @@ static inline void cache_sync(void)
 static inline void pl310_inv_all(void)
 {
 	/* invalidate all ways */
-	sil_wrw_mem((void*)(PL310_L2CACHE_BASE + PL310_INV_WAY), pl310_way_mask);
-	cache_wait_way((uint32_t *)(PL310_L2CACHE_BASE+PL310_INV_WAY), pl310_way_mask);
+	sil_wrw_mem((void*)(PL310_L2CACHE_BASE + PL310_INV_WAY), 0xffff);
+	cache_wait_way((uint32_t *)(PL310_L2CACHE_BASE+PL310_INV_WAY), 0xffff);
 	cache_sync();
 }
 
@@ -67,18 +67,16 @@ pl310_init(uint32_t aux_val, uint32_t aux_mask)
 {
 	uint32_t tmp;
 	uint32_t aux;
-	uint32_t cache_id;
 	uint32_t prefetch;
 	uint32_t prefetch_val = 0;    
 	uint32_t power;
 	int ways;
 
-	/* L2�L���b�V�������łɃI���ɂȂ��Ă��邩�m�F���� */
+	/* L2キャッシュがすでにオンになっているか確認する */
 	tmp = sil_rew_mem((void*)(PL310_L2CACHE_BASE + PL310_CTRL));
 
-	/* L2�L���b�V���������̏ꍇ�̂ݏ����������{���� */
+	/* L2キャッシュが無効の場合のみ初期化を実施する */
 	if ( !(tmp & 1) ) {
-		cache_id = sil_rew_mem((void*)(PL310_L2CACHE_BASE + PL310_CACHE_ID));
 		aux = sil_rew_mem((void*)(PL310_L2CACHE_BASE + PL310_AUX_CTRL));
 		prefetch = sil_rew_mem((void*)(PL310_L2CACHE_BASE + PL310_PREFETCH_CTRL));
 		power = sil_rew_mem((void*)(PL310_L2CACHE_BASE + PL310_POWER_CTRL));
@@ -91,23 +89,28 @@ pl310_init(uint32_t aux_val, uint32_t aux_mask)
 		}
 
 		aux_val |= 1 << 22;
-        
+
+		/* Instruction Prefetch enable */
 		aux_val |= 1 << 29;
 		prefetch_val |= 1 << 29;
 
+		/* Data Prefetch enable */
 		aux_val |= 1 << 28;
 		prefetch_val |= 1 << 28;
 
-
-		if ((cache_id & 0x3f) > 0x6) {
-			prefetch_val |= 1 << 30;
-		}
+#ifdef TOPPERS_CHIP_SOLOX
+		prefetch_val |= (1 << 30) | (1 << 23);
+#else /* !TOPPERS_CHIP_SOLOX */
+		/* By Errata 752271 Not enable double linefill feature*/
+#endif /* TOPPERS_CHIP_SOLOX */
                 
 		pl310_way_mask = (1 << ways) - 1;
 
 		aux &= aux_mask;
 		aux |= aux_val;
 		prefetch |= prefetch_val;
+
+		power = 3;
 
 		sil_wrw_mem((void*)(PL310_L2CACHE_BASE + PL310_AUX_CTRL), aux);
 		sil_wrw_mem((void*)(PL310_L2CACHE_BASE + PL310_PREFETCH_CTRL), prefetch);
@@ -128,11 +131,40 @@ pl310_debug_set(uint32_t val)
 void
 pl310_flush_all(void)
 {
+	uint32_t aux;
+	int ways;
+	
+	aux = sil_rew_mem((void*)(PL310_L2CACHE_BASE + PL310_AUX_CTRL));
+	ways = (aux & (1 << 16))? 16 : 8;
+	pl310_way_mask = (1 << ways) - 1;
+
 	pl310_debug_set(0x03);
 	sil_wrw_mem((void*)(PL310_L2CACHE_BASE + PL310_CLEAN_INV_WAY), pl310_way_mask);
 	cache_wait_way((void*)(PL310_L2CACHE_BASE + PL310_CLEAN_INV_WAY), pl310_way_mask);
 	cache_sync();
 	pl310_debug_set(0x00);
+}
+
+void
+pl310_invalidate_all(void)
+{
+	uint32_t aux;
+	int ways;
+	
+	aux = sil_rew_mem((void*)(PL310_L2CACHE_BASE + PL310_AUX_CTRL));
+	ways = (aux & (1 << 16))? 16 : 8;
+	pl310_way_mask = (1 << ways) - 1;
+
+	pl310_debug_set(0x03);
+	sil_wrw_mem((void*)(PL310_L2CACHE_BASE + PL310_INV_WAY), pl310_way_mask);
+	cache_wait_way((void*)(PL310_L2CACHE_BASE + PL310_INV_WAY), pl310_way_mask);
+	cache_sync();
+	pl310_debug_set(0x00);
+}
+
+void
+outer_cache_flush(void) {
+	pl310_flush_all();
 }
 
 void

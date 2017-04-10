@@ -8,95 +8,95 @@
  *  Copyright (C) 2004-2015 by Embedded and Real-Time Systems Laboratory
  *              Graduate School of Information Science, Nagoya Univ., JAPAN
  *
- *  �嵭����Ԥϡ��ʲ���(1)��(4)�ξ������������˸¤ꡤ�ܥ��եȥ���
- *  �����ܥ��եȥ���������Ѥ�����Τ�ޤࡥ�ʲ�Ʊ���ˤ���ѡ�ʣ������
- *  �ѡ������ۡʰʲ������ѤȸƤ֡ˤ��뤳�Ȥ�̵���ǵ������롥
- *  (1) �ܥ��եȥ������򥽡��������ɤη������Ѥ�����ˤϡ��嵭������
- *      ��ɽ�����������Ѿ�浪��Ӳ�����̵�ݾڵ��꤬�����Τޤޤη��ǥ���
- *      ����������˴ޤޤ�Ƥ��뤳�ȡ�
- *  (2) �ܥ��եȥ������򡤥饤�֥������ʤɡ�¾�Υ��եȥ�������ȯ�˻�
- *      �ѤǤ�����Ǻ����ۤ�����ˤϡ������ۤ�ȼ���ɥ�����ȡ�����
- *      �ԥޥ˥奢��ʤɡˤˡ��嵭�����ɽ�����������Ѿ�浪��Ӳ���
- *      ��̵�ݾڵ����Ǻܤ��뤳�ȡ�
- *  (3) �ܥ��եȥ������򡤵�����Ȥ߹���ʤɡ�¾�Υ��եȥ�������ȯ�˻�
- *      �ѤǤ��ʤ����Ǻ����ۤ�����ˤϡ����Τ����줫�ξ�����������
- *      �ȡ�
- *    (a) �����ۤ�ȼ���ɥ�����ȡ����Ѽԥޥ˥奢��ʤɡˤˡ��嵭����
- *        �ɽ�����������Ѿ�浪��Ӳ�����̵�ݾڵ����Ǻܤ��뤳�ȡ�
- *    (b) �����ۤη��֤��̤�������ˡ�ˤ�äơ�TOPPERS�ץ��������Ȥ�
- *        ��𤹤뤳�ȡ�
- *  (4) �ܥ��եȥ����������Ѥˤ��ľ��Ū�ޤ��ϴ���Ū�������뤤���ʤ�»
- *      ������⡤�嵭����Ԥ����TOPPERS�ץ��������Ȥ����դ��뤳�ȡ�
- *      �ޤ����ܥ��եȥ������Υ桼���ޤ��ϥ���ɥ桼������Τ����ʤ���
- *      ͳ�˴�Ť����ᤫ��⡤�嵭����Ԥ����TOPPERS�ץ��������Ȥ�
- *      ���դ��뤳�ȡ�
+ *  上記著作権者は，以下の(1)～(4)の条件を満たす場合に限り，本ソフトウェ
+ *  ア（本ソフトウェアを改変したものを含む．以下同じ）を使用・複製・改
+ *  変・再配布（以下，利用と呼ぶ）することを無償で許諾する．
+ *  (1) 本ソフトウェアをソースコードの形で利用する場合には，上記の著作
+ *      権表示，この利用条件および下記の無保証規定が，そのままの形でソー
+ *      スコード中に含まれていること．
+ *  (2) 本ソフトウェアを，ライブラリ形式など，他のソフトウェア開発に使
+ *      用できる形で再配布する場合には，再配布に伴うドキュメント（利用
+ *      者マニュアルなど）に，上記の著作権表示，この利用条件および下記
+ *      の無保証規定を掲載すること．
+ *  (3) 本ソフトウェアを，機器に組み込むなど，他のソフトウェア開発に使
+ *      用できない形で再配布する場合には，次のいずれかの条件を満たすこ
+ *      と．
+ *    (a) 再配布に伴うドキュメント（利用者マニュアルなど）に，上記の著
+ *        作権表示，この利用条件および下記の無保証規定を掲載すること．
+ *    (b) 再配布の形態を，別に定める方法によって，TOPPERSプロジェクトに
+ *        報告すること．
+ *  (4) 本ソフトウェアの利用により直接的または間接的に生じるいかなる損
+ *      害からも，上記著作権者およびTOPPERSプロジェクトを免責すること．
+ *      また，本ソフトウェアのユーザまたはエンドユーザからのいかなる理
+ *      由に基づく請求からも，上記著作権者およびTOPPERSプロジェクトを
+ *      免責すること．
  * 
- *  �ܥ��եȥ������ϡ�̵�ݾڤ��󶡤���Ƥ����ΤǤ��롥�嵭����Ԥ�
- *  ���TOPPERS�ץ��������Ȥϡ��ܥ��եȥ������˴ؤ��ơ�����λ�����Ū
- *  ���Ф���Ŭ������ޤ�ơ������ʤ��ݾڤ�Ԥ�ʤ����ޤ����ܥ��եȥ���
- *  �������Ѥˤ��ľ��Ū�ޤ��ϴ���Ū�������������ʤ�»���˴ؤ��Ƥ⡤��
- *  ����Ǥ�����ʤ���
+ *  本ソフトウェアは，無保証で提供されているものである．上記著作権者お
+ *  よびTOPPERSプロジェクトは，本ソフトウェアに関して，特定の使用目的
+ *  に対する適合性も含めて，いかなる保証も行わない．また，本ソフトウェ
+ *  アの利用により直接的または間接的に生じたいかなる損害に関しても，そ
+ *  の責任を負わない．
  *
- *  @(#) $Id: sample1.h 59 2009-01-08 14:35:35Z ertl-honda $
+ *  @(#) $Id: sample1.h 1203 2016-07-18 07:05:08Z ertl-honda $
  */
 
 /*
- *		����ץ�ץ������(1)�Υإå��ե�����
+ *		サンプルプログラム(1)のヘッダファイル
  */
 
 /*
- *  �������åȰ�¸�����
+ *  ターゲット依存の定義
  */
 #include "target_test.h"
 
 /*
- *  �ƥ�������ͥ���٤����
+ *  各タスクの優先度の定義
  */
 
-#define MAIN_PRIORITY	5		/* �ᥤ�󥿥�����ͥ���� */
-								/* HIGH_PRIORITY���⤯���뤳�� */
+#define MAIN_PRIORITY	5		/* メインタスクの優先度 */
+								/* HIGH_PRIORITYより高くすること */
 
-#define SERVER_PRIORITY	4		/* �����Х�������ͥ���� */
+#define SERVER_PRIORITY	4		/* サーバタスクの優先度 */
 
-#define HIGH_PRIORITY	9		/* �¹Ԥ˼¹Ԥ���륿������ͥ���� */
+#define HIGH_PRIORITY	9		/* 並行に実行されるタスクの優先度 */
 #define MID_PRIORITY	10
 #define LOW_PRIORITY	11
 
 /*
- *  SERVER�������ؤ��׵�Τ����DTQ�ΥХåե���
+ *  SERVERタスクへの要求のためのDTQのバッファ数
  */
 #define NUM_SERVER_DTQ		10
 
 /*
- *  �������åȤ˰�¸�����ǽ���Τ�����������
+ *  ターゲットに依存する可能性のある定数の定義
  */
 
 #ifndef TASK_PORTID_PRC1
-#define	TASK_PORTID_PRC1		1	/* �ץ����å�1��ʸ�����Ϥ��륷�ꥢ��ݡ���ID */
+#define	TASK_PORTID_PRC1		1	/* プロセッサ1で文字入力するシリアルポートID */
 #endif /* TASK_PORTID_PRC1 */
 
 #ifndef TASK_PORTID_PRC2
-#define	TASK_PORTID_PRC2		2	/* �ץ����å�2��ʸ�����Ϥ��륷�ꥢ��ݡ���ID */
+#define	TASK_PORTID_PRC2		2	/* プロセッサ2で文字入力するシリアルポートID */
 #endif /* TASK_PORTID_PRC2 */
 
 #ifndef TASK_PORTID_PRC3
-#define	TASK_PORTID_PRC3		3	/* �ץ����å�3��ʸ�����Ϥ��륷�ꥢ��ݡ���ID */
+#define	TASK_PORTID_PRC3		3	/* プロセッサ3で文字入力するシリアルポートID */
 #endif /* TASK_PORTID_PRC3 */
 
 #ifndef TASK_PORTID_PRC4
-#define	TASK_PORTID_PRC4		4	/* �ץ����å�4��ʸ�����Ϥ��륷�ꥢ��ݡ���ID */
+#define	TASK_PORTID_PRC4		4	/* プロセッサ4で文字入力するシリアルポートID */
 #endif /* TASK_PORTID_PRC4 */
 
 #ifndef TASK_PORTID_G_SYSLOG
-#define	TASK_PORTID_G_SYSLOG	1	/* G_SYSLOG����ʸ�����Ϥ��륷�ꥢ��ݡ���ID */
+#define	TASK_PORTID_G_SYSLOG	1	/* G_SYSLOG時に文字入力するシリアルポートID */
 #endif /* TASK_PORTID_G_SYSLOG */
 
 #ifndef STACK_SIZE
-#define	STACK_SIZE		4096		/* �������Υ����å������� */
+#define	STACK_SIZE		4096		/* タスクのスタックサイズ */
 #endif /* STACK_SIZE */
 
 #ifndef LOOP_REF
-#define LOOP_REF		ULONG_C(1000000)	/* ®�ٷ�¬�ѤΥ롼�ײ�� */
+#define LOOP_REF		ULONG_C(1000000)	/* 速度計測用のループ回数 */
 #endif /* LOOP_REF */
 
 #ifndef ALM_TIME
@@ -108,7 +108,7 @@
 #endif /* ALMTIM */
 
 /*
- *  �ؿ��Υץ��ȥ��������
+ *  関数のプロトタイプ宣言
  */
 #ifndef TOPPERS_MACRO_ONLY
 

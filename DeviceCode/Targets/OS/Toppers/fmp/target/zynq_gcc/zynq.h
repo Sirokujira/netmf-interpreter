@@ -3,7 +3,7 @@
  *      Toyohashi Open Platform for Embedded Real-Time Systems/
  *      Flexible MultiProcessor Kernel
  *
- *  Copyright (C) 2012-2013 by Embedded and Real-Time Systems Laboratory
+ *  Copyright (C) 2012-2017 by Embedded and Real-Time Systems Laboratory
  *              Graduate School of Information Science, Nagoya Univ., JAPAN
  *
  *  上記著作権者は，以下の(1)〜(4)の条件を満たす場合に限り，本ソフトウェ
@@ -40,7 +40,7 @@
 
 /*
  *  This file contains a few definitions that are specific to
- *  the ZYNQ ZED board, such as the memory address, clock values,
+ *  the ZYNQ ZYBO and ZEDboard, such as the memory address, clock values,
  *  or number of interrupts.
  *
  */
@@ -48,6 +48,174 @@
 #define TOPPERS_ZYNQ_H
 
 #include <sil.h>
+
+#if defined(BOARD_ZYBO)
+
+/*
+ * CPU clocks
+ */
+#define ZYNQ_CPU_6X4X_MHZ     650U
+#define ZYNQ_CPU_3X2X_MHZ     325U
+#define ZYNQ_CPU_2X_MHZ       222U
+#define ZYNQ_CPU_1X_MHZ       111U
+
+#define ZYNQ_CORE_CLK              ZYNQ_CPU_6X4X_MHZ
+#define ZYNQ_PERIPHCLK             ZYNQ_CPU_3X2X_MHZ
+#define MPCORE_GTM_CLOCK_FREQ_MHZ  ZYNQ_PERIPHCLK
+
+/*
+ * Tmer preescaler and load value to achieve 1ms per tick.
+ * Note that the preescaler value must be representable with 8 bits;
+ * and the load value must be a 32bit value.
+ *
+ * Private timers and watchdogs are clocked with PERIPHCLK which is 1/2 of
+ * the CPU frequency. The formula is:
+ *
+ *    period = (preescaler + 1)(load + 1) / PERIPHCLK
+ *      - period    = 1ms
+ *      - periphclk = 325MHz
+ *
+ * For example:
+ *      - preescaler = 0
+ *      - load       = 325000
+ */
+#define MPCORE_WDT_PS_1MS    0U       // preescaler for private watchdog
+#define MPCORE_WDT_LOAD_1MS  325000U  // load value for private watchdog
+
+#define MPCORE_TM_PS_1MS     0U       // preescaler for private timer
+#define MPCORE_TM_LOAD_1MS   325000U  // load value for private timer
+
+/*
+ * Definition of the 115200bps baud rate constants
+ *        rate = clk / (CD * (BDIV + 1))
+ *         clk = MR.CLKSEL? inclk : inclk/8  (e.g. inclk)
+ *       inclk = MR.CCLK? uart_clock : apb clock (e.g. uart_clock=50MHz)
+ */
+#define UART_BAUD_115K          0x7CU
+#define UART_BAUDDIV_115K       0x6U
+
+/*
+ * Memory base address and size
+ */
+#define DDR_ADDR 0x00000000
+#define DDR_SIZE 0x20000000 /* 512MB */
+
+/*
+ *  UART base address definitions (used in target_serial.c)
+ *
+ */
+#ifdef TOPPERS_NOSAFEG
+#define     UART0_BASE  ZYNQ_UART1_BASE
+#define     UART1_BASE  ZYNQ_UART0_BASE
+#else
+#error "SafeG is no supported yet!"
+#endif
+
+/*
+ *  UART interrupt handler definitions (used in target_serial.cfg)
+ *     INHNO: interrupt handler number
+ *     INTNO: interrupt number
+ *     INTPRI: interrupt priority (lower means higher priority)
+ *     INTATR: interrupt attributes (0 means not enabled at the beginning)
+ *
+ */
+#ifdef TOPPERS_NOSAFEG
+#define    INHNO_SIO0  ZYNQ_UART1_IRQ
+#define    INTNO_SIO0  ZYNQ_UART1_IRQ
+#define    INTPRI_SIO0    -3
+#define    INTATR_SIO0     0U
+#define    INHNO_SIO1  ZYNQ_UART0_IRQ
+#define    INTNO_SIO1  ZYNQ_UART0_IRQ
+#define    INTPRI_SIO1    -2
+#define    INTATR_SIO1     0U
+#else
+#error "SafeG is no supported yet!"
+#endif
+
+#elif defined(BOARD_ARDUZYNQ)
+
+/*
+ * CPU clocks
+ */
+#define ZYNQ_CPU_6X4X_MHZ     666U
+#define ZYNQ_CPU_3X2X_MHZ     333U
+#define ZYNQ_CPU_2X_MHZ       222U
+#define ZYNQ_CPU_1X_MHZ       111U
+
+#define ZYNQ_CORE_CLK              ZYNQ_CPU_6X4X_MHZ
+#define ZYNQ_PERIPHCLK             ZYNQ_CPU_3X2X_MHZ
+#define MPCORE_GTM_CLOCK_FREQ_MHZ  ZYNQ_PERIPHCLK
+
+/*
+ * Tmer preescaler and load value to achieve 1ms per tick.
+ * Note that the preescaler value must be representable with 8 bits;
+ * and the load value must be a 32bit value.
+ *
+ * Private timers and watchdogs are clocked with PERIPHCLK which is 1/2 of
+ * the CPU frequency. The formula is:
+ *
+ *    period = (preescaler + 1)(load + 1) / PERIPHCLK
+ *      - period    = 1ms
+ *      - periphclk = 325MHz
+ *
+ * For example:
+ *      - preescaler = 0
+ *      - load       = 325000
+ */
+#define MPCORE_WDT_PS_1MS    0U       // preescaler for private watchdog
+#define MPCORE_WDT_LOAD_1MS  333000U  // load value for private watchdog
+
+#define MPCORE_TM_PS_1MS     0U       // preescaler for private timer
+#define MPCORE_TM_LOAD_1MS   333000U  // load value for private timer
+
+/*
+ * Definition of the 115200bps baud rate constants
+ *        rate = clk / (CD * (BDIV + 1))
+ *         clk = MR.CLKSEL? inclk : inclk/8  (e.g. inclk)
+ *       inclk = MR.CCLK? uart_clock : apb clock (e.g. uart_clock=50MHz)
+ */
+#define UART_BAUD_115K          0x7CU
+#define UART_BAUDDIV_115K       0x06U
+
+/*
+ * Memory base address and size
+ */
+#define DDR_ADDR 0x00000000
+#define DDR_SIZE 0x20000000 /* 512MB */
+
+/*
+ *  UART base address definitions (used in target_serial.c)
+ *
+ */
+#ifdef TOPPERS_NOSAFEG
+#define     UART0_BASE  ZYNQ_UART0_BASE
+#define     UART1_BASE  ZYNQ_UART1_BASE
+#else
+#error "SafeG is no supported yet!"
+#endif
+
+/*
+ *  UART interrupt handler definitions (used in target_serial.cfg)
+ *     INHNO: interrupt handler number
+ *     INTNO: interrupt number
+ *     INTPRI: interrupt priority (lower means higher priority)
+ *     INTATR: interrupt attributes (0 means not enabled at the beginning)
+ *
+ */
+#ifdef TOPPERS_NOSAFEG
+#define    INHNO_SIO0  ZYNQ_UART0_IRQ
+#define    INTNO_SIO0  ZYNQ_UART0_IRQ
+#define    INTPRI_SIO0    -3
+#define    INTATR_SIO0     0U
+#define    INHNO_SIO1  ZYNQ_UART1_IRQ
+#define    INTNO_SIO1  ZYNQ_UART1_IRQ
+#define    INTPRI_SIO1    -2
+#define    INTATR_SIO1     0U
+#else
+#error "SafeG is no supported yet!"
+#endif
+
+#elif defined(BOARD_ZEDBOARD)
 
 /*
  * CPU clocks
@@ -59,7 +227,7 @@
 
 #define ZYNQ_CORE_CLK              ZYNQ_CPU_6X4X_MHZ
 #define ZYNQ_PERIPHCLK             ZYNQ_CPU_3X2X_MHZ
-#define MPCORE_GTC_CLOCK_FREQ_MHZ  ZYNQ_PERIPHCLK
+#define MPCORE_GTM_CLOCK_FREQ_MHZ  ZYNQ_PERIPHCLK
 
 /*
  * Tmer preescaler and load value to achieve 1ms per tick.
@@ -89,6 +257,91 @@
 #endif /* TOPPERS_ENABLE_QEMU */
 
 /*
+ * Definition of the 115200bps baud rate constants
+ *        rate = clk / (CD * (BDIV + 1))
+ *         clk = MR.CLKSEL? inclk : inclk/8  (e.g. inclk)
+ *       inclk = MR.CCLK? uart_clock : apb clock (e.g. uart_clock=50MHz)
+ *
+ * Note: Linux values(in Zedboard)
+ *   XUARTPS_BAUDGEN_REG: 0x3E
+ *   XUARTPS_BAUDDIV_REG: 0x6
+ *   XUARTPS_MR_REG: 0x20
+ *   XUARTPS_RXWM_REG: 0x20
+ *   XUARTPS_RXTOUT_REG: 0xA
+ *   XUARTPS_CR_REG: 0x114
+ */
+#define UART_BAUD_115K          0x56  /* 0x56 (50MHz) or 0x11 (33.3MHz) */
+#define UART_BAUDDIV_115K       0x4   /* 0x4 (50MHz) or 0x6 (33.3MHz) */
+
+/*
+ * Memory base address and size
+ */
+#define DDR_ADDR 0x00000000
+#define DDR_SIZE 0x20000000 /* 512MB */
+
+/*
+ *  UART base address definitions (used in target_serial.c)
+ *
+ *  Note: When using SafeG, G_SYSLOG is defined (see Makefile.target) so
+ *  we select a single UART for each world (e.g. Secure uses UART0
+ *  and Nonsecure uses UART1).
+ */
+#ifdef TOPPERS_NOSAFEG
+#define     UART0_BASE  ZYNQ_UART1_BASE
+#define     UART1_BASE  ZYNQ_UART0_BASE
+#elif defined(TOPPERS_SAFEG_SECURE)
+#define     UART0_BASE  ZYNQ_UART0_BASE
+#elif defined(TOPPERS_SAFEG_NONSECURE)
+#define     UART0_BASE  ZYNQ_UART1_BASE
+#else
+#error "Check your Makefile.target"
+#endif
+
+/*
+ *  UART interrupt handler definitions (used in target_serial.cfg)
+ *     INHNO: interrupt handler number
+ *     INTNO: interrupt number
+ *     INTPRI: interrupt priority (lower means higher priority)
+ *     INTATR: interrupt attributes (0 means not enabled at the beginning)
+ *
+ *  Note: When using SafeG, G_SYSLOG is defined (see Makefile.target) so
+ *  we select a single UART for each world (e.g. Secure uses UART0
+ *  and Nonsecure uses UART1).
+ */
+#ifdef TOPPERS_NOSAFEG
+#define    INHNO_SIO0  ZYNQ_UART1_IRQ
+#define    INTNO_SIO0  ZYNQ_UART1_IRQ
+#define    INTPRI_SIO0    -3
+#define    INTATR_SIO0     0U
+#define    INHNO_SIO1  ZYNQ_UART0_IRQ
+#define    INTNO_SIO1  ZYNQ_UART0_IRQ
+#define    INTPRI_SIO1    -2
+#define    INTATR_SIO1     0U
+#elif defined(TOPPERS_SAFEG_SECURE)
+#define    INHNO_SIO0  ZYNQ_UART0_IRQ
+#define    INTNO_SIO0  ZYNQ_UART0_IRQ
+#define    INTPRI_SIO0    -19
+#define    INTATR_SIO0     0U
+#elif defined(TOPPERS_SAFEG_NONSECURE)
+#define    INHNO_SIO0  ZYNQ_UART1_IRQ
+#define    INTNO_SIO0  ZYNQ_UART1_IRQ
+#define    INTPRI_SIO0    -2
+#define    INTATR_SIO0     0U
+#else
+#error "Check your Makefile.target"
+#endif
+
+
+/*
+ *  Map the UART0 to MIO 10-11
+ */
+#define UART0_MIO10_11
+
+#else
+#error Specifi target board.
+#endif 
+
+/*
  * Available UARTs
  */
 #define ZYNQ_UART0_BASE 0xE0000000
@@ -97,24 +350,27 @@
 #define ZYNQ_UART1_IRQ  (82)
 
 /*
- * Memory base address and size
- */
-#define DDR_ADDR 0x00000000
-#define DDR_SIZE 0x10000000 /* 256MB */
-
-/*
  *  MPCore Private Memory Region Base Address (Table 4.7 in ZYNQ manual)
  */
 #define MPCORE_PMR_BASE  0xF8F00000
+
+/*
+ *  GIC Base Address
+ */
+#define GICC_BASE		(MPCORE_PMR_BASE + 0x0100)
+#define GICD_BASE		(MPCORE_PMR_BASE + 0x1000)
 
 /*
  *  Number of interrupts supported by the GICv1.0 in this board. Note
  *  that these values could be obtained dynamically from the corresponding
  *  GIC register.
  */
-#define DIC_TMIN_INTNO    0U
-#define DIC_TMAX_INTNO   95U // maximum interrupt ID
-#define DIC_TNUM_INT     96U // maximum number of interrupts
+#define GIC_TNUM_INTNO		96U
+
+/*
+ *  L2(PL310) Base Address
+ */
+#define PL310_L2CACHE_BASE	0xF8F02000
 
 #ifndef TOPPERS_MACRO_ONLY
 

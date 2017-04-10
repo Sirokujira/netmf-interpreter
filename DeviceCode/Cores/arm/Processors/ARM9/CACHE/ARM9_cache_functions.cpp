@@ -2,7 +2,7 @@
 // Copyright (c) Microsoft Corporation.  All rights reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include <Cores\arm\Include\cpu.h>
+#include <Cores\arm\Processors\ARM9\include\cpu.h>
 
 // the arm3.0 compiler optimizes out much of the boot strap code which causes
 // the device not to boot for RTM builds (optimization level 3), adding this pragma 

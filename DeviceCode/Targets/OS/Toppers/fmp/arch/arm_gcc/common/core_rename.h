@@ -27,6 +27,10 @@
 #define exit_and_dispatch			_kernel_exit_and_dispatch
 #define call_exit_kernel			_kernel_call_exit_kernel
 #define default_exc_handler			_kernel_default_exc_handler
+#define default_undef_handler		_kernel_default_undef_handler
+#define default_swi_handler			_kernel_default_swi_handler
+#define default_prefetchabort_handler	_kernel_default_prefetchabort_handler
+#define default_dataabort_handler	_kernel_default_dataabort_handler
 #define dispatch_and_migrate		_kernel_dispatch_and_migrate
 #define exit_and_migrate			_kernel_exit_and_migrate
 #define ret_int_ipi_dispatch		_kernel_ret_int_ipi_dispatch
@@ -47,6 +51,9 @@
  */
 #define p_accb_table				_kernel_p_accb_table
 #define p_exch_table				_kernel_p_exch_table
+#define p_inh_table					_kernel_p_inh_table
+#define p_private_cfgint_table		_kernel_p_private_cfgint_table
+#define global_cfgint_table			_kernel_global_cfgint_table
 
 #ifdef TOPPERS_LABEL_ASM
 
@@ -74,6 +81,10 @@
 #define _exit_and_dispatch			__kernel_exit_and_dispatch
 #define _call_exit_kernel			__kernel_call_exit_kernel
 #define _default_exc_handler		__kernel_default_exc_handler
+#define _default_undef_handler		__kernel_default_undef_handler
+#define _default_swi_handler		__kernel_default_swi_handler
+#define _default_prefetchabort_handler	__kernel_default_prefetchabort_handler
+#define _default_dataabort_handler	__kernel_default_dataabort_handler
 #define _dispatch_and_migrate		__kernel_dispatch_and_migrate
 #define _exit_and_migrate			__kernel_exit_and_migrate
 #define _ret_int_ipi_dispatch		__kernel_ret_int_ipi_dispatch
@@ -94,6 +105,9 @@
  */
 #define _p_accb_table				__kernel_p_accb_table
 #define _p_exch_table				__kernel_p_exch_table
+#define _p_inh_table				__kernel_p_inh_table
+#define _p_private_cfgint_table		__kernel_p_private_cfgint_table
+#define _global_cfgint_table		__kernel_global_cfgint_table
 
 #endif /* TOPPERS_LABEL_ASM */
 

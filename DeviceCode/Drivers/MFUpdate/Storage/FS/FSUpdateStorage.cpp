@@ -180,7 +180,8 @@ BOOL FSUpdateStorage::InitializeFiles()
             initVolume = TRUE;
         }
         else
-        {
+        {
+
             INT64 size=0, free;
 
             if(FAILED(pVolume->GetSizeInfo( &size, &free )) || size <= 0)

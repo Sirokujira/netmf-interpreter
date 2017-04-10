@@ -3,7 +3,7 @@
  *      Toyohashi Open Platform for Embedded Real-Time Systems/
  *      Flexible MultiProcessor Kernel
  *
- *  Copyright (C) 2006-2013 by Embedded and Real-Time Systems Laboratory
+ *  Copyright (C) 2006-2017 by Embedded and Real-Time Systems Laboratory
  *              Graduate School of Information Science, Nagoya Univ., JAPAN
  *
  *  上記著作権者は，以下の(1)〜(4)の条件を満たす場合に限り，本ソフトウェ
@@ -80,6 +80,17 @@
 #define TCL_1_ONLY     3 /* The same but the task cannot migrate */
 #define TCL_2_ONLY     4 /* The same but the task cannot migrate */
 #define TCL_SYSTIM_PRC 5 /* Used for global system timer event handler */
+
+/*
+ *  Numbers for software generated interrupts SGI
+ */
+#ifdef TOPPERS_SAFEG_SECURE
+#define IPINO_DIS  UINT_C(14)
+#define IPINO_EXT  UINT_C(15)
+#else  /* !TOPPERS_SAFEG_SECURE */
+#define IPINO_DIS  UINT_C(0)
+#define IPINO_EXT  UINT_C(1)
+#endif /* TOPPERS_SAFEG_SECURE */
 
 /*
  *  SafeG COM shared memory address and size

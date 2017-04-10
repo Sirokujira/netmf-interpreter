@@ -1,0 +1,18 @@
+<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Directory>DeviceCode\Targets\Native\Interop\CQ_NETMF_LCD</Directory>
+    <AssemblyName>CQ_NETMF_LCD</AssemblyName>
+  </PropertyGroup>
+  <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Settings" />
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+  </PropertyGroup>
+<ItemGroup>
+<HFile Include="CQ_NETMF_LCD.h" />
+<Compile Include="CQ_NETMF_LCD.cpp" />
+<Compile Include="CQ_NETMF_LCD_CQ_NETMF_LCD_LCDDevice_mshl.cpp" />
+<HFile Include="CQ_NETMF_LCD_CQ_NETMF_LCD_LCDDevice.h" />
+<Compile Include="CQ_NETMF_LCD_CQ_NETMF_LCD_LCDDevice.cpp" />
+</ItemGroup>
+<Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Targets" />
+</Project>

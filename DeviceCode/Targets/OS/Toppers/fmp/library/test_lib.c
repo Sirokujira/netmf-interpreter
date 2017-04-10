@@ -5,41 +5,41 @@
  *  Copyright (C) 2005-2015 by Embedded and Real-Time Systems Laboratory
  *              Graduate School of Information Science, Nagoya Univ., JAPAN
  * 
- *  �嵭����Ԥϡ��ʲ���(1)��(4)�ξ������������˸¤ꡤ�ܥ��եȥ���
- *  �����ܥ��եȥ���������Ѥ�����Τ�ޤࡥ�ʲ�Ʊ���ˤ���ѡ�ʣ������
- *  �ѡ������ۡʰʲ������ѤȸƤ֡ˤ��뤳�Ȥ�̵���ǵ������롥
- *  (1) �ܥ��եȥ������򥽡��������ɤη������Ѥ�����ˤϡ��嵭������
- *      ��ɽ�����������Ѿ�浪��Ӳ�����̵�ݾڵ��꤬�����Τޤޤη��ǥ���
- *      ����������˴ޤޤ�Ƥ��뤳�ȡ�
- *  (2) �ܥ��եȥ������򡤥饤�֥������ʤɡ�¾�Υ��եȥ�������ȯ�˻�
- *      �ѤǤ�����Ǻ����ۤ�����ˤϡ������ۤ�ȼ���ɥ�����ȡ�����
- *      �ԥޥ˥奢��ʤɡˤˡ��嵭�����ɽ�����������Ѿ�浪��Ӳ���
- *      ��̵�ݾڵ����Ǻܤ��뤳�ȡ�
- *  (3) �ܥ��եȥ������򡤵�����Ȥ߹���ʤɡ�¾�Υ��եȥ�������ȯ�˻�
- *      �ѤǤ��ʤ����Ǻ����ۤ�����ˤϡ����Τ����줫�ξ�����������
- *      �ȡ�
- *    (a) �����ۤ�ȼ���ɥ�����ȡ����Ѽԥޥ˥奢��ʤɡˤˡ��嵭����
- *        �ɽ�����������Ѿ�浪��Ӳ�����̵�ݾڵ����Ǻܤ��뤳�ȡ�
- *    (b) �����ۤη��֤��̤�������ˡ�ˤ�äơ�TOPPERS�ץ��������Ȥ�
- *        ��𤹤뤳�ȡ�
- *  (4) �ܥ��եȥ����������Ѥˤ��ľ��Ū�ޤ��ϴ���Ū�������뤤���ʤ�»
- *      ������⡤�嵭����Ԥ����TOPPERS�ץ��������Ȥ����դ��뤳�ȡ�
- *      �ޤ����ܥ��եȥ������Υ桼���ޤ��ϥ���ɥ桼������Τ����ʤ���
- *      ͳ�˴�Ť����ᤫ��⡤�嵭����Ԥ����TOPPERS�ץ��������Ȥ�
- *      ���դ��뤳�ȡ�
+ *  上記著作権者は，以下の(1)～(4)の条件を満たす場合に限り，本ソフトウェ
+ *  ア（本ソフトウェアを改変したものを含む．以下同じ）を使用・複製・改
+ *  変・再配布（以下，利用と呼ぶ）することを無償で許諾する．
+ *  (1) 本ソフトウェアをソースコードの形で利用する場合には，上記の著作
+ *      権表示，この利用条件および下記の無保証規定が，そのままの形でソー
+ *      スコード中に含まれていること．
+ *  (2) 本ソフトウェアを，ライブラリ形式など，他のソフトウェア開発に使
+ *      用できる形で再配布する場合には，再配布に伴うドキュメント（利用
+ *      者マニュアルなど）に，上記の著作権表示，この利用条件および下記
+ *      の無保証規定を掲載すること．
+ *  (3) 本ソフトウェアを，機器に組み込むなど，他のソフトウェア開発に使
+ *      用できない形で再配布する場合には，次のいずれかの条件を満たすこ
+ *      と．
+ *    (a) 再配布に伴うドキュメント（利用者マニュアルなど）に，上記の著
+ *        作権表示，この利用条件および下記の無保証規定を掲載すること．
+ *    (b) 再配布の形態を，別に定める方法によって，TOPPERSプロジェクトに
+ *        報告すること．
+ *  (4) 本ソフトウェアの利用により直接的または間接的に生じるいかなる損
+ *      害からも，上記著作権者およびTOPPERSプロジェクトを免責すること．
+ *      また，本ソフトウェアのユーザまたはエンドユーザからのいかなる理
+ *      由に基づく請求からも，上記著作権者およびTOPPERSプロジェクトを
+ *      免責すること．
  * 
- *  �ܥ��եȥ������ϡ�̵�ݾڤ��󶡤���Ƥ����ΤǤ��롥�嵭����Ԥ�
- *  ���TOPPERS�ץ��������Ȥϡ��ܥ��եȥ������˴ؤ��ơ�����λ�����Ū
- *  ���Ф���Ŭ������ޤ�ơ������ʤ��ݾڤ�Ԥ�ʤ����ޤ����ܥ��եȥ���
- *  �������Ѥˤ��ľ��Ū�ޤ��ϴ���Ū�������������ʤ�»���˴ؤ��Ƥ⡤��
- *  ����Ǥ�����ʤ���
+ *  本ソフトウェアは，無保証で提供されているものである．上記著作権者お
+ *  よびTOPPERSプロジェクトは，本ソフトウェアに関して，特定の使用目的
+ *  に対する適合性も含めて，いかなる保証も行わない．また，本ソフトウェ
+ *  アの利用により直接的または間接的に生じたいかなる損害に関しても，そ
+ *  の責任を負わない．
  * 
- *  @(#) $Id: test_lib.c 514 2010-02-01 09:42:03Z ertl-honda $
+ *  @(#) $Id: test_lib.c 1203 2016-07-18 07:05:08Z ertl-honda $
  */
 
 
 /* 
- *		�ƥ��ȥץ�������ѥ饤�֥��
+ *		テストプログラム用ライブラリ
  */
 
 #include <kernel.h>
@@ -52,17 +52,17 @@
 #include <test_lib.h>
 
 /*
- *  �����å��ݥ�����̲ᥫ������ѿ��������Ǥ򡤣��ǽ��������뤳�Ȥ�����
+ *  チェックポイント通過カウント変数配列要素を，０で初期化されることを想定
  */ 
 static ID	check_count[TNUM_PRCID];
 
 /*
- *	���ʿ��Ǵؿ�
+ *	自己診断関数
  */
 static BIT_FUNC	check_bit_func = NULL;
 
 /*
- *	���ʿ��Ǵؿ�������
+ *	自己診断関数の設定
  */
 void
 set_bit_func(BIT_FUNC bit_func)
@@ -71,7 +71,7 @@ set_bit_func(BIT_FUNC bit_func)
 }
 
 /*
- *  �ƥ��ȥץ������γ���
+ *  テストプログラムの開始
  */
 void
 test_start(char *progname)
@@ -80,7 +80,7 @@ test_start(char *progname)
 }
 
 /*
- *  �����ƥ�����ν��Ͻ���
+ *  システムログの出力処理
  */
 void
 syslog_flush(void)
@@ -89,8 +89,8 @@ syslog_flush(void)
 	ER_UINT	rercd;
 
 	/*
-	 *  �����Хåե��˵�Ͽ���줿������������٥���ϵ�ǽ���Ѥ��ƽ�
-	 *  �Ϥ��롥
+	 *  ログバッファに記録されたログ情報を，低レベル出力機能を用いて出
+	 *  力する．
 	 */
 	while ((rercd = syslog_rea_log(&logbuf)) >= 0) {
 		if (rercd > 0) {
@@ -104,7 +104,7 @@ syslog_flush(void)
 }
 
 /*
- *	�ƥ��ȥץ������ν�λ
+ *	テストプログラムの終了
  */
 void
 test_finish(void)
@@ -117,7 +117,7 @@ test_finish(void)
 }
 
 /*
- *	�����å��ݥ����
+ *	チェックポイント
  */
 
 void
@@ -130,17 +130,17 @@ check_point(uint_t count)
 	SIL_PRE_LOC;
 
 	/*
-	 *  ����ߥ��å����֤�
+	 *  割込みロック状態に
 	 */
 	SIL_LOC_INT();
 
 	/*
-	 *  PRCID����
+	 *  PRCID取得
 	 */
 	sil_get_pid(&prcid);
 
 	/*
-	 *  �������󥹥����å�
+	 *  シーケンスチェック
 	 */
 	if (++check_count[prcid-1] == count) {
 		syslog_2(LOG_NOTICE, "PE %d : Check point %d passed.", prcid, count);
@@ -151,7 +151,7 @@ check_point(uint_t count)
 	}
 
 	/*
-	 *  �����ͥ���������֤θ���
+	 *  カーネルの内部状態の検査
 	 */
 	if (check_bit_func != NULL) {
 		rercd = (*check_bit_func)();
@@ -163,26 +163,26 @@ check_point(uint_t count)
 	}
 
 	/*
-	 *  ���顼�����Ф��줿���ϡ��ƥ��ȥץ�������λ���롥
+	 *  エラーが検出された場合は，テストプログラムを終了する．
 	 */
 	if (errorflag) {
 		test_finish();
 	}
 
 	/*
-	 *  ����ߥ��å����֤���
+	 *  割込みロック状態を解除
 	 */
 	SIL_UNL_INT();
 }
 
 /*
- *	��λ�����å��ݥ���ȤǤ�Ʊ�����ѿ�
+ *	完了チェックポイントでの同期用変数
  */
 static volatile uint_t check_finish_enter[TNUM_PRCID];
 static volatile uint_t check_finish_leave;
 
 /*
- *	��λ�����å��ݥ����
+ *	完了チェックポイント
  */
 void
 check_finish(uint_t count)
@@ -192,7 +192,7 @@ check_finish(uint_t count)
 	ID       prcid;
 
 	/*
-	 *  PRCID����
+	 *  PRCID取得
 	 */
 	sil_get_pid(&prcid);
 
@@ -200,7 +200,7 @@ check_finish(uint_t count)
 	syslog_1(LOG_NOTICE, "PE %d : All check points passed.", prcid);
 
 	/*
-	 * ext_ker()ȯ���������ץ����å���Ʊ����Ȥ�
+	 * ext_ker()発行前に全プロセッサの同期をとる
 	 */
 	check_finish_enter[prcid - 1] = 1;
 
@@ -225,7 +225,7 @@ check_finish(uint_t count)
 	test_finish();
 }
 /*
- *	�������å��Υ��顼����
+ *	条件チェックのエラー処理
  */
 void
 _check_assert(const char *expr, const char *file, int_t line)
@@ -236,7 +236,7 @@ _check_assert(const char *expr, const char *file, int_t line)
 }
 
 /*
- *	���顼�����ɥ����å��Υ��顼����
+ *	エラーコードチェックのエラー処理
  */
 void
 _check_ercd(ER ercd, const char *file, int_t line)
@@ -247,13 +247,13 @@ _check_ercd(ER ercd, const char *file, int_t line)
 }
 
 /*
- *  �ХꥢƱ�����ѿ�
+ *  バリア同期用変数
  */
 static volatile uint_t local_phase[TNUM_PRCID];
 static volatile uint_t global_phase;
 
 /*
- *  �ХꥢƱ��
+ *  バリア同期
  */
 void
 barrier_sync(uint_t phase)
@@ -265,13 +265,13 @@ barrier_sync(uint_t phase)
 	SIL_PRE_LOC;
 
 	/*
-	 *  ����ߥ��å����֤�
+	 *  割込みロック状態に
 	 */
 	SIL_LOC_INT();
 
 	/*
-	 *  PRCID����
-	 *  �ɤΤ褦�ʾ��֤Ǥ�����Ǥ���褦�� sil_get_pid() ����Ѥ��롥
+	 *  PRCID取得
+	 *  どのような状態でも取得できるように sil_get_pid() を使用する．
 	 */
 	sil_get_pid(&prcid);
 
@@ -296,7 +296,7 @@ barrier_sync(uint_t phase)
 	}
 
 	/*
-	 *  ����ߥ��å����֤���
+	 *  割込みロック状態を解除
 	 */
 	SIL_UNL_INT();
 }

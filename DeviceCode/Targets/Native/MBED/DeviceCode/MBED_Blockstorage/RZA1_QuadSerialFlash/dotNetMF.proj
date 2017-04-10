@@ -1,0 +1,59 @@
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <AssemblyName>RZA1_QuadSerialFlash_BL_Driver</AssemblyName>
+    <ProjectGuid>{14372E51-6C6C-44FD-A10C-EDE01558554A}</ProjectGuid>
+    <Size>
+    </Size>
+    <Description>RZA1 QuadSerialFlash Driver</Description>
+    <Level>HAL</Level>
+    <LibraryFile>RZA1_QuadSerialFlash_BL_Driver.$(LIB_EXT)</LibraryFile>
+    <ProjectPath>$(SPOCLIENT)\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_BlockStorage\RZA1_QuadSerialFlash\dotNetMF.proj</ProjectPath>
+    <ManifestFile>RZA1_QuadSerialFlash_BL_Driver.$(LIB_EXT).manifest</ManifestFile>
+    <Groups>Processor\MBED</Groups>
+    <LibraryCategory>
+      <MFComponent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="USB_HAL" Guid="{D5D07F9F-0BB9-4077-836B-580C4E7A734C}" ProjectPath="" Conditional="" xmlns="">
+        <VersionDependency xmlns="http://schemas.microsoft.com/netmf/InventoryFormat.xsd">
+          <Major>1</Major>
+          <Minor>0</Minor>
+          <Revision>0</Revision>
+          <Build>0</Build>
+          <Extra />
+          <Date>2009-05-19</Date>
+        </VersionDependency>
+        <ComponentType xmlns="http://schemas.microsoft.com/netmf/InventoryFormat.xsd">LibraryCategory</ComponentType>
+      </MFComponent>
+    </LibraryCategory>
+    <Documentation>
+    </Documentation>
+    <PlatformIndependent>False</PlatformIndependent>
+    <CustomFilter>
+    </CustomFilter>
+    <Required>False</Required>
+    <IgnoreDefaultLibPath>False</IgnoreDefaultLibPath>
+    <IsStub>False</IsStub>
+    <Directory>DeviceCode\Targets\Native\MBED\DeviceCode\MBED_BlockStorage\RZA1_QuadSerialFlash</Directory>
+    <OutputType>Library</OutputType>
+    <PlatformIndependentBuild>false</PlatformIndependentBuild>
+    <Version>1.0.0.0</Version>
+  </PropertyGroup>
+  <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Settings" />
+  <PropertyGroup />
+  <ItemGroup>
+    <HFiles Include="RZA1_QuadSerialFlash.h" />
+    <HFiles Include="r_spibsc_flash_api.h" />
+    <HFiles Include="r_spibsc_ioset_api.h" />
+    <HFiles Include="sflash.h" />
+    <HFiles Include="spibsc.h" />
+    <HFiles Include="Flash.h" />
+    <Compile Include="RZA1_QuadSerialFlash.cpp" />
+    <Compile Include="spibsc_flash_api.c" />
+    <Compile Include="spibsc_flash_userdef.c" />
+    <Compile Include="spibsc_ioset_api.c" />
+    <Compile Include="spibsc_ioset_drv.c" />
+    <Compile Include="spibsc_ioset_userdef.c" />
+    <Compile Include="Flash_Routine.c" />
+    <Compile Include="rza_io_regrw.c" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Targets" />
+</Project>

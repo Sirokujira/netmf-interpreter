@@ -73,4 +73,4 @@ $CLASS_OBJ_LOCK[5] = TOPPERS_SYSTIM_PRCID$
 $
 $  Include chip template
 $
-$INCLUDE"../../arch/arm_gcc/mpcore/ca9.tf"$
+$INCLUDE"../../arch/arm_gcc/mpcore/chip.tf"$

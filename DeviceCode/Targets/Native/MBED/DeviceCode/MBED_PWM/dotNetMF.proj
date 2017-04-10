@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" >
+  <PropertyGroup>
+    <AssemblyName>MBED_PWM</AssemblyName>
+    <ProjectGuid>{E1D0393F-0B42-41A6-B02E-DDBE0EDC01E6}</ProjectGuid>
+    <Size />
+    <Description>MBED PWM driver</Description>
+    <Level>HAL</Level>
+    <LibraryFile>MBED_PWM.$(LIB_EXT)</LibraryFile>
+    <ProjectPath>$(SPOCLIENT)\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_PWM\dotNetMF.proj</ProjectPath>
+    <ManifestFile>MBED_PWM.$(LIB_EXT).manifest</ManifestFile>
+    <Directory>DeviceCode\Targets\Native\MBED\DeviceCode\MBED_PWM</Directory>
+    <OutputType>Library</OutputType>
+    <Groups>Processor\MBED</Groups>
+    <LibraryCategory>
+<MFComponent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="PWM_HAL" Guid="{53DABCD1-8C9D-485c-8C48-8ECEE7D27453}" ProjectPath="$(SPOCLIENT)\Framework\Features\PWM_HAL.libcatproj" Conditional="" xmlns="">
+  <VersionDependency xmlns="http://schemas.microsoft.com/netmf/InventoryFormat.xsd">
+    <Major>4</Major>
+    <Minor>0</Minor>
+    <Revision>0</Revision>
+    <Build>0</Build>
+    <Extra />
+    <Date>2011-09-15</Date>
+    <Author />
+  </VersionDependency>
+  <ComponentType xmlns="http://schemas.microsoft.com/netmf/InventoryFormat.xsd">LibraryCategory</ComponentType>
+</MFComponent></LibraryCategory>
+    <ProcessorSpecific>
+      <MFComponent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="MBED" Guid="{72DD54F4-314F-4401-BDB7-9E03363A9310}" ProjectPath="" Conditional="" xmlns="">
+        <VersionDependency xmlns="http://schemas.microsoft.com/netmf/InventoryFormat.xsd">
+          <Major>4</Major>
+          <Minor>0</Minor>
+          <Revision>0</Revision>
+          <Build>0</Build>
+          <Extra />
+          <Date>2011-09-15</Date>
+          <Author />
+        </VersionDependency>
+        <ComponentType xmlns="http://schemas.microsoft.com/netmf/InventoryFormat.xsd">Processor</ComponentType>
+      </MFComponent>
+    </ProcessorSpecific>
+    <Documentation />
+    <PlatformIndependent>False</PlatformIndependent>
+    <CustomFilter />
+    <Required>False</Required>
+    <IgnoreDefaultLibPath>False</IgnoreDefaultLibPath>
+    <IsStub>False</IsStub>
+    <IsSolutionWizardVisible>True</IsSolutionWizardVisible>
+    <HasLibraryCategory>True</HasLibraryCategory>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemGroup>
+    <Compile Include="MBED_PWM.cpp" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Settings" />
+  <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Targets" />
+</Project>

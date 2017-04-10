@@ -1,9 +1,9 @@
 $
-$       ¥ª¥Õ¥»¥Ã¥È¥Õ¥¡¥¤¥ëÀ¸À®ÍÑ¥Æ¥ó¥×¥ì¡¼¥È¥Õ¥¡¥¤¥ë¡ÊARMÍÑ¡Ë
+$       ã‚ªãƒ•ã‚»ãƒƒãƒˆãƒ•ã‚¡ã‚¤ãƒ«ç”Ÿæˆç”¨ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ï¼ˆARMç”¨ï¼‰
 $
 
 $
-$  ¥ª¥Õ¥»¥Ã¥ÈÃÍ¤Î¥Ş¥¯¥íÄêµÁ¤ÎÀ¸À®
+$  ã‚ªãƒ•ã‚»ãƒƒãƒˆå€¤ã®ãƒã‚¯ãƒ­å®šç¾©ã®ç”Ÿæˆ
 $
 $DEFINE("TCB_p_tinib", offsetof_TCB_p_tinib)$
 $DEFINE("TCB_texptn", offsetof_TCB_texptn)$
@@ -20,9 +20,20 @@ $DEFINE("PCB_ipmflg", offsetof_PCB_ipmflg)$
 $DEFINE("PCB_disdsp", offsetof_PCB_disdsp)$
 $DEFINE("PCB_dspflg", offsetof_PCB_dspflg)$
 
+$DEFINE("PCB_p_firstlock", offsetof_PCB_p_firstlock)$
+$DEFINE("PCB_p_secondlock", offsetof_PCB_p_secondlock)$
+$DEFINE("PCB_locspnid", offsetof_PCB_locspnid)$
+
+$DEFINE("PCB_excpt_nest_count", offsetof_PCB_excpt_nest_count)$
+$DEFINE("PCB_istkpt", offsetof_PCB_istkpt)$
+$DEFINE("PCB_p_exch_tbl", offsetof_PCB_p_exch_tbl)$
+
+$DEFINE("PCB_saved_iipm", offsetof_PCB_saved_iipm)$
+$DEFINE("PCB_lock_flag", offsetof_PCB_lock_flag)$
+
 $DEFINE("EXC_FRAME_cpsr", offsetof_EXC_FRAME_cpsr)$
 
 $
-$  ¥Ó¥Ã¥È¥ª¥Õ¥»¥Ã¥ÈÃÍÅù¤Î¥Ş¥¯¥íÄêµÁ¤ÎÀ¸À®
+$  ãƒ“ãƒƒãƒˆã‚ªãƒ•ã‚»ãƒƒãƒˆå€¤ç­‰ã®ãƒã‚¯ãƒ­å®šç¾©ã®ç”Ÿæˆ
 $
 $DEFINE_BIT("TCB_enatex", sizeof_TCB, "B")$

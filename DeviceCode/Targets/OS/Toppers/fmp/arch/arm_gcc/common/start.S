@@ -7,49 +7,49 @@
  *  Copyright (C) 2005-2011 by Embedded and Real-Time Systems Laboratory
  *              Graduate School of Information Science, Nagoya Univ., JAPAN
  *
- *  �嵭����Ԥϡ��ʲ���(1)��(4)�ξ������������˸¤ꡤ�ܥ��եȥ���
- *  �����ܥ��եȥ���������Ѥ�����Τ�ޤࡥ�ʲ�Ʊ���ˤ���ѡ�ʣ������
- *  �ѡ������ۡʰʲ������ѤȸƤ֡ˤ��뤳�Ȥ�̵���ǵ������롥
- *  (1) �ܥ��եȥ������򥽡��������ɤη������Ѥ�����ˤϡ��嵭������
- *      ��ɽ�����������Ѿ�浪��Ӳ�����̵�ݾڵ��꤬�����Τޤޤη��ǥ���
- *      ����������˴ޤޤ�Ƥ��뤳�ȡ�
- *  (2) �ܥ��եȥ������򡤥饤�֥������ʤɡ�¾�Υ��եȥ�������ȯ�˻�
- *      �ѤǤ�����Ǻ����ۤ�����ˤϡ������ۤ�ȼ���ɥ�����ȡ�����
- *      �ԥޥ˥奢��ʤɡˤˡ��嵭�����ɽ�����������Ѿ�浪��Ӳ���
- *      ��̵�ݾڵ����Ǻܤ��뤳�ȡ�
- *  (3) �ܥ��եȥ������򡤵�����Ȥ߹���ʤɡ�¾�Υ��եȥ�������ȯ�˻�
- *      �ѤǤ��ʤ����Ǻ����ۤ�����ˤϡ����Τ����줫�ξ�����������
- *      �ȡ�
- *    (a) �����ۤ�ȼ���ɥ�����ȡ����Ѽԥޥ˥奢��ʤɡˤˡ��嵭����
- *        �ɽ�����������Ѿ�浪��Ӳ�����̵�ݾڵ����Ǻܤ��뤳�ȡ�
- *    (b) �����ۤη��֤��̤�������ˡ�ˤ�äơ�TOPPERS�ץ��������Ȥ�
- *        ��𤹤뤳�ȡ�
- *  (4) �ܥ��եȥ����������Ѥˤ��ľ��Ū�ޤ��ϴ���Ū�������뤤���ʤ�»
- *      ������⡤�嵭����Ԥ����TOPPERS�ץ��������Ȥ����դ��뤳�ȡ�
- *      �ޤ����ܥ��եȥ������Υ桼���ޤ��ϥ���ɥ桼������Τ����ʤ���
- *      ͳ�˴�Ť����ᤫ��⡤�嵭����Ԥ����TOPPERS�ץ��������Ȥ�
- *      ���դ��뤳�ȡ�
+ *  上記著作権者は，以下の(1)～(4)の条件を満たす場合に限り，本ソフトウェ
+ *  ア（本ソフトウェアを改変したものを含む．以下同じ）を使用・複製・改
+ *  変・再配布（以下，利用と呼ぶ）することを無償で許諾する．
+ *  (1) 本ソフトウェアをソースコードの形で利用する場合には，上記の著作
+ *      権表示，この利用条件および下記の無保証規定が，そのままの形でソー
+ *      スコード中に含まれていること．
+ *  (2) 本ソフトウェアを，ライブラリ形式など，他のソフトウェア開発に使
+ *      用できる形で再配布する場合には，再配布に伴うドキュメント（利用
+ *      者マニュアルなど）に，上記の著作権表示，この利用条件および下記
+ *      の無保証規定を掲載すること．
+ *  (3) 本ソフトウェアを，機器に組み込むなど，他のソフトウェア開発に使
+ *      用できない形で再配布する場合には，次のいずれかの条件を満たすこ
+ *      と．
+ *    (a) 再配布に伴うドキュメント（利用者マニュアルなど）に，上記の著
+ *        作権表示，この利用条件および下記の無保証規定を掲載すること．
+ *    (b) 再配布の形態を，別に定める方法によって，TOPPERSプロジェクトに
+ *        報告すること．
+ *  (4) 本ソフトウェアの利用により直接的または間接的に生じるいかなる損
+ *      害からも，上記著作権者およびTOPPERSプロジェクトを免責すること．
+ *      また，本ソフトウェアのユーザまたはエンドユーザからのいかなる理
+ *      由に基づく請求からも，上記著作権者およびTOPPERSプロジェクトを
+ *      免責すること．
  *
- *  �ܥ��եȥ������ϡ�̵�ݾڤ��󶡤���Ƥ����ΤǤ��롥�嵭����Ԥ�
- *  ���TOPPERS�ץ��������Ȥϡ��ܥ��եȥ������˴ؤ��ơ�����λ�����Ū
- *  ���Ф���Ŭ������ޤ�ơ������ʤ��ݾڤ�Ԥ�ʤ����ޤ����ܥ��եȥ���
- *  �������Ѥˤ��ľ��Ū�ޤ��ϴ���Ū�������������ʤ�»���˴ؤ��Ƥ⡤��
- *  ����Ǥ�����ʤ���
+ *  本ソフトウェアは，無保証で提供されているものである．上記著作権者お
+ *  よびTOPPERSプロジェクトは，本ソフトウェアに関して，特定の使用目的
+ *  に対する適合性も含めて，いかなる保証も行わない．また，本ソフトウェ
+ *  アの利用により直接的または間接的に生じたいかなる損害に関しても，そ
+ *  の責任を負わない．
  *
  *  @(#) $Id: start.S 955 2012-10-30 07:31:22Z ertl-honda $
  */
 
 /*
- *   �����ͥ��ѤΥ������ȥ��åץ⥸�塼��(ARM��)
+ *   カーネル用のスタートアップモジュール(ARM用)
  */
 #define    TOPPERS_MACRO_ONLY
-#define UINT_C(val)		(val)		/* uint_t�����������ޥ��� */
-#define ULONG_C(val)	(val)		/* ulong_t�����������ޥ��� */
+#define UINT_C(val)		(val)		/* uint_t型の定数を作るマクロ */
+#define ULONG_C(val)	(val)		/* ulong_t型の定数を作るマクロ */
 #include "kernel_impl.h"
 #include "target_asm.inc"
 
 /*
- *  Ʊ���ѤΥޥ��å��ʥ�С�
+ *  同期用のマジックナンバー
  */
 #define MAGIC_START 0x87654321
 
@@ -58,25 +58,25 @@
     AGLOBAL(start)
 ALABEL(start)
     /*
-     *  �ץ����å��⡼�ɤν����
-     *  �����ѡ��Х������⡼�ɡ�FIQ/IRQ�ػ�
+     *  プロセッサモードの初期化
+     *  スーパーバイザーモード，FIQ/IRQ禁止
      */
     msr  cpsr_cxsf, #(CPSR_SVC AOR CPSR_INTLOCK)
 
     /*
-     *  �����å��ݥ��󥿤ȡ��ե졼��ݥ��󥿤ν����
-     *  sl(�����å���¥쥸����r10)�����ꤹ��ɬ�פ����뤫?
-     *  gcc�ϥǥ��ե���ȤǤ�-mapcs�ʤΤ�ɬ�פʤ�
+     *  スタックポインタと，フレームポインタの初期化
+     *  sl(スタック上限レジスタr10)は設定する必要があるか?
+     *  gccはディフォルトでは-mapcsなので必要ない
      */
     my_istkpt sp, r0   /* FMP */
-    mov  fp, #0        /* ARM�⡼���ѥե졼��ݥ���(r11) */
-    mov  r7, #0        /* Thumb�⡼���ѥե졼��ݥ���    */
+    mov  fp, #0        /* ARMモード用フレームポインタ(r11) */
+    mov  r7, #0        /* Thumbモード用フレームポインタ    */
 
     /*
-     *  hardware_init_hook�θƤӽФ� ��0�Ǥʤ�����
+     *  hardware_init_hookの呼び出し （0でない場合）
      *
-     *  �������åȥϡ��ɥ������˰�¸����ɬ�פʽ����������������
-     *  �ϡ�hardware_init_hook �Ȥ����ؿ����Ѱդ���
+     *  ターゲットハードウェアに依存して必要な初期化処理がある場合
+     *  は，hardware_init_hook という関数を用意する
      */
     ldr   r0, =hardware_init_hook
     cmp   r0, #0x00
@@ -84,14 +84,14 @@ ALABEL(start)
     bxne  r0
 
     /*
-     *  �ޥ����ץ����å��ʳ��Ͻ�����Ԥ�
+     *  マスタプロセッサ以外は初期化待ち
      */
     my_core_index r0
     cmp  r0, #(TOPPERS_MASTER_PRCID - 1)
     bne  slave_wait
 
     /*
-     *  �ޥ����ץ����å����ѿ�������
+     *  マスタプロセッサは変数を初期化
      */
     ldr  r0, =start_sync
     mov  r1, #0
@@ -99,7 +99,7 @@ ALABEL(start)
 
 #ifndef TOPPERS_OMIT_BSS_INIT
     /*
-     *  bss���������Υ��ꥢ
+     *  bssセクションのクリア
      */
 ALABEL(start_1)
     ldr  r1, =BSS_START
@@ -116,9 +116,9 @@ ALABEL(start_2)
 ALABEL(start_3)
 #ifndef TOPPERS_OMIT_DATA_INIT
     /*
-     *  data���������ν����(ROM���б�)
-     *  IDATA_START ���� IDATA_END �ޤǤ�DATA_START �ʹߤ�
-     *  ���ԡ�����
+     *  dataセクションの初期化(ROM化対応)
+     *  IDATA_START から IDATA_END までを，DATA_START 以降に
+     *  コピーする
      */
     ldr  r1, =IDATA_START
     ldr  r3, =IDATA_END
@@ -133,11 +133,11 @@ ALABEL(start_4)
 #endif /* TOPPERS_OMIT_DATA_INIT */
 
     /*
-     *  software_init_hook ��ƽФ���0 �Ǥʤ�����
+     *  software_init_hook を呼出し（0 でない場合）
      *
-     *  ���եȥ������Ķ����ä˥饤�֥��ˤ˰�¸����ɬ�פʽ������
-     *  ����������ϡ�software_init_hook �Ȥ����ؿ����Ѱդ����
-     *  �褤��
+     *  ソフトウェア環境（特にライブラリ）に依存して必要な初期化処
+     *  理がある場合は，software_init_hook という関数を用意すれば
+     *  よい．
      */
 ALABEL(start_5)
     ldr   r0, =software_init_hook
@@ -146,15 +146,15 @@ ALABEL(start_5)
     bxne  r0
 
     /*
-     *  target_mprc_initialize �θƤӽФ�
+     *  target_mprc_initialize の呼び出し
      *
-     *  sta_ker �����˥ޥ����ץ����å��ΤߤǹԤ�ɬ�פΤ���������¹�
+     *  sta_ker 以前にマスタプロセッサのみで行う必要のある初期化を実行
      */
 ALABEL(start_6)
     bl   target_mprc_initialize
 
     /*
-     *  �����ͥ��ư����
+     *  カーネルを起動する
      */
 ALABEL(start_7)
     ldr  r0, =start_sync
@@ -166,13 +166,13 @@ ALABEL(start_8)
     cmp  r2, #(TNUM_PRCID * 4)
     bne  start_8
 
-    /* �ޥ����ץ����å��Ѥ�start_sync������ */
+    /* マスタプロセッサ用のstart_syncを初期化 */
     my_core_index r1
     str  r2, [r0, r1, lsl #2]
     bl   sta_ker
 
     /*
-     *  �ޥ����ץ����å��ʳ��ν�����Ԥ��롼����
+     *  マスタプロセッサ以外の初期化待ちルーチン
      */
 ALABEL(slave_wait)
     my_core_index r0

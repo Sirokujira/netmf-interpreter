@@ -8,95 +8,63 @@
  *  Copyright (C) 2006-2011 by Embedded and Real-Time Systems Laboratory
  *              Graduate School of Information Science, Nagoya Univ., JAPAN
  *
- *  ¾åµ­Ãøºî¸¢¼Ô¤Ï¡¤°Ê²¼¤Î(1)¡Á(4)¤Î¾ò·ï¤òËş¤¿¤¹¾ì¹ç¤Ë¸Â¤ê¡¤ËÜ¥½¥Õ¥È¥¦¥§
- *  ¥¢¡ÊËÜ¥½¥Õ¥È¥¦¥§¥¢¤ò²şÊÑ¤·¤¿¤â¤Î¤ò´Ş¤à¡¥°Ê²¼Æ±¤¸¡Ë¤ò»ÈÍÑ¡¦Ê£À½¡¦²ş
- *  ÊÑ¡¦ºÆÇÛÉÛ¡Ê°Ê²¼¡¤ÍøÍÑ¤È¸Æ¤Ö¡Ë¤¹¤ë¤³¤È¤òÌµ½ş¤ÇµöÂú¤¹¤ë¡¥
- *  (1) ËÜ¥½¥Õ¥È¥¦¥§¥¢¤ò¥½¡¼¥¹¥³¡¼¥É¤Î·Á¤ÇÍøÍÑ¤¹¤ë¾ì¹ç¤Ë¤Ï¡¤¾åµ­¤ÎÃøºî
- *      ¸¢É½¼¨¡¤¤³¤ÎÍøÍÑ¾ò·ï¤ª¤è¤Ó²¼µ­¤ÎÌµÊİ¾Úµ¬Äê¤¬¡¤¤½¤Î¤Ş¤Ş¤Î·Á¤Ç¥½¡¼
- *      ¥¹¥³¡¼¥ÉÃæ¤Ë´Ş¤Ş¤ì¤Æ¤¤¤ë¤³¤È¡¥
- *  (2) ËÜ¥½¥Õ¥È¥¦¥§¥¢¤ò¡¤¥é¥¤¥Ö¥é¥ê·Á¼°¤Ê¤É¡¤Â¾¤Î¥½¥Õ¥È¥¦¥§¥¢³«È¯¤Ë»È
- *      ÍÑ¤Ç¤­¤ë·Á¤ÇºÆÇÛÉÛ¤¹¤ë¾ì¹ç¤Ë¤Ï¡¤ºÆÇÛÉÛ¤ËÈ¼¤¦¥É¥­¥å¥á¥ó¥È¡ÊÍøÍÑ
- *      ¼Ô¥Ş¥Ë¥å¥¢¥ë¤Ê¤É¡Ë¤Ë¡¤¾åµ­¤ÎÃøºî¸¢É½¼¨¡¤¤³¤ÎÍøÍÑ¾ò·ï¤ª¤è¤Ó²¼µ­
- *      ¤ÎÌµÊİ¾Úµ¬Äê¤ò·ÇºÜ¤¹¤ë¤³¤È¡¥
- *  (3) ËÜ¥½¥Õ¥È¥¦¥§¥¢¤ò¡¤µ¡´ï¤ËÁÈ¤ß¹ş¤à¤Ê¤É¡¤Â¾¤Î¥½¥Õ¥È¥¦¥§¥¢³«È¯¤Ë»È
- *      ÍÑ¤Ç¤­¤Ê¤¤·Á¤ÇºÆÇÛÉÛ¤¹¤ë¾ì¹ç¤Ë¤Ï¡¤¼¡¤Î¤¤¤º¤ì¤«¤Î¾ò·ï¤òËş¤¿¤¹¤³
- *      ¤È¡¥
- *    (a) ºÆÇÛÉÛ¤ËÈ¼¤¦¥É¥­¥å¥á¥ó¥È¡ÊÍøÍÑ¼Ô¥Ş¥Ë¥å¥¢¥ë¤Ê¤É¡Ë¤Ë¡¤¾åµ­¤ÎÃø
- *        ºî¸¢É½¼¨¡¤¤³¤ÎÍøÍÑ¾ò·ï¤ª¤è¤Ó²¼µ­¤ÎÌµÊİ¾Úµ¬Äê¤ò·ÇºÜ¤¹¤ë¤³¤È¡¥
- *    (b) ºÆÇÛÉÛ¤Î·ÁÂÖ¤ò¡¤ÊÌ¤ËÄê¤á¤ëÊıË¡¤Ë¤è¤Ã¤Æ¡¤TOPPERS¥×¥í¥¸¥§¥¯¥È¤Ë
- *        Êó¹ğ¤¹¤ë¤³¤È¡¥
- *  (4) ËÜ¥½¥Õ¥È¥¦¥§¥¢¤ÎÍøÍÑ¤Ë¤è¤êÄ¾ÀÜÅª¤Ş¤¿¤Ï´ÖÀÜÅª¤ËÀ¸¤¸¤ë¤¤¤«¤Ê¤ëÂ»
- *      ³²¤«¤é¤â¡¤¾åµ­Ãøºî¸¢¼Ô¤ª¤è¤ÓTOPPERS¥×¥í¥¸¥§¥¯¥È¤òÌÈÀÕ¤¹¤ë¤³¤È¡¥
- *      ¤Ş¤¿¡¤ËÜ¥½¥Õ¥È¥¦¥§¥¢¤Î¥æ¡¼¥¶¤Ş¤¿¤Ï¥¨¥ó¥É¥æ¡¼¥¶¤«¤é¤Î¤¤¤«¤Ê¤ëÍı
- *      Í³¤Ë´ğ¤Å¤¯ÀÁµá¤«¤é¤â¡¤¾åµ­Ãøºî¸¢¼Ô¤ª¤è¤ÓTOPPERS¥×¥í¥¸¥§¥¯¥È¤ò
- *      ÌÈÀÕ¤¹¤ë¤³¤È¡¥
+ *  ä¸Šè¨˜è‘—ä½œæ¨©è€…ã¯ï¼Œä»¥ä¸‹ã®(1)ï½(4)ã®æ¡ä»¶ã‚’æº€ãŸã™å ´åˆã«é™ã‚Šï¼Œæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§
+ *  ã‚¢ï¼ˆæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’æ”¹å¤‰ã—ãŸã‚‚ã®ã‚’å«ã‚€ï¼ä»¥ä¸‹åŒã˜ï¼‰ã‚’ä½¿ç”¨ãƒ»è¤‡è£½ãƒ»æ”¹
+ *  å¤‰ãƒ»å†é…å¸ƒï¼ˆä»¥ä¸‹ï¼Œåˆ©ç”¨ã¨å‘¼ã¶ï¼‰ã™ã‚‹ã“ã¨ã‚’ç„¡å„Ÿã§è¨±è«¾ã™ã‚‹ï¼
+ *  (1) æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’ã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰ã®å½¢ã§åˆ©ç”¨ã™ã‚‹å ´åˆã«ã¯ï¼Œä¸Šè¨˜ã®è‘—ä½œ
+ *      æ¨©è¡¨ç¤ºï¼Œã“ã®åˆ©ç”¨æ¡ä»¶ãŠã‚ˆã³ä¸‹è¨˜ã®ç„¡ä¿è¨¼è¦å®šãŒï¼Œãã®ã¾ã¾ã®å½¢ã§ã‚½ãƒ¼
+ *      ã‚¹ã‚³ãƒ¼ãƒ‰ä¸­ã«å«ã¾ã‚Œã¦ã„ã‚‹ã“ã¨ï¼
+ *  (2) æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’ï¼Œãƒ©ã‚¤ãƒ–ãƒ©ãƒªå½¢å¼ãªã©ï¼Œä»–ã®ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢é–‹ç™ºã«ä½¿
+ *      ç”¨ã§ãã‚‹å½¢ã§å†é…å¸ƒã™ã‚‹å ´åˆã«ã¯ï¼Œå†é…å¸ƒã«ä¼´ã†ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆï¼ˆåˆ©ç”¨
+ *      è€…ãƒãƒ‹ãƒ¥ã‚¢ãƒ«ãªã©ï¼‰ã«ï¼Œä¸Šè¨˜ã®è‘—ä½œæ¨©è¡¨ç¤ºï¼Œã“ã®åˆ©ç”¨æ¡ä»¶ãŠã‚ˆã³ä¸‹è¨˜
+ *      ã®ç„¡ä¿è¨¼è¦å®šã‚’æ²è¼‰ã™ã‚‹ã“ã¨ï¼
+ *  (3) æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã‚’ï¼Œæ©Ÿå™¨ã«çµ„ã¿è¾¼ã‚€ãªã©ï¼Œä»–ã®ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢é–‹ç™ºã«ä½¿
+ *      ç”¨ã§ããªã„å½¢ã§å†é…å¸ƒã™ã‚‹å ´åˆã«ã¯ï¼Œæ¬¡ã®ã„ãšã‚Œã‹ã®æ¡ä»¶ã‚’æº€ãŸã™ã“
+ *      ã¨ï¼
+ *    (a) å†é…å¸ƒã«ä¼´ã†ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒˆï¼ˆåˆ©ç”¨è€…ãƒãƒ‹ãƒ¥ã‚¢ãƒ«ãªã©ï¼‰ã«ï¼Œä¸Šè¨˜ã®è‘—
+ *        ä½œæ¨©è¡¨ç¤ºï¼Œã“ã®åˆ©ç”¨æ¡ä»¶ãŠã‚ˆã³ä¸‹è¨˜ã®ç„¡ä¿è¨¼è¦å®šã‚’æ²è¼‰ã™ã‚‹ã“ã¨ï¼
+ *    (b) å†é…å¸ƒã®å½¢æ…‹ã‚’ï¼Œåˆ¥ã«å®šã‚ã‚‹æ–¹æ³•ã«ã‚ˆã£ã¦ï¼ŒTOPPERSãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã«
+ *        å ±å‘Šã™ã‚‹ã“ã¨ï¼
+ *  (4) æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã®åˆ©ç”¨ã«ã‚ˆã‚Šç›´æ¥çš„ã¾ãŸã¯é–“æ¥çš„ã«ç”Ÿã˜ã‚‹ã„ã‹ãªã‚‹æ
+ *      å®³ã‹ã‚‰ã‚‚ï¼Œä¸Šè¨˜è‘—ä½œæ¨©è€…ãŠã‚ˆã³TOPPERSãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã‚’å…è²¬ã™ã‚‹ã“ã¨ï¼
+ *      ã¾ãŸï¼Œæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã®ãƒ¦ãƒ¼ã‚¶ã¾ãŸã¯ã‚¨ãƒ³ãƒ‰ãƒ¦ãƒ¼ã‚¶ã‹ã‚‰ã®ã„ã‹ãªã‚‹ç†
+ *      ç”±ã«åŸºã¥ãè«‹æ±‚ã‹ã‚‰ã‚‚ï¼Œä¸Šè¨˜è‘—ä½œæ¨©è€…ãŠã‚ˆã³TOPPERSãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã‚’
+ *      å…è²¬ã™ã‚‹ã“ã¨ï¼
  *
- *  ËÜ¥½¥Õ¥È¥¦¥§¥¢¤Ï¡¤ÌµÊİ¾Ú¤ÇÄó¶¡¤µ¤ì¤Æ¤¤¤ë¤â¤Î¤Ç¤¢¤ë¡¥¾åµ­Ãøºî¸¢¼Ô¤ª
- *  ¤è¤ÓTOPPERS¥×¥í¥¸¥§¥¯¥È¤Ï¡¤ËÜ¥½¥Õ¥È¥¦¥§¥¢¤Ë´Ø¤·¤Æ¡¤ÆÃÄê¤Î»ÈÍÑÌÜÅª
- *  ¤ËÂĞ¤¹¤ëÅ¬¹çÀ­¤â´Ş¤á¤Æ¡¤¤¤¤«¤Ê¤ëÊİ¾Ú¤â¹Ô¤ï¤Ê¤¤¡¥¤Ş¤¿¡¤ËÜ¥½¥Õ¥È¥¦¥§
- *  ¥¢¤ÎÍøÍÑ¤Ë¤è¤êÄ¾ÀÜÅª¤Ş¤¿¤Ï´ÖÀÜÅª¤ËÀ¸¤¸¤¿¤¤¤«¤Ê¤ëÂ»³²¤Ë´Ø¤·¤Æ¤â¡¤¤½
- *  ¤ÎÀÕÇ¤¤òÉé¤ï¤Ê¤¤¡¥
+ *  æœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã¯ï¼Œç„¡ä¿è¨¼ã§æä¾›ã•ã‚Œã¦ã„ã‚‹ã‚‚ã®ã§ã‚ã‚‹ï¼ä¸Šè¨˜è‘—ä½œæ¨©è€…ãŠ
+ *  ã‚ˆã³TOPPERSãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã¯ï¼Œæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§ã‚¢ã«é–¢ã—ã¦ï¼Œç‰¹å®šã®ä½¿ç”¨ç›®çš„
+ *  ã«å¯¾ã™ã‚‹é©åˆæ€§ã‚‚å«ã‚ã¦ï¼Œã„ã‹ãªã‚‹ä¿è¨¼ã‚‚è¡Œã‚ãªã„ï¼ã¾ãŸï¼Œæœ¬ã‚½ãƒ•ãƒˆã‚¦ã‚§
+ *  ã‚¢ã®åˆ©ç”¨ã«ã‚ˆã‚Šç›´æ¥çš„ã¾ãŸã¯é–“æ¥çš„ã«ç”Ÿã˜ãŸã„ã‹ãªã‚‹æå®³ã«é–¢ã—ã¦ã‚‚ï¼Œã
+ *  ã®è²¬ä»»ã‚’è² ã‚ãªã„ï¼
  *
- *  @(#) $Id: chip_config.h 1067 2014-12-24 14:15:10Z ertl-honda $
+ *  @(#) $Id: chip_config.h 1202 2016-07-18 06:36:33Z ertl-honda $
  */
 
 /*
- *  ¥Á¥Ã¥×°ÍÂ¸¥â¥¸¥å¡¼¥ë¡ÊMPCOREÍÑ¡Ë
+ *  ãƒãƒƒãƒ—ä¾å­˜ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ï¼ˆMPCOREç”¨ï¼‰
  *
- *  ¥«¡¼¥Í¥ë¤Î¥Á¥Ã¥×°ÍÂ¸Éô¤Î¥¤¥ó¥¯¥ë¡¼¥É¥Õ¥¡¥¤¥ë¡¥kernel_impl.h¤Î¥¿¡¼
- *  ¥²¥Ã¥È°ÍÂ¸Éô¤Î°ÌÃÖÉÕ¤±¤È¤Ê¤ë¡¥
+ *  ã‚«ãƒ¼ãƒãƒ«ã®ãƒãƒƒãƒ—ä¾å­˜éƒ¨ã®ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«ï¼kernel_impl.hã®ã‚¿ãƒ¼
+ *  ã‚²ãƒƒãƒˆä¾å­˜éƒ¨ã®ä½ç½®ä»˜ã‘ã¨ãªã‚‹ï¼
  */
 
 #ifndef TOPPERS_CHIP_CONFIG_H
 #define TOPPERS_CHIP_CONFIG_H
 
 /*
- *  ¥Á¥Ã¥×°ÍÂ¸Éô¤Î¤Î¥Ï¡¼¥É¥¦¥§¥¢»ñ¸»¤ÎÄêµÁ
+ *  ãƒãƒƒãƒ—ä¾å­˜éƒ¨ã®ã®ãƒãƒ¼ãƒ‰ã‚¦ã‚§ã‚¢è³‡æºã®å®šç¾©
  */
 #include "mpcore.h"
 
-#ifdef USE_IPI_DIS_HANDER_BYPASS
-#define OMIT_KER_REQ_ON_IPI
-
-#ifndef TOPPERS_MACRO_ONLY
 /*
- *  ¥«¡¼¥Í¥ë½ªÎ»½èÍıÍ×µá
+ *  GICä¾å­˜ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
  */
-extern void ext_ker_request(void);
-#endif /* TOPPERS_MACRO_ONLY */
-#endif /* USE_IPI_DIS_HANDER_BYPASS */
-
-/*
- *  ³ä¹ş¤ßÈÖ¹æ¤Î¥Ş¥¹¥¯¡Ê²¼°Ì16bit¤Î¤ß¤¬Í­¸ú¡Ë
- */
-#define INTNO_MASK(intno) (intno & 0xffffU)
-
-/*
- *  ³ä¹ş¤ßÈÖ¹æ¤ÎÀÜÂ³¥×¥í¥»¥Ã¥µ¤Î¥×¥í¥»¥Ã¥µID¡Ê¾å°Ì16bit¡Ë
- */
-#define INTNO_PRCID(intno) (intno >> 16U)
-
-/*
- *  ³ä¹ş¤ß¥Ï¥ó¥É¥éÈÖ¹æ¤Î¥Ş¥¹¥¯¡Ê²¼°Ì16bit¤Î¤ß¤¬Í­¸ú¡Ë
- */
-#define INHNO_MASK(intno) (intno & 0xffffU)
-
-/*
- *  ³ä¹ş¤ß¥Ï¥ó¥É¥éÈÖ¹æ¤È³ä¹ş¤ßÈÖ¹æ¤Ë´Ø¤¹¤ëÄêµÁ
- */
-#define TMIN_INTNO  DIC_TMIN_INTNO
-#define TMAX_INTNO  DIC_TMAX_INTNO
-#define TNUM_INT    DIC_TNUM_INT
-
-#define TMIN_INHNO  DIC_TMIN_INTNO
-#define TMAX_INHNO  DIC_TMAX_INTNO
-#define TNUM_INH    DIC_TNUM_INT
+#include "arm_gcc/common/gic_kernel.h"
 
 #ifndef TOPPERS_MACRO_ONLY
 
 /*
- *  ¼«¥×¥í¥»¥Ã¥µ¤ÎAPCB¤Ø¤Î¥İ¥¤¥ó¥¿¤Î¼èÆÀ
- *  ¥¤¥ó¥¯¥ë¡¼¥É½ç½ø¤Î´Ø·¸¾å¡¤target_pcb.h ¤Ë¤Ïµ­½Ò¤Ç¤­¤Ê¤¤¤¿¤á¤³¤³¤ÇÄêµÁ¤¹¤ë¡¥
+ *  è‡ªãƒ—ãƒ­ã‚»ãƒƒã‚µã®APCBã¸ã®ãƒã‚¤ãƒ³ã‚¿ã®å–å¾—
+ *  ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰é †åºã®é–¢ä¿‚ä¸Šï¼Œtarget_pcb.h ã«ã¯è¨˜è¿°ã§ããªã„ãŸã‚ã“ã“ã§å®šç¾©ã™ã‚‹ï¼
  */
 Inline APCB*
 get_my_p_apcb(void)
@@ -105,72 +73,9 @@ get_my_p_apcb(void)
 }
 
 /*
- *  ¥Ş¥¹¥¿¥×¥í¥»¥Ã¥µ¤«¤òÊÖ¤¹
- */
-Inline bool_t
-x_sense_mprc(void){
-	if(x_prc_index() == (TOPPERS_MASTER_PRCID - 1)) {
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-/*
- *  ¥í¥Ã¥¯´Ø·¸
- */
-
-/*
- *  ¥¸¥ã¥¤¥¢¥ó¥È¥í¥Ã¥¯¤Î½é´ü²½¡ÊG_LOCK¤Î¾ì¹ç¡Ë
- */
-Inline void
-x_initialize_giant_lock(LOCK *p_giant_lock)
-{
-	*p_giant_lock = 0;
-}
-
-/*
- *  ¥¿¥¹¥¯¥í¥Ã¥¯¤Î½é´ü²½
- */
-Inline void
-x_initialize_tsk_lock(LOCK *p_tsk_lock)
-{
-	*p_tsk_lock = 0;
-}
-
-/*
- *  ¥ª¥Ö¥¸¥§¥¯¥È¥í¥Ã¥¯¤Î½é´ü²½
- */
-Inline void
-x_initialize_obj_lock(LOCK *p_obj_lock)
-{
-	*p_obj_lock = 0;
-}
-
-/*
- *  ³ä¹ş¤ßÈÖ¹æ¤ÎÈÏ°Ï¤ÎÈ½Äê
- */
-#if TMIN_INTNO == 0
-#define VALID_INTNO(prcid, intno) ((INTNO_MASK(intno) <= TMAX_INTNO) \
-                                    && (INTNO_PRCID(intno) == 0U || INTNO_PRCID(intno) == prcid))
-#else /* !TMIN_INTNO == 0 */
-#define VALID_INTNO(prcid, intno) (((TMIN_INTNO <= (INTNO_MASK(intno)) && (INTNO_MASK(intno)) <= TMAX_INTNO)) \
-                                    && (INTNO_PRCID(intno) == 0U || INTNO_PRCID(intno) == prcid))
-#endif /* TMIN_INTNO == 0 */
-
-#define VALID_INTNO_DISINT(prcid, intno)	VALID_INTNO(prcid, intno)
-#define VALID_INTNO_CFGINT(prcid, intno)	VALID_INTNO(prcid, intno)
-
-/*
- *  ³ä¹ş¤ß¥Ï¥ó¥É¥é¤ÎÅĞÏ¿ÍÑ¥Æ¡¼¥Ö¥ë¡Êkernel_cfg.c¡Ë
- */
-extern const FP* const p_inh_table[TNUM_PRCID];
-
-/*
- *  ³ä¹ş¤ß¥Ï¥ó¥É¥é¤ÎÀßÄê
+ *  å‰²è¾¼ã¿ãƒãƒ³ãƒ‰ãƒ©ã®è¨­å®š
  *
- *  ³ä¹ş¤ß¥Ï¥ó¥É¥éÈÖ¹æinhno¤Î³ä¹ş¤ß¥Ï¥ó¥É¥é¤Îµ¯Æ°ÈÖÃÏ¤òinthdr¤ËÀßÄê¤¹¤ë
+ *  å‰²è¾¼ã¿ãƒãƒ³ãƒ‰ãƒ©ç•ªå·inhnoã®å‰²è¾¼ã¿ãƒãƒ³ãƒ‰ãƒ©ã®èµ·å‹•ç•ªåœ°ã‚’inthdrã«è¨­å®šã™ã‚‹
  */
 Inline void
 x_define_inh(INHNO inhno, FP int_entry, uint_t affinity_mask)
@@ -183,7 +88,7 @@ x_define_inh(INHNO inhno, FP int_entry, uint_t affinity_mask)
 }
 
 /*
- *  ³ä¹ş¤ß¥Ï¥ó¥É¥é¤Î½ĞÆş¸ı½èÍı¤ÎÀ¸À®¥Ş¥¯¥í
+ *  å‰²è¾¼ã¿ãƒãƒ³ãƒ‰ãƒ©ã®å‡ºå…¥å£å‡¦ç†ã®ç”Ÿæˆãƒã‚¯ãƒ­
  *
  */
 #define INT_ENTRY(inhno, inthdr)    inthdr
@@ -191,452 +96,35 @@ x_define_inh(INHNO inhno, FP int_entry, uint_t affinity_mask)
 
 #endif /* TOPPERS_MACRO_ONLY */
 
-/*
- *  ³ä¹ş¤ßÍ¥ÀèÅÙ¥Ş¥¹¥¯Áàºî¥é¥¤¥Ö¥é¥ê
- *
- *  DIC¤Ç¤Ï¡¤DICÆâ¤ÎÍ¥ÀèÅÙ¥ì¥¸¥¹¥¿¤ËCPU¤Î³ä¹ş¤ßÍ¥ÀèÅÙ¥Ş¥¹¥¯¡ÊIPM¡Ë¤òÀßÄê¤¹¤ë¡¥
- *  ³ä¹ş¤ßÍ¥ÀèÅÙ¥Ş¥¹¥¯¤ÏÃÍ¤¬Âç¤­¤¤¤Û¤ÉÄãÍ¥ÀèÅÙ¤Ç¤¢¤ë¡¥
- *  ³ä¹ş¤ßÍ¥ÀèÅÙ¥Ş¥¹¥¯¤Ï¤ÎÃÊ³¬¤ÏARM11¤ÈCA9¤Ç°Û¤Ê¤ë¡¥
- *    ¡¦ARM11(ARMv6) : 16ÃÊ³¬¡Ê0x00 ¡Á 0x0f¡Ë
- *    ¡¦CA9(ARMv7)   : 32ÃÊ³¬¡Ê0x00 ¡Á 0x1f¡Ë
- *  IPM¤òÊİÂ¸¤·¤Æ¤ª¤¯¤¿¤á¤Ë¡¤³ä¹ş¤ßÍ¥ÀèÅÙ¤Î³°ÉôÉ½¸½¡Ê-1¤«¤éÏ¢Â³¤·¤¿Éé¤ÎÃÍ¡Ë
- *  ¤ò»È¤¦¤³¤È¤â²ÄÇ½¤Ç¤¢¤ë¤¬¡¤Í¾·×¤Ê·×»»¤¬É¬Í×¤Ë¤Ê¤ë¡¥¤³¤ì¤òÈò¤±¤ë¤¿¤á¡¤IPM¤ò
- *  ÊİÂ¸¤¹¤ë¾ì¹ç¤Ë¤Ï¡¤DIC¤Ç°·¤¦Í¥ÀèÅÙ¤Î·Á¼°¤È¤¹¤ë¡¥¤³¤ÎÃÍ¤ò³ä¹ş¤ßÍ¥ÀèÅÙ¥Ş¥¹¥¯
- *  ¤ÎÆâÉôÉ½¸½¤È¸Æ¤Ó¡¤IIPM¤È½ñ¤¯¤³¤È¤Ë¤¹¤ë¡¥
- */
-
-/*
- *  ³ä¹ş¤ßÍ¥ÀèÅÙ¥Ş¥¹¥¯¤Î¥Ó¥Ã¥È¥Ş¥¹¥¯
- */
-#if __TARGET_ARCH_ARM == 6
-#ifndef TOPPERS_MACRO_ONLY
-#define IPM_BIT_MASK  0x0fU
-#else /* TOPPERS_MACRO_ONLY */
-#define IPM_BIT_MASK  0x0f
-#endif /* TOPPERS_MACRO_ONLY */
-#define IPM_BIT_OFFSET 4
-#elif __TARGET_ARCH_ARM == 7
-#ifndef TOPPERS_MACRO_ONLY
-#define IPM_BIT_MASK  0x1fU
-#else /* TOPPERS_MACRO_ONLY */
-#define IPM_BIT_MASK  0x1f
-#endif /* TOPPERS_MACRO_ONLY */
-#define IPM_BIT_OFFSET 3
-#endif /* __TARGET_ARCH_ARM == 7 */
-
-/*
- *  ³ä¹ş¤ßÍ¥ÀèÅÙ¥Ş¥¹¥¯¤Î³°ÉôÉ½¸½¤ÈÆâÉôÉ½¸½¤ÎÊÑ´¹
- *
- *  ¥¢¥»¥ó¥Ö¥ê¸À¸ì¤Î¥½¡¼¥¹¥Õ¥¡¥¤¥ë¤«¤é¥¤¥ó¥¯¥ë¡¼¥É¤¹¤ë¾ì¹ç¤Î¤¿¤á¤Ë¡¤·¿
- *  ¥­¥ã¥¹¥È¤·¤Ê¤¤ÄêµÁ¤âÍÑ°Õ¤·¤Æ¤¤¤ë¡¥
- */
-#ifndef TOPPERS_MACRO_ONLY
-#define EXT_IPM(iipm)    ((PRI)(iipm - IPM_BIT_MASK))    /* ÆâÉôÉ½¸½¤ò³°ÉôÉ½¸½¤Ë */
-#define INT_IPM(ipm)    ((uint8_t)(ipm + IPM_BIT_MASK))  /* ³°ÉôÉ½¸½¤òÆâÉôÉ½¸½¤Ë */
-#else /* TOPPERS_MACRO_ONLY */
-#define EXT_IPM(iipm)    (iipm - IPM_BIT_MASK)           /* ÆâÉôÉ½¸½¤ò³°ÉôÉ½¸½¤Ë */
-#define INT_IPM(ipm)    (ipm + IPM_BIT_MASK)             /* ³°ÉôÉ½¸½¤òÆâÉôÉ½¸½¤Ë */
-#endif /* TOPPERS_MACRO_ONLY */
-
-/*
- *  TIPM_ENAALL¡Ê³ä¹ş¤ßÍ¥ÀèÅÙ¥Ş¥¹¥¯Á´²ò½ü¡Ë¤ÎÆâÉôÉ½¸½
- */
-#define IIPM_ENAALL        (INT_IPM(TIPM_ENAALL))
-
 #ifndef TOPPERS_MACRO_ONLY
 
 /*
- *  IPM¡Ê¥Ï¡¼¥É¥¦¥§¥¢¤Î³ä¹ş¤ßÍ¥ÀèÅÙ¥Ş¥¹¥¯¡¤ÆâÉôÉ½¸½¡Ë¤Î¸½ºßÃÍ¤ÎÆÉ½Ğ¤·
- */
-Inline uint8_t
-current_iipm(void)
-{
-	return(dic_cpu_current_priority());
-}
-
-/*
- *  IPM¡Ê¥Ï¡¼¥É¥¦¥§¥¢¤Î³ä¹ş¤ßÍ¥ÀèÅÙ¥Ş¥¹¥¯¡¤ÆâÉôÉ½¸½¡Ë¤Î¸½ºßÃÍ¤ÎÀßÄê
- */
-Inline void
-set_iipm(uint8_t iipm)
-{
-	dic_cpu_set_priority(iipm);
-}
-
-#endif /* TOPPERS_MACRO_ONLY */
-
-#ifdef USE_GIC_CPULOCK
-
-/*
- *  USE_GIC_CPULOCK»ş¤ÎÀßÄê
- */
-
-#define IIPM_LOCK 0x00
-
-#ifndef TOPPERS_MACRO_ONLY
-
-/*
- *  ¥³¥ó¥Æ¥­¥¹¥È¤Î»²¾È(USE_GIC_CPULOCK»ş)
- *
- *  ARM¤Ç¤Ï¡¤¥¿¥¹¥¯¥³¥ó¥Æ¥­¥¹¥È¤ÈÈó¥¿¥¹¥¯¥³¥ó¥Æ¥­¥¹¥È¤ÎÎ¾Êı¤ò¥¹¡¼¥Ñ¡¼
- *  ¥Ğ¥¤¥¶¡¼¥â¡¼¥É¤ÇÆ°ºî¤µ¤»¤ë¡¥¤½¤Î¤¿¤á¡¤CPSR¤ÎÆâÍÆ¤Ç¤ÏÈ½ÊÌ¤Ç¤­¤Ê¤¤¡¥
- *  ¤½¤Î¤¿¤á¡¤Îã³°¡Ê³ä¹ş¤ß/CPUÎã³°¡Ë¤Î¥Í¥¹¥È²ó¿ô¤ò¥«¥¦¥ó¥È¤¹¤ëÊÑ¿ô
- *  ¡Êexcpt_nest_count¡Ë¤òÍÑ°Õ¤·¡¤Îã³°¤ÎÆş¤ê¸ı¤Ç¥¤¥ó¥¯¥ê¥á¥ó¥È¤¹¤ë¤³¤È
- *  ¤Ç¡¤¥³¥ó¥Æ¥­¥¹¥È¤òÈ½Äê¤¹¤ë¡¥
- */
-Inline bool_t
-sense_context(void)
-{
-	uint32_t tmp;
-	uint8_t saved_iipm;
-	APCB* my_p_apcb;
-
-	/*
-	 *  ¥Ş¥¤¥°¥ì¡¼¥·¥ç¥ó¤µ¤ì¤ë¤³¤È¤ò¹ÍÎ¸¤·¤Æ³ä¹ş¤ß¤ò¶Ø»ß¤·¤Æ¤«¤é¥Á¥§¥Ã
-	 *  ¥¯¤¹¤ë¡¥
-	 */
-	saved_iipm = current_iipm();
-	set_iipm(IIPM_LOCK);
-	ARM_MEMORY_CHANGED;
-	my_p_apcb = get_my_p_apcb();
-	tmp = my_p_apcb->excpt_nest_count;
-	set_iipm(saved_iipm);
-	ARM_MEMORY_CHANGED;
-
-	return(tmp > 0U);
-}
-
-/*
- *  CPU¥í¥Ã¥¯¾õÂÖ¤Ø¤Î°Ü¹Ô(USE_GIC_CPULOCK»ş)
- *
- *  IPM¡Ê¥Ï¡¼¥É¥¦¥§¥¢¤Î³ä¹ş¤ßÍ¥ÀèÅÙ¥Ş¥¹¥¯¡Ë¤ò¡¤saved_iipm¤ËÊİÂ¸¤·¡¤¥«¡¼
- *  ¥Í¥ë´ÉÍı³°¤Î¤â¤Î¤ò½ü¤¯¤¹¤Ù¤Æ¤Î³ä¹ş¤ß¤ò¥Ş¥¹¥¯¤¹¤ëÃÍ¡ÊTIPM_LOCK¡Ë¤ËÀß
- *  Äê¤¹¤ë¡¥¤Ş¤¿¡¤lock_flag¤òtrue¤Ë¤¹¤ë¡¥
- *
- *  IPM¤¬¡¤ºÇ½é¤«¤éTIPM_LOCK¤ÈÆ±¤¸¤«¤½¤ì¤è¤ê¹â¤¤¾ì¹ç¤Ë¤Ï¡¤¤½¤ì¤ò
- *  saved_iipm¤ËÊİÂ¸¤¹¤ë¤Î¤ß¤Ç¡¤TIPM_LOCK¤Ë¤ÏÀßÄê¤·¤Ê¤¤¡¥¤³¤ì¤Ï¥â¥Ç¥ë
- *  ¾å¤Î³ä¹ş¤ßÍ¥ÀèÅÙ¥Ş¥¹¥¯¤¬¡¤TIPM_LOCK¤ÈÆ±¤¸¤«¤½¤ì¤è¤ê¹â¤¤¥ì¥Ù¥ë¤ËÀßÄê
- *  ¤µ¤ì¤Æ¤¤¤ë¾õÂÖ¤Ë¤¢¤¿¤ë¡¥
- *
- *  ¤³¤Î´Ø¿ô¤Ï¡¤CPU¥í¥Ã¥¯¾õÂÖ¡Êlock_flag¤¬true¤Î¾õÂÖ¡Ë¤Ç¸Æ¤Ğ¤ì¤ë¤³¤È¤Ï
- *  ¤Ê¤¤¤â¤Î¤ÈÁÛÄê¤·¤Æ¤¤¤ë¡¥
- */
-Inline void
-x_lock_cpu(void)
-{
-	uint8_t iipm;
-
-	/*
-	*  current_iipm()¤ÎÊÖ¤êÃÍ¤òÄ¾ÀÜsaved_iipm¤ËÊİÂ¸¤»¤º¡¤°ì»şÊÑ¿ôiipm
-	*  ¤òÍÑ¤¤¤Æ¤¤¤ë¤Î¤Ï¡¤current_iipm()¤ò¸Æ¤ó¤ÀÄ¾¸å¤Ë³ä¹ş¤ß¤¬È¯À¸¤·¡¤
-	*  µ¯Æ°¤µ¤ì¤¿³ä¹ş¤ß½èÍı¤Çsaved_iipm¤¬ÊÑ¹¹¤µ¤ì¤ë²ÄÇ½À­¤¬¤¢¤ë¤¿¤á¤Ç
-	*  ¤¢¤ë¡¥
-	*/
-	iipm = current_iipm();
-	set_iipm(IIPM_LOCK);
-	get_my_p_tpcb()->saved_iipm = iipm;
-	get_my_p_tpcb()->lock_flag = true;
-
-	/* ¥¯¥ê¥Æ¥£¥«¥ë¥»¥¯¥·¥ç¥ó¤ÎÁ°¸å¤Ç¥á¥â¥ê¤¬½ñ¤­´¹¤ï¤ë²ÄÇ½À­¤¬¤¢¤ë */
-	ARM_MEMORY_CHANGED;
-}
-
-#define t_lock_cpu()    x_lock_cpu()
-#define i_lock_cpu()    x_lock_cpu()
-
-/*
- *  CPU¥í¥Ã¥¯¾õÂÖ¤Î²ò½ü(USE_GIC_CPULOCK»ş)
- *
- *  lock_flag¤òfalse¤Ë¤·¡¤IPM¡Ê¥Ï¡¼¥É¥¦¥§¥¢¤Î³ä¹ş¤ßÍ¥ÀèÅÙ¥Ş¥¹¥¯¡Ë¤ò¡¤
- *  saved_iipm¤ËÊİÂ¸¤·¤¿ÃÍ¤ËÌá¤¹¡¥
- *
- *  ¤³¤Î´Ø¿ô¤Ï¡¤CPU¥í¥Ã¥¯¾õÂÖ¡Êlock_flag¤¬true¤Î¾õÂÖ¡Ë¤Ç¤Î¤ß¸Æ¤Ğ¤ì¤ë¤â
- *  ¤Î¤ÈÁÛÄê¤·¤Æ¤¤¤ë¡¥
- */
-Inline void
-x_unlock_cpu(void)
-{
-	/* ¥¯¥ê¥Æ¥£¥«¥ë¥»¥¯¥·¥ç¥ó¤ÎÁ°¸å¤Ç¥á¥â¥ê¤¬½ñ¤­´¹¤ï¤ë²ÄÇ½À­¤¬¤¢¤ë */
-	ARM_MEMORY_CHANGED;
-	get_my_p_tpcb()->lock_flag = false;
-	set_iipm(get_my_p_tpcb()->saved_iipm);
-}
-
-#define t_unlock_cpu()    x_unlock_cpu()
-#define i_unlock_cpu()    x_unlock_cpu()
-
-/*
- *  CPU¥í¥Ã¥¯¾õÂÖ¤Î»²¾È(USE_GIC_CPULOCK»ş)
- */
-Inline bool_t
-x_sense_lock(void)
-{
-	return(get_my_p_tpcb()->lock_flag);
-}
-
-#define t_sense_lock()    x_sense_lock()
-#define i_sense_lock()    x_sense_lock()
-
-
-/*
- * ¡Ê¥â¥Ç¥ë¾å¤Î¡Ë³ä¹ş¤ßÍ¥ÀèÅÙ¥Ş¥¹¥¯¤ÎÀßÄê(USE_GIC_CPULOCK»ş)
- *
- *  CPU¥í¥Ã¥¯¥Õ¥é¥°¤¬¥¯¥ê¥¢¤µ¤ì¤Æ¤¤¤ë»ş¤Ï¡¤¥Ï¡¼¥É¥¦¥§¥¢¤Î³ä¹ş¤ßÍ¥ÀèÅÙ¥Ş
- *  ¥¹¥¯¤òÀßÄê¤¹¤ë¡¥CPU¥í¥Ã¥¯¥Õ¥é¥°¤¬¥»¥Ã¥È¤µ¤ì¤Æ¤¤¤ë»ş¤Ï¡¤saved_iipm
- *  ¤òÀßÄê¤·¡¤¤µ¤é¤Ë¡¤¥Ï¡¼¥É¥¦¥§¥¢¤Î³ä¹ş¤ßÍ¥ÀèÅÙ¥Ş¥¹¥¯¤ò¡¤ÀßÄê¤·¤è¤¦¤È
- *  ¤·¤¿¡Ê¥â¥Ç¥ë¾å¤Î¡Ë³ä¹ş¤ßÍ¥ÀèÅÙ¥Ş¥¹¥¯¤ÈTIPM_LOCK¤Î¹â¤¤Êı¤ËÀßÄê¤¹¤ë¡¥
- */
-Inline void
-x_set_ipm(PRI intpri)
-{
-	uint8_t   iipm = INT_IPM(intpri);
-
-	if (!get_my_p_tpcb()->lock_flag) {
-		set_iipm(iipm);
-	}
-	else {
-		get_my_p_tpcb()->saved_iipm = iipm;
-		/*
-		 *  OSÆâ¤«¤é¤Î¤ß¸Æ¤Ó½Ğ¤µ¤ì¤ë¤¿¤á¡¤¤³¤Î»şÅÀ¤Ç¥Ï¡¼¥É¥¦¥§¥¢¤Î³ä¹ş¤ßÍ¥Àè
-		 *  ÅÙ¥Ş¥¹¥¯¤¬É¬¤ººÇÂçÃÍ¤ËÀßÄê¤µ¤ì¤Æ¤¤¤ë¤¿¤á¡¤ÀßÄê¤¹¤ëÉ¬Í×¤Ï¤Ê¤¤¡¥
-		 */
-	}
-}
-
-#define t_set_ipm(intpri)    x_set_ipm(intpri)
-#define i_set_ipm(intpri)    x_set_ipm(intpri)
-
-/*
- * ¡Ê¥â¥Ç¥ë¾å¤Î¡Ë³ä¹ş¤ßÍ¥ÀèÅÙ¥Ş¥¹¥¯¤Î»²¾È(USE_GIC_CPULOCK»ş)
- *
- *  CPU¥í¥Ã¥¯¥Õ¥é¥°¤¬¥¯¥ê¥¢¤µ¤ì¤Æ¤¤¤ë»ş¤Ï¥Ï¡¼¥É¥¦¥§¥¢¤Î³ä¹ş¤ßÍ¥ÀèÅÙ¥Ş
- *  ¥¹¥¯¤ò¡¤¥»¥Ã¥È¤µ¤ì¤Æ¤¤¤ë»ş¤Ïsaved_iipm¤ò»²¾È¤¹¤ë¡¥
- */
-Inline PRI
-x_get_ipm(void)
-{
-	uint8_t iipm;
-
-	if (!get_my_p_tpcb()->lock_flag) {
-		iipm = current_iipm();
-	}
-	else {
-		iipm = get_my_p_tpcb()->saved_iipm;
-	}
-	return(EXT_IPM(iipm));
-}
-
-#define t_get_ipm()    x_get_ipm()
-#define i_get_ipm()    x_get_ipm()
-
-/*
- *  CPUÎã³°¤ÎÈ¯À¸¤·¤¿»ş¤Î(¥â¥Ç¥ë¾å¤Î)³ä¹ş¤ßÍ¥ÀèÅÙ¥Ş¥¹¥¯¤Î»²¾È(USE_GIC_CPULOCK»ş)
- */
-Inline PRI
-exc_get_ipm(void *p_excinf)
-{
-	if (!((exc_frame_t *)(p_excinf))->lock_flag) {
-		return((PRI)(((exc_frame_t *)(p_excinf))->ipm));
-	}
-	else {
-		return((PRI)(((exc_frame_t *)(p_excinf))->saved_iipm));
-	}
-}
-
-/*
- * CPU¥í¥Ã¥¯¾õÂÖ¤«(USE_GIC_CPULOCK»ş)
- */
-Inline bool_t
-exc_sense_lock(void *p_excinf)
-{
-	return(((exc_frame_t *)(p_excinf))->lock_flag);
-}
-
-/*
- * ³ä¹ş¤ß¥í¥Ã¥¯¾õÂÖ¤«(USE_GIC_CPULOCK»ş)
- */
-Inline bool_t
-exc_sense_int_lock(void *p_excinf)
-{
-	return(((exc_frame_t *)(p_excinf))->lock_flag);
-}
-
-#endif /* TOPPERS_MACRO_ONLY */
-
-#else /* USE_GIC_CPULOCK */
-
-#ifndef TOPPERS_MACRO_ONLY
-
-/*
- * (¥â¥Ç¥ë¾å¤Î)³ä¹ş¤ßÍ¥ÀèÅÙ¥Ş¥¹¥¯¤ÎÀßÄê
- */
-Inline void
-x_set_ipm(PRI intpri)
-{
-	set_iipm(INT_IPM(intpri));
-}
-
-#define t_set_ipm(intpri) x_set_ipm(intpri)
-#define i_set_ipm(intpri) x_set_ipm(intpri)
-
-/*
- *  (¥â¥Ç¥ë¾å¤Î)³ä¹ş¤ßÍ¥ÀèÅÙ¥Ş¥¹¥¯¤Î»²¾È
- */
-Inline PRI
-x_get_ipm(void)
-{
-	return(EXT_IPM(current_iipm()));
-}
-
-#define t_get_ipm() x_get_ipm()
-#define i_get_ipm() x_get_ipm()
-
-#endif /* TOPPERS_MACRO_ONLY */
-
-#endif /* USE_GIC_CPULOCK */
-
-#ifndef TOPPERS_MACRO_ONLY
-
-/*
- *  ³ä¹ş¤ßÂ°À­¥¢¥¯¥»¥¹¥Æ¡¼¥Ö¥ë
- *
- *  ³ä¹ş¤ßÂ°À­¥Æ¡¼¥Ö¥ë¤Ø¤Î¥İ¥¤¥ó¥¿¡¥³ä¹ş¤ßÂ°À­¥Æ¡¼¥Ö¥ë¤Ï¡¤³ä¹ş¤ßÂ°À­¤¬ÀßÄê
- *  ¤µ¤ì¤Æ¤¤¤ì¤Ğ"1"¡¤ÀßÄê¤µ¤ì¤Æ¤¤¤Ê¤±¤ì¤Ğ"0"¤È¤Ê¤ë
- */
-extern const uint8_t* const p_cfgint_table[];
-
-#define my_cfgint_table (p_cfgint_table[x_prc_index()])
-
-/*
- * ¡Ê¥â¥Ç¥ë¾å¤Î¡Ë³ä¹ş¤ßÍ×µá¶Ø»ß¥Õ¥é¥°¤Î¥»¥Ã¥È
- *
- *  »ØÄê¤µ¤ì¤¿¡¤³ä¹ş¤ßÈÖ¹æ¤Î³ä¹ş¤ßÍ×µá¶Ø»ß¥Õ¥é¥°¤Î¥»¥Ã¥È¤·¤Æ¡¤³ä¹ş¤ß¤ò
- *  ¶Ø»ß¤¹¤ë¡¥
- *
- *  ³ä¹ş¤ßÂ°À­¤¬ÀßÄê¤µ¤ì¤Æ¤¤¤Ê¤¤³ä¹ş¤ßÍ×µá¥é¥¤¥ó¤ËÂĞ¤·¤Æ³ä¹ş¤ßÍ×µá¶Ø»ß
- *  ¥Õ¥é¥°¤ò¥¯¥ê¥¢¤·¤è¤¦¤È¤·¤¿¾ì¹ç¤Ë¤Ï¡¤false¤òÊÖ¤¹¡¥
- */
-Inline bool_t
-x_disable_int(INTNO intno)
-{
-	if (my_cfgint_table[INTNO_MASK(intno)] == 0){
-		return(false);
-	}
-
-	dic_disable_int(INTNO_MASK(intno));
-	return(true);
-}
-
-#define t_disable_int(intno)  x_disable_int(intno)
-#define i_disable_int(intno)  t_disable_int(intno)
-
-/*
- *  (¥â¥Ç¥ë¾å¤Î)³ä¤êÍ×µá¶Ø»ß¥Õ¥é¥°¤Î²ò½ü
- *
- *  »ØÄê¤µ¤ì¤¿¡¤³ä¹ş¤ßÈÖ¹æ¤Î³ä¹ş¤ßÍ×µá¶Ø»ß¥Õ¥é¥°¤Î¥¯¥ê¥¢¤·¤Æ¡¤³ä¹ş¤ß¤ò
- *  µö²Ä¤¹¤ë¡¥
- *
- *  ³ä¹ş¤ßÂ°À­¤¬ÀßÄê¤µ¤ì¤Æ¤¤¤Ê¤¤³ä¹ş¤ßÍ×µá¥é¥¤¥ó¤ËÂĞ¤·¤Æ³ä¹ş¤ßÍ×µá¶Ø»ß
- *  ¥Õ¥é¥°¤ò¥¯¥ê¥¢¤·¤è¤¦¤È¤·¤¿¾ì¹ç¤Ë¤Ï¡¤false¤òÊÖ¤¹¡¥
- */
-Inline bool_t
-x_enable_int(INTNO intno)
-{
-	if (my_cfgint_table[INTNO_MASK(intno)] == 0){
-		return(false);
-	}
-
-	dic_enable_int(INTNO_MASK(intno));
-	return(true);
-}
-
-#define t_enable_int(intno) x_enable_int(intno)
-#define i_enable_int(intno) x_enable_int(intno)
-
-/*
- * ³ä¹ş¤ßÍ×µá¤Î¥¯¥ê¥¢
- */
-Inline void
-x_clear_int(INTNO intno)
-{
-	dic_clear_pending(INTNO_MASK(intno));
-}
-
-#define t_clear_int(intno) x_clear_int(intno)
-#define i_clear_int(intno) x_clear_int(intno)
-
-/*
- *  ³ä¹ş¤ßÍ×µá¤Î¥Á¥§¥Ã¥¯
- */
-Inline bool_t
-x_probe_int(INTNO intno)
-{
-	return(dic_probe_int(INTNO_MASK(intno)));
-}
-
-#define t_probe_int(intno) x_probe_int(intno)
-#define i_probe_int(intno) x_probe_int(intno)
-
-/*
- *  ³ä¹ş¤ßÍ×µá¥é¥¤¥ó¤ÎÂ°À­¤ÎÀßÄê
- *
- */
-extern void x_config_int(INTNO intno, ATR intatr, PRI intpri, uint_t affinity_mask);
-
-/*
- * ³ä¹ş¤ß¥Ï¥ó¥É¥é¤ÎÆş¤ê¸ı¤ÇÉ¬Í×¤ÊIRCÁàºî
- *
- */
-Inline void
-i_begin_int(INTNO intno)
-{
-}
-
-/*
- * ³ä¹ş¤ß¥Ï¥ó¥É¥é¤Î½Ğ¸ı¤ÇÉ¬Í×¤ÊIRCÁàºî
- */
-Inline void
-i_end_int(INTNO intno)
-{
-}
-
-/*
- *  str_ker() ¤ÎÁ°¤Ç¥Ş¥¹¥¿¥×¥í¥»¥Ã¥µ¤Ç¹Ô¤¦½é´ü²½
+ *  str_ker() ã®å‰ã§ãƒã‚¹ã‚¿ãƒ—ãƒ­ã‚»ãƒƒã‚µã§è¡Œã†åˆæœŸåŒ–
  */
 extern void chip_mprc_initialize(void);
 
 /*
- *  ¥Á¥Ã¥×°ÍÂ¸¤Î½é´ü²½
+ *  ãƒãƒƒãƒ—ä¾å­˜ã®åˆæœŸåŒ–
  */
 extern void chip_initialize(void);
 
 /*
- *  ¥Á¥Ã¥×°ÍÂ¸Éô¤Î½ªÎ»
+ *  ãƒãƒƒãƒ—ä¾å­˜éƒ¨ã®çµ‚äº†
  *
- *  ¥·¥¹¥Æ¥à¤ò½ªÎ»¤¹¤ë»ş¤Ë»È¤¦¡¥
+ *  ã‚·ã‚¹ãƒ†ãƒ ã‚’çµ‚äº†ã™ã‚‹æ™‚ã«ä½¿ã†ï¼
  */
 extern void chip_exit(void);
 
 /*
- *  ³ä¹ş¤ß¥Ï¥ó¥É¥é¡Êchip_support.S¡Ë
- */
-extern void interrupt_handler(void);
-
-/*
- *  Ì¤ÄêµÁ¤Î³ä¹ş¤ß¤¬Æş¤Ã¤¿¾ì¹ç¤Î½èÍı
+ *  æœªå®šç¾©ã®å‰²è¾¼ã¿ãŒå…¥ã£ãŸå ´åˆã®å‡¦ç†
  */
 extern void default_int_handler(void);
 
 #endif /* TOPPERS_MACRO_ONLY */
 
 /*
- *  ARM°ÍÂ¸¥â¥¸¥å¡¼¥ë
+ *  ARMä¾å­˜ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
  */
 #include "arm_gcc/common/core_config.h"
-
-/*
- *  ¥Á¥Ã¥×°ÍÂ¸¥â¥¸¥å¡¼¥ë¤Î¥Ä¡¼¥ë°ÍÂ¸Éô
- */
-#include <chip_config_tool.h>
 
 #endif /* TOPPERS_CHIP_CONFIG_H */

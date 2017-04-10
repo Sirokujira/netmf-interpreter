@@ -1,37 +1,75 @@
 #
-#  @(#) $Id: Makefile.core 955 2012-10-30 07:31:22Z ertl-honda $
+#  @(#) $Id: Makefile.core 1202 2016-07-18 06:36:33Z ertl-honda $
 #
 
 #
-#		Makefile д╬е│ев░═┬╕╔Їб╩ARM═╤б╦
+#		Makefile уБоуВ│уВвф╛ЭхнШщГия╝ИARMчФия╝Й
 #
 
 #
-#  е│ев░═┬╕╔Їе╟егеьепе╚еъ╠╛д╬─ъ╡┴
+#  уВ│уВвф╛ЭхнШщГиуГЗуВгуГмуВпуГИуГкхРНуБохоЪч╛й
 #
 COREDIR = $(SRCDIR)/arch/$(PRC)_$(TOOL)/common
 
 #
-#  е│еєе╤едеыеке╫е╖ечеє
+#  уВ┐уГ╝уВ▓уГГуГИуБоцМЗхоЪ
+#
+ifeq ($(CORE),CR5)
+	COPTS := $(COPTS) -mcpu=cortex-r5
+	LDFLAGS := $(LDFLAGS) -mcpu=cortex-r5
+	CDEFS := $(CDEFS) -D__TARGET_ARCH_ARM=7 -D__TARGET_PROFILE_R
+endif
+
+ifeq ($(CORE),ARM11)
+	COPTS := $(COPTS) -mcpu=mpcore
+	LDFLAGS := $(LDFLAGS) -mcpu=mpcore
+	CDEFS := $(CDEFS) -D__TARGET_ARCH_ARM=6 -D__TARGET_PROFILE_A
+endif
+
+ifeq ($(CORE),CA9)
+	COPTS := $(COPTS) -mcpu=cortex-a9
+	LDFLAGS := $(LDFLAGS) -mcpu=cortex-a9
+	CDEFS := $(CDEFS) -D__TARGET_ARCH_ARM=7 -D__TARGET_PROFILE_A
+endif
+
+ifeq ($(CORE),CA7)
+	COPTS := $(COPTS) -mcpu=cortex-a7
+	LDFLAGS := $(LDFLAGS) -mcpu=cortex-a7
+	CDEFS := $(CDEFS) -D__TARGET_ARCH_ARM=7 -D__TARGET_PROFILE_A -D__TARGET_FEATURE_GENERIC_TIMER
+endif
+
+ifeq ($(CORE),CA53)
+	COPTS := $(COPTS) -mcpu=cortex-a53
+	LDFLAGS := $(LDFLAGS) -mcpu=cortex-a53
+	CDEFS := $(CDEFS) -D__TARGET_ARCH_ARM=8 -D__TARGET_PROFILE_A -D__TARGET_FEATURE_GENERIC_TIMER
+endif
+
+#  Enable FPU
+ifeq ($(ENABLE_VFPV3_NEON),true)
+	COPTS := $(COPTS) -mhard-float -mfloat-abi=softfp -mfpu=neon
+	CDEFS := $(CDEFS) -DSUPPORT_VFPv3_NEON
+endif
+
+#
+#  уВ│уГ│уГСуВдуГлуВкуГЧуВ╖уГзуГ│
 #
 INCLUDES := $(INCLUDES) -I$(COREDIR)
 LIBS := $(LIBS) -lgcc
 
-
 #
-#  елб╝е═еыд╦┤╪д╣ды─ъ╡┴
+#  уВлуГ╝уГНуГлуБлщЦвуБЩуВЛхоЪч╛й
 #
 KERNEL_DIR := $(KERNEL_DIR):$(COREDIR)
 KERNEL_ASMOBJS := $(KERNEL_ASMOBJS) core_support.o
-KERNEL_COBJS := $(KERNEL_COBJS) core_config.o
+KERNEL_COBJS := $(KERNEL_COBJS) core_config.o arm.o
 
 #
-#  ░═┬╕┤╪╖╕д╬─ъ╡┴
+#  ф╛ЭхнШщЦвф┐ВуБохоЪч╛й
 #
 kernel_cfg.timestamp: $(COREDIR)/core.tf
 $(OBJFILE): $(COREDIR)/core_check.tf
 
 #
-#  е│еєе╒егеоехеьб╝е┐┤╪╖╕д╬╩╤┐Їд╬─ъ╡┴
+#  уВ│уГ│уГХуВгуВоуГеуГмуГ╝уВ┐щЦвф┐ВуБохдЙцХ░уБохоЪч╛й
 #
 CFG_TABS := $(CFG_TABS) --cfg1-def-table $(COREDIR)/core_def.csv

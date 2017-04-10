@@ -18,6 +18,10 @@ start_dispatch
 exit_and_dispatch
 call_exit_kernel
 default_exc_handler
+default_undef_handler
+default_swi_handler
+default_prefetchabort_handler
+default_dataabort_handler
 dispatch_and_migrate
 exit_and_migrate
 ret_int_ipi_dispatch
@@ -34,3 +38,6 @@ x_install_exc
 # kernel_cfg.c
 p_accb_table
 p_exch_table
+p_inh_table
+p_private_cfgint_table
+global_cfgint_table

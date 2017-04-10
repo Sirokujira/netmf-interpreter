@@ -1,5 +1,5 @@
 PACKAGE fmp
-VERSION 1.3.0
+VERSION 1.4.0
 
 configure
 MANIFEST
@@ -114,7 +114,5 @@ utils/gentest
 utils/makedep
 utils/makerelease
 
-INCLUDE target/at91skyeye_gcc/MANIFEST
-INCLUDE arch/arm_gcc/MANIFEST
 INCLUDE arch/gcc/MANIFEST
 INCLUDE arch/logtrace/MANIFEST

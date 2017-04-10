@@ -1,9 +1,9 @@
 $ 
-$     ¥Ñ¥¹2¤Î¥Á¥Ã¥×°ÍÂ¸¥Æ¥ó¥×¥ì¡¼¥È¡ÊMPCOREÍÑ¡Ë
+$     ãƒ‘ã‚¹2ã®ãƒãƒƒãƒ—ä¾å­˜ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆï¼ˆMPCOREç”¨ï¼‰
 $ 
 
 $ 
-$ Í­¸ú¤ÊCPUÎã³°¥Ï¥ó¥É¥éÈÖ¹æ
+$ æœ‰åŠ¹ãªCPUä¾‹å¤–ãƒãƒ³ãƒ‰ãƒ©ç•ªå·
 $ 
 $EXCNO_VALID = { 
 	0x10001,0x10002,0x10003,0x10004,0x10006;
@@ -12,98 +12,29 @@ $EXCNO_VALID = {
 	0x40001,0x40002,0x40003,0x40004,0x40006
 }$
 
+$
+$  Interrupt numbers usable in ATT_ISR and their corresponding handlers
+$
+$INTNO_ATTISR_VALID = INTNO_VALID$
+$INHNO_ATTISR_VALID = INTNO_VALID$
+
 $ 
-$  DEF_INT¤Ç»ÈÍÑ¤Ç¤­¤ë³ä¹þ¤ß¥Ï¥ó¥É¥éÈÖ¹æ
+$  DEF_INTã§ä½¿ç”¨ã§ãã‚‹å‰²è¾¼ã¿ãƒãƒ³ãƒ‰ãƒ©ç•ªå·
 $ 
 $INHNO_DEFINH_VALID = INHNO_VALID$
 
 $ 
-$  CFG_INT¤Ç»ÈÍÑ¤Ç¤­¤ë³ä¹þ¤ßÈÖ¹æ¤È³ä¹þ¤ßÍ¥ÀèÅÙ
+$  CFG_INTã§ä½¿ç”¨ã§ãã‚‹å‰²è¾¼ã¿ç•ªå·ã¨å‰²è¾¼ã¿å„ªå…ˆåº¦
 $ 
 $INTNO_CFGINT_VALID  = INTNO_VALID$
+$INTPRI_CFGINT_VALID = RANGE(TMIN_INTPRI, -1)$
 
 $ 
-$ ATT_ISR¤Î¥¿¡¼¥²¥Ã¥È°ÍÂ¸¤Î¥Á¥§¥Ã¥¯
-$ ¤É¤Î¥×¥í¥»¥Ã¥µ¤Ç¤â¼õ¤±ÉÕ¤±²ÄÇ½¤Ê³ä¹þ¤ßÈÖ¹æ¤Ï¡¤½é´ü³äÉÕ¤±²ÄÇ½¥×¥í¥»¥Ã¥µ¤Ë¤Î¤ß
-$ ³äÉÕ¤±²ÄÇ½¤Ç¤¢¤ë¡¥
-$ 
-$FUNCTION TARGET_CHECK_ATT_ISR$
-	$IF ((ISR.INTNO[ARGV[1]] & 0xffff0000) == 0) 
-		&& ((1 << (CLASS_AFFINITY_INI[ISR.CLASS[ARGV[1]]] - 1)) != CLASS_AFFINITY_MASK[ISR.CLASS[ARGV[1]]])$
-		$ERROR ISR.TEXT_LINE[order]$E_RSATR: $FORMAT(_("processor affinity of `0x%1$x\' in %2% is not match with class %3% processor affinity mask `0x%4$x\'."), +ISR.INTNO[ARGV[1]], "ATT_ISR", ISR.CLASS[ARGV[1]], +CLASS_AFFINITY_MASK[ISR.CLASS[ARGV[1]]])$$END$
-	$END$
-$END$
-
-$ 
-$  ARM°ÍÂ¸¥Æ¥ó¥×¥ì¡¼¥È¤Î¥¤¥ó¥¯¥ë¡¼¥É
+$  ARMä¾å­˜ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã®ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰
 $ 
 $INCLUDE"../common/core.tf"$
 
 $ 
-$  ³ä¹þ¤ß¥Ï¥ó¥É¥é¥Æ¡¼¥Ö¥ë
+$  GICä¾å­˜ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã®ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰
 $ 
-$FOREACH prcid RANGE(1, TNUM_PRCID)$
-
-const FP _kernel_prc$prcid$_inh_table[TNUM_INH] = {$NL$
-$FOREACH inhno RANGE(0, (TNUM_INH - 1))$
-	$minhno = inhno | (prcid << intno_cpu_shift)$
-	$IF LENGTH(INH.INHNO[inhno]) && (CLASS_AFFINITY_INI[INH.CLASS[inhno]] == prcid)$
-		$TAB$(FP)($INH.INTHDR[inhno]$),
-	$ELSE$
-		$IF LENGTH(INH.INHNO[minhno]) && (CLASS_AFFINITY_INI[INH.CLASS[minhno]] == prcid)$
-			$TAB$(FP)($INH.INTHDR[minhno]$),
-		$ELSE$
-			$TAB$(FP)(_kernel_default_int_handler),
-		$END$
-	$END$
-	$SPC$$FORMAT("/* 0x%x */", +minhno)$$NL$
-$END$
-};$NL$
-$NL$
-
-$END$$NL$
-
-$ 
-$  ³ä¹þ¤ß¥Ï¥ó¥É¥é¥¢¥¯¥»¥¹¥Æ¡¼¥Ö¥ë
-$ 
-const FP* const _kernel_p_inh_table[TNUM_PRCID] = {$NL$
-$JOINEACH prcid RANGE(1, TNUM_PRCID) ",\n"$
-	$TAB$_kernel_prc$prcid$_inh_table
-$END$
-$NL$};$NL$
-$NL$
-
-$ 
-$  ³ä¹þ¤ßÂ°À­¥Æ¡¼¥Ö¥ë
-$ 
-$NL$
-$FOREACH prcid RANGE(1, TNUM_PRCID)$
-
-const uint8_t _kernel_prc$prcid$_cfgint_table[TNUM_INH] = {$NL$
-$FOREACH inhno RANGE(0, (TNUM_INH - 1))$
-	$minhno = inhno | (prcid << intno_cpu_shift)$
-	$IF LENGTH(INH.INHNO[inhno]) && (CLASS_AFFINITY_INI[INH.CLASS[inhno]] == prcid)$
-		$TAB$1U,
-	$ELSE$
-		$IF LENGTH(INH.INHNO[minhno]) && (CLASS_AFFINITY_INI[INH.CLASS[minhno]] == prcid)$
-			$TAB$1U,
-		$ELSE$
-			$TAB$0U,
-		$END$
-	$END$
-	$SPC$$FORMAT("/* 0x%x */", +minhno)$$NL$
-$END$
-};$NL$
-$NL$
-
-$END$$NL$
-
-$ 
-$  ³ä¹þ¤ßÂ°À­¥¢¥¯¥»¥¹¥Æ¡¼¥Ö¥ë
-$ 
-const uint8_t* const _kernel_p_cfgint_table[TNUM_PRCID] = {$NL$
-$JOINEACH prcid RANGE(1, TNUM_PRCID) ",\n"$
-	$TAB$_kernel_prc$prcid$_cfgint_table
-$END$
-$NL$};$NL$
-$NL$
+$INCLUDE"../common/gic_kernel.tf"$

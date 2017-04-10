@@ -43,6 +43,7 @@
     <HFiles Include="DeviceCode\include\tinyhal.h" />
     <HFiles Include="uItron4API.h" />
     <CFiles Include="uItron4API.c" />
+    <Compile Include="..\mfmain.c" />
     <Compile Include="configuration.cpp" />
     <Compile Include="cpu.cpp" />
     <Compile Include="GlobalLock.cpp" />

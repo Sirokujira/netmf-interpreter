@@ -1,476 +1,524 @@
 =====================================================================
-                        MPCore��¸���ޥ˥奢��
-                                  Last Modified: 2015 Feb 10 11:37:15
+                        MPCore依存部マニュアル
+                                  Last Modified:2017 Feb 18 11:29:00
 =====================================================================
 
-������
+○概要
 
-MPCore��¸���ϡ�ARM�Ҥ�MPCore�򥿡����åȤȤ��Ƥ��롥������ARM11MPCore
-�Τߤ򥵥ݡ��Ȥ��Ƥ��롥
+MPCore依存部は，ARM社のMPCoreをターゲットとしている．現状は
+ARM11MPCore/CA9/CA7のみをサポートしている．
 
 
-�������ͥ�λ��ѥ꥽����
+○カーネルの使用リソース
 
-�ץ����å���˥����ͥ�ϰʲ��Υ꥽��������Ѥ��롥
+プロセッサ毎にカーネルは以下のリソースを使用する．
 
-��������¢������
+●コア内蔵タイマ
 
-�����ͥ�Υƥ��å��Ȥ����Ѥ��롥
+カーネルのティックとして用いる．
 
-��0�֤Υץ����å��ֳ����
+●0番のプロセッサ間割込み
 
-DIC�γ�����ֹ�0�Υץ����å��ֳ���ߤ�ץ����å��֤Υǥ����ѥå��׵��
-������Ѥ��롥�ǥ����ѥå��ѤΥץ����å��ֳ���ߥϥ�ɥ�ΥХ��ѥ�����
-���Ѥ�����ˤϡ�DIC�γ�����ֹ�1�Υץ����å��ֳ���ߤ���Ѥ��롥
+GICの割込み番号0のプロセッサ間割込みをプロセッサ間のディスパッチ要求の
+ために用いる．ディスパッチ用のプロセッサ間割込みハンドラのバイパス処理
+を用いる場合には，GICの割込み番号1のプロセッサ間割込みも使用する．
 
-��Thread ID �쥸������Privileged Only Thread and Process ID Register��
+●SCUカウンタMN0
 
-���ץ����å���PCB�����������Ψ�����뤿�ᡤPCB�ؤΥݥ��󥿤��Ǽ���롥
-���Ѥ��ʤ����ϡ�chip_pcb.h �� USE_THREAD_ID_PCB �������̵���ˤ��뤳
-�ȡ�
+性能評価用にSCUカウンタのMN0を用いる．
 
-��SCU������MN0
 
-��ǽɾ���Ѥ�SCU�����󥿤�MN0���Ѥ��롥
+○割込み処理関係
 
+割込みはGICを用いて扱う．
 
-������߽����ط�
+●割込みハンドラ番号と割込み番号
 
-����ߤ�DIC���Ѥ��ư�����
+GICで割付けられている番号を割込みハンドラ番号及び割込み番号とする．コ
+アに割り付けられるローカルな割込みに関しては，上位ビットで割り付けられ
+ているコアのビットを入れることで，識別する．グローバルな割込みは，上位
+ビットが0xfとなっている．
 
-������ߥϥ�ɥ��ֹ�ȳ�����ֹ�
+●割込み優先度の最小値と最大値
 
-DIC�ǳ��դ����Ƥ����ֹ�����ߥϥ�ɥ��ֹ�ڤӳ�����ֹ�Ȥ��롥��
-���˳���դ������������ʳ���ߤ˴ؤ��Ƥϡ���̥ӥåȤǳ���դ����
-�Ƥ��륳���ΥӥåȤ�����뤳�Ȥǡ����̤��롥�������Х�ʳ���ߤϡ����
-�ӥåȤ�0xf�ȤʤäƤ��롥
+割込み優先度の最小値は-15であり，最大値は-1である．
 
-�������ͥ���٤κǾ��ͤȺ�����
+●dis_int/ena_int のサポート
 
-�����ͥ���٤κǾ��ͤ�-15�Ǥ��ꡤ�����ͤ�-1�Ǥ��롥
+dis_int/ena_intをサポートしている．
 
-��dis_int/ena_int �Υ��ݡ���
+●カーネル管理外の割込みサポート
 
-dis_int/ena_int�򥵥ݡ��Ȥ��Ƥ��롥
+カーネル管理外の割込みはサポートしていない．
 
-�������ͥ�������γ���ߥ��ݡ���
+●ATT_ISRの割付クラスの制限
 
-�����ͥ�������γ���ߤϥ��ݡ��Ȥ��Ƥ��ʤ���
+ハードウェア的に全プロセッサにも割り付け可能な割込み（割込み番号の上位
+16ビットが0）に対するATT_ISRは，割り付け可能プロセッサが初期割付けプロ
+セッサのみのクラスに割り付け可能である．
 
-��ATT_ISR�γ��ե��饹������
+○性能評価用システム時刻の参照
 
-�ϡ��ɥ�����Ū�����ץ����å��ˤ����դ���ǽ�ʳ���ߡʳ�����ֹ�ξ��
-16�ӥåȤ�0�ˤ��Ф���ATT_ISR�ϡ�����դ���ǽ�ץ����å���������դ��ץ�
-���å��ΤߤΥ��饹�˳���դ���ǽ�Ǥ��롥
+コア内蔵タイマによる get_utm をサポートしている．
 
-����ǽɾ���ѥ����ƥ����λ���
 
-������¢�����ޤˤ�� get_utm �򥵥ݡ��Ȥ��Ƥ��롥
+○チップ依存のマスタプロセッサ用初期化ルーチン
 
+カーネル起動時に str_ker() の実行前に呼び出されるルーチンとして，
+chip_mprc_initialize() があり，以下の初期化を行う．
 
-�����åװ�¸�Υޥ����ץ����å��ѽ�����롼����
+●GICの初期化
 
-�����ͥ뵯ư���� str_ker() �μ¹����˸ƤӽФ����롼����Ȥ��ơ�
-chip_mprc_initialize() �����ꡤ�ʲ��ν������Ԥ���
+GICを一旦無効にして，全ての割込みを禁止した上で，ペンディングビットを
+クリアした後，有効にする．
 
-��DIC�ν����
+●SCUの初期化
 
-DIC���ö̵���ˤ��ơ����Ƥγ���ߤ�ػߤ�����ǡ��ڥ�ǥ��󥰥ӥåȤ�
-���ꥢ�����塤ͭ���ˤ��롥
+SCUを有効にして，全てのコアのモードをNORMALとする．
 
-��SCU�ν����
+●SILのスピンロック用変数の初期化
 
-SCU��ͭ���ˤ��ơ����ƤΥ����Υ⡼�ɤ�NORMAL�Ȥ��롥
+SILのスピンロック関数を有効にするため，スピンロック変数を有効にする．
 
-��SIL�Υ��ԥ���å����ѿ��ν����
 
-SIL�Υ��ԥ���å��ؿ���ͭ���ˤ��뤿�ᡤ���ԥ���å��ѿ���ͭ���ˤ��롥
+○チップ依存の初期化ルーチン
 
+チップ依存の初期化ルーチンとして，chip_initialize()があり，以下の初期
+化を行う．
 
-�����åװ�¸�ν�����롼����
+●Thread ID レジスタの初期化
 
-���åװ�¸�ν�����롼����Ȥ��ơ�chip_initialize()�����ꡤ�ʲ��ν��
-����Ԥ���
+自プロセッサのPCBへのポインタを設定する．
 
-��Thread ID �쥸�����ν����
+●ARM依存部の初期化ルーチンの呼び出し
 
-���ץ����å���PCB�ؤΥݥ��󥿤����ꤹ�롥
+ARM依存部の初期化ルーチンである，core_initialize()を呼び出す．
 
-��ARM��¸���ν�����롼����θƤӽФ�
+●MMUの初期化
 
-ARM��¸���ν�����롼����Ǥ��롤core_initialize()��ƤӽФ���
+MMUを初期化して，ページテーブルを以下の設定で1つ作成する．
 
-��MMU�ν����
+  ・全セクションを物理アドレス = 仮想アドレス
+  ・ノンキャッシャブル，ノンバッファブルとする
 
-MMU���������ơ��ڡ����ơ��֥��ʲ��������1�ĺ������롥
+●SMPモードに設定する
 
-  ��������������ʪ�����ɥ쥹 = ���ۥ��ɥ쥹
-  ���Υ󥭥�å���֥롤�Υ�Хåե��֥�Ȥ���
+キャッシュとTLVをクリアした後，プロセッサをSMPモードとする．
 
-��SMP�⡼�ɤ����ꤹ��
+●キャッシュを有効に
 
-����å����TLV�򥯥ꥢ�����塤�ץ����å���SMP�⡼�ɤȤ��롥
+IキャッシュとDキャッシュの両方を有効にする．
 
-������å����ͭ����
+●GICのCPUインタフェースを有効に
 
-I����å����D����å����ξ����ͭ���ˤ��롥
+プロセッサの割込み優先度を最低優先度とし，割込み優先度の全ビットを有効
+にして，EOIによりペンディングしている割込みをクリアする．
 
-��DIC��CPU���󥿥ե�������ͭ����
 
-�ץ����å��γ����ͥ���٤����ͥ���٤Ȥ��������ͥ���٤����ӥåȤ�ͭ��
-�ˤ��ơ�EOI�ˤ��ڥ�ǥ��󥰤��Ƥ������ߤ򥯥ꥢ���롥
+○チップ依存の終了処理ルーチン
 
+チップ依存の初期化ルーチンであるchip_exit()では，以下の終了処理を行う．
 
-�����åװ�¸�ν�λ�����롼����
+●ARM依存部の終了処理ルーチンの呼び出し
 
-���åװ�¸�ν�����롼����Ǥ���chip_exit()�Ǥϡ��ʲ��ν�λ������Ԥ���
+ARM依存部の終了処理ルーチンである，core_exit()を呼び出す．
 
-��ARM��¸���ν�λ�����롼����θƤӽФ�
+●GICのCPUインタフェースを停止する
 
-ARM��¸���ν�λ�����롼����Ǥ��롤core_exit()��ƤӽФ���
+●GICのDISインタフェースの停止
 
-��DIC��CPU���󥿥ե���������ߤ���
 
-��DIC��DIS���󥿥ե����������
+○性能評価用カウンタ用ルーチン
 
+プロセッサを跨ぐ時間を計測するために，SCUのMN0カウンタを用いた計測ルー
+チンを用意している．カウントはCPUクロックで行われる．
 
-����ǽɾ���ѥ������ѥ롼����
+  void scu_counter_init(void); //カウンターの初期化
 
-�ץ����å���٤����֤��¬���뤿��ˡ�SCU��MN0�����󥿤��Ѥ�����¬�롼
-������Ѱդ��Ƥ��롥������Ȥ�CPU�����å��ǹԤ��롥
+  void scu_counter_reset(void) //カウンター値のリセット
 
-  void scu_counter_init(void); //�����󥿡��ν����
+  void scu_counter_get_current(void) //カウンター値の取得
 
-  void scu_counter_reset(void) //�����󥿡��ͤΥꥻ�å�
 
-  void scu_counter_get_current(void) //�����󥿡��ͤμ���
+○SIL関連
 
+MPCore依存部では，SILのスピンロック取得・解放ルーチンを提供する．スピ
+ンロックで用いる変数は，チップ依存のマスタプロセッサ用初期化ルーチン
+（chip_mprc_initialize()）で初期化している．
 
-��SIL��Ϣ
+○FPU
 
-MPCore��¸���Ǥϡ�SIL�Υ��ԥ���å������������롼������󶡤��롥����
-����å����Ѥ����ѿ��ϡ����åװ�¸�Υޥ����ץ����å��ѽ�����롼����
-��chip_mprc_initialize()�ˤǽ�������Ƥ��롥
-
-��FPU
-
-ARM APCS �ץ������㥳���륹���������
-�쥸���� s0-s15 (d0-d7, q0-q3)  �� ���֥롼���󥳡���֤���¸����
-                                   ��������������ǻ��ѡ����֥롼���󥳡���ǥ�����å������쥸����
-�쥸���� s16-s31 (d8-d15, q4-q7)�� ���֥롼���󥳡���֤���¸��ɬ��
-�쥸���� d16-d31 (q8-q15)       �� ���֥롼���󥳡���֤���¸��ɬ��
+ARM APCS プロシジャコールスタンダード
+レジスタ s0-s15 (d0-d7, q0-q3)  ： サブルーチンコール間で保存不要
+                                   引数、戻り値等で使用、サブルーチンコールでスクラッチされるレジスタ
+レジスタ s16-s31 (d8-d15, q4-q7)： サブルーチンコール間で保存が必要
+レジスタ d16-d31 (q8-q15)       ： サブルーチンコール間で保存が必要
      
 =====================================================================
-                �������åȰ�¸����ȯ�Ը����ξ���
+                ターゲット依存部開発者向けの情報
 =====================================================================
-���������ƥ��������
+○マスタプロセッサの指定
 
-�������ƥ�����򼡤Υޥ����ǻ��ꤹ�롥
-
-__TARGET_ARCH_ARM
-
-ARM11 MPCore (ARMv6)���Ѥ�����ϡ�6���������Cortex-A9 MPCore (ARMv7)
-���Ѥ�����ϡ�7��������롥
-
-�ޤ����������åȤ�.tf�ե�����ǡ�ARM11 MPCore (ARMv6)���Ѥ�����ϡ�
-arm11_mpcore.tf�򥤥󥯥롼�ɤ���Cortex-A9 MPCore (ARMv7) ���Ѥ�����
-�ϡ�ca9_mpcore.tf�򥤥󥯥롼�ɤ��롥
-
-���ޥ����ץ����å��λ���
-
-�ޥ����ץ����å��Υץ����å�ID�򼡤Υޥ����ǻ��ꤹ�롥
+マスタプロセッサのプロセッサIDを次のマクロで指定する．
 
   TMPRC_INDEX
 
-��������¢�ڥ�ե����Υ١������ɥ쥹�򼡤Υޥ����ǻ��ꤹ�롥
+○コア内蔵ペリフェラルのベースアドレスを次のマクロで指定する．
 
   MPCORE_PMR_BASE
 
-��MMU�ν�����롼����
+○chip_mprc_initialize()の呼び出し
 
-MMU�δ���Ū�ʽ�����ν�λ�塤�������åȰ�¸�ǹԤ�����MMU�ν����������
-�ʲ��δؿ��˵��Ҥ��롥
+target_mprc_initialize()からの呼び出すこと．
 
-  void target_mmu_init(void)
+○chip_initialize()の呼び出し
 
-MPCore��¸���Ǥϡ�MMU�ν�����Ѥδؿ��Ȥ��Ƽ��δؿ����󶡤���
+target_initialize()からの呼び出すこと．
 
-  void mmu_map_memory(MEMORY_ATTRIBUTE *m_attribute);
+○タイマ関連の定義
 
-������MEMORY_ATTRIBUTE �����ꤷ���������ΰ�Υ������䥭��å����ͭ
-��̵���������ꤹ�롥
+各コアのプライベートタイマを使用する時は以下のマクロを定義すること．
 
-	typedef struct{
-		uintptr_t   va;
-		uintptr_t   pa;
-		uint32_t    size;
-		uint8_t     s;
-		uint8_t     tex;
-		uint8_t     ap;
-		uint8_t     c;
-		uint8_t     b;
-	}MEMORY_ATTRIBUTE;
+ MPCORE_TM_LOAD_1MS  : 1msec周期を生成するためのロード値
+ MPCORE_TM_PS_1MS    : 1msec周期を生成するためのプリスケーラ値
 
-��chip_mprc_initialize()�θƤӽФ�
+○性能評価用関数の定義
 
-target_mprc_initialize()����θƤӽФ����ȡ�
+CA9/MPCore の r1以降に搭載されている Global Timer を使用する．
 
-��chip_initialize()�θƤӽФ�
+以下のマクロを定義すること．
 
-target_initialize()����θƤӽФ����ȡ�
+ MPCORE_GTC_CLOCK_FREQ_MHZ : Global Timer の動作周波数
 
-�������޴�Ϣ�����
+○TrustZoneのサポート
 
-�ƥ����Υץ饤�١��ȥ����ޤ���Ѥ�����ϰʲ��Υޥ�����������뤳�ȡ�
+SafeGを用いてSecure/NonSecure側で実行するコンフィギュレーションをサポ
+ートする．この機能を有効にするには，以下のマクロを定義すること．
 
- MPCORE_TM_LOAD_1MS  : 1msec�������������뤿��Υ�������
- MPCORE_TM_PS_1MS    : 1msec�������������뤿��Υץꥹ��������
+ TOPPERS_SAFEG_SECURE : TrustZoneのSecure側で実行
+ TOPPERS_SAFEG_NONSECURE : TrustZoneのNonSecure側で実行
+ 
+Secure/NonSecureがそれぞれのプロセッサで何%動作したか(負荷)を計測する
+機能を提供する．本機能を使用する場合には，以下のマクロを有効にし，
+./syssvc/safeg_load.c をビルド対象とするこ．
 
-����ǽɾ���Ѵؿ������
+ TOPPERS_SAFEG_LOAD
+ 
+使用方法は，まず各コアで初期化関数 safeg_load_init() を呼び出す．次に
+safeg_syscall_switch()を呼び出してNonSecure側に移行する直前に
+safeg_load_idle()を呼び出す．なお，これらの関数の呼び出しはアトミック
+に行う必要があるため，次のようにSILロック状態で呼び出すこと．
 
-CA9/MPCore �� r1�ʹߤ���ܤ���Ƥ��� Global Timer ����Ѥ��롥
+    SIL_PRE_LOC;
+    SIL_LOC_INT();
+    safeg_load_idle();
+    ret = safeg_syscall_switch();
+    SIL_UNL_INT();
+    
+OSのアイドル処理によりNonSecure側に移行する場合は特にユーザーで記述す
+る必要はない．
 
-�ʲ��Υޥ�����������뤳�ȡ�
+負荷は次の関数で取得可能である．
 
- MPCORE_GTC_CLOCK_FREQ_MHZ : Global Timer ��ư����ȿ�
+ safeg_load_info(ID prcid, uint32_t *p_trust_load, uint32_t *p_nontrust_load)
+    
+また，safeg_load_init() を呼び出すと，それまでの履歴は捨て，改めて負荷
+の計測を開始する．
 
-��TrustZone�Υ��ݡ���
+○ディフォルトのIDLE処理
 
-SafeG���Ѥ���Secure/NonSecure¦�Ǽ¹Ԥ��륳��ե�����졼�����򥵥�
-���Ȥ��롥���ε�ǽ��ͭ���ˤ���ˤϡ��ʲ��Υޥ�����������뤳�ȡ�
+ディフォルトのIDLE処理として，wfiによるIDLE処理を用意している．この処
+理以外の処理を行う場合は，ターゲット依存部でアセンブラマクロ
+(toppers_asm_custom_idle)を定義して，以下のマクロを定義すること．
 
- TOPPERS_SAFEG_SECURE : TrustZone��Secure¦�Ǽ¹�
- TOPPERS_SAFEG_NONSECURE : TrustZone��NonSecure¦�Ǽ¹�
+ TOPPRS_NONUSE_CHIP_DEFAULT_CUSTOM_IDLE : MPCore依存部のディフォルトの
+                                          IDLE処理を無効に
 
-���ǥ��ե���Ȥ�IDLE����
+○GICによるCPUロック
 
-�ǥ��ե���Ȥ�IDLE�����Ȥ��ơ�wfi�ˤ��IDLE�������Ѱդ��Ƥ��롥���ν�
-���ʳ��ν�����Ԥ����ϡ��������åȰ�¸���ǥ�����֥�ޥ���
-(toppers_asm_custom_idle)��������ơ��ʲ��Υޥ�����������뤳�ȡ�
+SafeGを用いてSecure側で実行する際は通常はcpsrのFビットで割込みの禁止を
+実現するが，NMFI が有効となっていると，Fビットはセットできない．そのた
+め，GICの優先度マスクをCPUロックとして使用する機能を提供する．この機能
+を有効をするためには，以下のマクロを定義すること．
 
- TOPPRS_NONUSE_CHIP_DEFAULT_CUSTOM_IDLE : MPCore��¸���Υǥ��ե���Ȥ�
-                                          IDLE������̵����
+ USE_GIC_CPULOCK : CPUロックとしてGICの優先度マスクを使用．
+ ENABLE_NMFI     : NMFI対応コード
 
-��GIC�ˤ��CPU���å�
+本機能を有効とした場合，次の制約がある．
 
-SafeG���Ѥ���Secure¦�Ǽ¹Ԥ���ݤ��̾��cpsr��F�ӥåȤǳ���ߤζػߤ�
-�¸����뤬��NMFI ��ͭ���ȤʤäƤ���ȡ�F�ӥåȤϥ��åȤǤ��ʤ������Τ�
-�ᡤGIC��ͥ���٥ޥ�����CPU���å��Ȥ��ƻ��Ѥ��뵡ǽ���󶡤��롥���ε�ǽ
-��ͭ���򤹤뤿��ˤϡ��ʲ��Υޥ�����������뤳�ȡ�
+ ・多重割込みはサポートしていない．
+ ・割込みからリターンと割込みの許可がアトミックに出来ないため，タスク
+   スタック1段分余分に必要な場合がある．      
 
- USE_GIC_CPULOCK : CPU���å��Ȥ���GIC��ͥ���٥ޥ�������ѡ�
- ENABLE_NMFI     : NMFI�б�������
-
-�ܵ�ǽ��ͭ���Ȥ�����硤�������󤬤��롥
-
- ��¿�ų���ߤϥ��ݡ��Ȥ��Ƥ��ʤ���
- ������ߤ���꥿����ȳ���ߤε��Ĥ����ȥߥå��˽���ʤ����ᡤ������
-   �����å�1��ʬ;ʬ��ɬ�פʾ�礬���롥      
 
 =====================================================================
-                             �ѹ�����
+                             変更履歴
 =====================================================================
+2017/02/18
+・chip_wdt.cfg
+  3,4コア用の記述の追加．
+  
+2016/09/09
+・mpcore.c
+  enable_sa()のv8向けのコードの不具合修正．
+
+2016/07/18
+・MPCore依存部にあった記述のうち，ARMv6/ARMv7の仕様として定義されてい
+  る機能をARM依存部に移動．
+・Generic Timerに対するコードをARM依存部に移動．
+・GICに関するコードをARM依存部に移動．
+
+2016/07/08
+・CA7対応．
+・キャッシュ操作をキャッシュ情報レジスタを参照してLv7まで対応するよう
+  に変更．
+・グローバルタイマ対応
+
+2016/06/14
+・2016/03/09の変更ではDEF_INH()で登録された割込みに対応していなかったた
+  め修正．
+
+2016/03/17
+・アセンブラからC言語を呼び出す際にはスタックが8バイト境界となるよう調
+  整．
+・起動時にブランチプリディクターの初期化を実施するよう変更．
+  
+2016/03/09
+・割込みハンドラ及びサービスルーチンが登録されたコア以外からも
+  ena_int()/dis_int()可能なように，割込み属性アクセステーブルをプライ
+  ベート割込みとグローバル割込みに分けて用意するよう変更
+
+2016/02/04
+・mpcore.h
+  mpcore_icache_invalidate()
+   無効後にブランチヒストリをクリア，DSB，プリフェッチバッファのクリアを追加  
+・mpcore.c  
+   mpcore_dcache_disable()
+    無効前にL1とL2をフラッシュ&Invalidate
+   mpcore_cache_disable()
+    Iキャッシュから無効化．
+   
+2015/09/01
+・mpcore.h/mpcore.c
+  コア2以降は分岐予測が有効となっていなかったため，Iキャッシュの有効化
+  と共に有効とする．
+
+2015/08/25
+・chip_gtimer.h
+  4コアまでに対応．
+  
+2015/07/07
+・chip_gtimer.h
+  Global Timerのtarget_timer_get_current()を修正．
+・chip_support.S
+  SafeG使用時にTrustとNon-Trustの負荷を取得する機能の追加．  
+  TOPPERS_SAFEG_LOADによりON/OFF可能．
+
+2015/06/30
+・Global Timerをシステムタイマーとしてサポート
+  ・SafeG使用時はNon-Secure側はGlobal Timerを操作できないよう変更．
+
 2015/02/10
-��SafeG��ͭ�����˳����ͥ���٤��ϰϤ�tf�ǥ����å�����褦�ѹ���
+・SafeGを有効時に割込み優先度の範囲をtfでチェックするよう変更．
 
 2015/01/28
-��FPU(VFPv3 NEONN)�Υ��ݡ��ȡ�
+・FPU(VFPv3 NEONN)のサポート．
 
 2014/12/24
-��mpcore.h/mpcore.c
-  ARMv7�Ǥϡ�SMP�ܡ��ɤ�ͭ���ˤ���ݤ�FW�ӥåȤ򥻥åȤ���TLB/cache��
-  �ᥤ��ƥʥ󥹥����ɤ򥳥��֤ǥ֥����ɥ��㥹�Ȥ���褦�˽�����
+・mpcore.h/mpcore.c
+  ARMv7では，SMPボードを有効にする際にFWビットをセットしてTLB/cacheの
+  メインテナンスコードをコア間でブロードキャストするように修正．
   
 2014/12/24
-��chip_support.S
-  release_lock�ˤ�����PCB.p_sencondlock��NULLȽ���˥����ץ����ɤ�
-  ���äƤ��ʤ����������
+・chip_support.S
+  release_lockにおいてPCB.p_sencondlockのNULL判定後にジャンプコードが
+  入っていない問題を修正．
 
 2014/10/03
-��mpcore.h
-  dic_cpu_set_priority() ͥ�����ѹ��塤ͥ���٤�ȿ�Ǥ����ޤ��ԤĤ褦
-  �Хꥢ̾���ɲá�
+・mpcore.h
+  dic_cpu_set_priority() 優先度変更後，優先度が反映されるまで待つよう
+  バリア名を追加．
     
 2013/11/29
-��cpsr�ǤϤʤ���GIC�γ����ͥ���٥ޥ�����CPU���å���¸����뵡ǽ���ɲá�
-  USE_GIC_CPULOCK �ˤ���ڤ��ؤ��롥
-��NMFI��ͭ���ʾ��򥵥ݡ��Ȥ��� ENABLE_NMFI ���ɲá�
+・cpsrではなく，GICの割込み優先度マスクでCPUロックを実現する機能を追加．
+  USE_GIC_CPULOCK により切り替える．
+・NMFIが有効な場合をサポートする ENABLE_NMFI を追加．
   
 2013/10/05
-��MMU��ͭ���ʾ��֤ǵ�ư���Ƥ�ư���褦��MMU��̵������TLB��̵������
-  ��ư�����Ȥ����ɲá�
+・MMUが有効な状態で起動しても動作するよう，MMUの無効化とTLBの無効処理
+  を起動処理として追加．
 
 2013/08/21
-��chip_asm.inc
-  TOPPERS_ENABLE_QEMU ������������ϡ�toppers_custom_idle �� wfi��̵
-  ���ˤ��롥
-��chip_config.c
-  CP15_SET_VBAR()��ͭ����̵���� OMIT_VBAR_SETUP �����椹��褦���ѹ���
-��mpcore.h
-  mpcore_dcache_clean() ���ɲ�
-��mpcore_tool.h
-  CP15_DCACHE_CLEAN(x) ���ɲá�
+・chip_asm.inc
+  TOPPERS_ENABLE_QEMU を定義した場合は，toppers_custom_idle で wfiを無
+  効にする．
+・chip_config.c
+  CP15_SET_VBAR()の有効・無効を OMIT_VBAR_SETUP で制御するように変更．
+・mpcore.h
+  mpcore_dcache_clean() を追加
+・mpcore_tool.h
+  CP15_DCACHE_CLEAN(x) を追加．
   
 
 2013/07/11
-����¢WDT�ѤΥɥ饤�Ф��ɲ�(chip_wdt.c/h/cfg)
-��ARMv7�Ǥ�MMU���������ns�ӥåȤ����ꤹ��褦���ѹ���
-��HIVEC�����ꤹ��ؿ����ɲá�
-������ߥ������ƥ�����������ߤ�32�ǳ���ڤ�ʤ����Ǥ�����������
-  ��ǽ�ʤ褦���ѹ���
+・内蔵WDT用のドライバの追加(chip_wdt.c/h/cfg)
+・ARMv7ではMMUの設定時にnsビットを設定するように変更．
+・HIVECを設定する関数の追加．
+・割込みセキュリティの設定を割込みが32で割り切れない場合でも正しく設定
+  可能なように変更．
  
 2012/10/30
-��USE_IPI_DIS_HANDER_BYPASS ͭ�����˻��Ѥ���IPI���ֹ����ꤹ��ޥ���
-  ����äƤ������������
+・USE_IPI_DIS_HANDER_BYPASS 有効時に使用するIPIの番号を指定するマクロ
+  を誤っていた問題を修正．
 
 2012/10/19
-���ץ饤�١��ȥ����ޤΥ������ͤ�ޥ��������ǽ�ˡ�
-���ץꥹ�������ͤΥޥ���̾���ѹ���
-���嵭���ѹ���ȼ�����������Х륿�����ѥ����å����ȿ��Υޥ�����
-  MPCORE_GTC_CLOCK_FREQ_MHZ���ѹ���
-��x_conv_nsec()������ͤ�uint64_t���ѹ���
-����ǽɾ���Ѵؿ��Ȥ��ơ�CA9/MPCore �� r1�ʹߤ���ܤ���Ƥ��� Global
-  Timer ����Ѥ��롥
-������ߥ���ȥ�����Υ������SGI/PPI�Υ쥸�����ν�������ɲ�
-���ǥ��ե���Ȥ�IDLE������̵���ޥ������ɲá�
-��TrustZone���ݡ���
-��ip(r11)�쥸������ñ�˰��̥쥸�����Ȥ��ƻ��Ѥ������r11�Ƚ񤯤褦��
-  ����
-����ǽɾ���ʥ֡��Ȼ��֡�����߱������ˤη�¬�롼������ɲá�
+・プライベートタイマのロード値をマクロ設定可能に．
+・プリスケーラ値のマクロ名を変更．
+・上記の変更に伴い，グローバルタイマ用クロック周波数のマクロを
+  MPCORE_GTC_CLOCK_FREQ_MHZに変更．
+・x_conv_nsec()の戻り値をuint64_tに変更．
+・性能評価用関数として，CA9/MPCore の r1以降に搭載されている Global
+  Timer を使用する．
+・割込みコントローラのコア毎のSGI/PPIのレジスタの初期化を追加
+・ディフォルトのIDLE処理の無効マクロを追加．
+・TrustZoneサポート
+・ip(r11)レジスタを単に一般レジスタとして使用する場合はr11と書くよう変
+  更．
+・性能評価（ブート時間，割込み応答性）の計測ルーチンの追加．
 
 
 2012/04/28
-��MMU�����κ�Ŭ����
-��MMU�Υޥåפ����ƥ������åȰ�¸���Ǽ»ܤ���褦�ѹ���
+・MMU処理の最適化．
+・MMUのマップは全てターゲット依存部で実施するよう変更．
 
 2012/04/03
-��irq_handler�Ǥ�cpsr������ν���
-  ��CPSR_CPULOCK �� CPSR_ALWAYS_SET �򥻥åȤ���褦�˽�����
+・irq_handlerでのcpsrの設定の修正
+  ・CPSR_CPULOCK と CPSR_ALWAYS_SET をセットするように修正．
 
 2012/03/30
-��ext_ker_request()�ؤΥ������Ȥ��ɲ�
-  ��ARMCC�Ǥϳ���ߤ�����դ��ʤ��ץ����å�ȯ�����롥GCC����Ӥ��ƥ���
-    �ɤ���ΨŪ���ᤤ����λפ��롥�롼�פ��ɲä���Ĵ���ʥ��ޡ��ȤǤ�
-    �ʤ��ˡ�
+・ext_ker_request()へのウェイトの追加
+  ・ARMCCでは割込みを受け付けないプロセッサ発生する．GCCと比較してコー
+    ドが効率的で早いための思われる．ループを追加して調整（スマートでは
+    ない）．
 
 2012/01/13
-��ARMCC�б��Τ�����ѹ���
+・ARMCC対応のための変更．
 
 2011/07/15
-��ARMv7����Binary Point Regiset �������ͤν���
-  ��ARMv6�ȤϥӥåȤΥ��������ѹ�����Ƥ����ꡤ����ޤǤϾ��4bit��
-    �ߤ���Ӥ��Ѥ����Ƥ������ᡤ5bit���Τ���Ӥ���褦���ѹ���
+・ARMv7時のBinary Point Regiset の設定値の修正
+  ・ARMv6とはビットのアサインが変更されていおり，これまでは上位4bitの
+    みが比較に用いられていたため，5bit全体を比較するように変更．
 
 2011/07/12
-��chip_support.S �ˤ�����EOI�񤭹����ͤν���
-  �������ȯ������IAR������������ͤβ���10bit��񤭹���Ǥ��������ץ�
-    ���å��ֳ���ߤξ��ϡ�������׵᤬���ꥢ����ʤ���礬���뤿�ᡤ
-    IAR�����ɤ߹�������Τޤޤ��͡ʥ�����CPU���󤬤���ˤ�EOI�˽񤭹�
-    ��褦���ѹ���
-  �����ν����ˤ�ꡤ3�����ʾ��NaviEngine��ȯ�����Ƥ�����Spurious���
-    �ߤ�������褷����
-��chip.tf �ˤ��������ߴ�Ϣ�ε��Ҥ��ѹ�
-  ��INHNO_ATTISR_VALID �ˤ����륰�����Х�ʳ�����׵�饤����Ф����
-    ���ߥϥ�ɥ��ֹ�ΰ������ѹ��ˤ�ꡤchip.tf �˰ʲ����ѹ���»ܡ�
-    ��INTNO_ATTISR_VALID/INHNO_ATTISR_VALID �򥿡����åȰ�¸���˰�ư
+・chip_support.S におけるEOI書き込み値の修正
+  ・割込み発生時にIARから取得した値の下位10bitを書き込んでいたが，プロ
+    セッサ間割込みの場合は，割込み要求がクリアされない場合があるため，
+    IARから読み込んだそのままの値（ソースCPU情報がある）をEOIに書き込
+    むように変更．
+  ・この修正により，3コア以上のNaviEngineで発生していた，Spurious割込
+    みの問題も解決した．
+・chip.tf における割込み関連の記述の変更
+  ・INHNO_ATTISR_VALID におけるグローバルな割込み要求ラインに対する割
+    込みハンドラ番号の扱いの変更により，chip.tf に以下の変更を実施．
+    ・INTNO_ATTISR_VALID/INHNO_ATTISR_VALID をターゲット依存部に移動
 
 2011/05/03
-��ASP 1.7.0 �ؤ��ɽ���
-  �����ե��åȥե������������ˡ�򥳥�ե�����졼�����Ѥ�����ˡ���ѹ���
+・ASP 1.7.0 への追従．
+  ・オフセットファイルの生成方法をコンフィギュレータを用いる方法に変更．
 
 2011/02/17
-������ߥϥ�ɥ��irq_handler�ˤˤ����ơ�Spurious Interrupt ���˥�����
-  ���ݥ���Ȥ����������ɤ�ʬ������褦�ˤʤäƤ������������å�����¸��
-  �ͥ��ȥ�����Ȥι����ϹԤäƤ��ʤ����ᡤret_int2�˥꥿���󤹤�褦��
-  ������
-��CA9��ARMv7�ˤ�Ʊ�ͤ�ARM11MPcore��ARMv6�ˤǤ�Spurious Interrupt ��ȯ
-  �����뤿�ᡤARM11MPcore�Ǥ�Spurious Interrupt�б��Υ����ɤ�ͭ���Ȥ��롥
+・割込みハンドラ（irq_handler）において，Spurious Interrupt 時にスタッ
+  クポイントの復帰コードへ分岐するようになっていたが，スタックの保存や
+  ネストカウントの更新は行っていないため，ret_int2にリターンするように
+  修正．
+・CA9（ARMv7）と同様にARM11MPcore（ARMv6）でもSpurious Interrupt が発
+  生するため，ARM11MPcoreでもSpurious Interrupt対応のコードを有効とする．
 
 2011/02/16
-�������ͥ��������CPU�㳰�ν����������ǡ������ƥ���֡ʥ���ƥ����Ȥ�
-  �����ˤ�CPU�㳰ȯ�����ξ��֤��ѹ�����ݤ����������ɥ쥹����CPU�㳰
-  ȯ������CPSR��������Ƥ��ʤ��ä����������
+・カーネル管理外のCPU例外の出入口処理で，システム状態（コンテキストは
+  除く）を，CPU例外発生時の状態へ変更する際に正しいアドレスからCPU例外
+  発生前のCPSRを取得していなかった問題を修正．
 
 2010/11/02
-����ư����Ʊ����ˡ���ѹ���
-  �ǥХå���Ȥ���硤sev/wev�����ѤǤ��ʤ����Ȥ˲ä������μ¹ԤΥ��
-  �꤬�ĤäƤ��뤿��������Ʊ���Ǥ��ʤ���礬���ä���Ʊ���Ѥ��ѿ��򥳥�
-  ��˻�����Ʊ����˽��������褦���ѹ���
-��CA9��ȯ������spurious������б�
+・起動時の同期方法を変更．
+  デバッガを使う場合，sev/wevが使用できないことに加え，前の実行のメモ
+  リが残っているため正しく同期できない場合があった．同期用の変数をコア
+  毎に持ち，同期後に初期化するように変更．
+・CA9で発生するspurious割込み対応
 
 2010/10/14
-��TOPPERS_SYSTIM_PRCID ������ǻ��Ѥ������ߥϥ�ɥ���ѹ�����褦��
-  �ѹ���
+・TOPPERS_SYSTIM_PRCID の定義で使用する割込みハンドラを変更するように
+  変更．
 
 2010/08/06
-�������� 1.2 �ɽ���
+・共通部 1.2 追従．
 
 2010/06/02
-���ƥ��ȥץ�������Ϣ�Υ����ɤκ����
+・テストプログラム関連のコードの削除．
 
 2010/04/21
-���ץ����å�3/4�ѤΥ����ޤγ�����ֹ�ξ�̥ӥåȤ�ץ����å�ID�Υޥ�
-  ������ץ����å�ID�˽�����
+・プロセッサ3/4用のタイマの割込み番号の上位ビットをプロセッサIDのマス
+  クからプロセッサIDに修正．
 
 2010/02/26
-��Coretex-A9 MPCore �Υ��ݡ���
-  __TARGET_ARCH_ARM �ޥ������ڤ��ؤ���
+・Coretex-A9 MPCore のサポート
+  __TARGET_ARCH_ARM マクロで切り替え．
 
 2010/02/16
-���������Х륿�����������˥����޳���ߤ�TCL_ADMIN_PRC�ʥ��饹ID 5�ˤ�
-  °����褦���ѹ���
+・グローバルタイマ方式時にタイマ割込みをTCL_ADMIN_PRC（クラスID 5）に
+  属するように変更．
 
 2010/01/27
-�����å��ѿ��η�(LOCK)�������typedef���ѹ���
-�����ԥ���å��η�(SPNLOCK)�������typedef���ѹ���
+・ロック変数の型(LOCK)の定義をtypedefに変更．
+・スピンロックの型(SPNLOCK)の定義をtypedefに変更．
 
 2009/11/27
-�����ԥ���å����Ի��˳���ߤ���Ĥ���wfe��¹Ԥ���褦���ѹ���
+・スピンロック失敗時に割込みを許可してwfeを実行するように変更．
 
 2009/11/20
-���������ȥ��åץ롼����ǥޥ����ץ����å���TOPPERS_MASTER_PRCID�򸫤�
-  Ƚ�ꤹ��褦���ѹ���
+・スタートアップルーチンでマスタプロセッサをTOPPERS_MASTER_PRCIDを見て
+  判定するように変更．
 
 2009/11/11
-��start.S���ɲá�ARMɸ���sart.S�ȤϰۤʤꡤƱ������sev,wfe����Ѥ��롥
+・start.Sの追加．ARM標準のsart.Sとは異なり，同期時にsev,wfeを使用する．
 
 2009/11/03
-��SIL_LOC_SPN�λ��ͤ��ѹ���
-  ���å��������ԤĴ֤ϡ�����ߤ�ޥ������ʤ��褦���ѹ���
+・SIL_LOC_SPNの仕様を変更．
+  ロック取得を待つ間は，割込みをマスクしないように変更．
 
 2009/10/16
-��������֥�ե��������ʬ��̿��� AAPCS�侩���ѹ���
+・アセンブラファイル中の分岐命令を AAPCS推奨に変更．
   mov pc, xx -> bx pc
 
 2009/10/05
- dic_config/dic_set_target/dic_set_priority��ǥץ����å��֤���¾�μ»�
+ dic_config/dic_set_target/dic_set_priority内でプロセッサ間の排他の実施
 
 2009/09/15
- �ǥ����ѥå��ѤΥץ����å��ֳ���ߥϥ�ɥ�ΥХ��ѥ������Υ��ݡ���
- 1.1.0���ɽ��Τ�����ѹ���
- ���ץ����å���PCB�ؤΥ����������Ψ�����뤿�ᡤPCB�ؤΥݥ��󥿤�
- Thread ID �쥸�����س�Ǽ��
+ ディスパッチ用のプロセッサ間割込みハンドラのバイパス処理のサポート
+ 1.1.0の追従のための変更．
+ 自プロセッサのPCBへのアクセスを効率化するため，PCBへのポインタを
+ Thread ID レジスタへ格納．
 
 2009/07/14
- CPUEXC3 �� CPUEXC4 ������
- ����ץ�ץ�������Ѥ������CPUEXC1...�� �򥿡����åȰ�¸���˰�ư
+ CPUEXC3 と CPUEXC4 を修正．
+ サンプルプログラム用の定義（CPUEXC1...） をターゲット依存部に異動
 
 2009/05/14
- INTHDR_ENTRY() ��extern�������Ϥ��ʤ��褦���ѹ���
+ INTHDR_ENTRY() でextern宣言を出力しないように変更．
 
 2009/02/03
- �ޥ˥奢���������
+ マニュアルの整備．
 
 2009/01/26
- �������ȤΥ��󥿥ե��������ѹ��ˤ�ꡤ�ؿ�̾���ѹ���
+ 共通部とのインタフェースの変更により，関数名を変更．
 
 2008/09/11
  CP15_DATA_SYNC_BARRIER()/CP15_INVALIDATE_UNIFIED_TLB() : mpcore.h
-   ����饤�󥢥���֥�ޥ���������
+   インラインアセンブラマクロを修正．
 
 2008/08/04
  x_config_int() : chip_config.c
-   �����������ߤξ�硤������н�ץ����å��˼��ץ����å����ޤޤ��
-   ���뤫�����å����롥
+   ローカル割込みの場合，割込み対処プロセッサに自プロセッサが含まれて
+   いるかチェックする．
 
-�ʾ塥
+以上．

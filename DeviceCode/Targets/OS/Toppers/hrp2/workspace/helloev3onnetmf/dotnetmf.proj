@@ -394,6 +394,13 @@
         <CFiles Include="cli_sensor.c" />
     </ItemGroup>
     
+    <Import Project="$(SPOCLIENT)\Framework\Features\RTX_Config.libcatproj" />
     <Import Project="$(SPOCLIENT)/tools/targets/Toppers.SPOT.System.Targets" />
     <!-- <Import Project="$(SPOCLIENT)/tools/targets/Toppers.Spot.system.gcc.targets" /> -->
+    <Target Name="CheckPreRquisitesInstalled">
+        <Error Code="NETMFBLD"
+               Condition="!EXISTS('$(SPOCLIENT)\DeviceCode\Targets\OS\Toppers\hrp2\ARM.ToppersHRP2.pdsc')"
+               Text="Missing Toppers installation at: $(SPOCLIENT)\DeviceCode\Targets\OS\Toppers\hrp2*"
+               />
+    </Target>
 </Project>

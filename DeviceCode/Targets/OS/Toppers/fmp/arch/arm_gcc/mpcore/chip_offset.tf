@@ -1,29 +1,18 @@
 $
-$       еке╒е╗е├е╚е╒ебедеы└╕└о═╤е╞еєе╫еьб╝е╚е╒ебедеыб╩AT91SKYEY═╤б╦
+$       уВкуГХуВ╗уГГуГИуГХуВбуВдуГлчФЯцИРчФиуГЖуГ│уГЧуГмуГ╝уГИуГХуВбуВдуГля╝ИMPCoreчФия╝Й
 $
 
 $
-$  ╔╕╜ре╞еєе╫еьб╝е╚е╒ебедеыд╬едеєепеыб╝е╔
+$  циЩц║ЦуГЖуГ│уГЧуГмуГ╝уГИуГХуВбуВдуГлуБоуВдуГ│уВпуГлуГ╝уГЙ
 $
 $INCLUDE "kernel/genoffset.tf"$
 
 $
-$  е│ев░═┬╕е╞еєе╫еьб╝е╚д╬едеєепеыб╝е╔б╩ARM═╤б╦
+$  уВ│уВвф╛ЭхнШуГЖуГ│уГЧуГмуГ╝уГИуБоуВдуГ│уВпуГлуГ╝уГЙя╝ИARMчФия╝Й
 $
 $INCLUDE"../common/core_offset.tf"$
 
 $
-$  еке╒е╗е├е╚├═д╬е▐епеэ─ъ╡┴д╬└╕└о
+$  уВкуГХуВ╗уГГуГИхАдуБоуГЮуВпуГнхоЪч╛йуБочФЯцИР
 $
-$DEFINE("PCB_p_firstlock", offsetof_PCB_p_firstlock)$
-$DEFINE("PCB_p_secondlock", offsetof_PCB_p_secondlock)$
-$DEFINE("PCB_locspnid", offsetof_PCB_locspnid)$
-
-$DEFINE("PCB_excpt_nest_count", offsetof_PCB_excpt_nest_count)$
-$DEFINE("PCB_istkpt", offsetof_PCB_istkpt)$
-$DEFINE("PCB_p_exch_tbl", offsetof_PCB_p_exch_tbl)$
-
 $DEFINE("PCB_p_inh_tbl", offsetof_PCB_p_inh_tbl)$
-
-$DEFINE("PCB_saved_iipm", offsetof_PCB_saved_iipm)$
-$DEFINE("PCB_lock_flag", offsetof_PCB_lock_flag)$

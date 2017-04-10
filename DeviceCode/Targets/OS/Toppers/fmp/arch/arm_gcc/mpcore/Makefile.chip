@@ -1,13 +1,13 @@
 #
-#  @(#) $Id: Makefile.chip 1088 2015-02-03 01:05:20Z ertl-honda $
+#  @(#) $Id: Makefile.chip 1202 2016-07-18 06:36:33Z ertl-honda $
 #
 
 #
-#		Makefile д╬е┴е├е╫░═┬╕╔Їб╩MPCORE═╤б╦
+#		Makefile уБоуГБуГГуГЧф╛ЭхнШщГия╝ИMPCOREчФия╝Й
 #
 
 #
-#  е┴е├е╫╠╛бде│ев╠╛бд│л╚п┤─╢н╠╛д╬─ъ╡┴
+#  уГБуГГуГЧхРНя╝МуВ│уВвхРНя╝МщЦЛчЩ║чТ░хвГхРНуБохоЪч╛й
 #
 CHIP = mpcore
 PRC  = arm
@@ -16,56 +16,36 @@ TOOL = gcc
 CHIPDIR = $(SRCDIR)/arch/$(PRC)_$(TOOL)/$(CHIP)
 
 #
-#  е│еєе╤едеыеке╫е╖ечеє
+#  уВ│уГ│уГСуВдуГлуВкуГЧуВ╖уГзуГ│
 #
 INCLUDES := $(INCLUDES) -I$(CHIPDIR)
 COPTS := $(COPTS)
 LDFLAGS := $(LDFLAGS) -N
 
 #
-#  ARM11д╚CA9д╬└┌дъ╩мд▒
-#
-ifeq ($(MPCORE_TYPE),ARM11)
-	COPTS := $(COPTS) -mcpu=mpcore
-	LDFLAGS := $(LDFLAGS) -mcpu=mpcore
-	CDEFS := $(CDEFS) -D__TARGET_ARCH_ARM=6
-endif
-ifeq ($(MPCORE_TYPE),CA9)
-	COPTS := $(COPTS) -mcpu=cortex-a9
-	LDFLAGS := $(LDFLAGS) -mcpu=cortex-a9
-	CDEFS := $(CDEFS) -D__TARGET_ARCH_ARM=7
-endif
-
-#  Enable FPU
-ifeq ($(ENABLE_VFPV3_NEON),true)
-      COPTS := $(COPTS) -mhard-float -mfloat-abi=softfp -mfpu=neon
-      CDEFS := $(CDEFS) -DSUPPORT_VFPv3_NEON
-endif
-
-#
-#  елб╝е═еыд╦┤╪д╣ды─ъ╡┴
+#  уВлуГ╝уГНуГлуБлщЦвуБЩуВЛхоЪч╛й
 #
 KERNEL_DIR := $(KERNEL_DIR) $(CHIPDIR)
-KERNEL_ASMOBJS := $(KERNEL_ASMOBJS) chip_support.o
-KERNEL_COBJS := $(KERNEL_COBJS) chip_config.o mpcore.o
+KERNEL_ASMOBJS := $(KERNEL_ASMOBJS) gic_support.o
+KERNEL_COBJS := $(KERNEL_COBJS) chip_config.o mpcore.o gic_kernel.o
 
 #
-#  ░═┬╕┤╪╖╕д╬─ъ╡┴
+#  ф╛ЭхнШщЦвф┐ВуБохоЪч╛й
 #
 kernel_cfg.timestamp: $(CHIPDIR)/chip.tf
 $(OBJFILE): $(CHIPDIR)/chip_check.tf
 
 #
-#  е│еєе╒егеоехеьб╝е┐┤╪╖╕д╬╩╤┐Їд╬─ъ╡┴
+#  уВ│уГ│уГХуВгуВоуГеуГмуГ╝уВ┐щЦвф┐ВуБохдЙцХ░уБохоЪч╛й
 #
 CFG_TABS := $(CFG_TABS) --cfg1-def-table $(CHIPDIR)/chip_def.csv
 
 #
-#  еке╒е╗е├е╚е╒ебедеы└╕└од╬д┐дсд╬─ъ╡┴
+#  уВкуГХуВ╗уГГуГИуГХуВбуВдуГлчФЯцИРуБоуБЯуВБуБохоЪч╛й
 #
 OFFSET_TF = $(CHIPDIR)/chip_offset.tf
 
 #
-#  ARM░═┬╕╔Їд╬едеєепеыб╝е╔
+#  ARMф╛ЭхнШщГиуБоуВдуГ│уВпуГлуГ╝уГЙ
 #
 include $(SRCDIR)/arch/$(PRC)_$(TOOL)/common/Makefile.core

@@ -1,0 +1,18 @@
+<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Directory>DeviceCode\Targets\Native\Interop\CQ_NETMF_LEDMATRIX</Directory>
+    <AssemblyName>CQ_NETMF_LEDMATRIX</AssemblyName>
+  </PropertyGroup>
+  <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Settings" />
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+  </PropertyGroup>
+<ItemGroup>
+<HFile Include="CQ_NETMF_LEDMATRIX.h" />
+<Compile Include="CQ_NETMF_LEDMATRIX.cpp" />
+<Compile Include="CQ_NETMF_LEDMATRIX_CQ_NETMF_LEDMATRIX_RGBLEDMatrix_mshl.cpp" />
+<HFile Include="CQ_NETMF_LEDMATRIX_CQ_NETMF_LEDMATRIX_RGBLEDMatrix.h" />
+<Compile Include="CQ_NETMF_LEDMATRIX_CQ_NETMF_LEDMATRIX_RGBLEDMatrix.cpp" />
+</ItemGroup>
+<Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Targets" />
+</Project>

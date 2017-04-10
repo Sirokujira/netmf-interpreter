@@ -28,6 +28,10 @@
 #undef exit_and_dispatch
 #undef call_exit_kernel
 #undef default_exc_handler
+#undef default_undef_handler
+#undef default_swi_handler
+#undef default_prefetchabort_handler
+#undef default_dataabort_handler
 #undef dispatch_and_migrate
 #undef exit_and_migrate
 #undef ret_int_ipi_dispatch
@@ -48,6 +52,9 @@
  */
 #undef p_accb_table
 #undef p_exch_table
+#undef p_inh_table
+#undef p_private_cfgint_table
+#undef global_cfgint_table
 
 #ifdef TOPPERS_LABEL_ASM
 
@@ -75,6 +82,10 @@
 #undef _exit_and_dispatch
 #undef _call_exit_kernel
 #undef _default_exc_handler
+#undef _default_undef_handler
+#undef _default_swi_handler
+#undef _default_prefetchabort_handler
+#undef _default_dataabort_handler
 #undef _dispatch_and_migrate
 #undef _exit_and_migrate
 #undef _ret_int_ipi_dispatch
@@ -95,6 +106,9 @@
  */
 #undef _p_accb_table
 #undef _p_exch_table
+#undef _p_inh_table
+#undef _p_private_cfgint_table
+#undef _global_cfgint_table
 
 #endif /* TOPPERS_LABEL_ASM */
 

@@ -3,7 +3,7 @@
  *      Toyohashi Open Platform for Embedded Real-Time Systems/
  *      Flexible MultiProcessor Kernel
  *
- *  Copyright (C) 2009-2013 by Embedded and Real-Time Systems Laboratory
+ *  Copyright (C) 2009-2017 by Embedded and Real-Time Systems Laboratory
  *              Graduate School of Information Science, Nagoya Univ., JAPAN
  *
  *  上記著作権者は，以下の(1)〜(4)の条件を満たす場合に限り，本ソフトウェ
@@ -47,17 +47,6 @@
 #include "mpcore.h"
 
 /*
- *  Numbers for software generated interrupts SGI
- */
-#ifdef TOPPERS_SAFEG_SECURE
-#define IPINO_DIS  DIC_IRQNO_IPI14
-#define IPINO_EXT  DIC_IRQNO_IPI15
-#else  /* !TOPPERS_SAFEG_SECURE */
-#define IPINO_DIS  DIC_IRQNO_IPI0
-#define IPINO_EXT  DIC_IRQNO_IPI1
-#endif /* TOPPERS_SAFEG_SECURE */
-
-/*
  *  Priority for inter-processor interrupts used for dispatching requests
  */
 #ifdef TOPPERS_SAFEG_SECURE
@@ -82,6 +71,6 @@
 /*
  *  Include chip configuration (MPCORE)
  */
-#include "arm_gcc/mpcore/chip_ipi.h"
+#include "arm_gcc/common/gic_ipi.h"
 
 #endif /* TOPPERS_TARGET_IPI_H */

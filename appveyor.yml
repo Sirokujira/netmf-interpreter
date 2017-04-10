@@ -56,6 +56,8 @@ install:
 # setenv_gcc 5.4.1 C:\projects\gcc-arm-none-eabi
 # 
 # setenv_gcc 4.9.3 C:\projects\gcc-arm-none-eabi
+# cd Solutions\ToppersHRP2onEV3
+# cd Solutions\MBED_GR_PEACH_Native
 build_script:
 - cmd: >-
     dir "C:\projects"
@@ -68,21 +70,14 @@ build_script:
     
     setenv_gcc 4.9.3 C:\projects\gcc-arm-none-eabi
     
-    cd Solutions\ToppersHRP2onEV3
+    cd Solutions\MBED_GR_PEACH_Native
     
     MSbuild dotnetmf.proj /t:rebuild /p:flavor=release;memory=flash
-
-    cd ..\..
-    
-    cd DeviceCode\Targets\OS\Toppers\hrp2\workspace\helloev3onnetmf
-    
-    MSbuild dotnetmf.proj /t:rebuild /p:flavor=release;memory=flash
- 
 
 artifacts:
 - path: netmfvs2015.msi
   name: netmfvs2015
 
-- path: BuildOutput\ARM\GCC4.9\le\FLASH\release\ToppersHRP2onEV3\obj\DeviceCode\Targets\OS\Toppers\hrp2\workspace\helloev3onnetmf\hrp2
+- path: BuildOutput\RZA1\GCC4.9\le\FLASH\release\MBED_GR_PEACH\bin\tinyclrnbl.bin
   name: Release
 

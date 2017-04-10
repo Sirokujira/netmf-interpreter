@@ -10,30 +10,21 @@ void ApplicationEntryPoint()
 {
     CLR_SETTINGS clrSettings;
 
-    // InitCRuntime();
-    // CPU_Initialize();
-    // Time_Initialize();
-    // HAL_Initialize();
-
-	memset(&clrSettings, 0, sizeof(CLR_SETTINGS));
+    memset(&clrSettings, 0, sizeof(CLR_SETTINGS));
 
     clrSettings.MaxContextSwitches         = 50;
     clrSettings.WaitForDebugger            = false;
     clrSettings.EnterDebuggerLoopAfterExit = true;
 
+
     ClrStartup( clrSettings );
-	
-    // HAL_Uninitialize();
-    // Time_Uninitialize();
 
 #if !defined(BUILD_RTM)
     debug_printf( "Exiting.\r\n" );
-	// ::CPU_Halt();
 #else
-    // ::CPU_Reset();
+    ::CPU_Reset();
 #endif
 }
-
 
 BOOL Solution_GetReleaseInfo(MfReleaseInfo& releaseInfo)
 {
