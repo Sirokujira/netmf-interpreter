@@ -1,12 +1,12 @@
 #include <toppers_os_cpp.h>
 
 // This is an attempt to get as close to the official std implementation as plausible
-// with CMSIS-RTOS. It does not aim to be 100% complete, but it should be compatible
+// with TOPPERS-RTOS. It does not aim to be 100% complete, but it should be compatible
 // with the official library for those parts it does implement. 
 namespace std
 {
     // REVIEW:
-    // CMSIS_RTOS is silent on the recursive vs. non-recursive nature of mutex...
+    // TOPPERS_RTOS is silent on the recursive vs. non-recursive nature of mutex...
     // assuming recursive...
     class recursive_mutex
     {

@@ -48,7 +48,7 @@ public:
     void lock( )
     {
         // refcounting employed for recursive locks since
-        // CMSIS-RTOS APIs don't specify recursive behavior
+        // TOPPERS-RTOS APIs don't specify recursive behavior
         // either way.
         if( !owned() )
         {

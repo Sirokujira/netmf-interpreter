@@ -15,15 +15,15 @@
     <TARGETCODEBASE>TOPPERS_RTOS</TARGETCODEBASE>
     <TARGETCODEBASETYPE>OS</TARGETCODEBASETYPE>
     <IsSolutionWizardVisible>false</IsSolutionWizardVisible>
-    <!-- <CMSIS_RequiredVersion>4.3.0</CMSIS_RequiredVersion> -->
+    <!-- <TOPPERS_RequiredVersion>4.3.0</TOPPERS_RequiredVersion> -->
   </PropertyGroup>
   <ItemGroup>
     <CC_CPP_Defines Include="__TOPPERS_RTOS" />
     <CC_CPP_Defines Include="PLATFORM_ARM_OS_PORT" />
   </ItemGroup>
   <ItemGroup>
-    <IncludePaths Include="CMSIS\CMSIS\Include" />
-    <IncludePaths Include="CMSIS\CMSIS\RTOS\RTX\INC" />
+    <IncludePaths Include="TOPPERS\TOPPERS\Include" />
+    <IncludePaths Include="TOPPERS\TOPPERS\RTOS\RTX\INC" />
   </ItemGroup>
   <ItemGroup Condition="'$(TCP_IP_STACK)'=='LWIP_1_4_1_OS'">
     <IncludePaths Include="DeviceCode\Targets\OS\TOPPERS_RTOS\DeviceCode\lwip_1_4_1_os"/>
@@ -31,18 +31,18 @@
   <!--
     <Target Name="CheckPreRquisitesInstalled">
         <Error Code="NETMFBLD"
-               Condition="!EXISTS('$(SPOCLIENT)\CMSIS\ARM.CMSIS.pdsc')"
-               Text="Missing CMSIS installation at: $(SPOCLIENT)\CMSIS\*"
+               Condition="!EXISTS('$(SPOCLIENT)\TOPPERS\ARM.TOPPERS.pdsc')"
+               Text="Missing TOPPERS installation at: $(SPOCLIENT)\TOPPERS\*"
                />
-        <!-- Check CMSIS version -->
-        <XmlPeek XmlInputPath="$(SPOCLIENT)\CMSIS\ARM.CMSIS.pdsc"
+        <!-- Check TOPPERS version -->
+        <XmlPeek XmlInputPath="$(SPOCLIENT)\TOPPERS\ARM.TOPPERS.pdsc"
                  Query="/package/releases/release[1]/@version"
                 >
-          <Output TaskParameter="Result" PropertyName="CMSIS_CurrentVersion" />
+          <Output TaskParameter="Result" PropertyName="TOPPERS_CurrentVersion" />
         </XmlPeek>
         <Error Code="NETMFBLD"
-               Condition="'$(CMSIS_RequiredVersion)'!='$(CMSIS_CurrentVersion)'"
-               Text="Required CMSIS version $(CMSIS_RequiredVersion) (detected $(CMSIS_CurrentVersion))"
+               Condition="'$(TOPPERS_RequiredVersion)'!='$(TOPPERS_CurrentVersion)'"
+               Text="Required TOPPERS version $(TOPPERS_RequiredVersion) (detected $(TOPPERS_CurrentVersion))"
                />
     </Target>
   -->

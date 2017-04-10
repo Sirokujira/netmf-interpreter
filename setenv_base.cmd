@@ -78,8 +78,8 @@ cd %CURRENTCD%
 set CURRENTCD=
 
 IF /I NOT "%COMPILER_TOOL%" == "VS" (
-    IF NOT "%VS120COMNTOOLS%" == "" (
-        CALL "%VS120COMNTOOLS%"vsvars32.bat
+    IF NOT "%VS140COMNTOOLS%" == "" (
+        CALL "%VS140COMNTOOLS%"vsvars32.bat
     ) ELSE (    
         @ECHO WARNING: Could not find vsvars32.bat.
         @ECHO WARNING: VISUAL STUDIO 2015 DOES NOT APPEAR TO BE INSTALLED ON THIS MACHINE

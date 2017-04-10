@@ -35,6 +35,10 @@
     <Compile Include="core\udp.c" />
     <IncludePaths Include="DeviceCode\Drivers\Ethernet\loopback" />
     <IncludePaths Include="DeviceCode\pal\net" />
+    <IncludePaths Include="DeviceCode\pal\lwip_1_4_1_os\config" />
+    <!-- OS depencencies -->
+    <!-- <IncludePaths Include="DeviceCode\Targets\OS\CMSIS_RTOS\DeviceCode\lwip_1_4_1_os" /> -->
+    <IncludePaths Include="DeviceCode\Targets\OS\TOPPERS_RTOS\DeviceCode\lwip_1_4_1_os" />
     <IncludePaths Include="DeviceCode\pal\lwip_1_4_1_os\LWIP\src\include" />
     <IncludePaths Include="DeviceCode\pal\lwip_1_4_1_os\LWIP\src\include\lwip" />
     <!-- lwIP does NOT support ipv4 and ipv6 at the same time -->

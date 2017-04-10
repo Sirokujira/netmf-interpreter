@@ -1,7 +1,7 @@
-#ifndef CMSIS_OS_CPP_H__
-#define CMSIS_OS_CPP_H__
+#ifndef TOPPERS_OS_CPP_H__
+#define TOPPERS_OS_CPP_H__
 
-#include <cmsis_os.h>
+#include <toppers_os.h>
 
 #define TOPPERS_VERSION(m,mm) ( ( ( m )<< 16 ) | ( mm ) )
 
