@@ -62,7 +62,10 @@ install:
 # dir "C:\projects"
 # dir "C:\projects\gcc-arm-none-eabi"
 # dir "C:\projects\netmf-interpreter"
+# NG(Temp Access Error)
 # icacls C:\Users\appveyor\AppData\Local\Temp /inheritance:r /grant Everyone:(OI)(CI)F
+# icacls C:\Users\appveyor\AppData\Local\Temp /inheritance:r /grant Administrator:(OI)(CI)F
+# ?
 # icacls C:\Users\appveyor\AppData\Local\Temp /inheritance:r /grant User:(OI)(CI)F
 build_script:
 - cmd: >-
@@ -70,7 +73,7 @@ build_script:
     
     cd Solutions\MBED_GR_PEACH_Native
     
-    icacls C:\Users\appveyor\AppData\Local\Temp /inheritance:r /grant Administrator:(OI)(CI)F
+    icacls C:\Users\appveyor\AppData\Local\Temp /inheritance:r /grant User:(OI)(CI)F
     
     MSbuild dotnetmf.proj /t:rebuild /p:flavor=release;memory=flash
 
