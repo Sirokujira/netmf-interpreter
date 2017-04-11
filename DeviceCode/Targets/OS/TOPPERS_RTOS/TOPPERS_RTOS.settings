@@ -1,4 +1,5 @@
-﻿<Project ToolsVersion="4.0" InitialTargets="CheckPreRquisitesInstalled" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<!-- <Project ToolsVersion="4.0" InitialTargets="CheckPreRquisitesInstalled" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003"> -->
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Name>TOPPERS_RTOS</Name>
     <DefaultISA>Thumb2</DefaultISA>
@@ -34,7 +35,7 @@
                Condition="!EXISTS('$(SPOCLIENT)\TOPPERS\ARM.TOPPERS.pdsc')"
                Text="Missing TOPPERS installation at: $(SPOCLIENT)\TOPPERS\*"
                />
-        <!-- Check TOPPERS version -->
+        <!-? Check TOPPERS version ?->
         <XmlPeek XmlInputPath="$(SPOCLIENT)\TOPPERS\ARM.TOPPERS.pdsc"
                  Query="/package/releases/release[1]/@version"
                 >

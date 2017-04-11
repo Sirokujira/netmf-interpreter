@@ -254,19 +254,21 @@
     
     <PropertyGroup>
         <EXEName>$(BIN_DIR)\$(AssemblyName)</EXEName>
-    
+        
         <TargetRule Condition="'$(OutputType)'=='Library' and '$(AssemblyName)'!='ToppersASP_RTX'">ArmBuildLib</TargetRule>
         <!-- OS Build -->
         <TargetRule Condition="'$(OutputType)'=='Library' and '$(AssemblyName)'=='ToppersASP_RTX'">ArmBuildLib4</TargetRule>
-
+        
         <TargetRule Condition="'$(OutputType)'=='Executable'">BuildAXF</TargetRule>
         <TargetRule Condition="'$(OutputType)'=='Configure'">BuildAXF</TargetRule>
-    
+        
         <!-- AddRule -->
         <!-- EV3 only -->
         <TargetRule Condition="'$(OutputType)'=='DynamicLoading'">ArmBuildLib2</TargetRule>
         <!-- no use netmf -->
         <TargetRule Condition="'$(OutputType)'=='Kernel'">ArmBuildLib3</TargetRule>
+        
+        <!-- <TargetRule Condition="'$(OutputType)'=='OSLibrary'">ArmBuildLib4</TargetRule> -->
     </PropertyGroup>
     
     <PropertyGroup Condition="'$(COMPILER_TOOL)'=='GCC'" >

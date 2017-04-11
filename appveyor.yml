@@ -68,19 +68,14 @@ install:
 # NG - (No User)
 # icacls C:\Users\appveyor\AppData\Local\Temp /inheritance:r /grant User:(OI)(CI)F
 # Environment Changed
-# TEMP
-# TMP
+# mkdir temp(NG?)
+# set TEMP=C:\projects\netmf-interpreter\temp
+# set TMP=C:\projects\netmf-interpreter\temp
 build_script:
 - cmd: >-
     setenv_gcc 4.9.3 C:\projects\gcc-arm-none-eabi
     
     cd Solutions\MBED_GR_PEACH_Native
-    
-    mkdir temp
-    
-    set TEMP=C:\projects\netmf-interpreter\temp
-    
-    set TMP=C:\projects\netmf-interpreter\temp
     
     MSbuild dotnetmf.proj /t:rebuild /p:flavor=release;memory=flash
 

@@ -12,7 +12,8 @@
     <DEVICE_TYPE Condition="'$(DEVICE_TYPE)' == ''">RZA1</DEVICE_TYPE>
     <INSTRUCTION_SET Condition="'$(INSTRUCTION_SET)' == ''">RZA1</INSTRUCTION_SET>
     <PLATFORM_TYPE>MBED</PLATFORM_TYPE>
-    <TCP_IP_STACK>LWIP</TCP_IP_STACK>
+    <NO_BOOTLOADER_COMPRESSION>true</NO_BOOTLOADER_COMPRESSION>
+    <TCP_IP_STACK>LWIP_1_4_1_OS</TCP_IP_STACK>
   </PropertyGroup>
   <PropertyGroup>
     <OEMSystemInfoString>MBED_GR_PEACH by Kentaro Sekimoto</OEMSystemInfoString>
@@ -21,4 +22,6 @@
     <IncludePaths Include="Solutions\MBED_GR_PEACH" />
   </ItemGroup>
   <Import Project="$(SPOCLIENT)\DeviceCode\Targets\Native\MBED\MBED_RZA1.settings" />
+  
+  <!-- <Import Project="$(SPOCLIENT)\devicecode\Targets\OS\TOPPERS_RTOS\TOPPERS_RTOS.settings" Condition="'$(reducesize)' == 'false' AND '$(TCP_IP_STACK)'=='LWIP_1_4_1_OS'"/> -->
 </Project>
