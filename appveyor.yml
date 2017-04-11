@@ -68,6 +68,8 @@ build_script:
     
     cd Solutions\MBED_GR_PEACH_Native
     
+    icacls C:\Users\appveyor\AppData\Local\Temp /inheritance:r /grant Everyone:(OI)(CI)M
+    
     MSbuild dotnetmf.proj /t:rebuild /p:flavor=release;memory=flash
 
 artifacts:
