@@ -16,22 +16,23 @@ namespace std
             , osMutexInitMember( MutexDef )
         {
             osMutexConstructMember( MutexDef );
-            MutexId = osMutexCreate( osMutex( MutexDef ) );
+            // MutexId = osMutexCreate( osMutex( MutexDef ) );
         }
 
         void lock( )
         {
-            osMutexWait( MutexId, osWaitForever );
+            // osMutexWait( MutexId, osWaitForever );
         }
 
         bool try_lock( )
         {
-            return ( osMutexWait( MutexId, 0 ) == osOK );
+            // return ( osMutexWait( MutexId, 0 ) == osOK );
+            return false;
         }
 
         void unlock( )
         {
-            osMutexRelease( MutexId );
+            // osMutexRelease( MutexId );
         }
 
     private:

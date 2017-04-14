@@ -74,13 +74,14 @@ namespace MsOpenTech
 
             void Cancel(void)
             {
-                osTimerStop( TimerId );
+            	// toppers_os.h
+                // osTimerStop( TimerId );
             }
 
             void Start( uint32_t initialTimeout, bool periodic )
             {
-                TimerId = osTimerCreate( osTimer(TimerDef), periodic ? osTimerPeriodic : osTimerOnce, CallbackArg );
-                              osTimerStart(TimerId, initialTimeout);
+                // TimerId = osTimerCreate( osTimer(TimerDef), periodic ? osTimerPeriodic : osTimerOnce, CallbackArg );
+                //               osTimerStart(TimerId, initialTimeout);
             }
 
             // C++11 move semantics not supported in the ARM compiler 5.04 and earlier
@@ -88,20 +89,20 @@ namespace MsOpenTech
             // use by the application.
             void Close()
             {
-                if( TimerId != NULL )
-                {
-                    osTimerDelete( TimerId );
-                    CallbackArg = NULL;
-                    TimerId = NULL;
-                    (osTimer( TimerDef ))->ptimer = NULL;
-                    (osTimer( TimerDef ))->timer = NULL;
-                }
+                // if( TimerId != NULL )
+                // {
+                //     osTimerDelete( TimerId );
+                //     CallbackArg = NULL;
+                //     TimerId = NULL;
+                //     (osTimer( TimerDef ))->ptimer = NULL;
+                //     (osTimer( TimerDef ))->timer = NULL;
+                // }
             }
         
         // property accessors
         public:
             const void* get_Arg() const { return CallbackArg; }
-            os_ptimer get_Handler() const { return (osTimer( TimerDef ))->ptimer; }
+            // os_ptimer get_Handler() const { return (osTimer( TimerDef ))->ptimer; }
 
         private:
             void* CallbackArg;

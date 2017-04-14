@@ -15,7 +15,7 @@
     <TARGETCODEBASE>CMSIS_RTOS</TARGETCODEBASE>
     <TARGETCODEBASETYPE>OS</TARGETCODEBASETYPE>
     <IsSolutionWizardVisible>false</IsSolutionWizardVisible>
-    <CMSIS_RequiredVersion>4.3.0</CMSIS_RequiredVersion>
+    <CMSIS_RequiredVersion>5.0.2-dev2</CMSIS_RequiredVersion>
   </PropertyGroup>
   <ItemGroup>
     <CC_CPP_Defines Include="__CMSIS_RTOS" />

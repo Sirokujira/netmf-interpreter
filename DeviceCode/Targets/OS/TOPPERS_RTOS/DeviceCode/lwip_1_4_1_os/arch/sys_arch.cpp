@@ -100,13 +100,13 @@ struct os_messageQ_t
     osMessageQDef_t  def;
 };
 
-osPoolDef( sys_pool_sem, SYS_SEM_COUNT, os_semaphore_t );
+// osPoolDef( sys_pool_sem, SYS_SEM_COUNT, os_semaphore_t );
 osPoolId  sys_pool_sem;
 
-osPoolDef( sys_pool_thrd, SYS_THREAD_COUNT, osThreadDef_t );
+// osPoolDef( sys_pool_thrd, SYS_THREAD_COUNT, osThreadDef_t );
 osPoolId  sys_pool_thrd;
 
-osPoolDef( sys_pool_mbox, SYS_MBOX_COUNT, os_messageQ_t );
+// osPoolDef( sys_pool_mbox, SYS_MBOX_COUNT, os_messageQ_t );
 osPoolId  sys_pool_mbox;
 
 
@@ -175,16 +175,16 @@ extern "C"
         // Toppers Init?
         // kernel/semaphore.h
         // sys_pool_sem = osPoolCreate( osPool( sys_pool_sem ) );
-        initialize_semaphore();
+        // initialize_semaphore();
         // kernel/time_event.h
-        initialize_mailbox();
+        // initialize_mailbox();
 // #ifndef TOPPERS_RTOS_COMPATIBLE
 //         sys_pool_thrd = osPoolCreate( osPool( sys_pool_thrd ) );
 // #endif
 
         // sys_pool_timeout = osPoolCreate( osPool( sys_pool_timeout ) );
         // kernel/time_event.h
-        initialize_tmevt();
+        // initialize_tmevt();
         // MasterTimeoutQueue.Initialize();
     }
     

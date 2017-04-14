@@ -42,12 +42,12 @@ typedef osSemaphoreId sys_sem_t;
 /* let sys.h use binary semaphores for mutexes */
 #define LWIP_COMPAT_MUTEX 1
 
-// typedef osMessageQId sys_mbox_t;
+typedef osMessageQId sys_mbox_t;
 #define SYS_MBOX_NULL NULL
 #define sys_mbox_valid(mbox) (((mbox) != NULL) && (*(mbox) != NULL))
 #define sys_mbox_set_invalid(mbox) if ((mbox) != NULL) { *(mbox) = NULL; }
 
-// typedef osThreadId sys_thread_t;
+typedef osThreadId sys_thread_t;
 
 typedef uint32_t sys_prot_t;
 
