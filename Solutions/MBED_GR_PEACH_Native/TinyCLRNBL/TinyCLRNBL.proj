@@ -34,7 +34,8 @@
     <EnablePKTest>false</EnablePKTest>
     <EnablePWM>true</EnablePWM>
     <EnableRPC>true</EnableRPC>
-    <EnableSD>true</EnableSD>
+    <!-- <EnableSD>true</EnableSD> -->
+    <EnableSD>false</EnableSD>
     <EnableSecurity>false</EnableSecurity>
     <EnableSerialization>true</EnableSerialization>
     <EnableSPI>true</EnableSPI>
