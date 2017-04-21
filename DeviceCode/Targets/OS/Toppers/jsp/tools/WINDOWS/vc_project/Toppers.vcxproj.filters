@@ -1,0 +1,349 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{355b12ec-aea5-4831-9eff-2e4f5388a6ad}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{98496916-70bb-48a6-9d45-a8a26290b17e}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="configuration">
+      <UniqueIdentifier>{20434e37-3e81-412e-b170-c8f30d665abc}</UniqueIdentifier>
+      <Extensions>cfg</Extensions>
+    </Filter>
+    <Filter Include="TOPPERS/JSP">
+      <UniqueIdentifier>{3d4f86a9-0d20-4e70-8528-b1bf2bd60150}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TOPPERS/JSP\Resource Files">
+      <UniqueIdentifier>{4d9a7932-1f33-4cdb-a91d-554f613449f6}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+    <Filter Include="TOPPERS/JSP\kernel">
+      <UniqueIdentifier>{15041d5e-5d94-455b-a3d6-9a91e920c49c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TOPPERS/JSP\include">
+      <UniqueIdentifier>{4ca60a2c-d6c8-4bda-a3ae-1d84028522f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TOPPERS/JSP\systask">
+      <UniqueIdentifier>{b359c8c0-1940-4256-984c-b8893a14ba90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TOPPERS/JSP\win32">
+      <UniqueIdentifier>{83a1a572-7354-422e-b48a-d462c0827385}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TOPPERS/JSP\library">
+      <UniqueIdentifier>{02006767-d5d0-4c46-baa2-2f934697dc2e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\kernel_cfg.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sample1.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\sample2.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\kernel\banner.c">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\kernel\cyclic.c">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\kernel\dataqueue.c">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\kernel\eventflag.c">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\kernel\exception.c">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\kernel\interrupt.c">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\kernel\mailbox.c">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\kernel\mempfix.c">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\kernel\semaphore.c">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\kernel\startup.c">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\kernel\sys_manage.c">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\kernel\syslog.c">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\kernel\task.c">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\kernel\task_except.c">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\kernel\task_manage.c">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\kernel\task_sync.c">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\kernel\time_event.c">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\kernel\time_manage.c">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\kernel\wait.c">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\systask\logtask.c">
+      <Filter>TOPPERS/JSP\systask</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\systask\serial.c">
+      <Filter>TOPPERS/JSP\systask</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\systask\timer.c">
+      <Filter>TOPPERS/JSP\systask</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\config\windows\com_support.cpp">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\config\windows\cpu_config.c">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\config\windows\cpu_defs.c">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\config\windows\debugout.c">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\config\windows\eventlog.c">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\config\windows\hw_serial.c">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\config\windows\hw_timer.c">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\config\windows\primary_thread.c">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\config\windows\sys_config.c">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\library\log_output.c">
+      <Filter>TOPPERS/JSP\library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\library\strerror.c">
+      <Filter>TOPPERS/JSP\library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\library\t_perror.c">
+      <Filter>TOPPERS/JSP\library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\library\vasyslog.c">
+      <Filter>TOPPERS/JSP\library</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\kernel_id.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sample1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\sample2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\kernel\check.h">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\kernel\cyclic.h">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\kernel\dataqueue.h">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\kernel\eventflag.h">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\kernel\exception.h">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\kernel\interrupt.h">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\kernel\jsp_kernel.h">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\kernel\jsp_rename.h">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\kernel\jsp_unrename.h">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\kernel\mailbox.h">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\kernel\mempfix.h">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\kernel\queue.h">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\kernel\semaphore.h">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\kernel\syslog.h">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\kernel\task.h">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\kernel\time_event.h">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\kernel\wait.h">
+      <Filter>TOPPERS/JSP\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\itron.h">
+      <Filter>TOPPERS/JSP\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\kernel.h">
+      <Filter>TOPPERS/JSP\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\kernel_cfg.h">
+      <Filter>TOPPERS/JSP\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\kernel_debug.h">
+      <Filter>TOPPERS/JSP\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\linux_sigio.h">
+      <Filter>TOPPERS/JSP\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\logtask.h">
+      <Filter>TOPPERS/JSP\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\s_services.h">
+      <Filter>TOPPERS/JSP\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\serial.h">
+      <Filter>TOPPERS/JSP\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\sil.h">
+      <Filter>TOPPERS/JSP\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\t_config.h">
+      <Filter>TOPPERS/JSP\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\t_services.h">
+      <Filter>TOPPERS/JSP\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\t_stddef.h">
+      <Filter>TOPPERS/JSP\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\t_syslog.h">
+      <Filter>TOPPERS/JSP\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\timer.h">
+      <Filter>TOPPERS/JSP\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\config\windows\api.h">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\config\windows\com_support.h">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\config\windows\constants.h">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\config\windows\cpu_config.h">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\config\windows\cpu_context.h">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\config\windows\cpu_defs.h">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\config\windows\cpu_rename.h">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\config\windows\cpu_unrename.h">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\config\windows\debugout.h">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\config\windows\device.h">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\config\windows\eventlog.h">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\config\windows\hal_msg.h">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\config\windows\hw_serial.h">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\config\windows\hw_timer.h">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\config\windows\messages.h">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\config\windows\resource.h">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\config\windows\sys_config.h">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\config\windows\sys_defs.h">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\config\windows\sys_rename.h">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\config\windows\sys_unrename.h">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\config\windows\tool_config.h">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\config\windows\tool_defs.h">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\config\windows\vitron.h">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\config\windows\vwindows.h">
+      <Filter>TOPPERS/JSP\win32</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\..\config\windows\hal_resource.rc">
+      <Filter>TOPPERS/JSP\Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\config\windows\icon1.ico">
+      <Filter>TOPPERS/JSP\Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\sample1.cfg">
+      <Filter>configuration</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\sample2.cfg">
+      <Filter>configuration</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,45 @@
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <AssemblyName>QuadSerialFlash_Config_SSL</AssemblyName>
+    <Size>
+    </Size>
+    <ProjectGuid>{38399464-75D8-4C86-87D2-81FC3A3E9361}</ProjectGuid>
+    <Description>Quad Serial Flash config SSL</Description>
+    <Level>HAL</Level>
+    <LibraryFile>QuadSerialFlash_Config_SSL.$(LIB_EXT)</LibraryFile>
+    <ProjectPath>$(SPOCLIENT)\Solutions\RaspberryPi2\DeviceCode\Blockstorage\QuadSerialFlash\dotNetMF.proj</ProjectPath>
+    <Groups>BlockStorage</Groups>
+    <LibraryCategory>
+      <MFComponent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="BlockStorageConfig_HAL" Guid="{497F59BB-55D3-404e-B958-A6284806D184}" ProjectPath="" xmlns="">
+        <VersionDependency xmlns="http://schemas.microsoft.com/netmf/InventoryFormat.xsd">
+          <Major>4</Major>
+          <Minor>0</Minor>
+          <Revision>0</Revision>
+          <Build>0</Build>
+          <Extra />
+          <Date>2009-04-30</Date>
+        </VersionDependency>
+        <ComponentType xmlns="http://schemas.microsoft.com/netmf/InventoryFormat.xsd">LibraryCategory</ComponentType>
+      </MFComponent>
+    </LibraryCategory>
+    <Documentation>
+    </Documentation>
+    <PlatformIndependent>False</PlatformIndependent>
+    <Required>False</Required>
+    <IgnoreDefaultLibPath>False</IgnoreDefaultLibPath>
+    <ManifestFile>QuadSerialFlash_Config_SSL.$(LIB_EXT).manifest</ManifestFile>
+    <CustomFilter>
+    </CustomFilter>
+    <Directory>Solutions\RaspberryPi2\DeviceCode\BlockStorage\QuadSerialFlash</Directory>
+    <OutputType>Library</OutputType>
+    <PlatformIndependentBuild>false</PlatformIndependentBuild>
+    <Version>4.0.0.0</Version>
+  </PropertyGroup>
+  <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Settings" />
+  <PropertyGroup />
+  <ItemGroup>
+    <Compile Include="QuadSerialFlash_config_SSL.cpp" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Targets" />
+</Project>

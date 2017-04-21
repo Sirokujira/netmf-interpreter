@@ -187,7 +187,7 @@
   <!-- CMSIS(over Version 5.0.0?) -->
   <!--
   <ItemGroup>
-    <RequiredProjects Include="$(SPOCLIENT)/DeviceCode/Targets/OS/Toppers/asp\RTOS\RTX\dotNetMF.proj" />
+    <RequiredProjects Include="$(SPOCLIENT)/DeviceCode/Targets/OS/Toppers/asp/RTOS/RTX/dotNetMF.proj" />
     <DriverLibs Include="CMSIS_RTX.$(LIB_EXT)" />
   </ItemGroup>
   <ItemGroup>
@@ -660,7 +660,20 @@
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Pal\Ink\stubs\dotNetMF.proj" />
   </ItemGroup>
   <!-- changed 4.4 -->
+  <!-- Add -->
   <!-- os library use -->
+  <!-- use CMSIS RTOS -->
+  <!--
+  <ItemGroup Condition="'$(EnableLWIP)'=='true'">
+    <DriverLibs Include="lwip_1_4_1_os_CMSIS_RTOS.$(LIB_EXT)" />
+    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\OS\CMSIS_RTOS\DeviceCode\lwip_1_4_1_os\dotnetmf.proj" />
+  </ItemGroup>
+  -->
+  <!-- use Toppers RTOS? -->
+  <ItemGroup Condition="'$(EnableLWIP)'=='true'">
+    <DriverLibs Include="lwip_1_4_1_os_TOPPERS_RTOS.$(LIB_EXT)" />
+    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\OS\TOPPERS_RTOS\DeviceCode\lwip_1_4_1_os\dotnetmf.proj" />
+  </ItemGroup>
   <ItemGroup Condition="'$(EnableLWIP)'=='true'">
     <DriverLibs Include="sockets_hal_dhcp_LWIP_os.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\pal\lwip_1_4_1_os\LWIP\src\dotnetmf_dhcp.proj" />
@@ -681,20 +694,6 @@
     <DriverLibs Include="SocketsDriver_pal_lwip_os.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\pal\lwip_1_4_1_os\SocketsDriver\dotnetmf.proj" />
   </ItemGroup>
-  <!-- Add -->
-  <!-- use CMSIS RTOS -->
-  <!--
-  <ItemGroup Condition="'$(EnableLWIP)'=='true'">
-    <DriverLibs Include="lwip_1_4_1_os_CMSIS_RTOS.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\OS\CMSIS_RTOS\DeviceCode\lwip_1_4_1_os\dotnetmf.proj" />
-  </ItemGroup>
-  -->
-  <!-- use Toppers RTOS? -->
-  <ItemGroup Condition="'$(EnableLWIP)'=='true'">
-    <DriverLibs Include="lwip_1_4_1_os_TOPPERS_RTOS.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\OS\TOPPERS_RTOS\DeviceCode\lwip_1_4_1_os\dotnetmf.proj" />
-  </ItemGroup>
-
   <ItemGroup>
     <DriverLibs Include="MFUpdate_PAL_stub.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\PAL\MFUpdate\stubs\dotnetmf.proj" />

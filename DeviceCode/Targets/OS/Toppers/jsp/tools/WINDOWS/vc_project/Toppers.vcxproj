@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <SccProjectName />
+    <SccLocalPath />
+    <ProjectGuid>{33DA94B1-5878-432C-B1C5-4AADEF856F16}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.Cpp.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>Debug\</OutDir>
+    <IntDir>Debug\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>.\Release\</OutDir>
+    <IntDir>.\Release\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <Optimization>Disabled</Optimization>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <WarningLevel>Level3</WarningLevel>
+      <MinimalRebuild>true</MinimalRebuild>
+      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
+      <AdditionalIncludeDirectories>../../../kernel;../../../include;../../../config/windows;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerOutput>All</AssemblerOutput>
+      <AssemblerListingLocation>.\Debug\</AssemblerListingLocation>
+      <BrowseInformation>true</BrowseInformation>
+      <PrecompiledHeaderOutputFile>.\Debug\Toppers.pch</PrecompiledHeaderOutputFile>
+      <ObjectFileName>.\Debug\</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug\</ProgramDataBaseFileName>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>cd ..
+..\..\cfg\chk.exe -m toppers.exe -cs windows.chk -obj -v -lj</Command>
+    </PostBuildEvent>
+    <Midl>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TypeLibraryName>.\Debug\Toppers.tlb</TypeLibraryName>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <TargetEnvironment>Win32</TargetEnvironment>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0411</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Debug\Toppers.bsc</OutputFile>
+    </Bscmake>
+    <Link>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>../Toppers.exe</OutputFile>
+      <AdditionalDependencies>odbc32.lib;odbccp32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <Optimization>Disabled</Optimization>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <WarningLevel>Level3</WarningLevel>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>../../../kernel;../../../include;../../../config/windows;..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AssemblerListingLocation>.\Release\</AssemblerListingLocation>
+      <PrecompiledHeaderOutputFile>.\Release\Toppers.pch</PrecompiledHeaderOutputFile>
+      <ObjectFileName>.\Release\</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release\</ProgramDataBaseFileName>
+    </ClCompile>
+    <PostBuildEvent>
+      <Command>cd ..
+..\..\cfg\chk.exe -m toppers.exe -cs windows.chk -obj -v -lj</Command>
+    </PostBuildEvent>
+    <Midl>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TypeLibraryName>.\Release\Toppers.tlb</TypeLibraryName>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <TargetEnvironment>Win32</TargetEnvironment>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0411</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Release\Toppers.bsc</OutputFile>
+    </Bscmake>
+    <Link>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>.\Release\Toppers.exe</OutputFile>
+      <AdditionalDependencies>odbc32.lib;odbccp32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\config\windows\com_support.cpp" />
+    <ClCompile Include="..\..\..\config\windows\cpu_config.c" />
+    <ClCompile Include="..\..\..\config\windows\cpu_defs.c" />
+    <ClCompile Include="..\..\..\config\windows\debugout.c" />
+    <ClCompile Include="..\..\..\config\windows\eventlog.c" />
+    <ClCompile Include="..\..\..\config\windows\hw_serial.c" />
+    <ClCompile Include="..\..\..\config\windows\hw_timer.c" />
+    <ClCompile Include="..\..\..\config\windows\primary_thread.c" />
+    <ClCompile Include="..\..\..\config\windows\sys_config.c" />
+    <ClCompile Include="..\..\..\kernel\banner.c" />
+    <ClCompile Include="..\..\..\kernel\cyclic.c" />
+    <ClCompile Include="..\..\..\kernel\dataqueue.c" />
+    <ClCompile Include="..\..\..\kernel\eventflag.c" />
+    <ClCompile Include="..\..\..\kernel\exception.c" />
+    <ClCompile Include="..\..\..\kernel\interrupt.c" />
+    <ClCompile Include="..\..\..\kernel\mailbox.c" />
+    <ClCompile Include="..\..\..\kernel\mempfix.c" />
+    <ClCompile Include="..\..\..\kernel\semaphore.c" />
+    <ClCompile Include="..\..\..\kernel\startup.c" />
+    <ClCompile Include="..\..\..\kernel\syslog.c" />
+    <ClCompile Include="..\..\..\kernel\sys_manage.c" />
+    <ClCompile Include="..\..\..\kernel\task.c" />
+    <ClCompile Include="..\..\..\kernel\task_except.c" />
+    <ClCompile Include="..\..\..\kernel\task_manage.c" />
+    <ClCompile Include="..\..\..\kernel\task_sync.c" />
+    <ClCompile Include="..\..\..\kernel\time_event.c" />
+    <ClCompile Include="..\..\..\kernel\time_manage.c" />
+    <ClCompile Include="..\..\..\kernel\wait.c" />
+    <ClCompile Include="..\..\..\library\log_output.c" />
+    <ClCompile Include="..\..\..\library\strerror.c" />
+    <ClCompile Include="..\..\..\library\t_perror.c" />
+    <ClCompile Include="..\..\..\library\vasyslog.c" />
+    <ClCompile Include="..\..\..\systask\logtask.c" />
+    <ClCompile Include="..\..\..\systask\serial.c" />
+    <ClCompile Include="..\..\..\systask\timer.c" />
+    <ClCompile Include="..\kernel_cfg.c" />
+    <ClCompile Include="..\sample1.c" />
+    <ClCompile Include="..\sample2.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\config\windows\api.h" />
+    <ClInclude Include="..\..\..\config\windows\com_support.h" />
+    <ClInclude Include="..\..\..\config\windows\constants.h" />
+    <ClInclude Include="..\..\..\config\windows\cpu_config.h" />
+    <ClInclude Include="..\..\..\config\windows\cpu_context.h" />
+    <ClInclude Include="..\..\..\config\windows\cpu_defs.h" />
+    <ClInclude Include="..\..\..\config\windows\cpu_rename.h" />
+    <ClInclude Include="..\..\..\config\windows\cpu_unrename.h" />
+    <ClInclude Include="..\..\..\config\windows\debugout.h" />
+    <ClInclude Include="..\..\..\config\windows\device.h" />
+    <ClInclude Include="..\..\..\config\windows\eventlog.h" />
+    <ClInclude Include="..\..\..\config\windows\hal_msg.h" />
+    <ClInclude Include="..\..\..\config\windows\hw_serial.h" />
+    <ClInclude Include="..\..\..\config\windows\hw_timer.h" />
+    <ClInclude Include="..\..\..\config\windows\messages.h" />
+    <ClInclude Include="..\..\..\config\windows\resource.h" />
+    <ClInclude Include="..\..\..\config\windows\sys_config.h" />
+    <ClInclude Include="..\..\..\config\windows\sys_defs.h" />
+    <ClInclude Include="..\..\..\config\windows\sys_rename.h" />
+    <ClInclude Include="..\..\..\config\windows\sys_unrename.h" />
+    <ClInclude Include="..\..\..\config\windows\tool_config.h" />
+    <ClInclude Include="..\..\..\config\windows\tool_defs.h" />
+    <ClInclude Include="..\..\..\config\windows\vitron.h" />
+    <ClInclude Include="..\..\..\config\windows\vwindows.h" />
+    <ClInclude Include="..\..\..\include\itron.h" />
+    <ClInclude Include="..\..\..\include\kernel.h" />
+    <ClInclude Include="..\..\..\include\kernel_cfg.h" />
+    <ClInclude Include="..\..\..\include\kernel_debug.h" />
+    <ClInclude Include="..\..\..\include\linux_sigio.h" />
+    <ClInclude Include="..\..\..\include\logtask.h" />
+    <ClInclude Include="..\..\..\include\serial.h" />
+    <ClInclude Include="..\..\..\include\sil.h" />
+    <ClInclude Include="..\..\..\include\s_services.h" />
+    <ClInclude Include="..\..\..\include\timer.h" />
+    <ClInclude Include="..\..\..\include\t_config.h" />
+    <ClInclude Include="..\..\..\include\t_services.h" />
+    <ClInclude Include="..\..\..\include\t_stddef.h" />
+    <ClInclude Include="..\..\..\include\t_syslog.h" />
+    <ClInclude Include="..\..\..\kernel\check.h" />
+    <ClInclude Include="..\..\..\kernel\cyclic.h" />
+    <ClInclude Include="..\..\..\kernel\dataqueue.h" />
+    <ClInclude Include="..\..\..\kernel\eventflag.h" />
+    <ClInclude Include="..\..\..\kernel\exception.h" />
+    <ClInclude Include="..\..\..\kernel\interrupt.h" />
+    <ClInclude Include="..\..\..\kernel\jsp_kernel.h" />
+    <ClInclude Include="..\..\..\kernel\jsp_rename.h" />
+    <ClInclude Include="..\..\..\kernel\jsp_unrename.h" />
+    <ClInclude Include="..\..\..\kernel\mailbox.h" />
+    <ClInclude Include="..\..\..\kernel\mempfix.h" />
+    <ClInclude Include="..\..\..\kernel\queue.h" />
+    <ClInclude Include="..\..\..\kernel\semaphore.h" />
+    <ClInclude Include="..\..\..\kernel\syslog.h" />
+    <ClInclude Include="..\..\..\kernel\task.h" />
+    <ClInclude Include="..\..\..\kernel\time_event.h" />
+    <ClInclude Include="..\..\..\kernel\wait.h" />
+    <ClInclude Include="..\kernel_id.h" />
+    <ClInclude Include="..\sample1.h" />
+    <ClInclude Include="..\sample2.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\sample1.cfg">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cd %(RootDir)%(Directory)  
+cl /E /I "../../kernel" /I "../../include" /I "../../config/windows" %(Filename).cfg | ..\..\cfg\cfg.exe -s -c -v -obj -lj -cpu windows -system msvc</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">kernel_cfg.c;kernel_id.h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cd %(RootDir)%(Directory)  
+cl /E /I "../../kernel" /I "../../include" /I "../../config/windows" %(Filename).cfg | ..\..\cfg\cfg.exe -s -c -v -obj -lj -cpu windows -system msvc</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">kernel_cfg.c;kernel_id.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\sample2.cfg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\..\config\windows\hal_resource.rc">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">\Temp\toppers-jsp-for-msvc\jsp-1.4.4.1-full\config\windows;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">\Temp\toppers-jsp-for-msvc\jsp-1.4.4.1-full\config\windows;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\config\windows\icon1.ico" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

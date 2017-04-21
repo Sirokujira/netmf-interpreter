@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "checker", "checker.vcxproj", "{388BFCBB-D92F-49D6-9168-EB3C6BC04CA3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "configurator", "configurator.vcxproj", "{0A8D8BA1-F2C4-4045-8D27-C1A103173938}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+		Template|x86 = Template|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{388BFCBB-D92F-49D6-9168-EB3C6BC04CA3}.Debug|x86.ActiveCfg = Debug|Win32
+		{388BFCBB-D92F-49D6-9168-EB3C6BC04CA3}.Debug|x86.Build.0 = Debug|Win32
+		{388BFCBB-D92F-49D6-9168-EB3C6BC04CA3}.Release|x86.ActiveCfg = Release|Win32
+		{388BFCBB-D92F-49D6-9168-EB3C6BC04CA3}.Release|x86.Build.0 = Release|Win32
+		{388BFCBB-D92F-49D6-9168-EB3C6BC04CA3}.Template|x86.ActiveCfg = Release|Win32
+		{388BFCBB-D92F-49D6-9168-EB3C6BC04CA3}.Template|x86.Build.0 = Release|Win32
+		{0A8D8BA1-F2C4-4045-8D27-C1A103173938}.Debug|x86.ActiveCfg = Debug|Win32
+		{0A8D8BA1-F2C4-4045-8D27-C1A103173938}.Debug|x86.Build.0 = Debug|Win32
+		{0A8D8BA1-F2C4-4045-8D27-C1A103173938}.Release|x86.ActiveCfg = Release|Win32
+		{0A8D8BA1-F2C4-4045-8D27-C1A103173938}.Release|x86.Build.0 = Release|Win32
+		{0A8D8BA1-F2C4-4045-8D27-C1A103173938}.Template|x86.ActiveCfg = Template|Win32
+		{0A8D8BA1-F2C4-4045-8D27-C1A103173938}.Template|x86.Build.0 = Template|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

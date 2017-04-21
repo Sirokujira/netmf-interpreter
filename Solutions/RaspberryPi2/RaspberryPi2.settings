@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Author>Kentaro Sekimoto</Author>
+    <Description>GR PEACH board by Renesas</Description>
+    <Documentation />
+    <PlatformGuid>{3094F767-7CDC-48AF-A5E5-04C271832F85}</PlatformGuid>
+    <TARGETPLATFORM>RaspberryPi2</TARGETPLATFORM>
+    <PLATFORM>RaspberryPi2</PLATFORM>
+    <IsSolutionWizardVisible>True</IsSolutionWizardVisible>
+    <ENDIANNESS>le</ENDIANNESS>
+    <DEVICE_TYPE Condition="'$(DEVICE_TYPE)' == ''">RZA1</DEVICE_TYPE>
+    <INSTRUCTION_SET Condition="'$(INSTRUCTION_SET)' == ''">RZA1</INSTRUCTION_SET>
+    <PLATFORM_TYPE>MBED</PLATFORM_TYPE>
+    <TCP_IP_STACK>LWIP</TCP_IP_STACK>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OEMSystemInfoString>RaspberryPi2 by Kentaro Sekimoto</OEMSystemInfoString>
+  </PropertyGroup>
+  <ItemGroup>
+    <IncludePaths Include="Solutions\RaspberryPi2" />
+  </ItemGroup>
+  <Import Project="$(SPOCLIENT)\DeviceCode\Targets\Native\MBED\MBED_RZA1.settings" />
+</Project>

@@ -23,5 +23,6 @@
   </ItemGroup>
   <Import Project="$(SPOCLIENT)\DeviceCode\Targets\Native\MBED\MBED_RZA1.settings" />
   
-  <!-- <Import Project="$(SPOCLIENT)\devicecode\Targets\OS\TOPPERS_RTOS\TOPPERS_RTOS.settings" Condition="'$(reducesize)' == 'false' AND '$(TCP_IP_STACK)'=='LWIP_1_4_1_OS'"/> -->
+  <!-- <Import Project="$(SPOCLIENT)\DeviceCode\Targets\OS\TOPPERS_RTOS\TOPPERS_RTOS.settings" Condition="'$(reducesize)' == 'false' AND '$(TCP_IP_STACK)'=='LWIP_1_4_1_OS'"/> -->
+  <Import Project="$(SPOCLIENT)\DeviceCode\Targets\OS\TOPPERS_RTOS\TOPPERS_RTOS.settings" />
 </Project>

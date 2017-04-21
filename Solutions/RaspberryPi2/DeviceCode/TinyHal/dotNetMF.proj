@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <AssemblyName>RaspberryPi2_tinyhal</AssemblyName>
+        <ProjectGuid>{4700A10C-F4E9-4D12-B0E7-B941E80BB402}</ProjectGuid>
+        <Size>
+        </Size>
+        <Description>RaspberryPi2 tinyhal library</Description>
+        <Level>HAL</Level>
+        <LibraryFile>RaspberryPi2_tinyhal.$(LIB_EXT)</LibraryFile>
+        <ManifestFile>RaspberryPi2_tinyhal.$(LIB_EXT).manifest</ManifestFile>
+        <Groups>System</Groups>
+        <LibraryCategory>
+          <MFComponent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="TinyHal_HAL" Guid="{37C37BC0-3CA6-4C1C-A26F-4761A7BA3C05}" Conditional="" xmlns="">
+            <VersionDependency xmlns="http://schemas.microsoft.com/netmf/InventoryFormat.xsd">
+              <Major>4</Major>
+              <Minor>0</Minor>
+              <Revision>0</Revision>
+              <Build>0</Build>
+              <Extra />
+              <Date>2009-04-30</Date>
+            </VersionDependency>
+            <ComponentType xmlns="http://schemas.microsoft.com/netmf/InventoryFormat.xsd">LibraryCategory</ComponentType>
+          </MFComponent>
+        </LibraryCategory>
+        <Documentation>
+        </Documentation>
+        <PlatformIndependent>False</PlatformIndependent>
+        <CustomFilter>
+        </CustomFilter>
+        <Required>False</Required>
+        <IgnoreDefaultLibPath>False</IgnoreDefaultLibPath>
+        <IsStub>False</IsStub>
+        <Directory>Solutions\RaspberryPi2\DeviceCode\TinyHal</Directory>
+        <PlatformIndependentBuild>false</PlatformIndependentBuild>
+        <Version>4.0.0.0</Version>
+    </PropertyGroup>
+    <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Settings" />
+    <!--
+    <Import Project="$(SPOCLIENT)\Framework\Features\BlockStorage_PAL.libcatproj" />
+    <Import Project="$(SPOCLIENT)\Framework\Features\BlockStorageAddDevices_HAL.libcatproj" />
+    <Import Project="$(SPOCLIENT)\Framework\Features\Buttons_PAL.libcatproj" />
+    <Import Project="$(SPOCLIENT)\Framework\Features\COM_PAL.libcatproj" />
+    <Import Project="$(SPOCLIENT)\Framework\Features\SOCKETS_PAL.libcatproj" />
+    <Import Project="$(SPOCLIENT)\Framework\Features\I2C_PAL.libcatproj" />
+    <Import Project="$(SPOCLIENT)\Framework\Features\SPI_HAL.libcatproj" />
+    <Import Project="$(SPOCLIENT)\Framework\Features\PalEvent_PAL.libcatproj" />
+    <Import Project="$(SPOCLIENT)\Framework\Features\Time_PAL.libcatproj" />
+    <Import Project="$(SPOCLIENT)\Framework\Features\TimeService_PAL.libcatproj" />
+    <Import Project="$(SPOCLIENT)\Framework\Features\Heap_PAL.libcatproj" />
+    -->
+    <PropertyGroup>
+        <OutputType>Library</OutputType>
+    </PropertyGroup>
+    <ItemGroup>
+        <!-- <Compile Include="$(AS_SUBDIR)\AppEntry.s" /> -->
+        <!-- <Compile Include="$(AS_SUBDIR)\IDelayLoop.s" /> -->
+        <Compile Include="$(AS_SUBDIR)\Interlocked.s" />
+        <!-- <Compile Include="$(AS_SUBDIR)\startup_armv7-m.S" /> -->
+        <!-- <Compile Include="$(AS_SUBDIR)\startup_RZ1AH.S" /> -->
+    </ItemGroup>
+    <ItemGroup>
+        <!-- <Compile Include="Aborts.cpp" /> -->
+        <!-- <Compile Include="CpuPower.cpp"/> -->
+        <!-- <Compile Include="Retarget.cpp"/> -->
+        <Compile Include="main.cpp" />
+        <!-- <HFile Include="OsHal.h" /> -->
+        <!-- <HFile Include="MasterConfig.h" /> -->
+    </ItemGroup>
+    <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Targets" />
+</Project>
