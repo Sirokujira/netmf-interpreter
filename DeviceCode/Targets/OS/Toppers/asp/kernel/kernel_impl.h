@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  TOPPERS/ASP Kernel
  *      Toyohashi Open Platform for Embedded Real-Time Systems/
  *      Advanced Standard Profile Kernel
@@ -155,7 +155,7 @@ extern void	call_terrtn(void);
 /*
  *  非タスクコンテキスト用のスタック領域（kernel_cfg.c）
  */
-extern const SIZE	istksz;		/* スタック領域のサイズ（丸めた値） */
+extern const MEMSIZE	istksz;		/* スタック領域のサイズ（丸めた値） */
 extern STK_T *const	istk;		/* スタック領域の先頭番地 */
 #ifdef TOPPERS_ISTKPT
 extern STK_T *const	istkpt;		/* スタックポインタの初期値 */

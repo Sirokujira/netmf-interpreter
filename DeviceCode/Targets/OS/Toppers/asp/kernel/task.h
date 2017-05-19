@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  TOPPERS/ASP Kernel
  *      Toyohashi Open Platform for Embedded Real-Time Systems/
  *      Advanced Standard Profile Kernel
@@ -189,7 +189,7 @@ typedef struct task_initialization_block {
 #ifdef USE_TSKINICTXB
 	TSKINICTXB	tskinictxb;		/* タスク初期化コンテキストブロック */
 #else /* USE_TSKINICTXB */
-	SIZE		stksz;			/* スタック領域のサイズ（丸めた値） */
+	MEMSIZE		stksz;			/* スタック領域のサイズ（丸めた値） */
 	void		*stk;			/* スタック領域の先頭番地 */
 #endif /* USE_TSKINICTXB */
 
