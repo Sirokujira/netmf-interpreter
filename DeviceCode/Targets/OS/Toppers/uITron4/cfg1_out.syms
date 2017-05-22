@@ -1,6 +1,6 @@
-00000000 A ___guard_fids_table
-00000000 A ___guard_flags
 00000000 A ___guard_fids_count
+00000000 A ___guard_flags
+00000000 A ___guard_fids_table
 00000001 A ___safe_se_handler_count
 00400000 A ___ImageBase
 00401030 T _main
@@ -299,12 +299,11 @@
 00408164 A __newmode
 00408168 A __fmode
 0040816c A ?wsprintffp@@3P6AHPADPBDZZA
-00408498 A _task_intmask
-004084a4 A ___native_startup_lock
-004084b4 A ___native_startup_state
-004084b8 A ___onexitend
-004084c8 A ___onexitbegin
-004084cc A ___dyn_tls_init_callback
+00408498 A ___native_startup_lock
+004084a8 A ___native_startup_state
+004084ac A ___onexitend
+004084bc A ___onexitbegin
+004084c0 A ___dyn_tls_init_callback
 00409000 A __imp__GetModuleHandleW@4
 00409004 A __imp__GetModuleFileNameW@12
 00409008 A __imp__FreeLibrary@4

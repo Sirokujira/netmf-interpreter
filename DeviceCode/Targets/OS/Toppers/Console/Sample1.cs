@@ -9,6 +9,9 @@ using System.Text;
 
 namespace Console
 {
+    /// <summary>
+    /// STM32 用
+    /// </summary>
 	public class Sample1 : DllUnitSim
 	{
 		List<IUnitInterface> m_Interfaces = new List<IUnitInterface>();

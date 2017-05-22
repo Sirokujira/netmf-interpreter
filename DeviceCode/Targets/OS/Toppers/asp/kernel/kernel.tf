@@ -1014,7 +1014,8 @@ $END$
 $NL$
 
 $ 非タスクコンテキスト用のスタック領域
-const SIZE		_kernel_istksz = TOPPERS_ISTKSZ;$NL$
+// const SIZE		_kernel_istksz = TOPPERS_ISTKSZ;$NL$
+const MEMSIZE		_kernel_istksz = TOPPERS_ISTKSZ;$NL$
 STK_T *const	_kernel_istk = TOPPERS_ISTK;$NL$
 $NL$
 #ifdef TOPPERS_ISTKPT$NL$

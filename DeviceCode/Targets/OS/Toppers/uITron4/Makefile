@@ -48,7 +48,7 @@ all:
 #
 #  ターゲット略称の定義
 #
-TARGET = cq_starm_gcc
+TARGET = msvc
 
 #
 #  プログラミング言語の定義

@@ -9,7 +9,6 @@
 #define TNUM_PDQID	0
 #define TNUM_MBXID	0
 #define TNUM_MPFID	0
-#define TNUM_MPLID	0
 #define TNUM_CYCID	0
 #define TNUM_ALMID	0
 

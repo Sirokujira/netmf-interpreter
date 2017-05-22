@@ -13,6 +13,17 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 CKernel *g_Kernel;
+volatile bool faultmask;
+volatile bool primask;
+volatile uint32_t basepri;
+volatile uint32_t control;
+volatile uint32_t ipsr;
+
+#define HSE_CLOCK		(8000000)
+#define SYS_CLOCK		(HSE_CLOCK * 9)
+#define PCLK1_CLOCK		((HSE_CLOCK * 9) >> 1)
+#define PCLK2_CLOCK		(HSE_CLOCK * 9)
+#define IIPM_LOCK 1
 
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
@@ -760,7 +771,7 @@ void CKernel::Execute()
 	}
 }
 
-void CKernel::TraceLogPut(char_t c)
+void CKernel::TraceLogPut(char c)
 {
 	m_SendBuf[m_SendBufPos++] = c;
 	if(m_SendBufPos == (sizeof(m_SendBuf) / sizeof(m_SendBuf[0]))){
@@ -780,7 +791,7 @@ void CKernel::TraceLogFlush()
 /*
  * システムログの低レベル出力のための文字出力
  */
-void CKernel::TraceLogPutC(char_t c)
+void CKernel::TraceLogPutC(char c)
 {
 	if (c == '\n') {
 		g_Kernel->TraceLogPut('\r');
@@ -848,7 +859,8 @@ void CKernel::MainLoop()
 			Idle();
 		}
 		else{
-			m_Current = (CCPUContext *)p_runtsk->tskctxb.cpu_context;
+			// m_Current = (CCPUContext *)p_runtsk->tskctxb.cpu_context;
+			m_Current = (CCPUContext *)p_runtsk->tskctxb.env;
 
 			m_Current->PopContext();
 
@@ -857,7 +869,7 @@ void CKernel::MainLoop()
 #endif /* LOG_DSP_LEAVE */
 
 			lock_flag = false;
-			basepri = saved_iipm;
+			basepri = NULL; // saved_iipm;
 
 			UnlockCPU();
 
@@ -906,7 +918,7 @@ void CKernel::ClearAllTask()
 		for (uint_t i = 0; i < tnum_tsk; i++) {
 			Task = &tcb_table[i];
 			if(Task->p_tinib != NULL){
-				CPUContext = (CCPUContext *)Task->tskctxb.cpu_context;
+				CPUContext = (CCPUContext *)Task->tskctxb.env;
 				if(!CPUContext->IsFinished()){
 					CPUContext->Terminate();
 					end = false;
@@ -938,7 +950,7 @@ void CKernel::Idle()
 	}
 	else{
 		lock_flag = false;
-		basepri = saved_iipm;
+		basepri = NULL; // saved_iipm;
 
 		UnlockCPU();
 
@@ -958,7 +970,7 @@ void CKernel::Idle()
 //------------------------------------------------------------------------------
 bool CKernel::Dispatch()
 {
-	CCPUContext *CPUContext = (CCPUContext *)p_runtsk->tskctxb.cpu_context;
+	CCPUContext *CPUContext = (CCPUContext *)p_runtsk->tskctxb.env;
 
 	return CPUContext->Dispatch();
 }
@@ -1016,7 +1028,7 @@ void CKernel::ExitCPUContext(CCPUContext *CPUContext)
 {
 	for (uint_t i = 0; i < tnum_tsk; i++) {
 		TCB *Task = &tcb_table[i];
-		if(CPUContext == (CCPUContext *)Task->tskctxb.cpu_context)
+		if (CPUContext == (CCPUContext *)Task->tskctxb.env)
 		{
 			tcb_table[i].p_tinib = NULL;
 			break;
@@ -1960,7 +1972,7 @@ void CKernel::SetTaskName(ID tskid, const TCHAR *szName)
 
 		CCPUContext *tc;
 		for(;;){
-			tc = (CCPUContext *)Task->tskctxb.cpu_context;
+			tc = (CCPUContext *)Task->tskctxb.env;
 			if(tc != NULL){
 				tc->SetThreadName(Name.c_str());
 				break;

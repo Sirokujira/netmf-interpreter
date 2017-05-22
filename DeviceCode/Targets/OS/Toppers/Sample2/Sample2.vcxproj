@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{0B19DCE1-EA5F-4DF4-80E4-E25CE96297F1}</ProjectGuid>
+    <RootNamespace>Sample1</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.51106.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)_Dbg\</OutDir>
+    <IntDir>$(ProjectDir)obj\$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)_Exe\</OutDir>
+    <IntDir>$(ProjectDir)obj\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <PreBuildEvent>
+      <Message>copy srec and syms</Message>
+      <Command>wscript ..\tools\update.js "$(ProjectDir)..\$(TargetName)Cfg\$(Configuration)\$(TargetName)Cfg.srec" cfg1_out.srec
+wscript ..\tools\update.js "$(ProjectDir)..\$(TargetName)Cfg\$(Configuration)\$(TargetName)Cfg.syms" cfg1_out.syms</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>.\;..\asp;..\asp\include;..\asp\arch;..\asp\target\msvc;..\Sim\win32;..\uITron4;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;SAMPLE1_EXPORTS;TASK_LOOP=400000;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>uITron4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\uITron4\bin\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <PreBuildEvent>
+      <Message>copy srec and syms</Message>
+      <Command>wscript ..\tools\update.js "$(ProjectDir)..\$(TargetName)Cfg\$(Configuration)\$(TargetName)Cfg.srec" cfg1_out.srec
+wscript ..\tools\update.js "$(ProjectDir)..\$(TargetName)Cfg\$(Configuration)\$(TargetName)Cfg.syms" cfg1_out.syms</Command>
+    </PreBuildEvent>
+    <ClCompile>
+      <AdditionalIncludeDirectories>.\;..\asp;..\asp\include;..\asp\arch;..\asp\target\cq_starm_gcc;..\Sim\stm32;..\uITron4;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;SAMPLE1_EXPORTS;TASK_LOOP=400000;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>uITron4.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\uITron4\bin\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\asp\syssvc\banner.c" />
+    <ClCompile Include="..\asp\library\histogram.c" />
+    <ClCompile Include="..\Sim\win32\SifCorei7SCS.cpp" />
+    <ClCompile Include="..\Sim\win32\SifWin32.cpp" />
+    <ClCompile Include="..\Sim\win32\SifWin32USART.cpp" />
+    <ClCompile Include="kernel_cfg.c" />
+    <ClCompile Include="..\asp\library\log_output.c" />
+    <ClCompile Include="..\asp\syssvc\logtask.c" />
+    <ClCompile Include="main.c" />
+    <ClCompile Include="..\asp\syssvc\serial.c" />
+    <ClCompile Include="Sample2.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\asp\library\strerror.c" />
+    <ClCompile Include="..\asp\syssvc\syslog.c" />
+    <ClCompile Include="..\asp\library\t_perror.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\asp\syssvc\banner.h" />
+    <ClInclude Include="..\Sim\win32\Corei7SCSReg.h" />
+    <ClInclude Include="..\Sim\win32\SifCorei7SCS.h" />
+    <ClInclude Include="..\Sim\win32\SifWin32.h" />
+    <ClInclude Include="..\Sim\win32\SifWin32USART.h" />
+    <ClInclude Include="..\Sim\win32\Win32EXTI.h" />
+    <ClInclude Include="..\Sim\win32\Win32Reg.h" />
+    <ClInclude Include="..\Sim\win32\Win32TIM.h" />
+    <ClInclude Include="..\Sim\win32\Win32USART.h" />
+    <ClInclude Include="..\Sim\win32\Win32USB.h" />
+    <ClInclude Include="kernel_cfg.h" />
+    <ClInclude Include="..\asp\syssvc\logtask.h" />
+    <ClInclude Include="main.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="..\asp\syssvc\serial.h" />
+    <ClInclude Include="Sample2.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="..\asp\syssvc\syslog.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="kernel.res">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="main.cfg">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">toppers configuration pass 2</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\asp\cfg\cfg\cfg.exe --pass 2 --kernel asp --api-table ..\asp\kernel\kernel_api.csv --cfg1-def-table ..\asp\kernel\kernel_def.csv --cfg1-def-table ..\asp\target\msvc\target_def.csv -I ..\asp -I ..\asp\arch -I ..\asp\include -I ..\asp\kernel -I ..\asp\target\msvc --template-file ..\asp\target\msvc\target.tf "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cfg1_out.srec;cfg1_out.syms;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">kernel_cfg.c;kernel_cfg.h;%(Outputs)</Outputs>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">toppers configuration pass 2</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\asp\cfg\cfg\cfg.exe --pass 2 --kernel asp --api-table ..\asp\kernel\kernel_api.csv --cfg1-def-table ..\asp\kernel\kernel_def.csv --cfg1-def-table ..\asp\arch\arm_m_msvc\common\core_def.csv --cfg1-def-table ..\asp\target\cq_starm_gcc\target_def.csv -I ..\asp -I ..\asp\arch -I ..\asp\arch\arm_m_msvc\common -I ..\asp\include -I ..\asp\kernel -I ..\asp\target\cq_starm_gcc --template-file ..\asp\target\cq_starm_gcc\target_msvc.tf "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cfg1_out.srec;cfg1_out.syms;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">kernel_cfg.c;kernel_cfg.h;%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sample1Cfg\Sample1Cfg.vcxproj">
+      <Project>{d63cc150-5541-42f8-8f9b-2dab591fbea9}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\uITron4\uITron4.vcxproj">
+      <Project>{2e896742-65e5-4cf6-a9c9-c79980833741}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Sample2.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

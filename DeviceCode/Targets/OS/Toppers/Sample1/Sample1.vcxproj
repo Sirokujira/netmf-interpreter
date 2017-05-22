@@ -102,13 +102,13 @@ wscript ..\tools\update.js "$(ProjectDir)..\$(TargetName)Cfg\$(Configuration)\$(
   <ItemGroup>
     <ClCompile Include="..\asp\syssvc\banner.c" />
     <ClCompile Include="..\asp\library\histogram.c" />
+    <ClCompile Include="..\Sim\stm32\SifCortexM3SCS.cpp" />
+    <ClCompile Include="..\Sim\stm32\SifSTM32.cpp" />
+    <ClCompile Include="..\Sim\stm32\SifSTM32USART.cpp" />
     <ClCompile Include="kernel_cfg.c" />
     <ClCompile Include="..\asp\library\log_output.c" />
     <ClCompile Include="..\asp\syssvc\logtask.c" />
     <ClCompile Include="main.c" />
-    <ClCompile Include="..\Sim\stm32\SifCortexM3SCS.cpp" />
-    <ClCompile Include="..\Sim\stm32\SifSTM32.cpp" />
-    <ClCompile Include="..\Sim\stm32\SifSTM32USART.cpp" />
     <ClCompile Include="Sample1.cpp" />
     <ClCompile Include="..\asp\syssvc\serial.c" />
     <ClCompile Include="stdafx.cpp">
@@ -118,25 +118,25 @@ wscript ..\tools\update.js "$(ProjectDir)..\$(TargetName)Cfg\$(Configuration)\$(
     <ClCompile Include="..\asp\library\strerror.c" />
     <ClCompile Include="..\asp\syssvc\syslog.c" />
     <ClCompile Include="..\asp\library\t_perror.c" />
-    <ClCompile Include="..\asp\syssvc\vasyslog.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\asp\syssvc\banner.h" />
+    <ClInclude Include="..\Sim\stm32\CortexM3SCSReg.h" />
+    <ClInclude Include="..\Sim\stm32\SifCortexM3SCS.h" />
+    <ClInclude Include="..\Sim\stm32\SifSTM32.h" />
+    <ClInclude Include="..\Sim\stm32\SifSTM32USART.h" />
+    <ClInclude Include="..\Sim\stm32\STM32EXTI.h" />
+    <ClInclude Include="..\Sim\stm32\STM32Reg.h" />
+    <ClInclude Include="..\Sim\stm32\STM32TIM.h" />
+    <ClInclude Include="..\Sim\stm32\STM32USART.h" />
+    <ClInclude Include="..\Sim\stm32\STM32USB.h" />
     <ClInclude Include="kernel_cfg.h" />
     <ClInclude Include="..\asp\syssvc\logtask.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Sample1.h" />
     <ClInclude Include="..\asp\syssvc\serial.h" />
-    <ClInclude Include="..\Sim\stm32\SifCortexM3SCS.h" />
-    <ClInclude Include="..\Sim\stm32\SifSTM32.h" />
-    <ClInclude Include="..\Sim\stm32\SifSTM32USART.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="..\Sim\stm32\STM32EXTI.h" />
-    <ClInclude Include="..\Sim\stm32\STM32Reg.h" />
-    <ClInclude Include="..\Sim\stm32\STM32TIM.h" />
-    <ClInclude Include="..\Sim\stm32\STM32USART.h" />
-    <ClInclude Include="..\Sim\stm32\STM32USB.h" />
     <ClInclude Include="..\asp\syssvc\syslog.h" />
   </ItemGroup>
   <ItemGroup>
@@ -151,7 +151,7 @@ wscript ..\tools\update.js "$(ProjectDir)..\$(TargetName)Cfg\$(Configuration)\$(
   <ItemGroup>
     <CustomBuild Include="main.cfg">
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">toppers configuration pass 2</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\asp\cfg\cfg\cfg.exe --pass 2 --kernel asp --api-table ..\asp\kernel\kernel_api.csv --cfg1-def-table ..\asp\kernel\kernel_def.csv --cfg1-def-table ..\asp\arch\arm_m_msvc\common\core_def.csv --cfg1-def-table ..\asp\target\cq_starm_gcc\target_def.csv -I ..\asp -I ..\asp\arch -I ..\asp\arch\msvc -I ..\asp\include -I ..\asp\kernel -I ..\asp\target\msvc --template-file ..\asp\target\msvc\target.tf "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\asp\cfg\cfg\cfg.exe --pass 2 --kernel asp --api-table ..\asp\kernel\kernel_api.csv --cfg1-def-table ..\asp\kernel\kernel_def.csv --cfg1-def-table ..\asp\target\msvc\target_def.csv -I ..\asp -I ..\asp\arch -I ..\asp\include -I ..\asp\kernel -I ..\asp\target\msvc --template-file ..\asp\target\msvc\target.tf "%(FullPath)"</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cfg1_out.srec;cfg1_out.syms;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">kernel_cfg.c;kernel_cfg.h;%(Outputs)</Outputs>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>

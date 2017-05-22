@@ -98,6 +98,8 @@ typedef	void			(*TOPPERS_fp_t)(struct TOPPERS_dummy_t);
  */
 typedef TOPPERS_bool	bool_t;		/* 真偽値 */
 
+typedef char		char_t;		/* 自然なサイズの符号付き整数 */
+
 typedef signed int		int_t;		/* 自然なサイズの符号付き整数 */
 typedef unsigned int	uint_t;		/* 自然なサイズの符号無し整数 */
 

@@ -37,23 +37,23 @@ uint8_t sil_reb_mem(uint8_t * mem)
 	return g_Kernel->GetByte((uintptr_t)mem);
 }
 
-void sil_wrb_mem(uint8_t * mem, uint8_t data)
-{
-	g_Kernel->SetByte((uintptr_t)mem, data);
-}
+// void sil_wrb_mem(uint8_t * mem, uint8_t data)
+// {
+// 	g_Kernel->SetByte((uintptr_t)mem, data);
+// }
 
 //---------------------------------------------------------------------------
 //  16ビット単位の読出し／書込み
 //---------------------------------------------------------------------------
-uint16_t sil_reh_mem(uint16_t * mem)
-{
-	return g_Kernel->GetUInt16((uintptr_t)mem);
-}
+// uint16_t sil_reh_mem(uint16_t * mem)
+// {
+// 	return g_Kernel->GetUInt16((uintptr_t)mem);
+// }
 
-void sil_wrh_mem(uint16_t * mem, uint16_t data)
-{
-	g_Kernel->SetUInt16((uintptr_t)mem, data);
-}
+// void sil_wrh_mem(uint16_t * mem, uint16_t data)
+// {
+// 	g_Kernel->SetUInt16((uintptr_t)mem, data);
+// }
 
 uint16_t sil_reh_bem(uint16_t * mem)
 {
@@ -64,10 +64,10 @@ uint16_t sil_reh_bem(uint16_t * mem)
 	return(SIL_REV_ENDIAN_H(data));
 }
 
-void sil_wrh_bem(uint16_t * mem, uint16_t data)
-{
-	sil_wrh_mem(mem, SIL_REV_ENDIAN_H(data));
-}
+// void sil_wrh_bem(uint16_t * mem, uint16_t data)
+// {
+// 	sil_wrh_mem(mem, SIL_REV_ENDIAN_H(data));
+// }
 
 //---------------------------------------------------------------------------
 //  32ビット単位の読出し／書込み
@@ -77,10 +77,10 @@ uint32_t sil_rew_mem(uint32_t * mem)
 	return g_Kernel->GetUInt32((uintptr_t)mem);
 }
 
-void sil_wrw_mem(uint32_t * mem, uint32_t data)
-{
-	g_Kernel->SetUInt32((uintptr_t)mem, data);
-}
+// void sil_wrw_mem(uint32_t * mem, uint32_t data)
+// {
+// 	g_Kernel->SetUInt32((uintptr_t)mem, data);
+// }
 
 uint32_t sil_rew_bem(uint32_t * mem)
 {
@@ -91,8 +91,8 @@ uint32_t sil_rew_bem(uint32_t * mem)
 	return(SIL_REV_ENDIAN_W(data));
 }
 
-void sil_wrw_bem(uint32_t * mem, uint32_t data)
-{
-	g_Kernel->SetUInt32((uintptr_t)mem, SIL_REV_ENDIAN_W(data));
-}
+// void sil_wrw_bem(uint32_t * mem, uint32_t data)
+// {
+// 	g_Kernel->SetUInt32((uintptr_t)mem, SIL_REV_ENDIAN_W(data));
+// }
 
