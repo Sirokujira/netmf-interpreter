@@ -24,6 +24,15 @@ UINT64 FileTimeToUint64( const FILETIME ft )
     return x.QuadPart;
 }
 
+void _wapi_time_t_to_filetime(time_t timeval, FILETIME* filetime)
+{
+	int64_t ticks;
+
+	ticks = ((int64_t)timeval * 10000000) + 116444736000000000ULL;
+	filetime->dwLowDateTime = ticks & 0xFFFFFFFF;
+	filetime->dwHighDateTime = ticks >> 32;
+}
+
 // "Ticks" are a platform specific unit of time.
 // Typically it is the clock period of some highspeed
 // counter used to track time. For Win32 we just use
@@ -31,7 +40,37 @@ UINT64 FileTimeToUint64( const FILETIME ft )
 UINT64 HAL_Time_CurrentTicks()
 {
     FILETIME ft = { 0 };
-    GetSystemTimePreciseAsFileTime( &ft );
+	
+
+#if _WIN32_WINNT > _WIN32_WINNT_WIN7
+	// Windows 8
+	::GetSystemTimePreciseAsFileTime( &ft );
+#else
+	// Windows 7 and earlier
+	// https://superuser.com/questions/1083794/how-to-make-an-arbitrary-microsoft-filetime
+	SYSTEMTIME stUTC;
+
+	int64_t elapsedNanoSeconds(0);
+	::GetSystemTime(&stUTC);
+
+	struct tm tmtime = { 0 };
+	tmtime.tm_year = stUTC.wYear - 1900;
+	tmtime.tm_mon = stUTC.wMonth - 1;
+	tmtime.tm_mday = stUTC.wDay;
+	tmtime.tm_hour = stUTC.wHour;
+	tmtime.tm_min = stUTC.wMinute;
+	tmtime.tm_sec = stUTC.wSecond;
+	tmtime.tm_wday = stUTC.wDayOfWeek;
+	// tmtime.tm_yday = stUTCStart.wDay;
+	// 0 - 365
+	tmtime.tm_yday = ((stUTC.wMonth - 1) * 30) + stUTC.wDay;
+	tmtime.tm_isdst = -1;
+	time_t ret = mktime(&tmtime);
+	_wapi_time_t_to_filetime(ret, &ft);
+	// FILETIME localFileTime;
+	// ::FileTimeToLocalFileTime(&ft, &localFileTime);
+#endif
+
     return FileTimeToUint64(ft);
 }
 
