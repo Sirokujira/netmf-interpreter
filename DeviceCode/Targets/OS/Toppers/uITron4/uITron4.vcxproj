@@ -57,7 +57,7 @@ wscript ..\tools\update.js "$(ProjectDir)..\$(TargetName)Cfg\$(Configuration)\$(
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\asp;..\asp\include;..\asp\kernel;..\asp\arch;..\asp\syssvc;..\asp\target\msvc;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;ALLFUNC;TOPPERS_ENABLE_TRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;TASK_SWITCH_DEBUG;_DEBUG;_LIB;ALLFUNC;TOPPERS_ENABLE_TRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>

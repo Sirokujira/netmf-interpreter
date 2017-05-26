@@ -128,10 +128,10 @@ void CallTimeOut(__int64 Frequency)
 TWIN32F10XReg WIN32Reg;
 TCorei7SCSReg Corei7SCSReg;
 
-CSample1::CSample1()
+CSample2::CSample2()
 	: CKernel(m_SifSysCtrlSpc = new CSifCorei7SCS(&Corei7SCSReg))
 {
-	SetUnitName(_T("Sample1"));
+	SetUnitName(_T("Sample2"));
 
 	// レジスタアドレス登録
 	m_SifCPU = new CSifWIN32(&WIN32Reg);
@@ -143,7 +143,7 @@ CSample1::CSample1()
 	AddSysTimerSync(m_SifSysCtrlSpc);
 }
 
-CSample1::~CSample1()
+CSample2::~CSample2()
 {
 	if(m_SifCPU != NULL){
 		delete m_SifCPU;
@@ -154,12 +154,12 @@ CSample1::~CSample1()
 	}
 }
 
-void CSample1::OnStart()
+void CSample2::OnStart()
 {
 	CKernel::OnStart();
 }
 
-void CSample1::OnTerminate()
+void CSample2::OnTerminate()
 {
 	__try{
 		m_SifCPU->OnTerminate();
@@ -169,7 +169,7 @@ void CSample1::OnTerminate()
 	}
 }
 
-ID CSample1::OnIdle()
+ID CSample2::OnIdle()
 {
 	return CKernel::OnIdle();
 }
@@ -179,7 +179,7 @@ ID CSample1::OnIdle()
 //	引数：
 //	戻り値：
 //------------------------------------------------------------------------------
-void CSample1::Input(int Kind, const void *Data, int Size)
+void CSample2::Input(int Kind, const void *Data, int Size)
 {
 	switch(Kind)
 	{
@@ -203,7 +203,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
 		if(g_Kernel == NULL){
 			// DLLアンロード時にメモリリークをチェックするよう設定
 			_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-			g_Kernel = new CSample1();
+			g_Kernel = new CSample2();
 		}
 		break;
 	case DLL_PROCESS_DETACH:

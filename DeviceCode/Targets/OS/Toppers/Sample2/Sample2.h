@@ -66,11 +66,11 @@ DLL_EXPORT void CallTimeOut(__int64 Frequency);
 }
 #endif
 
-class CSample1 : public CKernel
+class CSample2 : public CKernel
 {
 public:
-	CSample1();
-	virtual ~CSample1();
+	CSample2();
+	virtual ~CSample2();
 protected:
 	void OnStart();
 	void OnTerminate();
