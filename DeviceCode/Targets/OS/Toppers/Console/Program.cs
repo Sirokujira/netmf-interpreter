@@ -65,7 +65,7 @@ namespace Console
 				m_TraceLog = null;
 			}
 
-			m_Sample1 = new Sample1();
+			m_Sample1 = new Sample2();
 			m_Sample1.UnitExit += new UnitEventHandler(UnitSim_UnitExit);
 			m_Sample1.UnitOutput += new UnitOutputEventHandler(UnitSim_Log);
 			m_Sample1.UnitSetEvent += new UnitEventHandler(Unit_UnitSetEvent);
