@@ -864,9 +864,9 @@ void CKernel::MainLoop()
 			// m_Current = (CCPUContext *)p_runtsk->tskctxb.env;
 			m_Current->PopContext();
 
-#ifdef LOG_DSP_LEAVE
-			LOG_DSP_LEAVE(p_runtsk);
-#endif /* LOG_DSP_LEAVE */
+// #ifdef LOG_DSP_LEAVE
+// 			LOG_DSP_LEAVE(p_runtsk);
+// #endif /* LOG_DSP_LEAVE */
 
 			lock_flag = false;
 			basepri = NULL; // saved_iipm;

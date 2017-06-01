@@ -1,4 +1,4 @@
-													TOPPERS Confidential
+﻿													TOPPERS Confidential
 		TOPPERSプロジェクト ディスカッションメモ
 		処理単位の実行開始／リターン時のシステム状態
 

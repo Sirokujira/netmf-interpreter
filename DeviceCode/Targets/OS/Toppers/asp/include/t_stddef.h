@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  TOPPERS Software
  *      Toyohashi Open Platform for Embedded Real-Time Systems
  * 
@@ -114,8 +114,8 @@ typedef	uint_t			STAT;		/* オブジェクトの状態 */
 typedef	uint_t			MODE;		/* サービスコールの動作モード */
 typedef	int_t			PRI;		/* 優先度 */
 // t_stddef.h (windef.h/wtypes.h の SIZE 定義とぶつかる)
-// typedef	TOPPERS_size	SIZE;		/* メモリ領域のサイズ */
-typedef	TOPPERS_size	MEMSIZE;		/* メモリ領域のサイズ */
+typedef	TOPPERS_size	SIZE;		/* メモリ領域のサイズ */
+// typedef	TOPPERS_size	MEMSIZE;		/* メモリ領域のサイズ */
 
 typedef	int_t			TMO;		/* タイムアウト指定 */
 typedef	uint_t			RELTIM;		/* 相対時間 */

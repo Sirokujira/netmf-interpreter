@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  TOPPERS Software
  *      Toyohashi Open Platform for Embedded Real-Time Systems
  * 

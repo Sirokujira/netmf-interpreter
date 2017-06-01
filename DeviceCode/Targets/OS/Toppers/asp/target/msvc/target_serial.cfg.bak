@@ -1,0 +1,15 @@
+/*
+ *  @(#) $Id: target_serial.cfg 2728 2015-12-30 01:46:11Z ertl-honda $
+ */
+
+/*
+ *		SIOドライバ（Windows用）のコンフィギュレーションファイル
+ */
+
+// # INCLUDE("\"hw_serial.h\"");
+// # DEF_INH(INHNO_SERIAL, { TA_HLNG, sio_handler });
+#include "target_serial.h"
+INCLUDE("windows_sigio.cfg");
+ATT_INI({ TA_NULL, 0, sio_initialize });
+ATT_TER({ TA_NULL, 0, sio_terminate });
+ATT_ISR({ TA_NULL, 0, INTNO_SIGIO, sio_isr, 1 });

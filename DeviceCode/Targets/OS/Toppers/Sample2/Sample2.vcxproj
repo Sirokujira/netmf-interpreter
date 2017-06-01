@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{0B19DCE1-EA5F-4DF4-80E4-E25CE96297F1}</ProjectGuid>
+    <ProjectGuid>{D26621F5-B470-40F6-8CA4-854AC645F0EB}</ProjectGuid>
     <RootNamespace>Sample1</RootNamespace>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
@@ -82,7 +82,7 @@ wscript ..\tools\update.js "$(ProjectDir)..\$(TargetName)Cfg\$(Configuration)\$(
 wscript ..\tools\update.js "$(ProjectDir)..\$(TargetName)Cfg\$(Configuration)\$(TargetName)Cfg.syms" cfg1_out.syms</Command>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>.\;..\asp;..\asp\include;..\asp\arch;..\asp\target\cq_starm_gcc;..\Sim\stm32;..\uITron4;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;..\asp;..\asp\include;..\asp\arch;..\asp\target\msvc;..\Sim\Win32;..\uITron4;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;SAMPLE1_EXPORTS;TASK_LOOP=400000;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader />

@@ -73,7 +73,7 @@ wscript ..\tools\update.js "$(ProjectDir)..\$(TargetName)Cfg\$(Configuration)\$(
 wscript ..\tools\update.js "$(ProjectDir)..\$(TargetName)Cfg\$(Configuration)\$(TargetName)Cfg.syms" cfg1_out.syms</Command>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>..\asp;..\asp\include;..\asp\kernel;..\asp\arch;..\asp\target\msvc;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\asp;..\asp\include;..\asp\kernel;..\asp\arch;..\asp\syssvc;..\asp\target\msvc;.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;ALLFUNC;TOPPERS_ENABLE_TRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader />
@@ -169,9 +169,10 @@ wscript ..\tools\update.js "$(ProjectDir)..\$(TargetName)Cfg\$(Configuration)\$(
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\asp\cfg\cfg\cfg.exe --pass 2 --kernel asp --api-table ..\asp\kernel\kernel_api.csv --cfg1-def-table ..\asp\kernel\kernel_def.csv --cfg1-def-table ..\asp\target\msvc\target_def.csv -I ..\asp -I ..\asp\arch -I ..\asp\include -I ..\asp\kernel -I ..\asp\target\msvc --template-file ..\asp\target\msvc\target.tf "%(FullPath)"</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cfg1_out.srec;cfg1_out.syms;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">kernel_cfg.c;kernel_cfg.h;%(Outputs)</Outputs>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </ExcludedFromBuild>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">toppers configuration pass 2</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\asp\cfg\cfg\cfg.exe --pass 2 --kernel asp --api-table ..\asp\kernel\kernel_api.csv --cfg1-def-table ..\asp\kernel\kernel_def.csv --cfg1-def-table ..\asp\target\msvc\target_def.csv -I ..\asp -I ..\asp\arch -I ..\asp\include -I ..\asp\kernel -I ..\asp\target\msvc --template-file ..\asp\target\msvc\target_msvc.tf "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\asp\cfg\cfg\cfg.exe --pass 2 --kernel asp --api-table ..\asp\kernel\kernel_api.csv --cfg1-def-table ..\asp\kernel\kernel_def.csv --cfg1-def-table ..\asp\target\msvc\target_def.csv -I ..\asp -I ..\asp\arch -I ..\asp\include -I ..\asp\kernel -I ..\asp\target\msvc --template-file ..\asp\target\msvc\target.tf "%(FullPath)"</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cfg1_out.srec;cfg1_out.syms;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">kernel_cfg.c;kernel_cfg.h;%(Outputs)</Outputs>
     </CustomBuild>

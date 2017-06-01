@@ -1,4 +1,4 @@
-
+﻿
 		TOPPERS/ASPカーネルの仕様概要
 
 		対応バージョン: Release 1.9

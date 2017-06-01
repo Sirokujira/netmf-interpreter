@@ -8,52 +8,52 @@
  *  Copyright (C) 2006-2012 by Embedded and Real-Time Systems Laboratory
  *              Graduate School of Information Science, Nagoya Univ., JAPAN  
  *
- *  ��L���쌠�҂́C�ȉ���(1)�`(4)�̏����𖞂����ꍇ�Ɍ���C�{�\�t�g�E�F
- *  �A�i�{�\�t�g�E�F�A�����ς������̂��܂ށD�ȉ������j���g�p�E�����E��
- *  �ρE�Ĕz�z�i�ȉ��C���p�ƌĂԁj���邱�Ƃ𖳏��ŋ�������D
- *  (1) �{�\�t�g�E�F�A���\�[�X�R�[�h�̌`�ŗ��p����ꍇ�ɂ́C��L�̒���
- *      ���\���C���̗��p��������щ��L�̖��ۏ؋K�肪�C���̂܂܂̌`�Ń\�[
- *      �X�R�[�h���Ɋ܂܂�Ă��邱�ƁD
- *  (2) �{�\�t�g�E�F�A���C���C�u�����`���ȂǁC���̃\�t�g�E�F�A�J���Ɏg
- *      �p�ł���`�ōĔz�z����ꍇ�ɂ́C�Ĕz�z�ɔ����h�L�������g�i���p
- *      �҃}�j���A���Ȃǁj�ɁC��L�̒��쌠�\���C���̗��p��������щ��L
- *      �̖��ۏ؋K����f�ڂ��邱�ƁD
- *  (3) �{�\�t�g�E�F�A���C�@��ɑg�ݍ��ނȂǁC���̃\�t�g�E�F�A�J���Ɏg
- *      �p�ł��Ȃ��`�ōĔz�z����ꍇ�ɂ́C���̂����ꂩ�̏����𖞂�����
- *      �ƁD
- *    (a) �Ĕz�z�ɔ����h�L�������g�i���p�҃}�j���A���Ȃǁj�ɁC��L�̒�
- *        �쌠�\���C���̗��p��������щ��L�̖��ۏ؋K����f�ڂ��邱�ƁD
- *    (b) �Ĕz�z�̌`�Ԃ��C�ʂɒ�߂���@�ɂ���āCTOPPERS�v���W�F�N�g��
- *        �񍐂��邱�ƁD
- *  (4) �{�\�t�g�E�F�A�̗��p�ɂ�蒼�ړI�܂��͊ԐړI�ɐ����邢���Ȃ鑹
- *      �Q������C��L���쌠�҂����TOPPERS�v���W�F�N�g��Ɛӂ��邱�ƁD
- *      �܂��C�{�\�t�g�E�F�A�̃��[�U�܂��̓G���h���[�U����̂����Ȃ闝
- *      �R�Ɋ�Â�����������C��L���쌠�҂����TOPPERS�v���W�F�N�g��
- *      �Ɛӂ��邱�ƁD
+ *  上記著作権者は，以下の(1)～(4)の条件を満たす場合に限り，本ソフトウェ
+ *  ア（本ソフトウェアを改変したものを含む．以下同じ）を使用・複製・改
+ *  変・再配布（以下，利用と呼ぶ）することを無償で許諾する．
+ *  (1) 本ソフトウェアをソースコードの形で利用する場合には，上記の著作
+ *      権表示，この利用条件および下記の無保証規定が，そのままの形でソー
+ *      スコード中に含まれていること．
+ *  (2) 本ソフトウェアを，ライブラリ形式など，他のソフトウェア開発に使
+ *      用できる形で再配布する場合には，再配布に伴うドキュメント（利用
+ *      者マニュアルなど）に，上記の著作権表示，この利用条件および下記
+ *      の無保証規定を掲載すること．
+ *  (3) 本ソフトウェアを，機器に組み込むなど，他のソフトウェア開発に使
+ *      用できない形で再配布する場合には，次のいずれかの条件を満たすこ
+ *      と．
+ *    (a) 再配布に伴うドキュメント（利用者マニュアルなど）に，上記の著
+ *        作権表示，この利用条件および下記の無保証規定を掲載すること．
+ *    (b) 再配布の形態を，別に定める方法によって，TOPPERSプロジェクトに
+ *        報告すること．
+ *  (4) 本ソフトウェアの利用により直接的または間接的に生じるいかなる損
+ *      害からも，上記著作権者およびTOPPERSプロジェクトを免責すること．
+ *      また，本ソフトウェアのユーザまたはエンドユーザからのいかなる理
+ *      由に基づく請求からも，上記著作権者およびTOPPERSプロジェクトを
+ *      免責すること．
  * 
- *  �{�\�t�g�E�F�A�́C���ۏ؂Œ񋟂���Ă�����̂ł���D��L���쌠�҂�
- *  ���TOPPERS�v���W�F�N�g�́C�{�\�t�g�E�F�A�Ɋւ��āC����̎g�p�ړI
- *  �ɑ΂���K�������܂߂āC�����Ȃ�ۏ؂��s��Ȃ��D�܂��C�{�\�t�g�E�F
- *  �A�̗��p�ɂ�蒼�ړI�܂��͊ԐړI�ɐ����������Ȃ鑹�Q�Ɋւ��Ă��C��
- *  �̐ӔC�𕉂�Ȃ��D
+ *  本ソフトウェアは，無保証で提供されているものである．上記著作権者お
+ *  よびTOPPERSプロジェクトは，本ソフトウェアに関して，特定の使用目的
+ *  に対する適合性も含めて，いかなる保証も行わない．また，本ソフトウェ
+ *  アの利用により直接的または間接的に生じたいかなる損害に関しても，そ
+ *  の責任を負わない．
  * 
  *  @(#) $Id: arm.h 2757 2016-03-10 15:03:12Z ertl-honda $
  */
 
 /*
- *  ARM�̃n�[�h�E�F�A�����̒�`
+ *  ARMのハードウェア資源の定義
  */
 
 #ifndef TOPPERS_ARM_H
 #define TOPPERS_ARM_H
 
 /* 
- *  ARM �̃n�[�h�E�F�A�����̃c�[���ˑ����̒�` 
+ *  ARM のハードウェア資源のツール依存部の定義 
  */ 
 #include <arm_tool.h>
 
 /*
- *  ARM ��O�x�N�^
+ *  ARM 例外ベクタ
  */
 #define SVC_Vector    UINT_C(0x00)
 #define UND_Vector    UINT_C(0x04)
@@ -64,7 +64,7 @@
 #define FIQ_Vector    UINT_C(0x1C)
 
 /*
- * ARM ��O�x�N�^�ԍ�
+ * ARM 例外ベクタ番号
  */
 #define SVC_Number    UINT_C(0)
 #define UND_Number    UINT_C(1)
@@ -76,14 +76,14 @@
 #define FIQ_Number    UINT_C(7)
 
 /*
- *  CPSR �����݋֎~�r�b�g
+ *  CPSR 割込み禁止ビット
  */
 #define CPSR_INT_MASK UINT_C(0xC0)
 #define CPSR_IRQ_BIT  UINT_C(0x80)
 #define CPSR_FIQ_BIT  UINT_C(0x40)
 
 /*
- *  CPSR �̃��[�h�r�b�g
+ *  CPSR のモードビット
  */
 #define CPSR_MODE_MASK   UINT_C(0x1f)
 #define CPSR_USER        UINT_C(0x10)
@@ -95,7 +95,7 @@
 #define CPSR_SYS         UINT_C(0x1F)
 
 /*
- *  �R�v���̃r�b�g��`
+ *  コプロのビット定義
  */
 #define CP15_CONTROL_XP_BIT   (1 << 23)
 #define CP15_CONTROL_V_BIT    (1 << 13)
@@ -123,11 +123,11 @@
 #ifndef TOPPERS_MACRO_ONLY
 
 /*
- *  �R�v����p�������[�`��
+ *  コプロを用いたルーチン
  */
 #if (__TARGET_ARCH_ARM == 6) || (__TARGET_ARCH_ARM == 7)
 /*
- *  High exception vector ���g�����̐ݒ�
+ *  High exception vector を使うかの設定
  */
 Inline void
 set_high_vector(bool_t enable)
@@ -147,7 +147,7 @@ set_high_vector(bool_t enable)
 }
 
 /*
- *  �v���Z�b�TINDEX�i0�I���W���j�̎擾
+ *  プロセッサINDEX（0オリジン）の取得
  */
 Inline uint32_t
 x_prc_index(void)
@@ -160,9 +160,9 @@ x_prc_index(void)
 
 /*
  *  Data Synchronization Barrier
- *  �E��ɔ��s���ꂽ read �� write �̏I����҂�
- *  �E�L���b�V���C�u�����`�v���f�B�N�V�����CTLB�̑���̏I����҂�
- *  �E���̖��߂̌�ɏ����ꂽ���߂͎��s����Ȃ� 
+ *  ・先に発行された read と write の終了を待つ
+ *  ・キャッシュ，ブランチプリディクション，TLBの操作の終了を待つ
+ *  ・この命令の後に書かれた命令は実行されない 
  */
 Inline void
 data_sync_barrier(void)
@@ -172,8 +172,8 @@ data_sync_barrier(void)
 
 /*
  *  Data Memory Barrier
- *  �E�v���O�����̋L�q�ɏ]���āC��ɏ����ꂽ���߂ł̃������A�N�Z�X��
- *     �I������܂ő҂D
+ *  ・プログラムの記述に従って，先に書かれた命令でのメモリアクセスが
+ *     終了するまで待つ．
  */
 Inline void
 data_memory_barrier(void)
@@ -183,10 +183,10 @@ data_memory_barrier(void)
 
 
 /* 
- *  �L���b�V���֘A
+ *  キャッシュ関連
  */
 /*
- *  TLB�̖�����
+ *  TLBの無効化
  */
 Inline void
 invalidate_unfied_tlb(void)
@@ -195,7 +195,7 @@ invalidate_unfied_tlb(void)
 }
 
 /*
- *  D�L���b�V���̖�����
+ *  Dキャッシュの無効化
  */
 Inline void
 dcache_invalidate(void)
@@ -219,7 +219,7 @@ dcache_invalidate(void)
 }
 
 /*
- *  D�L���b�V���̃N���[��
+ *  Dキャッシュのクリーン
  */
 Inline void
 dcache_clean(void)
@@ -243,7 +243,7 @@ dcache_clean(void)
 }
 
 /*
- *  D�L���b�V���̃N���[���Ɩ�����
+ *  Dキャッシュのクリーンと無効化
  */
 Inline void
 dcache_clean_and_invalidate(void)
@@ -267,7 +267,7 @@ dcache_clean_and_invalidate(void)
 }
 
 /*
- *  I�L���b�V���̖�����
+ *  Iキャッシュの無効化
  */
 Inline void
 icache_invalidate(void)
@@ -276,7 +276,7 @@ icache_invalidate(void)
 }
 
 /*
- *  �v���t�F�b�`�o�b�t�@���N���A
+ *  プリフェッチバッファをクリア
  */
 Inline void
 pbuffer_flash(void)
@@ -285,7 +285,7 @@ pbuffer_flash(void)
 }
 
 /*
- *  �u�����`�v���f�B�N�^�[�̑S������
+ *  ブランチプリディクターの全無効化
  */
 Inline void
 bpi_invalidate_all(void)
@@ -296,37 +296,37 @@ bpi_invalidate_all(void)
 }
 
 /*
- *  D�L���b�V�����J�n
+ *  Dキャッシュを開始
  */
 extern void dcache_enable(void);
 
 /*
- *  D�L���b�V�����~
+ *  Dキャッシュを停止
  */
 extern void dcache_disable(void);
 
 /*
- *  I�L���b�V���̊J�n
+ *  Iキャッシュの開始
  */
 extern void icache_enable(void);
 
 /*
- *  I�L���b�V�����~
+ *  Iキャッシュを停止
  */
 extern void icache_disable(void);
 	 
 /*
- *  I/D�L���b�V���𗼕���L����
+ *  I/Dキャッシュを両方を有効に
  */
 extern void cache_enable(void);
 
 /*
- *  I/D�L���b�V���𗼕��𖳌���
+ *  I/Dキャッシュを両方を無効に
  */
 extern void cache_disable(void);
 
 /*
- *  �u�����`�v���f�B�N�^�[��L����
+ *  ブランチプリディクターを有効に
  */
 Inline void
 btac_enable(void)
@@ -339,19 +339,19 @@ btac_enable(void)
 }
 
 /*
- *  MMU�֘A
+ *  MMU関連
  */
 /*
- * �ϊ��e�[�u���ւ̐ݒ���e
- * va   : ���z�A�h���X
- * pa   : �����A�h���X
- * size : �T�C�Y
+ * 変換テーブルへの設定内容
+ * va   : 仮想アドレス
+ * pa   : 物理アドレス
+ * size : サイズ
  * ns   : Secure/Non-Secure
- * s    : ���L�w��
- * tex  : C B�Ƃ̑g�ݍ��킹�ŕω�
- * ap   : �A�N�Z�X��
- * c    : �L���b�V��
- * b    : �o�b�t�@
+ * s    : 共有指定
+ * tex  : C Bとの組み合わせで変化
+ * ap   : アクセス権
+ * c    : キャッシュ
+ * b    : バッファ
  */
 typedef struct{
 	uintptr_t   va;
@@ -368,12 +368,12 @@ typedef struct{
 }MEMORY_ATTRIBUTE;
 
 /*
- *  MMU�̏�����
+ *  MMUの初期化
  */
 extern void mmu_init(void);
 
 /*
- *  MMU�ɂ�郁�����̃}�b�s���O
+ *  MMUによるメモリのマッピング
  */
 extern void mmu_map_memory(MEMORY_ATTRIBUTE *m_attribute);
 #endif /* (__TARGET_ARCH_ARM == 6) || (__TARGET_ARCH_ARM == 7) */

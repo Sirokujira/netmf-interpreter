@@ -88,7 +88,7 @@ if exist "$(TargetDir)$(TargetName).srec" del "$(TargetDir)$(TargetName).srec"
 if exist "$(TargetDir)$(TargetName).syms" del "$(TargetDir)$(TargetName).syms"</Command>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>..\asp;..\asp\include;..\asp\kernel;..\asp\arch;..\asp\target\cq_starm_gcc;..\Sample1;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\asp;..\asp\include;..\asp\kernel;..\asp\arch;..\asp\target\msvc;..\Sample1;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;ALLFUNC;TOPPERS_ENABLE_TRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader />

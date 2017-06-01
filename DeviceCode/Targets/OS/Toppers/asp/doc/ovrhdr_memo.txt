@@ -1,4 +1,4 @@
-													TOPPERS Confidential
+﻿													TOPPERS Confidential
 		TOPPERSプロジェクト ディスカッションメモ
 		オーバランハンドラに関する設計メモ
 

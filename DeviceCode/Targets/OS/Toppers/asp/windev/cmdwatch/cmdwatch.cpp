@@ -6,37 +6,37 @@
  *  Copyright (C) 2003 by Embedded and Real-Time Systems Laboratory
  *                              Toyohashi Univ. of Technology, JAPAN
  * 
- *  ��L���쌠�҂́C�ȉ��� (1)�`(4) �̏������CFree Software Foundation 
- *  �ɂ���Č��\����Ă��� GNU General Public License �� Version 2 �ɋL
- *  �q����Ă�������𖞂����ꍇ�Ɍ���C�{�\�t�g�E�F�A�i�{�\�t�g�E�F�A
- *  �����ς������̂��܂ށD�ȉ������j���g�p�E�����E���ρE�Ĕz�z�i�ȉ��C
- *  ���p�ƌĂԁj���邱�Ƃ𖳏��ŋ�������D
- *  (1) �{�\�t�g�E�F�A���\�[�X�R�[�h�̌`�ŗ��p����ꍇ�ɂ́C��L�̒���
- *      ���\���C���̗��p��������щ��L�̖��ۏ؋K�肪�C���̂܂܂̌`�Ń\�[
- *      �X�R�[�h���Ɋ܂܂�Ă��邱�ƁD
- *  (2) �{�\�t�g�E�F�A���C���C�u�����`���ȂǁC���̃\�t�g�E�F�A�J���Ɏg
- *      �p�ł���`�ōĔz�z����ꍇ�ɂ́C�Ĕz�z�ɔ����h�L�������g�i���p
- *      �҃}�j���A���Ȃǁj�ɁC��L�̒��쌠�\���C���̗��p��������щ��L
- *      �̖��ۏ؋K����f�ڂ��邱�ƁD
- *  (3) �{�\�t�g�E�F�A���C�@��ɑg�ݍ��ނȂǁC���̃\�t�g�E�F�A�J���Ɏg
- *      �p�ł��Ȃ��`�ōĔz�z����ꍇ�ɂ́C���̂����ꂩ�̏����𖞂�����
- *      �ƁD
- *    (a) �Ĕz�z�ɔ����h�L�������g�i���p�҃}�j���A���Ȃǁj�ɁC��L�̒�
- *        �쌠�\���C���̗��p��������щ��L�̖��ۏ؋K����f�ڂ��邱�ƁD
- *    (b) �Ĕz�z�̌`�Ԃ��C�ʂɒ�߂���@�ɂ���āCTOPPERS�v���W�F�N�g��
- *        �񍐂��邱�ƁD
- *  (4) �{�\�t�g�E�F�A�̗��p�ɂ�蒼�ړI�܂��͊ԐړI�ɐ����邢���Ȃ鑹
- *      �Q������C��L���쌠�҂����TOPPERS�v���W�F�N�g��Ɛӂ��邱�ƁD
+ *  上記著作権者は，以下の (1)～(4) の条件か，Free Software Foundation 
+ *  によって公表されている GNU General Public License の Version 2 に記
+ *  述されている条件を満たす場合に限り，本ソフトウェア（本ソフトウェア
+ *  を改変したものを含む．以下同じ）を使用・複製・改変・再配布（以下，
+ *  利用と呼ぶ）することを無償で許諾する．
+ *  (1) 本ソフトウェアをソースコードの形で利用する場合には，上記の著作
+ *      権表示，この利用条件および下記の無保証規定が，そのままの形でソー
+ *      スコード中に含まれていること．
+ *  (2) 本ソフトウェアを，ライブラリ形式など，他のソフトウェア開発に使
+ *      用できる形で再配布する場合には，再配布に伴うドキュメント（利用
+ *      者マニュアルなど）に，上記の著作権表示，この利用条件および下記
+ *      の無保証規定を掲載すること．
+ *  (3) 本ソフトウェアを，機器に組み込むなど，他のソフトウェア開発に使
+ *      用できない形で再配布する場合には，次のいずれかの条件を満たすこ
+ *      と．
+ *    (a) 再配布に伴うドキュメント（利用者マニュアルなど）に，上記の著
+ *        作権表示，この利用条件および下記の無保証規定を掲載すること．
+ *    (b) 再配布の形態を，別に定める方法によって，TOPPERSプロジェクトに
+ *        報告すること．
+ *  (4) 本ソフトウェアの利用により直接的または間接的に生じるいかなる損
+ *      害からも，上記著作権者およびTOPPERSプロジェクトを免責すること．
  * 
- *  �{�\�t�g�E�F�A�́C���ۏ؂Œ񋟂���Ă�����̂ł���D��L���쌠�҂�
- *  ���TOPPERS�v���W�F�N�g�́C�{�\�t�g�E�F�A�Ɋւ��āC���̓K�p�\����
- *  �܂߂āC�����Ȃ�ۏ؂��s��Ȃ��D�܂��C�{�\�t�g�E�F�A�̗��p�ɂ�蒼
- *  �ړI�܂��͊ԐړI�ɐ����������Ȃ鑹�Q�Ɋւ��Ă��C���̐ӔC�𕉂�Ȃ��D
+ *  本ソフトウェアは，無保証で提供されているものである．上記著作権者お
+ *  よびTOPPERSプロジェクトは，本ソフトウェアに関して，その適用可能性も
+ *  含めて，いかなる保証も行わない．また，本ソフトウェアの利用により直
+ *  接的または間接的に生じたいかなる損害に関しても，その責任を負わない．
  * 
  *  @(#) $Id: cmdwatch.cpp,v 1.3 2003/06/30 15:51:47 takayuki Exp $
  */
 
-// cmdwatch.cpp : �R���\�[�� �A�v���P�[�V�����̃G���g�� �|�C���g���`���܂��B
+// cmdwatch.cpp : コンソール アプリケーションのエントリ ポイントを定義します。
 //
 
 #include <stdio.h>
@@ -49,7 +49,7 @@
 
 #include <conio.h>
 
-#pragma warning(disable:4200) //��W���̊g���@�\ : ����0�̔z������\����
+#pragma warning(disable:4200) //非標準の拡張機能 : 長さ0の配列を持つ構造体
 
 #define TMAX_LOGINFO	8
 
@@ -65,37 +65,37 @@ typedef struct {
 #define DBIFLOG_BUFMARGIN ((unsigned int)(&((DBIFLOG *)0)->buf))
 
 /*
- *  ���O���̏d�v�x�̒�`
+ *  ログ情報の重要度の定義
  */
-#define LOG_EMERG	0		/* �V���b�g�_�E���ɒl����G���[ */
+#define LOG_EMERG	0		/* シャットダウンに値するエラー */
 #define LOG_ALERT	1
 #define LOG_CRIT	2
-#define LOG_ERR		3		/* �V�X�e���G���[ */
-#define LOG_WARNING	4		/* �x�����b�Z�[�W */
+#define LOG_ERR		3		/* システムエラー */
+#define LOG_WARNING	4		/* 警告メッセージ */
 #define LOG_NOTICE	5
 #define LOG_INFO	6
-#define LOG_DEBUG	7		/* �f�o�b�O�p���b�Z�[�W */
+#define LOG_DEBUG	7		/* デバッグ用メッセージ */
 
 /*
- *  ���O���̏d�v�x�̃r�b�g�}�b�v����邽�߂̃}�N��
+ *  ログ情報の重要度のビットマップを作るためのマクロ
  */
 #define LOG_MASK(prio)	(1 << (prio))
 #define LOG_UPTO(prio)	((1 << ((prio) + 1)) - 1)
 
 /*
- *  ���O���̎�ʂ̒�`
+ *  ログ情報の種別の定義
  */
-#define LOG_TYP_INTERRUPT	0x01	/* �����݃n���h�� */
-#define LOG_TYP_ISR			0x02	/* �����݃T�[�r�X�n���h�� */
-#define LOG_TYP_TIMERHDR	0x03	/* �^�C���C�x���g�n���h�� */
-#define LOG_TYP_CPUEXC		0x04	/* CPU��O�n���h�� */
-#define LOG_TYP_TSKEXC		0x05	/* �^�X�N��O�������[�`�� */
-#define LOG_TYP_TSKSTAT		0x06	/* �^�X�N��ԕω� */
-#define LOG_TYP_DISPATCH	0x07	/* �f�B�X�p�b�`�� */
-#define LOG_TYP_SVC			0x08	/* �T�[�r�X�R�[�� */
-#define LOG_TYP_COMMENT		0x09	/* �R�����g�i������݂̂̃��O�j */
-#define LOG_ENTER			0x00	/* �����^�J�n */
-#define LOG_LEAVE			0x80	/* �o���^�I�� */
+#define LOG_TYP_INTERRUPT	0x01	/* 割込みハンドラ */
+#define LOG_TYP_ISR			0x02	/* 割込みサービスハンドラ */
+#define LOG_TYP_TIMERHDR	0x03	/* タイムイベントハンドラ */
+#define LOG_TYP_CPUEXC		0x04	/* CPU例外ハンドラ */
+#define LOG_TYP_TSKEXC		0x05	/* タスク例外処理ルーチン */
+#define LOG_TYP_TSKSTAT		0x06	/* タスク状態変化 */
+#define LOG_TYP_DISPATCH	0x07	/* ディスパッチャ */
+#define LOG_TYP_SVC			0x08	/* サービスコール */
+#define LOG_TYP_COMMENT		0x09	/* コメント（文字列のみのログ） */
+#define LOG_ENTER			0x00	/* 入口／開始 */
+#define LOG_LEAVE			0x80	/* 出口／終了 */
 
 
 
@@ -378,7 +378,7 @@ HRESULT IKernelLogEvents::OnLogEvent(long sz, byte data [])
 }
 
 
-	//�R�l�N�V�����|�C���g�ւ̐ڑ�
+	//コネクションポイントへの接続
 bool Advise(IUnknown * container, REFIID iid, IUnknown * sink, DWORD * cookie, IConnectionPoint ** pcp = NULL)
 {
 	IConnectionPointContainer * cpc;

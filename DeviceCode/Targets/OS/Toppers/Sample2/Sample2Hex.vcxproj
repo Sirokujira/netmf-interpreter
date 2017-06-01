@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{BC7E50BC-F2B7-406A-9715-F65DA6969C7F}</ProjectGuid>
+    <ProjectGuid>{FD9A80BC-B046-4614-BE9A-D50B69D2B8A8}</ProjectGuid>
     <RootNamespace>SampleHex</RootNamespace>
     <Keyword>MakeFileProj</Keyword>
   </PropertyGroup>

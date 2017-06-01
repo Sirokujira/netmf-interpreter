@@ -186,8 +186,8 @@ static STK_T _kernel_istack[COUNT_STK_T(DEFAULT_ISTKSZ)] __attribute__((aligned(
 
 #endif /* DEAULT_ISTK */
 
+const SIZE		_kernel_istksz = TOPPERS_ISTKSZ;
 // const SIZE		_kernel_istksz = TOPPERS_ISTKSZ;
-const MEMSIZE		_kernel_istksz = TOPPERS_ISTKSZ;
 STK_T *const	_kernel_istk = TOPPERS_ISTK;
 
 #ifdef TOPPERS_ISTKPT

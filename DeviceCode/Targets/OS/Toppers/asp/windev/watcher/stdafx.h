@@ -6,39 +6,39 @@
  *  Copyright (C) 2000-2003 by Embedded and Real-Time Systems Laboratory
  *                              Toyohashi Univ. of Technology, JAPAN
  * 
- *  ��L���쌠�҂́C�ȉ��� (1)�`(4) �̏������CFree Software Foundation 
- *  �ɂ���Č��\����Ă��� GNU General Public License �� Version 2 �ɋL
- *  �q����Ă�������𖞂����ꍇ�Ɍ���C�{�\�t�g�E�F�A�i�{�\�t�g�E�F�A
- *  �����ς������̂��܂ށD�ȉ������j���g�p�E�����E���ρE�Ĕz�z�i�ȉ��C
- *  ���p�ƌĂԁj���邱�Ƃ𖳏��ŋ�������D
- *  (1) �{�\�t�g�E�F�A���\�[�X�R�[�h�̌`�ŗ��p����ꍇ�ɂ́C��L�̒���
- *      ���\���C���̗��p��������щ��L�̖��ۏ؋K�肪�C���̂܂܂̌`�Ń\�[
- *      �X�R�[�h���Ɋ܂܂�Ă��邱�ƁD
- *  (2) �{�\�t�g�E�F�A���C���C�u�����`���ȂǁC���̃\�t�g�E�F�A�J���Ɏg
- *      �p�ł���`�ōĔz�z����ꍇ�ɂ́C�Ĕz�z�ɔ����h�L�������g�i���p
- *      �҃}�j���A���Ȃǁj�ɁC��L�̒��쌠�\���C���̗��p��������щ��L
- *      �̖��ۏ؋K����f�ڂ��邱�ƁD
- *  (3) �{�\�t�g�E�F�A���C�@��ɑg�ݍ��ނȂǁC���̃\�t�g�E�F�A�J���Ɏg
- *      �p�ł��Ȃ��`�ōĔz�z����ꍇ�ɂ́C���̂����ꂩ�̏����𖞂�����
- *      �ƁD
- *    (a) �Ĕz�z�ɔ����h�L�������g�i���p�҃}�j���A���Ȃǁj�ɁC��L�̒�
- *        �쌠�\���C���̗��p��������щ��L�̖��ۏ؋K����f�ڂ��邱�ƁD
- *    (b) �Ĕz�z�̌`�Ԃ��C�ʂɒ�߂���@�ɂ���āCTOPPERS�v���W�F�N�g��
- *        �񍐂��邱�ƁD
- *  (4) �{�\�t�g�E�F�A�̗��p�ɂ�蒼�ړI�܂��͊ԐړI�ɐ����邢���Ȃ鑹
- *      �Q������C��L���쌠�҂����TOPPERS�v���W�F�N�g��Ɛӂ��邱�ƁD
+ *  上記著作権者は，以下の (1)～(4) の条件か，Free Software Foundation 
+ *  によって公表されている GNU General Public License の Version 2 に記
+ *  述されている条件を満たす場合に限り，本ソフトウェア（本ソフトウェア
+ *  を改変したものを含む．以下同じ）を使用・複製・改変・再配布（以下，
+ *  利用と呼ぶ）することを無償で許諾する．
+ *  (1) 本ソフトウェアをソースコードの形で利用する場合には，上記の著作
+ *      権表示，この利用条件および下記の無保証規定が，そのままの形でソー
+ *      スコード中に含まれていること．
+ *  (2) 本ソフトウェアを，ライブラリ形式など，他のソフトウェア開発に使
+ *      用できる形で再配布する場合には，再配布に伴うドキュメント（利用
+ *      者マニュアルなど）に，上記の著作権表示，この利用条件および下記
+ *      の無保証規定を掲載すること．
+ *  (3) 本ソフトウェアを，機器に組み込むなど，他のソフトウェア開発に使
+ *      用できない形で再配布する場合には，次のいずれかの条件を満たすこ
+ *      と．
+ *    (a) 再配布に伴うドキュメント（利用者マニュアルなど）に，上記の著
+ *        作権表示，この利用条件および下記の無保証規定を掲載すること．
+ *    (b) 再配布の形態を，別に定める方法によって，TOPPERSプロジェクトに
+ *        報告すること．
+ *  (4) 本ソフトウェアの利用により直接的または間接的に生じるいかなる損
+ *      害からも，上記著作権者およびTOPPERSプロジェクトを免責すること．
  * 
- *  �{�\�t�g�E�F�A�́C���ۏ؂Œ񋟂���Ă�����̂ł���D��L���쌠�҂�
- *  ���TOPPERS�v���W�F�N�g�́C�{�\�t�g�E�F�A�Ɋւ��āC���̓K�p�\����
- *  �܂߂āC�����Ȃ�ۏ؂��s��Ȃ��D�܂��C�{�\�t�g�E�F�A�̗��p�ɂ�蒼
- *  �ړI�܂��͊ԐړI�ɐ����������Ȃ鑹�Q�Ɋւ��Ă��C���̐ӔC�𕉂�Ȃ��D
+ *  本ソフトウェアは，無保証で提供されているものである．上記著作権者お
+ *  よびTOPPERSプロジェクトは，本ソフトウェアに関して，その適用可能性も
+ *  含めて，いかなる保証も行わない．また，本ソフトウェアの利用により直
+ *  接的または間接的に生じたいかなる損害に関しても，その責任を負わない．
  * 
  *  @(#) $Id: stdafx.h,v 1.2 2003/06/30 15:58:39 takayuki Exp $
  */
 
-// stdafx.h : �W���̃V�X�e�� �C���N���[�h �t�@�C���A
-//            �܂��͎Q�Ɖ񐔂������A�����܂�ύX����Ȃ�
-//            �v���W�F�N�g��p�̃C���N���[�h �t�@�C�����L�q���܂��B
+// stdafx.h : 標準のシステム インクルード ファイル、
+//            または参照回数が多く、かつあまり変更されない
+//            プロジェクト専用のインクルード ファイルを記述します。
 
 #if !defined(AFX_STDAFX_H__D427C5C9_3DF2_4C06_BC74_B35DCF7062FC__INCLUDED_)
 #define AFX_STDAFX_H__D427C5C9_3DF2_4C06_BC74_B35DCF7062FC__INCLUDED_
@@ -54,84 +54,84 @@
 #define _ATL_APARTMENT_THREADED
 
 #include <atlbase.h>
-// CComModule �N���X����h�������N���X���g�p���āA�I�[�o�[���C�h����ꍇ
-// _Module �̖��O�͕ύX���Ȃ��ł��������B
+// CComModule クラスから派生したクラスを使用して、オーバーライドする場合
+// _Module の名前は変更しないでください。
 extern CComModule _Module;
 #include <atlcom.h>
 #include <atlctl.h>
 
 
 /*
- *  ITRON�f�o�b�M���O�C���^�t�F�[�X�֘A�̒�`
+ *  ITRONデバッギングインタフェース関連の定義
  */
 
 /*
- *  �f�B�X�p�b�`���
+ *  ディスパッチ種別
  */
-#define DSP_NORMAL		0;	//�^�X�N�R���e�L�X�g����̃f�B�X�p�b�`
-#define DSP_NONTSKCTX	1;	//�����ݏ��������CPU��O����̃f�B�X�p�b�` 
+#define DSP_NORMAL		0;	//タスクコンテキストからのディスパッチ
+#define DSP_NONTSKCTX	1;	//割込み処理およびCPU例外からのディスパッチ 
 
 typedef	short		 BITMASK;
 typedef unsigned int INHNO;
 
-/* �����݃n���h�� */
+/* 割込みハンドラ */
 typedef struct t_rglog_interrupt{
-	int inhno;	//�����݃n���h���ԍ�
+	int inhno;	//割込みハンドラ番号
 } T_RGLOG_INTERRUPT;
 
-/* �����݃T�[�r�X�n���h��(���g�p) */
+/* 割込みサービスハンドラ(未使用) */
 typedef struct t_rglog_isr {
-	int		isrid;	//�����݃T�[�r�X���[�`��ID
-	int     inhno;	//�����݃n���h���ԍ�
+	int		isrid;	//割込みサービスルーチンID
+	int     inhno;	//割込みハンドラ番号
 } T_RGLOG_ISR;
 
-/* �^�C���C�x���g�n���h�� */
+/* タイムイベントハンドラ */
 typedef struct t_rglog_timerhdr {
-	unsigned int	type;	//�^�C�}�[�̎��
-	int             hdrid;	//�^�C���C�x���g�n���h����ID
-	void *          exinf;	//�g�����
+	unsigned int	type;	//タイマーの種別
+	int             hdrid;	//タイムイベントハンドラのID
+	void *          exinf;	//拡張情報
 } T_RGLOG_TIMERHDR;
 
-/* CPU��O�n���h�� */
+/* CPU例外ハンドラ */
 typedef struct t_rglog_cupexc {
-	int		tskid;	//�ΏۂƂȂ�^�X�NID
+	int		tskid;	//対象となるタスクID
 } T_RGLOG_CPUEXC;
 
-/* �^�X�N��O�������[�`�� */
+/* タスク例外処理ルーチン */
 typedef struct t_rglog_tskexc {
-	int		tskid;	//�ΏۂƂȂ�^�X�NID
+	int		tskid;	//対象となるタスクID
 } T_RGLOG_TSKEXC;
 
-/* �^�X�N��ԕω� */
+/* タスク状態変化 */
 typedef struct t_rglog_tskstat {
-	int		tskid;		//�^�X�NID
-	int		tskstat;	//�J�ڐ�^�X�N���
-	int		tskwait;	//�҂����
-	int		wobjid;		//�҂��Ώۂ̃I�u�W�F�N�gID
+	int		tskid;		//タスクID
+	int		tskstat;	//遷移先タスク状態
+	int		tskwait;	//待ち状態
+	int		wobjid;		//待ち対象のオブジェクトID
 } T_RGLOG_TSKSTAT;
 
-/* �f�B�X�p�b�`���J�n */
+/* ディスパッチャ開始 */
 typedef struct t_rglog_dispatch_enter {
-	int				tskid;		//�^�X�NID
-	unsigned int	disptype;	//�f�B�X�p�b�`���
+	int				tskid;		//タスクID
+	unsigned int	disptype;	//ディスパッチ種別
 } T_RGLOG_DISPATCH_ENTER;
 
-/* �f�B�X�p�b�`���I�� */
+/* ディスパッチャ終了 */
 typedef struct t_rglog_dispatch_leave {
-	int		tskid;		//�^�X�NID
+	int		tskid;		//タスクID
 } T_RGLOG_DISPATCH_LEAVE;
 
-/* �T�[�r�X�R�[�� */
+/* サービスコール */
 typedef struct t_rglog_svc {
-	int				fncno;		//�@�\�R�[�h
-	unsigned int	prmcnt;		//�p�����[�^��
-	void *			prmary[1];	//�p�����[�^
+	int				fncno;		//機能コード
+	unsigned int	prmcnt;		//パラメータ数
+	void *			prmary[1];	//パラメータ
 } T_RGLOG_SVC;
 
-/* �R�����g�i������݂̂̃��O�j */
+/* コメント（文字列のみのログ） */
 typedef struct t_rglog_comment {
-	unsigned int	length;		//������̒���
-	char			strtext[1];	//������(NULL�I�[)-���f����
+	unsigned int	length;		//文字列の長さ
+	char			strtext[1];	//文字列(NULL終端)-中断あり
 } T_RGLOG_COMMENT;
 
 typedef struct t_rglog_header {
@@ -171,21 +171,21 @@ typedef struct t_rglog
 } T_RGLOG;
 
 /*
- *  ���O���̎�ʂ̒�`
+ *  ログ情報の種別の定義
  */
-#define LOG_TYP_INTERRUPT	0x01	/* �����݃n���h�� */
-#define LOG_TYP_ISR			0x02	/* �����݃T�[�r�X�n���h�� */
-#define LOG_TYP_TIMERHDR	0x03	/* �^�C���C�x���g�n���h�� */
-#define LOG_TYP_CPUEXC		0x04	/* CPU��O�n���h�� */
-#define LOG_TYP_TSKEXC		0x05	/* �^�X�N��O�������[�`�� */
-#define LOG_TYP_TSKSTAT		0x06	/* �^�X�N��ԕω� */
-#define LOG_TYP_DISPATCH	0x07	/* �f�B�X�p�b�`�� */
-#define LOG_TYP_SVC			0x08	/* �T�[�r�X�R�[�� */
-#define LOG_TYP_COMMENT		0x09	/* �R�����g�i������݂̂̃��O�j */
-#define LOG_ENTER			0x00	/* �����^�J�n */
-#define LOG_LEAVE			0x80	/* �o���^�I�� */
+#define LOG_TYP_INTERRUPT	0x01	/* 割込みハンドラ */
+#define LOG_TYP_ISR			0x02	/* 割込みサービスハンドラ */
+#define LOG_TYP_TIMERHDR	0x03	/* タイムイベントハンドラ */
+#define LOG_TYP_CPUEXC		0x04	/* CPU例外ハンドラ */
+#define LOG_TYP_TSKEXC		0x05	/* タスク例外処理ルーチン */
+#define LOG_TYP_TSKSTAT		0x06	/* タスク状態変化 */
+#define LOG_TYP_DISPATCH	0x07	/* ディスパッチャ */
+#define LOG_TYP_SVC			0x08	/* サービスコール */
+#define LOG_TYP_COMMENT		0x09	/* コメント（文字列のみのログ） */
+#define LOG_ENTER			0x00	/* 入口／開始 */
+#define LOG_LEAVE			0x80	/* 出口／終了 */
 
 //{{AFX_INSERT_LOCATION}}
-// Microsoft Visual C++ �͑O�s�̒��O�ɒǉ��̐錾��}�����܂��B
+// Microsoft Visual C++ は前行の直前に追加の宣言を挿入します。
 
 #endif // !defined(AFX_STDAFX_H__D427C5C9_3DF2_4C06_BC74_B35DCF7062FC__INCLUDED)

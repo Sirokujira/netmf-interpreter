@@ -28,7 +28,10 @@
 #include "DebugHeap.h"
 #include <new.h>
 // Windows ヘッダー ファイル:
+#define SIZE wSIZE
 #include <windows.h>
+#undef SIZE
+
 #include <tchar.h>
 
 #include <vector>

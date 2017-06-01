@@ -1,4 +1,4 @@
-													TOPPERS Confidential
+﻿													TOPPERS Confidential
 		TOPPERSプロジェクト ディスカッションメモ
 		制約タスクの仕様に関する検討
 
