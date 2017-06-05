@@ -170,4 +170,3 @@ exit_kernel(void)
 }
 
 #endif /* TOPPERS_ext_ker */
-

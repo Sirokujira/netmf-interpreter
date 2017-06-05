@@ -41,7 +41,7 @@
  */
 
 /*
- *      システムログタスク
+ *		システムログタスク
  */
 
 #ifndef TOPPERS_LOGTASK_H
@@ -57,24 +57,24 @@ extern "C" {
  *  システムログタスク関連の定数のデフォルト値の定義
  */ 
 #ifndef LOGTASK_PRIORITY
-#define LOGTASK_PRIORITY    3       
-#endif 
+#define LOGTASK_PRIORITY	3		/* 初期優先度 */
+#endif /* LOGTASK_PRIORITY */
 
 #ifndef LOGTASK_STACK_SIZE
-#define LOGTASK_STACK_SIZE  1024    
-#endif 
+#define LOGTASK_STACK_SIZE	1024	/* スタック領域のサイズ */
+#endif /* LOGTASK_STACK_SIZE */
 
 #ifndef LOGTASK_PORTID
-#define LOGTASK_PORTID      1       
-#endif 
+#define LOGTASK_PORTID		1		/* システムログ用のシリアルポート番号 */
+#endif /* LOGTASK_PORTID */
 
 #ifndef LOGTASK_INTERVAL
-#define LOGTASK_INTERVAL    10U     
-#endif 
+#define LOGTASK_INTERVAL	10U		/* システムログタスクの動作間隔（ミリ秒）*/
+#endif /* LOGTASK_INTERVAL */
 
 #ifndef LOGTASK_FLUSH_WAIT
-#define LOGTASK_FLUSH_WAIT  1U      
-#endif 
+#define LOGTASK_FLUSH_WAIT	1U		/* フラッシュ待ちの単位時間（ミリ秒）*/
+#endif /* LOGTASK_FLUSH_WAIT */
 
 /*
  *  システムログ出力の待ち合わせ
@@ -82,20 +82,20 @@ extern "C" {
  *  ログバッファ中のログの数がcount以下になるまで待つ．countが0の場合に
  *  は，シリアルバッファが空になるのも待つ．
  */
-extern ER   logtask_flush(uint_t count) throw();
+extern ER	logtask_flush(uint_t count) throw();
 
 /*
  *  システムログタスクの本体
  */
-extern void logtask_main(intptr_t exinf) throw();
+extern void	logtask_main(intptr_t exinf) throw();
 
 /*
  *  システムログタスクの終了処理
  */
-extern void logtask_terminate(intptr_t exinf) throw();
+extern void	logtask_terminate(intptr_t exinf) throw();
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif 
+#endif /* TOPPERS_LOGTASK_H */

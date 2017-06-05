@@ -98,8 +98,6 @@ typedef	void			(*TOPPERS_fp_t)(struct TOPPERS_dummy_t);
  */
 typedef TOPPERS_bool	bool_t;		/* 真偽値 */
 
-typedef char		char_t;		/* 自然なサイズの符号付き整数 */
-
 typedef signed int		int_t;		/* 自然なサイズの符号付き整数 */
 typedef unsigned int	uint_t;		/* 自然なサイズの符号無し整数 */
 
@@ -113,7 +111,6 @@ typedef	uint_t			ATR;		/* オブジェクトの属性 */
 typedef	uint_t			STAT;		/* オブジェクトの状態 */
 typedef	uint_t			MODE;		/* サービスコールの動作モード */
 typedef	int_t			PRI;		/* 優先度 */
-// t_stddef.h (windef.h/wtypes.h の SIZE 定義とぶつかる)
 typedef	TOPPERS_size	SIZE;		/* メモリ領域のサイズ */
 
 typedef	int_t			TMO;		/* タイムアウト指定 */
