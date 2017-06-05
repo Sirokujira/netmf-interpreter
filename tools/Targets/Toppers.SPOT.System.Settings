@@ -297,7 +297,7 @@
                 <!-- Toppers ASP + GR-PEACH -->
                 <!-- base "http://www.toppers.jp/download.cgi/asp_gr_peach_gcc-20160315.zip" -->
                 <APPNAME>sample1</APPNAME>
-                <CFGINCLUDE             Condition="'$(CFGINCLUDE)'==''">-I$(SRCDIR) -I$(SRCDIR)/arch -I$(SRCDIR)/include -I$(KERNELDIR) -I$(SRCDIR)/arch/arm_gcc/rza1 -I$(SRCDIR)/arch/arm_gcc/common -I$(SRCDIR)/arch/arm_gcc/at91sam7s -I$(TARGETDIR)</CFGINCLUDE>
+                <CFGINCLUDE             Condition="'$(CFGINCLUDE)'==''">-I$(SRCDIR) -I$(SRCDIR)/arch -I$(SRCDIR)/include -I$(KERNELDIR) -I$(SRCDIR)/arch/arm_gcc/rza1 -I$(SRCDIR)/arch/arm_gcc/common -I$(TARGETDIR)</CFGINCLUDE>
                 <CFG1COMPILEINCLUDE     Condition="'$(CFG1COMPILEINCLUDE)'==''">-I$(SRCDIR) -I$(SRCDIR)/arch -I$(SRCDIR)/include -I$(KERNELDIR) -I$(SRCDIR)/arch/arm_gcc/rza1 -I$(SRCDIR)/arch/arm_gcc/common -I$(TARGETDIR) -I$(SPOCLIENT)/$(Directory)</CFG1COMPILEINCLUDE>
                 <APPLNAME               Condition="'$(APPLNAME)'==''">$(SPOCLIENT)/$(Directory)/$(APPNAME)</APPLNAME>
                 <APPL_CFG>$(APPLNAME).cfg</APPL_CFG>
