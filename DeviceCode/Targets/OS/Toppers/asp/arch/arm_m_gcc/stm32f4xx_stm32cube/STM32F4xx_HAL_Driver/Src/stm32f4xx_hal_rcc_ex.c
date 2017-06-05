@@ -859,7 +859,7 @@ HAL_StatusTypeDef HAL_RCCEx_PeriphCLKConfig(RCC_PeriphCLKInitTypeDef  *PeriphClk
       /* check for Parameters */
       assert_param(IS_RCC_PLLI2SR_VALUE(PeriphClkInit->PLLI2S.PLLI2SR));
       /* Configure the PLLI2S division factors */
-      /* PLLI2S_VCO = f(VCO clock) = f(PLLI2S clock input) 髏倒?(PLLI2SN/PLLM) */
+      /* PLLI2S_VCO = f(VCO clock) = f(PLLI2S clock input) ﾗ (PLLI2SN/PLLM) */
       /* I2SCLK = f(PLLI2S clock output) = f(VCO clock) / PLLI2SR */
       __HAL_RCC_PLLI2S_CONFIG(PeriphClkInit->PLLI2S.PLLI2SN , PeriphClkInit->PLLI2S.PLLI2SR);
     }

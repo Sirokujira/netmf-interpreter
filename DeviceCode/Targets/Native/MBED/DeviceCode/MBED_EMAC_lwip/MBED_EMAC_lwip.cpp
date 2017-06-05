@@ -15,8 +15,8 @@
 //#define DEBUG_LWIP_TX
 //#define DEBUG_LWIP_RX
 
-// extern INT32 // dbg_printf( const char* format, ... );   // COM1 and LCD. defined in tinycrt.cpp
-// extern struct netif g_MBED_EMAC_NetIF;
+// extern INT32 dbg_printf( const char* format, ... );   // COM1 and LCD. defined in tinycrt.cpp
+extern struct netif g_MBED_EMAC_NetIF;
 extern HAL_COMPLETION    InterruptTaskCompletion;
 
 #if 0
@@ -29,9 +29,9 @@ int ethernetext_init(ethernet_cfg_t *p_ethcfg);
 #endif
 #endif
 
-// extern INT32 // dbg_printf( const char* format, ... );   // COM1 and LCD. defined in tinycrt.cpp
-// extern struct netif g_MBED_EMAC_NetIF;
-// extern HAL_COMPLETION InterruptTaskCompletion;
+// extern INT32 dbg_printf( const char* format, ... );   // COM1 and LCD. defined in tinycrt.cpp
+extern struct netif g_MBED_EMAC_NetIF;
+extern HAL_COMPLETION InterruptTaskCompletion;
 
 // MAC Address
 char MACAddr[6];

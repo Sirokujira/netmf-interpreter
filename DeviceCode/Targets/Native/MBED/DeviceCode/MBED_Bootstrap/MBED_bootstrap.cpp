@@ -49,6 +49,6 @@ extern "C"
 	{
 	    BootstrapCode_CPU();
 	    BootstrapCode_Board();
-	    // PrepareImageRegions();
+	    PrepareImageRegions();
 	}
 }

@@ -297,7 +297,6 @@ rel_mpf(ID mpfid, void *blk)
 {
 	MPFCB	*p_mpfcb;
 	SIZE	blkoffset;
-	// MEMSIZE	blkoffset;
 	uint_t	blkidx;
 	TCB		*p_tcb;
 	ER		ercd;
