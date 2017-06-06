@@ -6,7 +6,7 @@
  *  Copyright (C) 2006-2009 by Embedded and Real-Time Systems Laboratory
  *              Graduate School of Information Science, Nagoya Univ., JAPAN
  *
- *  上記著作権者は，以下の(1)〜(4)の条件を満たす場合に限り，本ソフトウェ
+ *  上記著作権者は，以下の(1)～(4)の条件を満たす場合に限り，本ソフトウェ
  *  ア（本ソフトウェアを改変したものを含む．以下同じ）を使用・複製・改
  *  変・再配布（以下，利用と呼ぶ）することを無償で許諾する．
  *  (1) 本ソフトウェアをソースコードの形で利用する場合には，上記の著作
@@ -54,7 +54,7 @@
 Inline void
 target_timer_int_clear()
 {
-	sil_wrw_mem(BCM283X_LTIMER_WRITE, 0x80000000);
+	sil_wrw_mem((void *)BCM283X_LTIMER_WRITE, 0x80000000);
 }
 
 /*
@@ -66,12 +66,12 @@ target_timer_initialize(intptr_t exinf)
 	/*
 	 *  タイマを停止する．
 	 */
-	sil_wrw_mem(BCM283X_LTIMER_CTLSTA, 0);
+	sil_wrw_mem((void *)BCM283X_LTIMER_CTLSTA, 0);
 
 	/*
 	 *  タイマ動作を開始する．
 	 */
-	sil_wrw_mem(BCM283X_LTIMER_CTLSTA, 0x30000000 | 38400U);	/* 38.4MHz 1ms */
+	sil_wrw_mem((void *)BCM283X_LTIMER_CTLSTA, 0x30000000 | 38400U);	/* 38.4MHz 1ms */
 
 	/*
 	 *  タイマ割込み要求をクリアする．
@@ -88,7 +88,7 @@ target_timer_terminate(intptr_t exinf)
 	/*
 	 *  タイマを停止する．
 	 */
-	sil_wrw_mem(BCM283X_LTIMER_CTLSTA, 0);
+	sil_wrw_mem((void *)BCM283X_LTIMER_CTLSTA, 0);
 
 	/*
 	 *  タイマ割込み要求をクリアする．

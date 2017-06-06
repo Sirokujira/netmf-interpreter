@@ -5,7 +5,7 @@
  *
  *  Copyright (C) 2000-2003 by Embedded and Real-Time Systems Laboratory
  *                              Toyohashi Univ. of Technology, JAPAN
- *  Copyright (C) 2005-2009 by Embedded and Real-Time Systems Laboratory
+ *  Copyright (C) 2005-2016 by Embedded and Real-Time Systems Laboratory
  *              Graduate School of Information Science, Nagoya Univ., JAPAN
  *
  *  上記著作権者は，以下の(1)～(4)の条件を満たす場合に限り，本ソフトウェ
@@ -37,74 +37,101 @@
  *  アの利用により直接的または間接的に生じたいかなる損害に関しても，そ
  *  の責任を負わない．
  *
- *  @(#) $Id: chip_timer.h 955 2016-10-17 00:00:00Z azo $
+ *  @(#) $Id: generic_timer.h 1203 2016-07-18 07:05:08Z ertl-honda $
  */
 
 /*
- *  タイマドライバ（BCM283X用）
+ *  タイマドライバ（ARMv7 Generic Timer用）
  */
 
-#ifndef TOPPERS_CHIP_TIMER_H
-#define TOPPERS_CHIP_TIMER_H
+#ifndef TOPPERS_CORE_TIMER_H
+#define TOPPERS_CORE_TIMER_H
 
 #include <sil.h>
-#include "bcm283x.h"
 
 /*
- *  タイマ割込みハンドラ登録のための定数
+ *  Generic Timer Register
  */
+#define CNTHCTL_EL1PCEN_BIT		(1 << 1)
+#define CNTHCTL_EL1PCTEN_BIT	(1 << 0)
+#define CNTKCTL_EL0PTEN_BIT		(1 << 9)
+#define CNTKCTL_EL0VTEN_BIT		(1 << 8)
+#define CNTKCTL_EL0PCTEN_BIT	(1 << 0)
+#define CNTKCTL_EL0VCTEN_BIT	(1 << 1)
+#define CNTP_CTL_ISTATUS_BIT    (1 << 2)
+#define CNTP_CTL_IMASK_BIT      (1 << 1)
+#define CNTP_CTL_ENABLE_BIT     (1 << 0)
+#define CNTPS_CTL_ISTATUS_BIT   (1 << 2)
+#define CNTPS_CTL_IMASK_BIT     (1 << 1)
+#define CNTPS_CTL_ENABLE_BIT    (1 << 0)
+#define CNTV_CTL_ISTATUS_BIT    (1 << 2)
+#define CNTV_CTL_IMASK_BIT      (1 << 1)
+#define CNTV_CTL_ENABLE_BIT     (1 << 0)
+
 /*
  *  ローカルタイマ方式用の定義
  */
-#define INHNO_TIMER_PRC1     (0x00010000 | IRQ_LTIMER) /* 割込みハンドラ番号 */
-#define INHNO_TIMER_PRC2     (0x00020000 | IRQ_LTIMER) /* 割込みハンドラ番号 */
-#define INHNO_TIMER_PRC3     (0x00030000 | IRQ_LTIMER) /* 割込みハンドラ番号 */
-#define INHNO_TIMER_PRC4     (0x00040000 | IRQ_LTIMER) /* 割込みハンドラ番号 */
+#define INHNO_TIMER_PRC1     (0x00010000 | IRQNO_GTIM) /* 割込みハンドラ番号 */
+#define INHNO_TIMER_PRC2     (0x00020000 | IRQNO_GTIM) /* 割込みハンドラ番号 */
+#define INHNO_TIMER_PRC3     (0x00030000 | IRQNO_GTIM) /* 割込みハンドラ番号 */
+#define INHNO_TIMER_PRC4     (0x00040000 | IRQNO_GTIM) /* 割込みハンドラ番号 */
 
-#define INTNO_TIMER_PRC1     (0x00010000 | IRQ_LTIMER) /* 割込み番号 */
-#define INTNO_TIMER_PRC2     (0x00020000 | IRQ_LTIMER) /* 割込み番号 */
-#define INTNO_TIMER_PRC3     (0x00030000 | IRQ_LTIMER) /* 割込み番号 */
-#define INTNO_TIMER_PRC4     (0x00040000 | IRQ_LTIMER) /* 割込み番号 */
+#define INTNO_TIMER_PRC1     (0x00010000 | IRQNO_GTIM) /* 割込み番号 */
+#define INTNO_TIMER_PRC2     (0x00020000 | IRQNO_GTIM) /* 割込み番号 */
+#define INTNO_TIMER_PRC3     (0x00030000 | IRQNO_GTIM) /* 割込み番号 */
+#define INTNO_TIMER_PRC4     (0x00040000 | IRQNO_GTIM) /* 割込み番号 */
 
 /*
  *  グローバルタイマ方式用の定義
  */
 #if TOPPERS_SYSTIM_PRCID == 1
-#define INHNO_TIMER_SYSTIM    (0x00010000 | IRQ_LTIMER)  /* 割込みハンドラ番号 */
-#define INTNO_TIMER_SYSTIM    (0x00010000 | IRQ_LTIMER)  /* 割込み番号 */
+#define INHNO_TIMER_SYSTIM    (0x00010000 | IRQNO_GTIM)  /* 割込みハンドラ番号 */
+#define INTNO_TIMER_SYSTIM    (0x00010000 | IRQNO_GTIM)  /* 割込み番号 */
 #elif TOPPERS_SYSTIM_PRCID == 2
-#define INHNO_TIMER_SYSTIM    (0x00020000 | IRQ_LTIMER)  /* 割込みハンドラ番号 */
-#define INTNO_TIMER_SYSTIM    (0x00020000 | IRQ_LTIMER)  /* 割込み番号 */
+#define INHNO_TIMER_SYSTIM    (0x00020000 | IRQNO_GTIM)  /* 割込みハンドラ番号 */
+#define INTNO_TIMER_SYSTIM    (0x00020000 | IRQNO_GTIM)  /* 割込み番号 */
 #elif TOPPERS_SYSTIM_PRCID == 3
-#define INHNO_TIMER_SYSTIM    (0x00030000 | IRQ_LTIMER)  /* 割込みハンドラ番号 */
-#define INTNO_TIMER_SYSTIM    (0x00030000 | IRQ_LTIMER)  /* 割込み番号 */
+#define INHNO_TIMER_SYSTIM    (0x00030000 | IRQNO_GTIM)  /* 割込みハンドラ番号 */
+#define INTNO_TIMER_SYSTIM    (0x00030000 | IRQNO_GTIM)  /* 割込み番号 */
 #elif TOPPERS_SYSTIM_PRCID == 4
-#define INHNO_TIMER_SYSTIM    (0x00040000 | IRQ_LTIMER)  /* 割込みハンドラ番号 */
-#define INTNO_TIMER_SYSTIM    (0x00040000 | IRQ_LTIMER)  /* 割込み番号 */
+#define INHNO_TIMER_SYSTIM    (0x00040000 | IRQNO_GTIM)  /* 割込みハンドラ番号 */
+#define INTNO_TIMER_SYSTIM    (0x00040000 | IRQNO_GTIM)  /* 割込み番号 */
 #endif /* TOPPERS_SYSTIM_PRCID == 1 */
 
 #define INTATR_TIMER    0U            /* 割込み属性 */
+
+#ifndef INTPRI_TIMER
 #define INTPRI_TIMER    -6            /* 割込み優先度 */
+#endif /* INTPRI_TIMER */
+
+#ifndef INTATR_TIMER
+#define INTATR_TIMER    0U            /* 割込み属性 */
+#endif /* INTATR_TIMER */
 
 #ifndef TOPPERS_MACRO_ONLY
 
 /*
  *  タイマ値の内部表現の型
  */
-typedef uint32_t    CLOCK;
+typedef uint32_t CLOCK;
+
+/*
+ *  タイマのクロックを保持する変数
+ *  単位はkHz
+ *  target_initialize() で初期化される
+ */
+extern uint32_t timer_clock;
+
+/*
+ *  タイマの設定値
+ */
+extern uint64_t timer_cval[];
 
 /*
  *  タイマ値の内部表現とミリ秒・μ秒単位との変換
- *  1μ秒毎(1MHz) にカウントダウンする
  */
-#define TIMER_CLOCK          1000 // cycles for 1ms
-#define TO_CLOCK(nume, deno) (TIMER_CLOCK * (nume) / (deno))
-#define TO_USEC(clock)       (((SYSUTM) clock) * 1000U / TIMER_CLOCK)
-
-/*
- *  設定できる最大のタイマ周期（単位は内部表現）
- */
-#define MAX_CLOCK        ((CLOCK) 0xffffffffU)
+#define TO_CLOCK(nume, deno) (timer_clock * (nume) / (deno))
+#define TO_USEC(clock)       (((SYSUTM) clock) * 1000U / timer_clock)
 
 /*
  *  タイマの現在値を割込み発生前の値とみなすかの判断
@@ -118,14 +145,14 @@ typedef uint32_t    CLOCK;
  *
  *  タイマを初期化し，周期的なタイマ割込み要求を発生させる．
  */
-extern void    target_timer_initialize(intptr_t exinf);
+extern void target_timer_initialize(intptr_t exinf);
 
 /*
  *  タイマの停止処理
  *
  *  タイマの動作を停止させる．
  */
-extern void    target_timer_terminate(intptr_t exinf);
+extern void target_timer_terminate(intptr_t exinf);
 
 /*
  *  タイマの現在値の読出し
@@ -133,7 +160,10 @@ extern void    target_timer_terminate(intptr_t exinf);
 Inline CLOCK
 target_timer_get_current(void)
 {
-	return(TO_CLOCK(TIC_NUME, TIC_DENO) - sil_rew_mem((void *)BCM283X_STIMER_CLO));
+	int32_t cnt;
+	CNTP_TVAL_READ(cnt);
+
+	return TO_CLOCK(TIC_NUME, TIC_DENO) - cnt;
 }
 
 /*
@@ -142,13 +172,30 @@ target_timer_get_current(void)
 Inline bool_t
 target_timer_probe_int(void)
 {
+#if 0
+	uint32_t ctl;
+
+#if defined(TOPPERS_SAFEG_SECURE)
+	CNTPS_CTL_READ(ctl);
+#else
+	CNTP_CTL_READ(ctl);
+#endif
+	return ((ctl & CNTP_CTL_ISTATUS_BIT) == CNTP_CTL_ISTATUS_BIT);
+#else
+	/*
+	 * Generic Timerはタイムアウト後はCNTP_CVALを更新するまで，CNTP_TVALの値は0のまま
+	 * であるため， target_timer_probe_int()がtrueを返すとget_utm()に不整合が発生するため，
+	 * 常にfalseを返すこととする． 
+	 */
 	return false;
+#endif /* 0 */
 }
 
 /*
  *  タイマ割込みハンドラ
  */
-extern void    target_timer_handler(void);
+extern void target_timer_handler(void);
 
 #endif /* TOPPERS_MACRO_ONLY */
-#endif /* TOPPERS_CHIP_TIMER_H */
+
+#endif /* TOPPERS_CORE_TIMER_H */

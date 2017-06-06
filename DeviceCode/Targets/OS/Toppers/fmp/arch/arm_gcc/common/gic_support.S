@@ -8,7 +8,7 @@
  *  Copyright (C) 2006-2016 by Embedded and Real-Time Systems Laboratory
  *              Graduate School of Information Science, Nagoya Univ., JAPAN
  *
- *  上記著作権者は，以下の(1)〜(4)の条件を満たす場合に限り，本ソフトウェ
+ *  上記著作権者は，以下の(1)～(4)の条件を満たす場合に限り，本ソフトウェ
  *  ア（本ソフトウェアを改変したものを含む．以下同じ）を使用・複製・改
  *  変・再配布（以下，利用と呼ぶ）することを無償で許諾する．
  *  (1) 本ソフトウェアをソースコードの形で利用する場合には，上記の著作
@@ -37,7 +37,7 @@
  *  アの利用により直接的または間接的に生じたいかなる損害に関しても，そ
  *  の責任を負わない．
  *
- *  @(#) $Id: chip_support.S 955 2016-10-19 00:00:00Z azo $
+ *  @(#) $Id: gic_support.S 1202 2016-07-18 06:36:33Z ertl-honda $
  */
 
 /*
@@ -47,27 +47,11 @@
 #define  TOPPERS_MACRO_ONLY
 #define UINT_C(val)		(val)		/* uint_t型の定数を作るマクロ */
 #define ULONG_C(val)	(val)		/* ulong_t型の定数を作るマクロ */
-#include "bcm283x.h"
+#define GIC_REG(base, offset)	((base) + (offset))
 #include "kernel_impl.h"
 #include "target_asm.inc"
 #include "target_ipi.h"
 #include "offset.h"
-
-/*
- *  低レベルのターゲットシステム依存の初期化
- *
- *  スタートアップモジュールの中で，メモリ初期化の前に呼び出される．
- */
-    ATEXT
-    AALIGN(2)
-    AGLOBAL(hardware_init_hook)
-ALABEL(hardware_init_hook)
-#ifdef TOPPERS_ENA_PERF
-    stmfd   sp!, {lr}
-    bl      perf_boot_init
-    ldmfd   sp!, {lr}
-#endif /* TOPPERS_ENA_PERF */
-    bx  lr
 
 /*
  * 割込みハンドラ
@@ -92,7 +76,7 @@ ALABEL(irq_handler)
      *  移行し，コンテキストを保存する
      */
     msr   cpsr_cxsf, #(CPSR_SVC AOR CPSR_CPULOCK AOR CPSR_ALWAYS_SET)
-    stmfd sp!, {r0-r5,ip,lr}
+    stmfd sp!, {r0-r3,ip,lr}
 #if defined(SUPPORT_VFPv3_NEON)
     fmrx    r0, fpscr
     push    {r0}
@@ -114,17 +98,17 @@ ALABEL(release_lock)
     cmp   r3, #0                      /* NULLなら終了       */
     beq   release_lock_end
     mov   r2, #0
-    mcr   p15, 0, r2, c7, c10, 5      /* data_memory_barrier */
+    dmb_inst
     str   r2, [r3]
-    mcr   p15, 0, r2, c7, c10, 4      /* data_sync_barrier */
+    dsb_inst
     sev
     str   r2, [r0, #PCB_p_firstlock]  /* p_firstlock を NULL へ */
     ldr   r3, [r0, #PCB_p_secondlock] /* p_secondlock を取得 */
     cmp   r3, #0                      /* NULLなら終了       */
     beq   release_lock_end
-    mcr   p15, 0, r2, c7, c10, 5      /* data_memory_barrier */
+    dmb_inst
     str   r2, [r3]
-    mcr   p15, 0, r2, c7, c10, 4      /* data_sync_barrier */
+    dsb_inst
     sev
     str   r2, [r0, #PCB_p_firstlock]  /* p_secondlock を NULL へ */
 ALABEL(release_lock_end)
@@ -132,75 +116,13 @@ ALABEL(release_lock_end)
 
     mov   lr, sp         /* この時点のスタックを復帰のため取得 */
 
-	/*
-	 *  割り込み要因の判定．
-	 */
-	/* MailBoxを優先でチェック */
-	my_core_index r2	/* コア番号の取得 0〜3 */
-	ldr   r1, =BCM283X_C0_IRQSOURCE
-	ldr   r1, [r1, r2, lsl #2]
-	tst   r1, #0xF0
-	bne   bsc283x_irc_begin_int_mb	/* MailBox割り込みならジャンプ */
-	cmp   r2, #0
-	bne   undef_handler	/* コア0以外がここに来たらエラー */
-	/* コア0の処理 */
-	ldr   r1, =AIC_BASIC
-	ldr   r5, [r1]
-	tst   r5, #0x200
-	movne r4, #64
-	ldrne r1, =AIC_PEND2
-	ldrne r5, [r1]
-	bne   bsc283x_irc_begin_int_1
-	tst   r5, #0x100
-	movne r4, #32
-	ldrne r1, =AIC_PEND1
-	ldrne r5, [r1]
-	bne   bsc283x_irc_begin_int_1
-	bic   r5, r5, #0x300
-	mov   r4, #0
-bsc283x_irc_begin_int_1:
-	mov   r3, #1
-bsc283x_irc_begin_int_2:
-	ands  r1, r5, r3
-	movne r3, #0xF			/* 要因番号が確定 */
-	bne   bsc283x_irc_begin_int_9
-	add   r4, r4, #1
-	lsls  r3, r3, #1
-	bne   bsc283x_irc_begin_int_2
-bsc283x_irc_begin_int_9:
-	cmp   r3, #0xF			/* 要因番号が未確定かチェック */
-	beq   bsc283x_irc_begin_int_8
-	mov   r4, #96
-	ldr   r1, =BCM283X_C0_IRQSOURCE
-	ldr   r5, [r1]
-	bic   r5, r5, #0xF0	/* MailBox以外 */
-	ldr   r1, =bcm283x_enable_intflag	/* 許可されている要因だけチェック */
-	ldr   r3, [r1]
-		orr   r3, r3, #0x800
-	and   r5, r5, r3
-	mov   r3, #1
-bsc283x_irc_begin_int_3:
-	ands  r1, r5, r3
-	movne r3, #0xF			/* 要因番号が確定 */
-	bne   bsc283x_irc_begin_int_8
-	add   r4, r4, #1
-	lsls  r3, r3, #1
-	bne   bsc283x_irc_begin_int_3
-bsc283x_irc_begin_int_8:
-	cmp   r3, #0xF			/* 要因番号が未確定かチェック */
-	bne   undef_handler
-	mov   r1, r4
-	b     bsc283x_irc_begin_int_6
-	/* MailBoxの処理 */
-bsc283x_irc_begin_int_mb:
-	mov   r3, #0x10
-	lsl   r3, r3, r2
-	ands  r1, r1, r3
-	beq   undef_handler
-	mov   r3, #0xE			/* MailBox割り込みが確定 */
-	add   r1, r2, #100
-bsc283x_irc_begin_int_6:
-	/* r1<-割り込み要因番号 */
+    /*
+     *  割り込み要因の判定．
+     */
+    ldr   r2, =(GICC_IAR)
+    ldr   r12, [r2]
+    mov   r1, r12, lsl #22  /* 下位10ビット以外をクリア */
+    mov   r1, r1,  lsr #22
 
    /*
     *  spurious割込み(INT_ID=1023(0x03ff))の場合，割込み処理を終了
@@ -209,28 +131,22 @@ bsc283x_irc_begin_int_6:
    cmp   r2, r1
    beq   ret_int_2
 
-	/* MailBox割り込みは、NMIなのでクリアする */
-	cmp   r3, #0xE
-	bne   bsc283x_int_mb_continue
-	ldr   r2, =0xFFFFFFFF
-	cmp   r1, #IRQ_MB0
-	ldreq r3, =BCM283X_C0MB_0RC
-	cmp   r1, #IRQ_MB1
-	ldreq r3, =BCM283X_C1MB_1RC
-	cmp   r1, #IRQ_MB2
-	ldreq r3, =BCM283X_C2MB_2RC
-	cmp   r1, #IRQ_MB3
-	ldreq r3, =BCM283X_C3MB_3RC
-	str   r2, [r3]			/* EOIレジスタへの書き込み */
-bsc283x_int_mb_continue:
+#ifdef TOPPERS_SAFEG_SECURE
+   /*
+    *  TrustZoneを用いるときは，INT_ID=1022(0x03fe)も
+    *  spurious割込みとなる．
+    */
+   ldr   r2, =(0x03fe)
+   cmp   r2, r1
+   beq   ret_int_2
+#endif /* TOPPERS_SAFEG_SECURE */
 
-	/* LTIMER割り込みは、NMIなのでクリアする */
-	cmp   r1, #IRQ_LTIMER
-	bne   bsc283x_int_ltimer_continue
-	mov   r2, #0x80000000
-	ldr   r4, =BCM283X_LTIMER_WRITE
-	str   r2, [r4]
-bsc283x_int_ltimer_continue:
+#ifdef USE_IPI_DIS_HANDER_BYPASS
+    cmp     r1, #IPINO_DIS
+    ldreq   r2,=GICC_EOIR
+    streq   r12,[r2]                /* EOIレジスタへの書き込み */
+    beq     ret_int_ipi_dispatch
+#endif /* USE_IPI_DIS_HANDER_BYPASS */
 
     /*
      *  多重割込みか判定
@@ -259,63 +175,26 @@ bsc283x_int_ltimer_continue:
     ldr   r3, [r0, #PCB_p_inh_tbl]   /* 割込みハンドラテーブルの読み込み */
     ldr   r0, [r3, r1, lsl #2]       /* r0<-割込みハンドラ */
 
-	my_core_index r2	/* コア番号の取得 0〜3 */
-	cmp   r2, #0
-	bne   bsc283x_ipi_1		/* コア0以外はAICを操作しない */
+    /*
+     *  割込み要因の割込み優先度を求め(モデル上の)割込み優先度マスクをセット
+     *  する．またその際，ハンドラ実行前の(モデル上の)割込み優先度マスクを
+     *  保存する．
+     */
+    ldr   lr, =(GICC_RPR)
+    ldr   r2, [lr]
+    ldr   r3, =(GICC_PMR) /* 割込み発生前の割込み優先度マスクを取得 */
+    ldr   lr, [r3]
+    str   r2, [r3]   /* 新しい割込み優先度マスクをセットする */
+    stmfd sp!, {lr}  /* 割込み発生前の割込み優先度マスクをスタックに保存 -8 */
 
-	/*
-	 *  割込み要因の割込み優先度を求め(モデル上の)割込み優先度マスクをセット
-	 *  する．またその際，ハンドラ実行前の(モデル上の)割込み優先度マスクを
-	 *  保存する．
-	 */
-	ldr   r2, =_kernel_inh_ipm_table	/* 割込み優先度を取得 */
-	ldr   r4, [r2, r1, lsl #2]		/* r4<-割込み優先度   */
-	ldr   r2, =ipm			/* 割込み発生前の割込み優先度マスクをスタックに保存 -8 */
-	ldr   r3, [r2]              
-	stmfd sp!,{r3}
-	str   r4, [r2]			/* (モデル上の)割込み優先度マスクをセット */
-
-	/*
-	 * (モデル上の)割込み優先度マスクの設定
-	 * 
-	 * 受け付けた割込みの割込み優先度に設定された割込み要求禁止フラグの
-	 * テーブルの値と(モデル上の)各割込みの割込み要求禁止フラグの状態を
-	 * 保持した変数の値とのORをIRCの割込み要求禁止フラグにセットする．
-	 */
-	mvn   r4, r4			/* 要素番号となるように反転+1 */
-	add   r4, r4, #1
-	lsl   r4, r4, #4		/* x16 */
-	ldr   r5, =_kernel_ipm_mask_table		/* (モデル上)の割込み優先度を実現するための */
-	add   r5, r5, r4
-	ldr   r2, =idf			/* 各割込みの割込み要求禁止フラグの状態を取得 */
-	ldr   r3, [r5]  		/* 割込み要求禁止フラグ(BASIC)を取得 */
-	ldr   r4, [r2]
-	orr   r3, r3, r4		/* マスク指定されていない割込みの許可(BASIC) */
-	ldr   r4, =AIC_DISABLE_BASIC
-	str   r3, [r4]
-	ldr   r3, [r5, #4]		/* 割込み要求禁止フラグ(IRQ1)を取得 */
-	ldr   r4, [r2, #4]
-	orr   r3, r3, r4		/* マスク指定されていない割込みの許可(IRQ1) */
-	ldr   r4, =AIC_DISABLE_IRQ1
-	str   r3, [r4]
-	ldr   r3, [r5, #8]		/* 割込み要求禁止フラグ(IRQ2)を取得 */
-	ldr   r4, [r2, #8]
-	orr   r3, r3, r4		/* マスク指定されていない割込みの許可(IRQ2) */
-	ldr   r4, =AIC_DISABLE_IRQ2
-	str   r3, [r4]
-#if defined(TOPPERS_USE_BCM2836) || defined(TOPPERS_USE_BCM2837)
-	ldr   r3, [r5, #12]		/* 割込み要求禁止フラグ(Core0)を取得 */
-	ldr   r4, [r2, #12]
-	orr   r3, r3, r4		/* マスク指定されていない割込みの許可(Core0) */
-	ldr   r4, =bcm283x_enable_intflag
-	ldr   r5, [r4]
-	bic   r3, r3, r5
-	str   r3, [r4]
-#endif
-
-bsc283x_ipi_1:		/* コア0以外はAICを操作しない */
-
+    stmfd sp!,{r12}      /* GICC_IAR から取得した内容を保存  -12 */
     stmfd sp!,{r1}       /* inhno を保存  -16 */
+
+#ifdef TOPPERS_SAFEG_LOAD
+    stmfd sp!,{r0,r1}  /* r1はスタック境界調整のためのダミー */
+    bl safeg_load_int
+    ldmfd sp!,{r0,r1}  /* r1はスタック境界調整のためのダミー */
+#endif /* TOPPERS_SAFEG_LOAD */
 
     /*
      * 割り込み許可
@@ -340,6 +219,10 @@ bsc283x_ipi_1:		/* コア0以外はAICを操作しない */
 ALABEL(target_ret_int)
 
     ldmfd sp!,{r0}       /* inhno を復帰  +4 */
+    ldmfd sp!,{r12}      /* GICC_IAR から取得した内容を取得  +8 */
+
+    ldr   r1,=GICC_EOIR
+    str   r12,[r1]               /* EOIレジスタへの書き込み */
 
 #ifdef LOG_INH_LEAVE
     bl    log_inh_leave  /* log_inh_leaveを呼び出す */
@@ -350,57 +233,12 @@ ALABEL(target_ret_int)
      */
     msr   cpsr_cxsf, #(CPSR_SVC AOR CPSR_CPULOCK AOR CPSR_ALWAYS_SET)
 
-	my_core_index r2	/* コア番号の取得 0〜3 */
-	cmp   r2, #0
-	bne   bsc283x_ipi_2		/* コア0以外はAICを操作しない */
-
-	/*
-	 * 割込み優先度マスクを元に戻す
-	 */
-	/*
-	 * 各割込みの割込み要求禁止フラグの状態と(モデル上)の割込み優先度のを実現する
-	 * ための割込み要求禁止フラグの状態のORをとり，それの否定を求めることにより，
-	 * IRCの割込み許可レジスタへの設定値を生成し設定する．
-	 */
-	ldmfd sp!, {r1}             /* 元の割込み優先度マスクを取得 +12 */
-	ldr   r0, =ipm              /* 割込み優先度マスクを復帰     */
-	str   r1, [r0]
-	mvn   r1, r1
-	add   r1, r1, #1
-	mov   r0, #0x10
-	mul   r1, r1, r0
-	ldr   r0, =_kernel_ipm_mask_table     /* (モデル上)の割込み優先度のを実現するための */
-	add   r0, r0, r1
-	ldr   r1, =idf              /* 各割込みの割込み要求禁止フラグの状態を取得 */
-	ldr   r2, [r0]          /* 割込み要求禁止フラグ(BASIC)を取得 */
-	ldr   r3, [r1]
-	orr   r2, r2, r3            /* マスク指定されていない割込みの許可 */
-	mvn   r2, r2
-	ldr   r3, =AIC_ENABLE_BASIC
-	str   r2, [r3]
-	ldr   r2, [r0, #4]          /* 割込み要求禁止フラグ(IRQ1)を取得 */
-	ldr   r3, [r1, #4]
-	orr   r2, r2, r3            /* マスク指定されていない割込みの許可 */
-	mvn   r2, r2
-	ldr   r3, =AIC_ENABLE_IRQ1
-	str   r2, [r3]
-	ldr   r2, [r0, #8]          /* 割込み要求禁止フラグ(IRQ2)を取得 */
-	ldr   r3, [r1, #8]
-	orr   r2, r2, r3            /* マスク指定されていない割込みの許可 */
-	mvn   r2, r2
-	ldr   r3, =AIC_ENABLE_IRQ2
-	str   r2, [r3]
-#if defined(TOPPERS_USE_BCM2836) || defined(TOPPERS_USE_BCM2837)
-	ldr   r2, [r0, #12]         /* 割込み要求禁止フラグ(Core0)を取得 */
-	ldr   r3, [r1, #12]
-	orr   r2, r2, r3            /* マスク指定されていない割込みの許可 */
-	ldr   r3, =bcm283x_enable_intflag
-	ldr   r4, [r3]
-	orr   r2, r2, r4
-	str   r2, [r3]
-#endif
-
-bsc283x_ipi_2:		/* コア0以外はAICを操作しない */
+    /*
+     * 割込み優先度マスクを元に戻す
+     */
+    ldmfd sp!,{r1}                       /* 元の割込み優先度マスクを取得 +12 */
+    ldr   r0, =(GICC_PMR)           /* DICにセット */
+    str   r1, [r0]
 
     /*
      * スタックポインタの復帰
@@ -422,14 +260,18 @@ bsc283x_ipi_2:		/* コア0以外はAICを操作しない */
     ATEXT
     AGLOBAL(target_exc_handler)
 ALABEL(target_exc_handler)
+#if defined(SUPPORT_VFPv3_NEON)
+    fmrx    r0, fpscr
+    push    {r0}
+    vpush   {d0-d7} /* スクラッチレジスタの保存 */
+#endif /* SUPPORT_VFPv3_NEON */
+
     mov   lr, sp         /* この時点のスタックを復帰のため取得 */
 
-//    ldr   r0, =(DIC_CPUIF_PMR) /* 例外発生前の割込み優先度マスクを取得 */
-    mov   r0, #0
-//    ldr   r3, [r0]
-//    asr   r3, r3, #DIC_CPUIF_PMR_OFFSET /* 外部表現に変更 */
-//    sub   r3, r3, #(IPM_BIT_MASK)
-    mov   r3, #0
+    ldr   r0, =(GICC_PMR) /* 例外発生前の割込み優先度マスクを取得 */
+    ldr   r3, [r0]
+    asr   r3, r3, #GIC_PRI_SHIFT /* 外部表現に変更 */
+    sub   r3, r3, #(GIC_PRI_LEVEL - 1)
     stmfd sp!, {r3}  /* 例外発生前の割込み優先度マスクをスタックに保存 */
 
     /*
@@ -441,6 +283,13 @@ ALABEL(target_exc_handler)
     my_pcb r0, r3
     ldr   r3, [r0, #PCB_excpt_nest_count]
     stmfd sp!, {r3}
+
+#ifdef USE_GIC_CPULOCK
+    ldrb   r3, [r0, #PCB_lock_flag]
+    stmfd sp!, {r3}
+    ldrb   r3, [r0, #PCB_saved_iipm]
+    stmfd sp!, {r3}
+#endif /* USE_GIC_CPULOCK */
 
     mov   r3,  sp         /* 例外フレーム番地を保存 */
 
@@ -490,8 +339,8 @@ ALABEL(target_exc_handler_1)
      * 割込み発生前の割込み優先度マスクをスタックに保存
      * 割込みハンドラと出口ルーチンを共有するために保存
      */
-//    ldr   r12, =(DIC_CPUIF_PMR) /* 例外発生前の割込み優先度マスクを取得 */
-//    ldr   r1, [r12]
+    ldr   r12, =(GICC_PMR) /* 例外発生前の割込み優先度マスクを取得 */
+    ldr   r1, [r12]
     stmfd sp!, {r1}  /* 例外発生前の割込み優先度マスクをスタックに保存 +12 */
 
     /*
@@ -544,8 +393,8 @@ ALABEL(target_ret_exc)
      * 割込み優先度マスクを元に戻す
      */
     ldmfd sp!,{r1}                       /* 元の割込み優先度マスクを取得 */
-//    ldr   r0, =(DIC_CPUIF_PMR)           /* DICにセット */
-//    str   r1, [r0]
+    ldr   r0, =(GICC_PMR)           /* DICにセット */
+    str   r1, [r0]
 
     /*
      * CPU例外発生時のlocspnidをr0へ
@@ -636,10 +485,3 @@ ALABEL(target_kernel_unc_exc_handler)
 #endif /* SUPPORT_VFPv3_NEON */
     ldmfd sp!,{r0-r3,ip,lr}
     rfeia sp!
-
-    ATEXT
-    AGLOBAL(bcm283x_getmycoreindex)
-ALABEL(bcm283x_getmycoreindex)
-    my_core_index r0
-    bx    lr
-

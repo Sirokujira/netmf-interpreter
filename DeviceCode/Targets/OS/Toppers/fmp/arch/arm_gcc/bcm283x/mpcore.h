@@ -6,7 +6,7 @@
  *  Copyright (C) 2006-2016 by Embedded and Real-Time Systems Laboratory
  *              Graduate School of Information Science, Nagoya Univ., JAPAN
  *
- *  上記著作権者は，以下の(1)〜(4)の条件を満たす場合に限り，本ソフトウェ
+ *  上記著作権者は，以下の(1)～(4)の条件を満たす場合に限り，本ソフトウェ
  *  ア（本ソフトウェアを改変したものを含む．以下同じ）を使用・複製・改
  *  変・再配布（以下，利用と呼ぶ）することを無償で許諾する．
  *  (1) 本ソフトウェアをソースコードの形で利用する場合には，上記の著作
@@ -35,7 +35,7 @@
  *  アの利用により直接的または間接的に生じたいかなる損害に関しても，そ
  *  の責任を負わない．
  *
- *  @(#) $Id: mpcore.h 1180 2016-07-08 05:57:35Z ertl-honda $
+ *  @(#) $Id: mpcore.h 1218 2017-04-25 07:05:23Z ertl-honda $
  */
 
 /*
@@ -87,19 +87,6 @@
 #define CCSIDR_NUM_SETS_MASK         0x0FFFE000
 #define CCSIDR_NUM_SETS_OFFSET      13
 
-#define CLIDR_CTYPE_NO_CACHE          0
-#define CLIDR_CTYPE_INSTRUCTION_ONLY  1
-#define CLIDR_CTYPE_DATA_ONLY         2
-#define CLIDR_CTYPE_INSTRUCTION_DATA  3
-#define CLIDR_CTYPE_UNIFIED           4
-
-#define CLIDR_MAX_CTYPE         7
-#define CLIDR_CTYPE_MASK      0x7
-#define CLIDR_CTYPE_BITWIDTH    3
-
-#define CSSELR_IND_DATA_UNIFIED       0
-#define CSSELR_IND_INSTRUCTION        1
-
 #endif /* __TARGET_ARCH_ARM == 7 */
 
 /*
@@ -123,38 +110,6 @@
 /*
  *  コプロを用いたルーチン
  */
-
-/*
- *  High exception vector を使うかの設定
- */
-Inline void
-set_high_vector(bool_t enable)
-{
-	uint32_t control;
-
-	CP15_CONTROL_READ(control);
-
-	if (enable) {
-		control |= CP15_CONTROL_V_BIT;
-	}
-	else {
-		control &= ~CP15_CONTROL_V_BIT;
-	}
-
-	CP15_CONTROL_WRITE(control);
-}
-
-/*
- *  プロセッサINDEX（0オリジン）の取得
- */
-Inline uint32_t
-x_prc_index(void)
-{
-	uint32_t index;
-
-	CP15_CPUID_READ(index);
-	return((index & 0x0fU));
-}
 
 /*
  *  Data Synchronization Barrier

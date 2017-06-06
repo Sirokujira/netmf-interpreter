@@ -35,67 +35,19 @@
  *  アの利用により直接的または間接的に生じたいかなる損害に関しても，そ
  *  の責任を負わない．
  *
- *  @(#) $Id: mpcore.c 1218 2017-04-25 07:05:23Z ertl-honda $
+ *  @(#) $Id: arm.c 1203 2016-07-18 07:05:08Z ertl-honda $
  */
 
 #include "kernel_impl.h"
 
-/*
- *
- * SCU関連の関数
- *
- */
-
-/*
- *  CP15のAUXILIARYレジスタのSAビットとFWビットをセットしてSMPモードにする
- */
-Inline void
-enable_sa(void){
-	uint32_t bits;
-
-	CP15_AUXILIARY_READ(bits);
-	bits |= CP15_AUXILIARY_SA_BIT;
-#if __TARGET_ARCH_ARM == 7
-	bits |= CP15_AUXILIARY_FW_BIT;
-#endif /* __TARGET_ARCH_ARM == 7 */
-	CP15_AUXILIARY_WRITE(bits);
-}
-
-/*
- *  SMPモードに設定する
- */
-void
-mpcore_smp_mode_enable(void){
-	uint32_t sr;
-
-	/* 全割込み禁止 */
-	sr = current_sr();
-	set_sr(sr|CPSR_IRQ_BIT|CPSR_FIQ_BIT);
-
-	/* キャシュを無効 */
-	mpcore_dcache_clean_and_invalidate();
-	mpcore_icache_invalidate();
-
-	/* Data Synchronization Barrier */
-	mpcore_data_sync_barrier();
-
-	/* TLBの初期化 */
-	mpcore_invalidate_unfied_tlb();
-
-#ifndef TOPPERS_SAFEG_NONSECURE
-	/* CP15のSMP/nAMP bit をセットする */
-	enable_sa();
-#endif /* TOPPERS_SAFEG_NONSECURE */
-
-	/* 割込み禁止状態を元に戻す */
-	set_sr(sr);
-}
+#ifdef __TARGET_PROFILE_A
+#if __TARGET_ARCH_ARM >= 6
 
 /*
  *  Dキャッシュを開始
  */
 void
-mpcore_dcache_enable(void)
+dcache_enable(void)
 {
 	uint32_t bits;
 
@@ -106,9 +58,10 @@ mpcore_dcache_enable(void)
 		return;
 	}
 
-	mpcore_dcache_invalidate();
+	dcache_invalidate();
 
 	CP15_DATA_SYNC_BARRIER();
+	CP15_PBUFFER_FLUSH();
 
 	bits |= CP15_CONTROL_C_BIT;
 	CP15_CONTROL_WRITE(bits);
@@ -121,26 +74,29 @@ mpcore_dcache_enable(void)
  *  のみを行う．
  */
 void
-mpcore_dcache_disable(void)
+dcache_disable(void)
 {
 	uint32_t bits;
 
 	CP15_CONTROL_READ(bits);
 	if( bits & CP15_CONTROL_C_BIT ){
-		CP15_DATA_SYNC_BARRIER();
-		mpcore_dcache_clean_and_invalidate();
+		dcache_clean_and_invalidate();
+		outer_cache_flush();
 		bits &= ~(CP15_CONTROL_C_BIT|CP15_CONTROL_M_BIT);
 		CP15_CONTROL_WRITE(bits);
 	}
 	else{
-		mpcore_dcache_invalidate();
+		dcache_invalidate();
 	}
+
+	CP15_DATA_SYNC_BARRIER();
+	CP15_PBUFFER_FLUSH();
 }
 
 /*
  * Iキャッシュの開始
  */
-void mpcore_icache_enable(void)
+void icache_enable(void)
 {
 	uint32_t bits;
 
@@ -154,9 +110,10 @@ void mpcore_icache_enable(void)
 		return;
 	}
 
-	mpcore_icache_invalidate();
+	icache_invalidate();
 	CP15_BRANCHP_INVALIDATE();
 
+	CP15_DATA_SYNC_BARRIER();
 	CP15_PBUFFER_FLUSH();
 
 	bits |= CP15_CONTROL_I_BIT|CP15_CONTROL_Z_BIT;
@@ -167,7 +124,7 @@ void mpcore_icache_enable(void)
  *  Iキャッシュを停止
  */
 void
-mpcore_icache_disable(void)
+icache_disable(void)
 {
 	uint32_t bits;
 
@@ -175,8 +132,9 @@ mpcore_icache_disable(void)
 	bits &= ~CP15_CONTROL_I_BIT;
 	CP15_CONTROL_WRITE(bits);
 
-	mpcore_icache_invalidate();
+	icache_invalidate();
 
+	CP15_DATA_SYNC_BARRIER();
 	CP15_PBUFFER_FLUSH();
 }
 
@@ -184,21 +142,135 @@ mpcore_icache_disable(void)
  *  I/Dキャッシュを両方を有効に
  */
 void
-mpcore_cache_enable(void)
+cache_enable(void)
 {
-	mpcore_dcache_enable();
-	mpcore_icache_enable();
+	dcache_enable();
+	icache_enable();
 }
 
 /*
  *  I/Dキャッシュを両方を無効に
  */
 void
-mpcore_cache_disable(void)
+cache_disable(void)
 {
-	mpcore_icache_disable();
-	mpcore_dcache_disable();
+	icache_disable();
+	dcache_disable();
 }
+#endif /* __TARGET_ARCH_ARM >= 6 */
+
+#if __TARGET_ARCH_ARM >= 7
+
+#define DCACHE_INVAL_ALL        1
+#define DCACHE_CLEAN_ALL        2
+#define DCACHE_CLEAN_INVAL_ALL  3
+
+Inline void
+dcache_setway(uint32_t level, uint32_t num_sets,
+				 uint32_t num_ways, uint32_t log2_line_len,
+				 uint32_t op)
+{
+	uint32_t way_shift;
+	int way, set;
+	uint32_t setway;
+	uint32_t log2_num_ways;
+	uint32_t tmp;
+
+	/* word から byte 単位に変換 */
+	log2_line_len += 2;
+
+	log2_num_ways = -1;
+	for(tmp = num_ways; tmp; tmp = tmp >> 1){
+		log2_num_ways++;
+	}
+	way_shift = (32 - log2_num_ways);
+
+	for (way = 0; way < num_ways; way++) {
+		for (set = 0; set < num_sets; set++) {
+			setway = (level << 1) | (set << log2_line_len) | (way << way_shift);
+			if (op == DCACHE_INVAL_ALL) {
+				CP15_DCACHE_INVALIDATE(setway);
+			} else if (op == DCACHE_CLEAN_ALL) {
+				CP15_DCACHE_CLEAN(setway);
+			} else if (op == DCACHE_CLEAN_INVAL_ALL) {
+				CP15_DCACHE_CLEAN_AND_INVALIDATE(setway);
+			}
+		}
+	}
+	CP15_DATA_SYNC_BARRIER();
+}
+
+static bool_t
+is_dcache(uint32_t level)
+{
+	uint32_t clidr;
+	uint32_t type;
+
+	CP15_CLIDR_READ(clidr);
+
+	type = (clidr >> (CLIDR_CTYPE_BITWIDTH*level)) & CLIDR_CTYPE_MASK;
+	if ((type == CLIDR_CTYPE_DATA_ONLY) ||
+		(type == CLIDR_CTYPE_INSTRUCTION_DATA) ||
+		(type == CLIDR_CTYPE_UNIFIED)) {
+		return true;
+	}
+	return false;
+}
+
+
+static void
+dcache_getinfo(uint32_t level, uint32_t *p_num_sets, uint32_t *p_num_ways,
+					 uint32_t *p_log2_line_len)
+{
+	uint32_t ccsidr;
+
+	CP15_CSSELR_WRITE((level << 1)| CSSELR_IND_DATA_UNIFIED);
+	CP15_CCSIDR_READ(ccsidr);
+
+	*p_log2_line_len = ((ccsidr & CCSIDR_LINE_SIZE_MASK) >> CCSIDR_LINE_SIZE_OFFSET) + 2;
+	*p_num_ways  = ((ccsidr & CCSIDR_ASSOCIATIVITY_MASK) >> CCSIDR_ASSOCIATIVITY_OFFSET) + 1;
+	*p_num_sets  = ((ccsidr & CCSIDR_NUM_SETS_MASK) >> CCSIDR_NUM_SETS_OFFSET) + 1;
+}
+
+void
+invalidate_dcache_all(void)
+{
+	uint32_t level, num_sets, num_ways, log2_line_len;
+
+	for (level = 0; level < CLIDR_MAX_CTYPE; level++) {
+		if(is_dcache(level)) {
+			dcache_getinfo(level, &num_sets, &num_ways, &log2_line_len);
+			dcache_setway(level, num_sets, num_ways, log2_line_len, DCACHE_INVAL_ALL);
+		}
+	}
+}
+
+void
+clean_invalidate_dcache_all(void)
+{
+	uint32_t level, num_sets, num_ways, log2_line_len;
+
+	for (level = 0; level < CLIDR_MAX_CTYPE; level++) {
+		if(is_dcache(level)) {
+			dcache_getinfo(level, &num_sets, &num_ways, &log2_line_len);
+			dcache_setway(level, num_sets, num_ways, log2_line_len, DCACHE_CLEAN_INVAL_ALL);
+		}
+	}
+}
+
+void
+clean_dcache_all(void)
+{
+	uint32_t level, num_sets, num_ways, log2_line_len;
+
+	for (level = 0; level < CLIDR_MAX_CTYPE; level++) {
+		if(is_dcache(level)) {
+			dcache_getinfo(level, &num_sets, &num_ways, &log2_line_len);
+			dcache_setway(level, num_sets, num_ways, log2_line_len, DCACHE_CLEAN_ALL);
+		}
+	}
+}
+#endif /* __TARGET_ARCH_ARM >= 7 */
 
 /*
  *  MMU関連のドライバ
@@ -261,9 +333,9 @@ mmu_map_memory(MEMORY_ATTRIBUTE *m_attribute)
 
 	fix_val =  (m_attribute->s << 16) | (m_attribute->tex << 12) | (m_attribute->ap << 10)
 		        | (m_attribute->c << 3) | (m_attribute->b << 2) | (1 << 1);
-#if __TARGET_ARCH_ARM == 7
+#if __TARGET_ARCH_ARM >= 7
 	fix_val |= (m_attribute->ns << 19);
-#endif /* __TARGET_ARCH_ARM == 7 */
+#endif /* __TARGET_ARCH_ARM >= 7 */
 	sptr  = (uint32_t *)((ttb & 0xFFFFC000) | (((va & 0xFFF00000) >> 20) << 2));
 
 	while(size > 0) {
@@ -278,7 +350,7 @@ mmu_map_memory(MEMORY_ATTRIBUTE *m_attribute)
  *  MMUの初期化
  */
 void
-mpcore_mmu_init(void)
+mmu_init(void)
 {
 	uint32_t bits = 0;
 
@@ -295,7 +367,7 @@ mpcore_mmu_init(void)
 	CP15_DATA_SYNC_BARRIER();
 	CP15_TLB_INVALIDATE_ALL();
 	CP15_DATA_SYNC_BARRIER();
-	mpcore_pbuffer_flash();
+	pbuffer_flash();
 
 	/*
 	 * TTBR0を用いる様に指定
@@ -313,7 +385,7 @@ mpcore_mmu_init(void)
 #endif /* __TARGET_ARCH_ARM == 7 */
 
 	/* プリフェッチバッファをクリア */
-	mpcore_pbuffer_flash();
+	pbuffer_flash();
 
 	/*
 	 *  ターゲット依存部でのMMUの初期化
@@ -321,7 +393,7 @@ mpcore_mmu_init(void)
 	target_mmu_init();
 
 	/* プリフェッチバッファをクリア */
-	mpcore_pbuffer_flash();
+	pbuffer_flash();
 
 	/*
 	 * ドメイン番号をセット
@@ -336,116 +408,44 @@ mpcore_mmu_init(void)
 	bits |= CP15_CONTROL_M_BIT | CP15_CONTROL_XP_BIT;
 	CP15_CONTROL_WRITE(bits);
 }
+#endif /* __TARGET_PROFILE_A */
 
-#if __TARGET_ARCH_ARM == 7
+#ifdef __TARGET_PROFILE_R
 
-#define DCACHE_INVAL_ALL        1
-#define DCACHE_CLEAN_ALL        2
-#define DCACHE_CLEAN_INVAL_ALL  3
-
-Inline void
-armv7_dcache_setway(uint32_t level, uint32_t num_sets,
-				 uint32_t num_ways, uint32_t log2_line_len,
-				 uint32_t op)
+/*
+ *  全MPUを無効とする
+ */
+void
+mpu_disable_allregion(void)
 {
-	uint32_t way_shift;
-	int way, set;
-	uint32_t setway;
-	uint32_t log2_num_ways;
-	uint32_t tmp;
+	uint32_t index, num, tmp;
 
-	/* word から byte 単位に変換 */
-	log2_line_len += 2;
-
-	log2_num_ways = -1;
-	for(tmp = num_ways; tmp; tmp = tmp >> 1){
-		log2_num_ways++;
+	CP15_MPUIR_READ(num);
+	for(index = 0; index < num; index++) {
+		CP15_RGNR_WRITE(index);
+		CP15_RSAE_READ(tmp);
+		tmp &= (~RSAE_EN);
+		CP15_DATA_SYNC_BARRIER();
+		CP15_RSAE_WRITE(tmp);
+		CP15_DATA_SYNC_BARRIER();
+		CP15_PBUFFER_FLUSH();
 	}
-	way_shift = (32 - log2_num_ways);
+}
 
-	for (way = 0; way < num_ways; way++) {
-		for (set = 0; set < num_sets; set++) {
-			setway = (level << 1) | (set << log2_line_len) | (way << way_shift);
-			if (op == DCACHE_INVAL_ALL) {
-				CP15_DCACHE_INVALIDATE(setway);
-			} else if (op == DCACHE_CLEAN_ALL) {
-				CP15_DCACHE_CLEAN(setway);
-			} else if (op == DCACHE_CLEAN_INVAL_ALL) {
-				CP15_DCACHE_CLEAN_AND_INVALIDATE(setway);
-			}
-		}
-	}
+/*
+ *  MPUのリージョンの属性を設定
+ */
+void
+mpu_set_region(uint32_t base, uint32_t size, uint32_t number, uint32_t attr)
+{
+	uint32_t tmp = (size << RSAE_RS_OFFSET) | RSAE_EN;
+
+	CP15_DATA_SYNC_BARRIER();
+	CP15_RGNR_WRITE(number);
+	CP15_PBUFFER_FLUSH();
+	CP15_RBA_WRITE(base);
+	CP15_RAC_WRITE(attr);
+	CP15_RSAE_WRITE(tmp);
 	CP15_DATA_SYNC_BARRIER();
 }
-
-static bool_t
-armv7_is_dcache(uint32_t level)
-{
-	uint32_t clidr;
-	uint32_t type;
-
-	CP15_CLIDR_READ(clidr);
-
-	type = (clidr >> (CLIDR_CTYPE_BITWIDTH*level)) & CLIDR_CTYPE_MASK;
-	if ((type == CLIDR_CTYPE_DATA_ONLY) ||
-		(type == CLIDR_CTYPE_INSTRUCTION_DATA) ||
-		(type == CLIDR_CTYPE_UNIFIED)) {
-		return true;
-	}
-	return false;
-}
-
-
-static void
-armv7_dcache_getinfo(uint32_t level, uint32_t *p_num_sets, uint32_t *p_num_ways,
-					 uint32_t *p_log2_line_len)
-{
-	uint32_t ccsidr;
-
-	CP15_CSSELR_WRITE((level << 1)| CSSELR_IND_DATA_UNIFIED);
-	CP15_CCSIDR_READ(ccsidr);
-
-	*p_log2_line_len = ((ccsidr & CCSIDR_LINE_SIZE_MASK) >> CCSIDR_LINE_SIZE_OFFSET) + 2;
-	*p_num_ways  = ((ccsidr & CCSIDR_ASSOCIATIVITY_MASK) >> CCSIDR_ASSOCIATIVITY_OFFSET) + 1;
-	*p_num_sets  = ((ccsidr & CCSIDR_NUM_SETS_MASK) >> CCSIDR_NUM_SETS_OFFSET) + 1;
-}
-
-void
-armv7_invalidate_dcache_all(void)
-{
-	uint32_t level, num_sets, num_ways, log2_line_len;
-
-	for (level = 0; level < CLIDR_MAX_CTYPE; level++) {
-		if(armv7_is_dcache(level)) {
-			armv7_dcache_getinfo(level, &num_sets, &num_ways, &log2_line_len);
-			armv7_dcache_setway(level, num_sets, num_ways, log2_line_len, DCACHE_INVAL_ALL);
-		}
-	}
-}
-
-void
-armv7_clean_invalidate_dcache_all(void)
-{
-	uint32_t level, num_sets, num_ways, log2_line_len;
-
-	for (level = 0; level < CLIDR_MAX_CTYPE; level++) {
-		if(armv7_is_dcache(level)) {
-			armv7_dcache_getinfo(level, &num_sets, &num_ways, &log2_line_len);
-			armv7_dcache_setway(level, num_sets, num_ways, log2_line_len, DCACHE_CLEAN_INVAL_ALL);
-		}
-	}
-}
-
-void
-armv7_clean_dcache_all(void)
-{
-	uint32_t level, num_sets, num_ways, log2_line_len;
-
-	for (level = 0; level < CLIDR_MAX_CTYPE; level++) {
-		if(armv7_is_dcache(level)) {
-			armv7_dcache_getinfo(level, &num_sets, &num_ways, &log2_line_len);
-			armv7_dcache_setway(level, num_sets, num_ways, log2_line_len, DCACHE_CLEAN_ALL);
-		}
-	}
-}
-#endif /* __TARGET_ARCH_ARM == 7 */
+#endif /* __TARGET_PROFILE_R */

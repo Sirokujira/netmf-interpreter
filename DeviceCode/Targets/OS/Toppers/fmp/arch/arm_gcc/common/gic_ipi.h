@@ -1,11 +1,12 @@
 /*
- *  TOPPERS Software
- *      Toyohashi Open Platform for Embedded Real-Time Systems
+ *  TOPPERS/FMP Kernel
+ *      Toyohashi Open Platform for Embedded Real-Time Systems/
+ *      Flexible MultiProcessor Kernel
  *
- *  Copyright (C) 2007-2013 by Embedded and Real-Time Systems Laboratory
+ *  Copyright (C) 2009 by Embedded and Real-Time Systems Laboratory
  *              Graduate School of Information Science, Nagoya Univ., JAPAN
  *
- *  上記著作権者は，以下の(1)〜(4)の条件を満たす場合に限り，本ソフトウェ
+ *  上記著作権者は，以下の(1)～(4)の条件を満たす場合に限り，本ソフトウェ
  *  ア（本ソフトウェアを改変したものを含む．以下同じ）を使用・複製・改
  *  変・再配布（以下，利用と呼ぶ）することを無償で許諾する．
  *  (1) 本ソフトウェアをソースコードの形で利用する場合には，上記の著作
@@ -33,42 +34,76 @@
  *  に対する適合性も含めて，いかなる保証も行わない．また，本ソフトウェ
  *  アの利用により直接的または間接的に生じたいかなる損害に関しても，そ
  *  の責任を負わない．
- * 
- *  @(#) $Id: target_sil.h 1067 2017-05-28 00:00:00Z azo $
+ *
+ *  @(#) $Id: gic_ipi.h 1202 2016-07-18 06:36:33Z ertl-honda $
  */
 
 /*
- *  This file is only included by sil.h just after including
- *  the header file t_stddef.h. It provides constants for the
- *  system interface layer (SIL)
+ *  プロセッサ間割込みドライバ（GIC用）
  */
-#ifndef TOPPERS_TARGET_SIL_H
-#define TOPPERS_TARGET_SIL_H
+
+#ifndef TOPPERS_CHIP_IPI_H
+#define TOPPERS_CHIP_IPI_H
 
 /*
- *  Endianess of the processor
+ *  ディスパッチ要求用プロセッサ間割込みの割込み番号
  */
-#define SIL_ENDIAN_LITTLE
+#define INTNO_IPI_DIS_PRC1   (0x00010000 | IPINO_DIS)
+#define INTNO_IPI_DIS_PRC2   (0x00020000 | IPINO_DIS)
+#define INTNO_IPI_DIS_PRC3   (0x00030000 | IPINO_DIS)
+#define INTNO_IPI_DIS_PRC4   (0x00040000 | IPINO_DIS)
 
 /*
- *  UARTの選択．RP3ではUART0は不可．
+ *  カーネル終了用のプロセッサ間割込みの割込み番号
  */
-/* arch/arm_gcc/bcm283x/bcm283x.h の切り替えも必要 */
-#define BCM283X_USE_UART 1
-/*
- *  UARTのFIFOを有効にする．（UART0では有効にすると1Byte割り込みが出来なくなる）
- */
-#define BCM283X_UART_ENABLE_FIFO
+#define INTNO_IPI_EXT_PRC1   (0x00010000 | IPINO_EXT)
+#define INTNO_IPI_EXT_PRC2   (0x00020000 | IPINO_EXT)
+#define INTNO_IPI_EXT_PRC3   (0x00030000 | IPINO_EXT)
+#define INTNO_IPI_EXT_PRC4   (0x00040000 | IPINO_EXT)
 
 /*
- *  Definitions for very small waiting times
+ *  ディスパッチ要求用のプロセッサ間割込みの割込みハンドラ番号
  */
-#define SIL_DLY_TIM1    2
-#define SIL_DLY_TIM2    1
+#define INHNO_IPI_DIS_PRC1   (0x00010000 | IPINO_DIS)
+#define INHNO_IPI_DIS_PRC2   (0x00020000 | IPINO_DIS)
+#define INHNO_IPI_DIS_PRC3   (0x00030000 | IPINO_DIS)
+#define INHNO_IPI_DIS_PRC4   (0x00040000 | IPINO_DIS)
 
 /*
- *  Include chip definitions
+ *  カーネル終了用のプロセッサ間割込みの割込みハンドラ番号
  */
-#include "chip_sil.h"
+#define INHNO_IPI_EXT_PRC1   (0x00010000 | IPINO_EXT)
+#define INHNO_IPI_EXT_PRC2   (0x00020000 | IPINO_EXT)
+#define INHNO_IPI_EXT_PRC3   (0x00030000 | IPINO_EXT)
+#define INHNO_IPI_EXT_PRC4   (0x00040000 | IPINO_EXT)
 
-#endif /* TOPPERS_TARGET_SIL_H */
+#ifndef TOPPERS_MACRO_ONLY
+
+/*
+ *  ディスパッチ用プロセッサ間割込みの発行
+ */
+Inline void
+target_ipi_raise(uint_t prcid)
+{
+	gicd_set_sgi((1<<(prcid-1)), IPINO_DIS);
+}
+
+/*
+ *  ディスパッチ用プロセッサ間割込みのクリア
+ */
+Inline void
+target_ipi_clear(void)
+{
+
+}
+
+#ifdef USE_IPI_DIS_HANDER_BYPASS
+/*
+ *  カーネル終了処理用のプロセッサ間割込みハンドラ
+ */
+extern void _kernel_ipi_ext_handler(void);
+#endif /* USE_IPI_DIS_HANDER_BYPASS */
+
+#endif /* TOPPERS_MACRO_ONLY */
+
+#endif /* TOPPERS_CHIP_IPI_H */

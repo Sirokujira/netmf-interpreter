@@ -180,15 +180,15 @@
     <DriverLibs Include="x509v3_openssl.$(LIB_EXT)" />
   </ItemGroup>
   <!-- OS add? -->
-  <!-- Toppers asp(NG) -->
+  <!-- Toppers fmp -->
   <ItemGroup>
-    <DriverLibs Include="ToppersASP_RTX.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)/DeviceCode/Targets/OS/Toppers/asp/sample/dotnetmf.proj" />
+    <DriverLibs Include="ToppersFMP_RTX.$(LIB_EXT)" />
+    <RequiredProjects Include="$(SPOCLIENT)/DeviceCode/Targets/OS/Toppers/fmp/sample/dotnetmf.proj" />
   </ItemGroup>
   <!-- CMSIS(over Version 5.0.0?) -->
   <!--
   <ItemGroup>
-    <RequiredProjects Include="$(SPOCLIENT)/DeviceCode/Targets/OS/Toppers/asp\RTOS\RTX\dotNetMF.proj" />
+    <RequiredProjects Include="$(SPOCLIENT)/DeviceCode/Targets/OS/Toppers/fmp/RTOS/RTX/dotNetMF.proj" />
     <DriverLibs Include="CMSIS_RTX.$(LIB_EXT)" />
   </ItemGroup>
   <ItemGroup>
@@ -200,24 +200,6 @@
     <DriverLibs Include="mbed_common.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\OS\mbed\libraries\mbed\common\dotNetMF.proj" />
   </ItemGroup>
-  <ItemGroup>
-    <DriverLibs Include="mbed_cmsis_TARGET_RZA1H.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\OS\mbed\libraries\mbed\targets\cmsis\TARGET_RENESAS\TARGET_RZ_A1H\dotNetMF.proj" />
-  </ItemGroup>
-  <ItemGroup>
-    <DriverLibs Include="mbed_startup_RZA1H.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\OS\mbed\libraries\mbed\targets\cmsis\TARGET_RENESAS\TARGET_RZ_A1H\TOOLCHAIN_GCC_ARM\dotNetMF.proj" />
-  </ItemGroup>
-  <ItemGroup>
-    <DriverLibs Include="mbed_hal_TARGET_RZA1H.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\OS\mbed\libraries\mbed\targets\hal\TARGET_RENESAS\TARGET_RZ_A1H\dotNetMF.proj" />
-  </ItemGroup>
-<!--
-  <ItemGroup Condition="'$(EnableUSB)'=='true'">
-    <DriverLibs Include="mbed_usb_device.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\OS\mbed\libraries\USBDevice\USBDevice\dotNetMF.proj" />
-  </ItemGroup>
--->
   <ItemGroup>
     <PlatformIndependentLibs Include="Core.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\CLR\Core\dotNetMF.proj" />
@@ -787,10 +769,6 @@
   <ItemGroup>
     <DriverLibs Include="MBED_bootstrap.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_Bootstrap\dotNetMF.proj" />
-  </ItemGroup>
-  <ItemGroup>
-    <DriverLibs Include="RZA1_QuadSerialFlash_BL_Driver.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_BlockStorage\RZA1_QuadSerialFlash\dotNetMF.proj" />
   </ItemGroup>
   <ItemGroup>
     <DriverLibs Include="MBED_HAL.$(LIB_EXT)" />

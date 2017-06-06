@@ -37,7 +37,7 @@
  *  アの利用により直接的または間接的に生じたいかなる損害に関しても，そ
  *  の責任を負わない．
  *
- *  @(#) $Id: core_support.S 1175 2016-06-13 14:07:13Z ertl-honda $
+ *  @(#) $Id: core_support.S 1218 2017-04-25 07:05:23Z ertl-honda $
  */
 
 /*
@@ -445,14 +445,14 @@ ALABEL(ret_int_2)
 #if (__TARGET_ARCH_ARM == 4) || (__TARGET_ARCH_ARM == 5)
     ldmfd sp!,{r1}              /* CPSRの復帰処理 */
     msr   spsr_cxsf, r1              /* 戻り先のcpsrをspsrに設定 */
-    ldmfd sp!,{r0-r3,ip,lr,pc}^ /* コンテキストの復帰，^付きなので、cpsr <- spsr */
+    ldmfd sp!,{r0-r5,ip,lr,pc}^ /* コンテキストの復帰，^付きなので、cpsr <- spsr */
 #else /* (__TARGET_ARCH_ARM == 6) || (__TARGET_ARCH_ARM == 7) || (__TARGET_ARCH_ARM == 8) */
 #if defined(SUPPORT_VFPv3_NEON)
     vpop    {d0-d7}             /* スクラッチレジスタの復帰 */
     pop     {R0}                /* FPSCRレジスタの復帰      */
     vmsr    fpscr, R0
 #endif /* SUPPORT_VFPv3_NEON */
-    ldmfd sp!,{r0-r3,ip,lr}
+    ldmfd sp!,{r0-r5,ip,lr}
     rfeia sp!
 #endif /* (__TARGET_ARCH_ARM == 6) || (__TARGET_ARCH_ARM == 7) || (__TARGET_ARCH_ARM == 8) */
 
@@ -585,7 +585,7 @@ ALABEL(ret_int_r_2)
     pop     {R0}           /* FPSCRレジスタの復帰 */
     vmsr    fpscr, R0
 #endif /* SUPPORT_VFPv3_NEON */
-    ldmfd sp!,{r0-r3,ip,lr}
+    ldmfd sp!,{r0-r5,ip,lr}
     rfeia sp!
 #endif /* (__TARGET_ARCH_ARM == 6) || (__TARGET_ARCH_ARM == 7) || (__TARGET_ARCH_ARM == 8) */
 

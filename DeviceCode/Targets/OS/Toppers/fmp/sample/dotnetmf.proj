@@ -25,8 +25,9 @@
         <IgnoreDefaultLibPath>False</IgnoreDefaultLibPath>
         <IsStub>False</IsStub>
         <Directory>DeviceCode/Targets/OS/Toppers/fmp/sample</Directory>
+        <!-- use RTOS -->
         <!-- <OutputType>Library</OutputType> -->
-        <OutputType>OSLibrary</OutputType>
+        <OutputType>Kernel</OutputType>
         <PlatformIndependentBuild>false</PlatformIndependentBuild>
         <Version>4.0.0.0</Version>
     </PropertyGroup>
@@ -72,12 +73,12 @@
         <HFiles Include="..\syssvc\logtask.h" />
         <HFiles Include="..\syssvc\syslog.h" />
         <HFiles Include="..\arch\logtrace\trace_config.h" />
-        <HFiles Include="..\arch\arm_gcc\rza1\chip_config.h" />
+        <HFiles Include="..\arch\arm_gcc\bcm283x\chip_config.h" />
         <HFiles Include="..\arch\arm_gcc\common\kernel_rename.h" />
         <HFiles Include="..\arch\arm_gcc\common\core_rename.h" />
         <HFiles Include="..\arch\arm_gcc\common\core_config.h" />
-        <HFiles Include="..\arch\arm_gcc\rza1\rza1.h" />
-        <HFiles Include="..\arch\arm_gcc\rza1\chip_kernel.h" />
+        <HFiles Include="..\arch\arm_gcc\bcm283x\bcm283x.h" />
+        <HFiles Include="..\arch\arm_gcc\bcm283x\chip_kernel.h" />
         <HFiles Include="app.h" />
         
         <!-- netmf on OS -->
@@ -130,14 +131,11 @@
         
         <!-- target(mbed) -->
         <Compile Include="..\arch\arm_gcc\common\arm.c" />
-        <Compile Include="..\arch\arm_gcc\rza1\scif.c" />
-        <Compile Include="..\arch\arm_gcc\rza1\pl310.c" />
-        <Compile Include="..\arch\arm_gcc\rza1\chip_config.c" />
+        <Compile Include="..\arch\arm_gcc\bcm283x\chip_config.c" />
         <!-- comment -->
-        <Compile Include="..\arch\arm_gcc\rza1\chip_serial.c" />
-        <Compile Include="..\arch\arm_gcc\rza1\chip_timer.c" />
-        <Compile Include="..\target\gr_peach_gcc\target_config.c" />
-        <Compile Include="..\target/gr_peach_gcc/sf_boot.c" />
+        <Compile Include="..\arch\arm_gcc\bcm283x\chip_serial.c" />
+        <Compile Include="..\arch\arm_gcc\bcm283x\chip_timer.c" />
+        <Compile Include="..\target\rp2_gcc\target_config.c" />
         
         <!-- common -->
         <!-- netmf on OS -->
@@ -150,7 +148,7 @@
         -->
         
         <!-- Assembly -->
-        <Compile Include="..\target\gr_peach_gcc\target_support.S" />
+        <Compile Include="..\target\rp2_gcc\target_support.S" />
         <Compile Include="..\arch\arm_gcc\common\start.S" />
         
         <!-- Unsupported Compiler error -->
@@ -175,34 +173,14 @@
         <!-- App -->
         <Compile Include="sample1.c" />
     </ItemGroup>
-    <!-- REVIEW:
-         It may be worth considering a seperate lib for these so that
-         this library can remain core neutral. We'll have the same
-         sort of thing with the CMSIS libs and support as well since
-         those have support specific to an architecture, a core, an
-         SOC and a physical board. 
-    -->
-    <ItemGroup Condition="'$(CpuName)'=='Cortex-M4'">
-        <Compile Condition="$(AS_SUBDIR) == 'RVD_S'" Include="SRC\ARM\HAL_CM4.c" />
-        <Compile Condition="$(AS_SUBDIR) == 'GNU_S'" Include="SRC\GCC\HAL_CM4.s" />
-    </ItemGroup>
-    <ItemGroup Condition="'$(CpuName)'=='Cortex-M3'">
-        <Compile Condition="$(AS_SUBDIR) == 'RVD_S'" Include="SRC\ARM\HAL_CM3.c" />
-        <Compile Condition="$(AS_SUBDIR) == 'GNU_S'" Include="SRC\GCC\HAL_CM3.s" />
-    </ItemGroup>
-    <!--
-    <ItemGroup Condition="'$(CpuName)'=='RZA1'">
-    	<Compile Condition="$(AS_SUBDIR) == 'RVD_S'" Include="SRC\ARM\HAL_CM3.c" />
-        <Compile Condition="$(AS_SUBDIR) == 'GNU_S'" Include="SRC\GCC\HAL_CM3.s" />
-    </ItemGroup>
-    -->
-    
     <Import Project="$(SPOCLIENT)\Framework\Features\RTX_Config.libcatproj" />
     <Import Project="$(SPOCLIENT)/tools/targets/Toppers.SPOT.System.Targets" />
+    <!--
     <Target Name="CheckPreRquisitesInstalled">
         <Error Code="NETMFBLD"
                Condition="!EXISTS('$(SPOCLIENT)\DeviceCode\Targets\OS\Toppers\fmp\ARM.ToppersASP.pdsc')"
                Text="Missing CMSIS installation at: $(SPOCLIENT)\DeviceCode\Targets\OS\Toppers\fmp\*"
                />
     </Target>
+    -->
 </Project>
