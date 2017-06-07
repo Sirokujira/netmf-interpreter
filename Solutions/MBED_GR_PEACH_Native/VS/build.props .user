@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="UserMacros">
+
+    <!-- Script to setup the toolchain environment. -->
+    <NETMFVS_SETENV>setenv_gcc 4.9.3 gcc-arm-none-eabi-4_9-2015q3-20150921-win32</NETMFVS_SETENV>
+
+    <!-- MSBuild options -->
+    <NETMFVS_MSBUILD>/flp:verbosity=detailed /clp:verbosity=minimal</NETMFVS_MSBUILD>
+
+  </PropertyGroup>
+</Project>
