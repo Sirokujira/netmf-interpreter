@@ -1700,6 +1700,8 @@ namespace System.Net
                     SubmitRequest();
                 }
 
+                for (int i = 0; i < 100000; i++) ; //Temporary wait (Only for GR-Peach board)
+
                 CoreResponseData respData = null;
 
                 // reset the total response bytes for the new request.

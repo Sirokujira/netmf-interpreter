@@ -72,8 +72,8 @@ build_script:
     MSbuild dotnetmf.proj /t:rebuild /p:flavor=release /p:memory=flash
 
 artifacts:
-- path: BuildOutput\RZA1\GCC4.9\le\FLASH\release\MBED_GR_PEACH_Native\bin\tinyclrnbl.bin
+- path: BuildOutput\RZA1\GCC4.9\le\FLASH\release\MBED_GR_PEACH\bin\tinyclrnbl.bin
   name: Release
-# - path: BuildOutput\RZA1\GCC4.9\le\FLASH\release\MBED_GR_PEACH_Native\bin\tinyclr.bin
+# - path: BuildOutput\RZA1\GCC4.9\le\FLASH\release\MBED_GR_PEACH\bin\tinyclr.bin
 #   name: Release
 
