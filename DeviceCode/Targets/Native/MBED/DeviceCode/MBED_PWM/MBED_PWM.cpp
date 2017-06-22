@@ -262,7 +262,7 @@ BOOL PWM_ApplyConfiguration(PWM_CHANNEL channel, GPIO_PIN pin, UINT32& period, U
     if (_period < 1)
         _period = 1;
     PWM_SetPeriod(pwm_obj, _period);
-    //// dbg_printf("_d:%d _p:%d\r\n", _duration, _period);
+    //dbg_printf("_d:%d _p:%d\r\n", _duration, _period);
     PWM_SetDuty(pwm_obj, (float)_duration/(float)_period);
     return TRUE;
 }

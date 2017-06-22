@@ -2,7 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <Directory>Solutions\MBED_GR_PEACH_Native</Directory>
-    <!-- <MFSettingsFile>$(SPOCLIENT)\Solutions\MBED_GR_PEACH\MBED_GR_PEACH.settings</MFSettingsFile> -->
     <MFSettingsFile>$(SPOCLIENT)\Solutions\MBED_GR_PEACH_Native\MBED_GR_PEACH_Native.settings</MFSettingsFile>
   </PropertyGroup>
   <ItemGroup Condition="'$(flavor)'=='debug'">

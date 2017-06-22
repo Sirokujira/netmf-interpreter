@@ -105,7 +105,7 @@ static BOOL rz_i2c_wait_BUS_BUSY(i2c_reg *reg)
     if (reg->RIICnCR2.UINT32 & CR2_BBSY) {
         if (timeout-- == 0) {
 #if defined(DEBUG_I2C_TIMEOUT)
-            // dbg_printf("I2C BBSY TO\r\n");
+            dbg_printf("I2C BUSY TO\r\n");
 #endif
             return FALSE;
         }
@@ -119,7 +119,7 @@ static BOOL rz_i2c_wait_STOP(i2c_reg *reg)
     while ((reg->RIICnSR2.UINT32 & SR2_STOP) == 0) {
         if (timeout-- == 0) {
 #if defined(DEBUG_I2C_TIMEOUT)
-            // dbg_printf("I2C STOP TO\r\n");
+            dbg_printf("I2C STOP TO\r\n");
 #endif
             return FALSE;
         }
@@ -133,7 +133,7 @@ static BOOL rz_i2c_wait_TDRE(i2c_reg *reg)
     while ((reg->RIICnSR2.UINT32 & SR2_TDRE) == 0) {
         if ((reg->RIICnSR2.UINT32 & SR2_NACKF) || (timeout-- == 0)) {
 #if defined(DEBUG_I2C_TIMEOUT)
-            // dbg_printf("I2C TDRE TO\r\n");
+            dbg_printf("I2C TDRE TO\r\n");
 #endif
             return FALSE;
         }
@@ -147,7 +147,7 @@ static BOOL rz_i2c_wait_RDRF(i2c_reg *reg)
     while ((reg->RIICnSR2.UINT32 & SR2_RDRF) == 0) {
         if ((reg->RIICnSR2.UINT32 & SR2_NACKF) || (timeout-- == 0)) {
 #if defined(DEBUG_I2C_TIMEOUT)
-            // dbg_printf("I2C RDRF TO\r\n");
+            dbg_printf("I2C RDRF TO\r\n");
 #endif
             return FALSE;
         }
@@ -270,7 +270,7 @@ static void rz_i2c_clear_line(UINT32 ch)
     UINT32 hang = 1;
     i2c_reg *reg = (i2c_reg *)(RIIC[ch]);
 #if defined(DEBUG_I2C)
-    // dbg_printf("I2C CLR\r\n");
+    dbg_printf("I2C CLR\r\n");
 #endif
     reg->RIICnFER.UINT32 &= ~FER_MALE;
     reg->RIICnCR1.UINT32 &= ~CR1_SOWP;
@@ -289,11 +289,11 @@ static void rz_i2c_clear_line(UINT32 ch)
     reg->RIICnCR1.UINT32 |= CR1_SOWP;
     if (hang) {
 #if defined(DEBUG_I2C_ERR)
-        // dbg_printf("I2C SDA NG\r\n");
+        dbg_printf("I2C SDA NG\r\n");
 #endif
     } else {
 #if defined(DEBUG_I2C_ERR)
-        // dbg_printf("I2C SDA OK\r\n");
+        dbg_printf("I2C SDA OK\r\n");
 #endif
     }
 }
@@ -372,7 +372,7 @@ BOOL MBED_I2C_Driver::Initialize(UINT32 ch)
     InterruptHandlerRegister(I2C_TMOI[ch],(IRQHandler)I2C_TMOI_ISR[ch]);
     i2c_IPR(ch, 6);
 #if defined(DEBUG_I2C)
-    // dbg_printf("I2C Init\r\n");
+    dbg_printf("I2C Init\r\n");
 #endif
     return TRUE;
 }
@@ -381,7 +381,7 @@ BOOL MBED_I2C_Driver::Uninitialize(UINT32 ch)
 {
     NATIVE_PROFILE_HAL_PROCESSOR_I2C();
 #if defined(DEBUG_I2C)
-    // dbg_printf("I2C Uninit\r\n");
+    dbg_printf("I2C Uninit\r\n");
 #endif
     return TRUE;
 }
@@ -430,7 +430,7 @@ void MBED_I2C_Driver::Abort(UINT32 ch)
     reg->RIICnCR1.UINT32 &= ~CR1_ICE;
 #endif
 #if defined(DEBUG_I2C)
-    // dbg_printf("I2C Abt\r\n");
+    dbg_printf("I2C Abt\r\n");
 #endif
     xAction->Signal(I2C_HAL_XACTION::c_Status_Aborted);
 }
@@ -444,11 +444,11 @@ void MBED_I2C_Driver::MasterXAction_Start(UINT32 ch, I2C_HAL_XACTION* xAction, b
     volatile UINT32 timeout;
 
 #if defined(DEBUG_I2C_DUMP_REGS)
-    // dbg_printf("XActionS-0 CR1:%02X CR2:%02X SR1:%02X SR2:%02X IER:%02X\r\n",
+    dbg_printf("XActionS-0 CR1:%02X CR2:%02X SR1:%02X SR2:%02X IER:%02X\r\n",
             reg->RIICnCR1.UINT8[0], reg->RIICnCR2.UINT8[0], reg->RIICnSR1.UINT8[0], reg->RIICnSR2.UINT8[0], reg->RIICnIER.UINT8[0]);
-    // dbg_printf("XActionS-1 MR1:%02X MR2:%02X MR3:%02X\r\n",
+    dbg_printf("XActionS-1 MR1:%02X MR2:%02X MR3:%02X\r\n",
             reg->RIICnMR1.UINT8[0], reg->RIICnMR2.UINT8[0], reg->RIICnMR3.UINT8[0]);
-    // dbg_printf("XActionS-2 FER:%02X BRL:%02X BRH:%02X\r\n",
+    dbg_printf("XActionS-2 FER:%02X BRL:%02X BRH:%02X\r\n",
             reg->RIICnFER.UINT8[0], reg->RIICnBRL.UINT8[0], reg->RIICnBRH.UINT8[0]);
 #endif
     if (g_MBED_I2C_Driver.m_initialized == FALSE)
@@ -473,10 +473,10 @@ void MBED_I2C_Driver::MasterXAction_Start(UINT32 ch, I2C_HAL_XACTION* xAction, b
     reg->RIICnCR2.UINT32 |= CR2_TRS;        // I2C transmit
 #ifdef DEBUG_I2C
     if (repeatedStart) {
-        // dbg_printf("I2C RS SLA=%02X %02X %02X %02X\r\n",
+        dbg_printf("I2C RS SLA=%02X %02X %02X %02X\r\n",
                 address, reg->RIICnCR1.UINT8[0], reg->RIICnCR2.UINT8[0], reg->RIICnSR2.UINT8[0]);
     } else {
-        // dbg_printf("I2C ST SLA=%02X %02X %02X %02X\r\n",
+        dbg_printf("I2C ST SLA=%02X %02X %02X %02X\r\n",
                 address, reg->RIICnCR1.UINT8[0], reg->RIICnCR2.UINT8[0], reg->RIICnSR2.UINT8[0]);
     }
 #endif
@@ -517,7 +517,7 @@ void MBED_I2C_Driver::MasterXAction_Start(UINT32 ch, I2C_HAL_XACTION* xAction, b
         i2c_IEN(ch, 1);
     }
 #ifdef DEBUG_I2C
-    // dbg_printf("I2C ST\r\n");
+    dbg_printf("I2C ST\r\n");
 #endif
 }
 
@@ -531,7 +531,7 @@ void MBED_I2C_Driver::MasterXAction_Stop(UINT32 ch)
     g_MBED_I2C_Driver.m_currentXAction = NULL;
     g_MBED_I2C_Driver.m_currentXActionUnit = NULL;
 #ifdef DEBUG_I2C
-    // dbg_printf("I2C Stop %02x\r\n", reg->RIICnSR2.UINT8[0]);
+    dbg_printf("I2C Stop %02x\r\n", reg->RIICnSR2.UINT8[0]);
 #endif
 }
 
@@ -542,7 +542,7 @@ void MBED_I2C_Driver::GetClockRate(UINT32 ch, UINT32 rateKhz, UINT8& clockRate, 
     clockRate2 = (UINT8)obj->width_low;
     clockRate = (UINT8)obj->width_hi;
 #ifdef DEBUG_I2C_CLK
-    // dbg_printf("I2C CLK=%d %d\r\n", clockRate, clockRate2);
+    dbg_printf("I2C CLK=%d %d\r\n", clockRate, clockRate2);
 #endif
 }
 
@@ -554,13 +554,13 @@ void MBED_I2C_Driver::WriteToSubordinate(UINT32 ch, I2C_HAL_XACTION_UNIT *unit)
     //ASSERT(queueData);
     if (queueData == NULL) {
 #if defined(DEBUG_I2C)
-        // dbg_printf("I2C wque err\r\n");
+        dbg_printf("I2C wque err\r\n");
 #endif
         return;
     }
 #ifdef DEBUG_I2C_TX_DATA
-    // dbg_printf("w%02x", *queueData);
-    //// dbg_printf("w");
+    dbg_printf("w%02x", *queueData);
+    //dbg_printf("w");
 #endif
     while ((reg->RIICnSR2.UINT32 & SR2_TDRE) == 0);
     reg->RIICnDRT.UINT8[0] = (UINT8)*queueData;
@@ -576,14 +576,14 @@ void MBED_I2C_Driver::ReadFromSubordinate(UINT32 ch, I2C_HAL_XACTION_UNIT *unit)
     //ASSERT(queueData);
     if (queueData == NULL) {
 #if defined(DEBUG_I2C)
-        // dbg_printf("I2C rque err\r\n");
+        dbg_printf("I2C rque err\r\n");
 #endif
         return;
     }
     UINT8 data = (UINT8)reg->RIICnDRR.UINT8[0];
 #ifdef DEBUG_I2C_RX_DATA
-    // dbg_printf("r%02x", data);
-    //// dbg_printf("r");
+    dbg_printf("r%02x", data);
+    //dbg_printf("r");
 #endif
     *queueData = data;
     ++unit->m_bytesTransferred;
@@ -598,7 +598,7 @@ void MBED_I2C_OTHER_ISR(UINT32 ch)
 #if defined(ENABLE_TMOIE)
     if ((reg->RIICnSR2.UINT32 & SR2_TMOF) && (reg->RIICnIER.UINT32 & IER_TMOIE)) {
 #if defined(DEBUG_I2C_INT)
-        // dbg_printf("I2C TO\r\n");
+        dbg_printf("I2C TO\r\n");
 #endif
         //IIC_EEI_IntTimeOut();
         reg->RIICnSR2.UINT32 &= ~SR2_TMOF;
@@ -608,7 +608,7 @@ void MBED_I2C_OTHER_ISR(UINT32 ch)
     // Check Arbitration Lost
     if ((reg->RIICnSR2.UINT32 & SR2_AL) && (reg->RIICnIER.UINT32 & IER_ALIE)) {
 #if defined(DEBUG_I2C_INT)
-        // dbg_printf("I2C AL\r\n");
+        dbg_printf("I2C AL\r\n");
 #endif
         //IIC_EEI_IntAL();
         reg->RIICnSR2.UINT32 &= ~SR2_AL;
@@ -619,7 +619,7 @@ void MBED_I2C_OTHER_ISR(UINT32 ch)
     if ((reg->RIICnSR2.UINT32 & SR2_STOP) && (reg->RIICnIER.UINT32 & IER_SPIE)) {
         // IIC_EEI_IntSP();
 #if defined(DEBUG_I2C_INT)
-        // dbg_printf("I2C SC\r\n");
+        dbg_printf("I2C SC\r\n");
 #endif
     }
 #endif
@@ -627,7 +627,7 @@ void MBED_I2C_OTHER_ISR(UINT32 ch)
     // Check NACK reception
     if ((reg->RIICnSR2.UINT32 & SR2_NACKF) && (reg->RIICnIER.UINT32 & IER_NAKIE)) {
 #if defined(DEBUG_I2C_INT)
-        // dbg_printf("I2C NK\r\n");
+        dbg_printf("I2C NK\r\n");
 #endif
         //IIC_EEI_IntNack();
         reg->RIICnSR2.UINT32 &= ~SR2_NACKF;
@@ -638,7 +638,7 @@ void MBED_I2C_OTHER_ISR(UINT32 ch)
     // Check start condition detection
     if ((reg->RIICnSR2.UINT32 & SR2_START) && (reg->RIICnIER.UINT32 & IER_STIE)) {
 #if defined(DEBUG_I2C_INT)
-        // dbg_printf("I2C SC\r\n");
+        dbg_printf("I2C SC\r\n");
 #endif
         //IIC_EEI_IntST();
         reg->RIICnSR2.UINT32 &= ~SR2_START;
@@ -653,7 +653,7 @@ void MBED_I2C_RI_ISR(UINT32 ch)
     I2C_HAL_XACTION *xAction = g_MBED_I2C_Driver.m_currentXAction;
     GLOBAL_LOCK(irq);
 #ifdef DEBUG_I2C_INT
-    // dbg_printf("I2C RXI\r\n");
+    dbg_printf("I2C RXI\r\n");
 #endif
     if (rz_i2c_wait_RDRF(reg) == FALSE) {
         MBED_I2C_Driver::Abort(ch);
@@ -680,7 +680,7 @@ void MBED_I2C_TI_ISR(UINT32 ch)
     I2C_HAL_XACTION_UNIT *unit = g_MBED_I2C_Driver.m_currentXActionUnit;
     GLOBAL_LOCK(irq);
 #ifdef DEBUG_I2C_INT
-    // dbg_printf("I2C TI\r\n");
+    dbg_printf("I2C TI\r\n");
 #endif
     (void)rz_i2c_wait_TDRE(reg);
     if (unit->m_bytesToTransfer) {
@@ -697,7 +697,7 @@ void MBED_I2C_TEI_ISR(UINT32 ch)
     I2C_HAL_XACTION *xAction = g_MBED_I2C_Driver.m_currentXAction;
     I2C_HAL_XACTION_UNIT *unit = g_MBED_I2C_Driver.m_currentXActionUnit;
 #ifdef DEBUG_I2C_INT
-    // dbg_printf("I2C TEI\r\n");
+    dbg_printf("I2C TEI\r\n");
 #endif
     reg->RIICnIER.UINT32 &= ~IER_TEIE;
     if (xAction->ProcessingLastUnit()) {

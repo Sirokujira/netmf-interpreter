@@ -15,7 +15,7 @@
 //#define DEBUG_LWIP_TX
 //#define DEBUG_LWIP_RX
 
-// extern INT32 dbg_printf( const char* format, ... );   // COM1 and LCD. defined in tinycrt.cpp
+extern INT32 dbg_printf( const char* format, ... );   // COM1 and LCD. defined in tinycrt.cpp
 extern struct netif g_MBED_EMAC_NetIF;
 extern HAL_COMPLETION    InterruptTaskCompletion;
 
@@ -29,7 +29,7 @@ int ethernetext_init(ethernet_cfg_t *p_ethcfg);
 #endif
 #endif
 
-// extern INT32 dbg_printf( const char* format, ... );   // COM1 and LCD. defined in tinycrt.cpp
+extern INT32 dbg_printf( const char* format, ... );   // COM1 and LCD. defined in tinycrt.cpp
 extern struct netif g_MBED_EMAC_NetIF;
 extern HAL_COMPLETION InterruptTaskCompletion;
 
@@ -69,7 +69,7 @@ err_t MBED_EMAC_LWIP_xmit(struct netif *pNetIf, struct pbuf *p)
             write_size = ethernet_write((char *)p->payload, p->len);
             if (write_size != 0) {
 //#if defined(DEBUG_LWIP)
-//                // dbg_printf("TX%d OK\r\n", write_size);
+//                dbg_printf("TX%d OK\r\n", write_size);
 //#endif
                 err = ERR_OK;
                 break;
@@ -82,12 +82,12 @@ err_t MBED_EMAC_LWIP_xmit(struct netif *pNetIf, struct pbuf *p)
             }
             if (ethernet_send() == 1) {
 #if defined(DEBUG_LWIP_TX)
-                // dbg_printf("TY%d OK\r\n", write_size);
+                dbg_printf("TY%d OK\r\n", write_size);
 #endif
                 err = ERR_OK;
             } else {
 #if defined(DEBUG_LWIP_TX)
-                // dbg_printf("TY%d NG\r\n", write_size);
+                dbg_printf("TY%d NG\r\n", write_size);
 #endif
                 err = ERR_MEM;
             }
@@ -107,12 +107,12 @@ void MBED_EMAC_LWIP_recv(struct netif *pNetIf)
         if (recvd == 0)
             break;
 #if defined(DEBUG_LWIP_RX)
-        // dbg_printf("RX%d ", recvd);
+        dbg_printf("RX%d ", recvd);
 #endif
         //p = pbuf_alloc(PBUF_RAW, recvd, PBUF_RAM);
         p = pbuf_alloc(PBUF_RAW, recvd, PBUF_POOL);
         if (p == NULL) {
-            // dbg_printf("Can't alloc pPBuf\r\n");
+            dbg_printf("Can't alloc pPBuf\r\n");
             break;
         }
         //(void)ethernet_read((char *)p->payload, recvd);
@@ -122,12 +122,12 @@ void MBED_EMAC_LWIP_recv(struct netif *pNetIf)
         if ((pNetIf != 0) && (pNetIf->input != 0)) {
             if (pNetIf->input(p, pNetIf) == ERR_OK) {
 #if defined(DEBUG_LWIP_RX)
-                // dbg_printf("OK\r\n");
+                dbg_printf("OK\r\n");
 #endif
                 break;
             } else {
 #if defined(DEBUG_LWIP_RX)
-                // dbg_printf("NG\r\n");
+                dbg_printf("NG\r\n");
 #endif
                 break;
             }

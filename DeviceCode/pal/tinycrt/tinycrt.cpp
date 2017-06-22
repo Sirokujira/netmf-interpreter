@@ -70,6 +70,53 @@ void hal_fprintf_SetLoggingCallback( LOGGING_CALLBACK fpn )
 
 //--//
 
+int dbg_vprintf( const char* format, va_list arg )
+{
+    NATIVE_PROFILE_PAL_CRT();
+    //hal_vfprintf( STREAM_LCD, format, arg );
+    return hal_vfprintf( COM1, format, arg );
+}
+
+int dbg_printf( const char* format, ... )
+{
+    NATIVE_PROFILE_PAL_CRT();
+    va_list arg_ptr;
+
+    va_start(arg_ptr, format);
+
+    int chars = dbg_vprintf( format, arg_ptr );
+
+    va_end( arg_ptr );
+
+    return chars;
+}
+
+int _dbg_vprintf( int ch, const char* format, va_list arg )
+{
+    NATIVE_PROFILE_PAL_CRT();
+    int ret = 0;
+    if (ch & 1)
+        ret = hal_vfprintf( COM1, format, arg );
+    if (ch & 2)
+        ret = hal_vfprintf( STREAM_LCD, format, arg );
+    return ret;
+}
+
+#ifdef __cplusplus
+extern "C" int _dbg_printf( int ch, const char* format, ...);
+#else
+int _dbg_printf( int ch, const char* format, ...);
+#endif
+int _dbg_printf( int ch, const char* format, ... )
+{
+    NATIVE_PROFILE_PAL_CRT();
+    va_list arg_ptr;
+    va_start(arg_ptr, format);
+    int chars = _dbg_vprintf( ch, format, arg_ptr );
+    va_end( arg_ptr );
+    return chars;
+}
+
 int hal_printf( const char* format, ... )
 {
     NATIVE_PROFILE_PAL_CRT();
