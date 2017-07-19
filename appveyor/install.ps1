@@ -15,6 +15,17 @@ $PYTHON_PRERELEASE_REGEX = @"
 (?<prerelease>[a-z]{1,2}\d+)
 "@
 
+$GCC_PRERELEASE_REGEX = @"
+(?x)
+(?<major>\d+)
+\.
+(?<minor>\d+)
+\.
+(?<micro>\d+)
+(?<prerelease>[a-z]{1,2}\d+)
+"@
+
+
 function InstallNETMFSDK()
 {
     # NG?
@@ -60,6 +71,47 @@ function InstallGCCCompiler2()
     $zipFilePath = "C:\\projects\\netmf-interpreter\\gcc-arm-none-eabi-4_9-2015q3-20150921-win32.zip"
     New-ZipExtract -source $zipFilePath -destination $archivePath -force -verbose
 }
+
+function ParseGCCVersion ($gcc_version) 
+{
+    if ($gcc_version -match $GCC_PRERELEASE_REGEX) 
+    {
+        # return ([int]$matches.major, [int]$matches.minor, [int]$matches.micro)
+        return ([int]$matches.major, [int]$matches.minor, [int]$matches.micro, $matches.prerelease)
+    }
+    
+    # Convert NG
+    $version_obj = [version]$gcc_version
+    return ($version_obj.major, $version_obj.minor, $version_obj.build, "")
+}
+
+
+function InstallGCCCompiler3($gcc_version, $base_folder, $gcc_compiler_home)
+{
+    $major, $minor, $micro = ParseGCCVersion $gcc_version
+
+    $archivePath = $gcc_compiler_home
+    if ($major -le 4 -and $minor -eq 9)
+    {
+        # if (micro -eq 3)
+        $zipFilePath = base_folder + "\\gcc-arm-none-eabi-4_9-2015q3-20150921-win32.zip"
+    }
+    elseif ($major -le 5 -and $minor -eq 4)
+    {
+        $zipFilePath = base_folder + "\\gcc-arm-none-eabi-4_9-2015q3-20150921-win32.zip"
+    }
+    elseif ($major -le 6 -and $minor -eq 0)
+    {
+        $zipFilePath = base_folder + "\\gcc-arm-none-eabi-4_9-2015q3-20150921-win32.zip"
+    }
+    else
+    {
+        $zipFilePath = base_folder + "\\gcc-arm-none-eabi-4_9-2015q3-20150921-win32.zip"
+    }
+
+    New-ZipExtract -source $zipFilePath -destination $archivePath -force -verbose
+}
+
 
 function InstallBuildTools()
 {
@@ -123,7 +175,8 @@ function main ()
     InstallNETMFSDK
     # ToolChain
     # InstallGCCCompiler
-    InstallGCCCompiler2
+    # InstallGCCCompiler2
+    InstallGCCCompiler3($env:GCC_VERSION, $env:APPVEYOR_BUILD_FOLDER, $env:GCC_TOOLS)
     # Wait Process
     # InstallBuildTools
     InstallBuildTools2

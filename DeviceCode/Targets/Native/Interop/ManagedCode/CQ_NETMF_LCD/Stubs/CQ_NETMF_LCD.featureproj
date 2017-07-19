@@ -11,6 +11,6 @@
     <DriverLibs Include="CQ_NETMF_LCD.$(LIB_EXT)" />
     <InteropFeature Include="CQ_NETMF_LCD" />
     <MMP_DAT_CreateDatabase Include="$(BUILD_TREE_CLIENT)\pe\$(ENDIANNESS)\CQ_NETMF_LCD.pe" />
-    <RequiredProjects Include="E:\netmf-interpreter\DeviceCode\Targets\Native\Interop\ManagedCode\CQ_NETMF_LCD\Stubs\dotnetmf.proj" />
+    <RequiredProjects Include="C:\netmf-interpreter\DeviceCode\Targets\Native\Interop\ManagedCode\CQ_NETMF_LCD\Stubs\dotnetmf.proj" />
   </ItemGroup>
 </Project>

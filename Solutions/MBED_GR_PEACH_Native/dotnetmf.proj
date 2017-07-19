@@ -7,8 +7,9 @@
   <ItemGroup Condition="'$(flavor)'=='debug'">
 <!--
     <RequiredProjects Include="NativeSample\NativeSample.proj" />
---> 
     <RequiredProjects Include="TinyBooter\TinyBooter.proj" />
+--> 
+    <RequiredProjects Include="TinyCLRNBL\TinyCLRNBL.proj" />
   </ItemGroup>
   <ItemGroup Condition="'$(flavor)'=='release'">
 <!--
