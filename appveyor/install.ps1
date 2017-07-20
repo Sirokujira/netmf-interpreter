@@ -2,19 +2,6 @@
 # Authors: Olivier Grisel, Jonathan Helmus, Kyle Kastner, and Alex Willmer
 # License: CC0 1.0 Universal: http://creativecommons.org/publicdomain/zero/1.0/
 
-$WINSDK_URL = "https://www.python.org/ftp/python/"
-$GCCCOMPILER_URL = "https://www.python.org/ftp/python/"
-
-$PYTHON_PRERELEASE_REGEX = @"
-(?x)
-(?<major>\d+)
-\.
-(?<minor>\d+)
-\.
-(?<micro>\d+)
-(?<prerelease>[a-z]{1,2}\d+)
-"@
-
 $GCC_PRERELEASE_REGEX = @"
 (?x)
 (?<major>\d+)
@@ -22,7 +9,6 @@ $GCC_PRERELEASE_REGEX = @"
 (?<minor>\d+)
 \.
 (?<micro>\d+)
-(?<prerelease>[a-z]{1,2}\d+)
 "@
 
 
@@ -76,8 +62,7 @@ function ParseGCCVersion ($gcc_version)
 {
     if ($gcc_version -match $GCC_PRERELEASE_REGEX) 
     {
-        # return ([int]$matches.major, [int]$matches.minor, [int]$matches.micro)
-        return ([int]$matches.major, [int]$matches.minor, [int]$matches.micro, $matches.prerelease)
+        return ([int]$matches.major, [int]$matches.minor, [int]$matches.micro)
     }
     
     # Convert NG
@@ -180,7 +165,7 @@ function main ()
     # ToolChain
     # InstallGCCCompiler
     # InstallGCCCompiler2
-    InstallGCCCompiler3($env:GCC_VERSION, $env:APPVEYOR_BUILD_FOLDER, $env:GCC_TOOLS)
+    InstallGCCCompiler3 $env:GCC_VERSION $env:APPVEYOR_BUILD_FOLDER $env:GCC_TOOLS
     # Wait Process
     # InstallBuildTools
     InstallBuildTools2
