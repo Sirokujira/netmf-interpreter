@@ -9,7 +9,7 @@ environment:
       GCC_TOOLS: 'C:\projects\gcc-arm-none-eabi'
 
     - SPOROOT: 'C:\projects\netmf-interpreter\build-tools'
-      GCC_VERSION: '5.4.3'
+      GCC_VERSION: '5.4.1'
       GCC_TOOLS: 'C:\projects\gcc-arm-none-eabi'
 
 
