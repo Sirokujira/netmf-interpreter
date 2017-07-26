@@ -94,6 +94,7 @@
         <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\TLSF-2.4.6\include" />
         <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\platform\include" />
         <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\pil\include" />
+		
         
         <!-- Assemble inc -->
         <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\am1808" />
@@ -123,8 +124,9 @@
         <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\lcd\include" />
         <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\motor\include" />
         <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\newlib\include" />
-        <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\sensor\include" />
+        <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\sensor\i2c\include" />
         <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\soc\include" />
+        <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\soc\include\hw" />
         <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\sound\include" />
         
         <!-- armv5\am1808\interrupt.h -->
@@ -139,6 +141,11 @@
         <!-- bluetooth_dri.h -->
         <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\bluetooth\include" />
         <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\bluetooth\btstack\include" />
+        <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\modules\btstack\platforms\ev3rt" />
+        <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\modules\mbed-on-toppers\arch\ev3rt" />
+        <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\modules\usblib\usblib\include" />
+        <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\usbmsc\include" />
+        <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\mbed\include" />
         <!-- api.cfg.h -->
         <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\api" />
         <!-- lcd_dri.c -->
@@ -246,11 +253,10 @@
         <CFiles Include="..\..\target\ev3_gcc\drivers\soc\AM1808_StarterWare_1_00_03_03\system_config\armv5\gcc\cp15.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\fatfs\src\diskio.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\common\src\driver_debug.c" />
+        <CFiles Include="..\..\target\ev3_gcc\pil\src\driver_interface_bluetooth.c" />
         <CFiles Include="..\..\target\ev3_gcc\pil\src\driver_interface_brick.c" />
         <CFiles Include="..\..\target\ev3_gcc\pil\src\driver_interface_filesys.c" />
         <CFiles Include="..\..\target\ev3_gcc\pil\src\driver_interface_sound.c" />
-        <!-- define 1808 Add (edma.h) -->
-        <CFiles Include="..\..\target\ev3_gcc\drivers\soc\AM1808_StarterWare_1_00_03_03\drivers\edma.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\fatfs\src\fatfs_dri.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\fatfs\src\fatfs_syscall.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\fatfs\ff10b\src\ff.c" />
@@ -288,30 +294,58 @@
         <CFiles Include="..\..\target\ev3_gcc\drivers\motor\src\motor_dri.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\newlib\src\newlib_dri.c" />
         
+        <CFiles Include="..\..\target\ev3_gcc\drivers\sensor\i2c\src\davinci_iic_dri.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\sensor\i2c\src\i2c_dri.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\sensor\uart\d_uart\Linuxmod_AM1808\pru-firmware-05-31-2011-1423-v3.0\pru\hal\common\src\pru.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\sensor\uart\src\pru_suart.c" />
-        <CFiles Include="..\..\target\ev3_gcc\drivers\soc\AM1808_StarterWare_1_00_03_03\drivers\psc.c" />
-        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\src\remote_device_db_memory.c" />
+        <!-- bluetooth -->
+        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\bnep.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\btstack_memory.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\hci.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\hci_dump.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\hci_transport_h4_dma.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\hci_transport_h4_ehcill_dma.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\hfp.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\hfp_ag.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\hfp_gsm_model.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\hfp_hf.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\hsp_ag.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\hsp_hs.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\l2cap.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\l2cap_signaling.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\linked_list.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\memory_pool.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\pan.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\remote_device_db_memory.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\rfcomm.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\run_loop.c" />
-        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\src\run_loop_toppers.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\run_loop_embedded.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\sdp.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\sdp_client.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\sdp_parser.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\sdp_query_rfcomm.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\sdp_query_util.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\sdp_util.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\utils.c" />
+        <!-- mbed -->
+        <CFiles Include="..\..\target\ev3_gcc\drivers\mbed\src\mbed_dri.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\soc\src\soc_cache.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\soc\src\soc_edma.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\soc\src\soc_interrupt.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\sound\src\sound_dri.c" />
-        <CFiles Include="..\..\target\ev3_gcc\drivers\soc\AM1808_StarterWare_1_00_03_03\drivers\spi.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\sensor\uart\d_uart\Linuxmod_AM1808\pru-firmware-05-31-2011-1423-v3.0\pru\hal\uart\src\suart_api.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\sensor\uart\d_uart\Linuxmod_AM1808\pru-firmware-05-31-2011-1423-v3.0\pru\hal\uart\src\suart_utils.c" />
+        <!-- usbmsc -->
+        <CFiles Include="..\..\target\ev3_gcc\drivers\usbmsc\src\usb_dev_msc.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\usbmsc\src\usb_msc_structs.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\usbmsc\src\usbmsc_dri.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\usbmsc\src\usbmsc_media_functions.c" />
         
         <!-- 
             kernel objects (must libkernel.a make objects)
             alarm.obj cyclic.obj dataqueue.obj eventflag.obj exception.obj interrupt.obj mem_manage.obj memory.obj mempfix.obj mutex.obj overrun.obj pridataq.obj semaphore.obj startup.obj svc_table.obj sys_manage.obj task.obj task_except.obj task_manage.obj task_refer.obj task_sync.obj time_event.obj time_manage.obj wait.obj
         -->
-        <CFiles Include="..\..\target\ev3_gcc\kernel\alarm.c" />
+        <!-- <CFiles Include="..\..\target\ev3_gcc\kernel\alarm.c" /> -->
         <CFiles Include="..\..\target\ev3_gcc\kernel\cyclic.c" />
         <CFiles Include="..\..\target\ev3_gcc\kernel\dataqueue.c" />
         <CFiles Include="..\..\target\ev3_gcc\kernel\eventflag.c" />
@@ -343,7 +377,15 @@
         <CFiles Include="..\..\syssvc\serial.c" />
         <CFiles Include="..\..\syssvc\banner.c" />
         <CFiles Include="..\..\arch\arm_gcc\am1808\tl16c550.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\soc\AM1808_StarterWare_1_00_03_03\platform\evmAM1808_usb.c" />
+        <!-- define 1808 Add (edma.h) -->
+        <CFiles Include="..\..\target\ev3_gcc\drivers\soc\AM1808_StarterWare_1_00_03_03\drivers\cppi41dma.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\soc\AM1808_StarterWare_1_00_03_03\drivers\edma.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\soc\AM1808_StarterWare_1_00_03_03\drivers\psc.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\soc\AM1808_StarterWare_1_00_03_03\drivers\spi.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\soc\AM1808_StarterWare_1_00_03_03\drivers\uart.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\soc\AM1808_StarterWare_1_00_03_03\drivers\usb.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\soc\AM1808_StarterWare_1_00_03_03\drivers\usbphyGS60.c" />
         
         <!-- error -->
         <!-- add header -->

@@ -15,6 +15,7 @@
 #include "syssvc/syslog.h"
 #include "syssvc/banner.h"
 #include "target_serial.h"
+#include "target_serial_dbsio.h"
 #include "syssvc/serial.h"
 #include "syssvc/logtask.h"
 #include "api.cfg.h"
@@ -36,7 +37,7 @@ const DOMINIB _kernel_dominib_table[TNUM_DOMID] = {
  *  Task Management Functions
  */
 
-#define TNUM_STSKID	10
+#define TNUM_STSKID	12
 
 const ID _kernel_tmax_tskid = (TMIN_TSKID + TNUM_TSKID - 1);
 const ID _kernel_tmax_stskid = (TMIN_TSKID + TNUM_STSKID - 1);
@@ -47,8 +48,10 @@ static STK_T _kernel_sstack_LCD_REFRESH_TSK[COUNT_STK_T(STACK_SIZE)] __attribute
 static STK_T _kernel_sstack_CONSOLE_BTN_TSK[COUNT_STK_T(STACK_SIZE)] __attribute__((section(".prsv_kernel"),nocommon));
 static STK_T _kernel_sstack_BT_TSK[COUNT_STK_T(STACK_SIZE)] __attribute__((section(".prsv_kernel"),nocommon));
 static STK_T _kernel_sstack_BT_QOS_TSK[COUNT_STK_T(STACK_SIZE)] __attribute__((section(".prsv_kernel"),nocommon));
+static STK_T _kernel_sstack_USBMSC_TSK[COUNT_STK_T(STACK_SIZE)] __attribute__((section(".prsv_kernel"),nocommon));
 static STK_T _kernel_sstack_EV3_INIT_TASK[COUNT_STK_T(STACK_SIZE)] __attribute__((section(".prsv_kernel"),nocommon));
 static STK_T _kernel_sstack_PLATFORM_BUSY_TASK[COUNT_STK_T(STACK_SIZE)] __attribute__((section(".prsv_kernel"),nocommon));
+static STK_T _kernel_sstack_EV3RT_LOGTASK[COUNT_STK_T(LOGTASK_STACK_SIZE)] __attribute__((section(".prsv_kernel"),nocommon));
 static STK_T _kernel_sstack_APP_INIT_TASK[COUNT_STK_T(DEFAULT_SSTKSZ)] __attribute__((section(".prsv_kernel"),nocommon));
 static STK_T _kernel_sstack_MAIN_TASK[COUNT_STK_T(DEFAULT_SSTKSZ)] __attribute__((section(".prsv_kernel"),nocommon));
 
@@ -61,10 +64,12 @@ const TINIB _kernel_tinib_table[TNUM_STSKID] = {
 	{ &_kernel_dominib_table[INDEX_DOM(TDOM_APP)], (TA_NULL), (intptr_t)(0), ((TASK)(brick_button_task)), INT_PRIORITY(TMIN_APP_TPRI), ROUND_STK_T(DEFAULT_SSTKSZ), _kernel_sstack_BRICK_BTN_TSK, ROUND_STK_T(4096), _kernel_ustack_BRICK_BTN_TSK, (TA_NULL), (NULL), { TACP(TDOM_APP), TACP(TDOM_APP), TACP(TDOM_APP), TACP(TDOM_APP) }},
 	{ &_kernel_dominib_kernel, (TA_NULL), (intptr_t)(NULL), ((TASK)(lcd_refresh_tsk)), INT_PRIORITY(TPRI_EV3_LCD_TASK), ROUND_STK_T(STACK_SIZE), _kernel_sstack_LCD_REFRESH_TSK, 0, NULL, (TA_NULL), (NULL), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
 	{ &_kernel_dominib_kernel, (TA_ACT), (intptr_t)(0), ((TASK)(console_button_task)), INT_PRIORITY(TPRI_EV3_MONITOR), ROUND_STK_T(STACK_SIZE), _kernel_sstack_CONSOLE_BTN_TSK, 0, NULL, (TA_NULL), (NULL), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
-	{ &_kernel_dominib_kernel, (TA_NULL), (intptr_t)(NULL), ((TASK)(bluetooth_task)), INT_PRIORITY(TPRI_BLUETOOTH_LOW), ROUND_STK_T(STACK_SIZE), _kernel_sstack_BT_TSK, 0, NULL, (TA_NULL), (NULL), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
+	{ &_kernel_dominib_kernel, (TA_NULL), (intptr_t)(NULL), ((TASK)(btstack_task)), INT_PRIORITY(TPRI_BLUETOOTH_HIGH), ROUND_STK_T(STACK_SIZE), _kernel_sstack_BT_TSK, 0, NULL, (TA_NULL), (NULL), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
 	{ &_kernel_dominib_kernel, (TA_NULL), (intptr_t)(NULL), ((TASK)(bluetooth_qos_task)), INT_PRIORITY(TPRI_BLUETOOTH_QOS), ROUND_STK_T(STACK_SIZE), _kernel_sstack_BT_QOS_TSK, 0, NULL, (TA_NULL), (NULL), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
+	{ &_kernel_dominib_kernel, (TA_ACT), (intptr_t)(0), ((TASK)(usbmsc_task)), INT_PRIORITY(TPRI_USBMSC), ROUND_STK_T(STACK_SIZE), _kernel_sstack_USBMSC_TSK, 0, NULL, (TA_NULL), (NULL), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
 	{ &_kernel_dominib_kernel, (TA_ACT), (intptr_t)(0), ((TASK)(ev3_main_task)), INT_PRIORITY(TPRI_INIT_TASK), ROUND_STK_T(STACK_SIZE), _kernel_sstack_EV3_INIT_TASK, 0, NULL, (TA_NULL), (NULL), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
 	{ &_kernel_dominib_kernel, (TA_ACT), (intptr_t)(0), ((TASK)(platform_busy_task)), INT_PRIORITY(TPRI_PLATFORM_BUSY), ROUND_STK_T(STACK_SIZE), _kernel_sstack_PLATFORM_BUSY_TASK, 0, NULL, (TA_NULL), (NULL), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
+	{ &_kernel_dominib_kernel, (TA_NULL), (intptr_t)(0), ((TASK)(ev3rt_logtask)), INT_PRIORITY(LOGTASK_PRIORITY), ROUND_STK_T(LOGTASK_STACK_SIZE), _kernel_sstack_EV3RT_LOGTASK, 0, NULL, (TA_NULL), (NULL), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
 	{ &_kernel_dominib_table[INDEX_DOM(TDOM_APP)], (TA_ACT), (intptr_t)(0), ((TASK)(_app_init_task)), INT_PRIORITY(TPRI_APP_INIT_TASK), ROUND_STK_T(DEFAULT_SSTKSZ), _kernel_sstack_APP_INIT_TASK, ROUND_STK_T(4096), _kernel_ustack_APP_INIT_TASK, (TA_NULL), (NULL), { TACP(TDOM_APP), TACP(TDOM_APP), TACP(TDOM_APP), TACP(TDOM_APP) }},
 	{ &_kernel_dominib_table[INDEX_DOM(TDOM_APP)], (TA_ACT), (intptr_t)(0), ((TASK)(main_task)), INT_PRIORITY(TMIN_APP_TPRI - 1), ROUND_STK_T(DEFAULT_SSTKSZ), _kernel_sstack_MAIN_TASK, ROUND_STK_T(4096), _kernel_ustack_MAIN_TASK, (TA_NULL), (NULL), { TACP(TDOM_APP), TACP(TDOM_APP), TACP(TDOM_APP), TACP(TDOM_APP) }}
 };
@@ -74,26 +79,28 @@ TINIB _kernel_atinib_table[48];
 TCB _kernel_tcb_table[TNUM_TSKID];
 
 const ID _kernel_torder_table[TNUM_STSKID] = {
-	LOGTASK, BRICK_BTN_TSK, LCD_REFRESH_TSK, CONSOLE_BTN_TSK, BT_TSK, BT_QOS_TSK, EV3_INIT_TASK, PLATFORM_BUSY_TASK, APP_INIT_TASK, MAIN_TASK
+	LOGTASK, BRICK_BTN_TSK, LCD_REFRESH_TSK, CONSOLE_BTN_TSK, BT_TSK, BT_QOS_TSK, USBMSC_TSK, EV3_INIT_TASK, PLATFORM_BUSY_TASK, EV3RT_LOGTASK, APP_INIT_TASK, MAIN_TASK
 };
 
 /*
  *  Semaphore Functions
  */
 
-#define TNUM_SSEMID	12
+#define TNUM_SSEMID	14
 
 const ID _kernel_tmax_semid = (TMIN_SEMID + TNUM_SEMID - 1);
 const ID _kernel_tmax_ssemid = (TMIN_SEMID + TNUM_SSEMID - 1);
 
 	const SEMINIB _kernel_seminib_table[TNUM_SSEMID] = {
+	{ (TA_TPRI), (0), (1), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
+	{ (TA_TPRI), (1), (1), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
+	{ (TA_TPRI), (0), (1), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
+	{ (TA_TPRI), (1), (1), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
+	{ (TA_TPRI), (0), (1), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
+	{ (TA_TPRI), (1), (1), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
+	{ (TA_TPRI), (0), (1), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
+	{ (TA_TPRI), (1), (1), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
 	{ (TA_NULL), (1), (1), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
-	{ (TA_TPRI), (0), (1), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
-	{ (TA_TPRI), (1), (1), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
-	{ (TA_TPRI), (0), (1), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
-	{ (TA_TPRI), (1), (1), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
-	{ (TA_TPRI), (0), (1), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
-	{ (TA_TPRI), (1), (1), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
 	{ (TA_NULL), (1), (1), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
 	{ (TA_NULL), (0), (1), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
 	{ (TA_NULL), (1), (1), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
@@ -117,7 +124,7 @@ const ID _kernel_tmax_sflgid = (TMIN_FLGID + TNUM_SFLGID - 1);
 const FLGINIB _kernel_flginib_table[TNUM_SFLGID] = {
 	{ (TA_CLR), (0), { TACP_KERNEL, TACP_SHARED, TACP_KERNEL, TACP_KERNEL }},
 	{ (TA_CLR), (0), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
-	{ (TA_NULL), (0), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }}
+	{ (TA_CLR), (0), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }}
 };
 
 FLGINIB _kernel_aflginib_table[16];
@@ -135,9 +142,9 @@ const ID _kernel_tmax_sdtqid = (TMIN_DTQID + TNUM_SDTQID - 1);
 
 TOPPERS_EMPTY_LABEL(const DTQINIB, _kernel_dtqinib_table);
 
-TOPPERS_EMPTY_LABEL(DTQINIB, _kernel_adtqinib_table);
+DTQINIB _kernel_adtqinib_table[16];
 
-TOPPERS_EMPTY_LABEL(DTQCB, _kernel_dtqcb_table);
+DTQCB _kernel_dtqcb_table[TNUM_DTQID];
 
 /*
  *  Priority Dataqueue Functions
@@ -150,15 +157,15 @@ const ID _kernel_tmax_spdqid = (TMIN_PDQID + TNUM_SPDQID - 1);
 
 TOPPERS_EMPTY_LABEL(const PDQINIB, _kernel_pdqinib_table);
 
-TOPPERS_EMPTY_LABEL(PDQINIB, _kernel_apdqinib_table);
+PDQINIB _kernel_apdqinib_table[16];
 
-TOPPERS_EMPTY_LABEL(PDQCB, _kernel_pdqcb_table);
+PDQCB _kernel_pdqcb_table[TNUM_PDQID];
 
 /*
  *  Mutex Functions
  */
 
-#define TNUM_SMTXID	3
+#define TNUM_SMTXID	4
 
 const ID _kernel_tmax_mtxid = (TMIN_MTXID + TNUM_MTXID - 1);
 const ID _kernel_tmax_smtxid = (TMIN_MTXID + TNUM_SMTXID - 1);
@@ -166,10 +173,11 @@ const ID _kernel_tmax_smtxid = (TMIN_MTXID + TNUM_SMTXID - 1);
 const MTXINIB _kernel_mtxinib_table[TNUM_SMTXID] = {
 	{ (TA_NULL), INT_PRIORITY(0), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
 	{ (TA_NULL), INT_PRIORITY(0), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
+	{ (TA_NULL), INT_PRIORITY(0), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
 	{ (TA_NULL), INT_PRIORITY(0), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }}
 };
 
-TOPPERS_EMPTY_LABEL(MTXINIB, _kernel_amtxinib_table);
+MTXINIB _kernel_amtxinib_table[16];
 
 MTXCB _kernel_mtxcb_table[TNUM_MTXID];
 
@@ -192,14 +200,16 @@ TOPPERS_EMPTY_LABEL(MPFCB, _kernel_mpfcb_table);
  *  Cyclic Handler Functions
  */
 
-#define TNUM_SCYCID	2
+#define TNUM_SCYCID	4
 
 const ID _kernel_tmax_cycid = (TMIN_CYCID + TNUM_CYCID - 1);
 const ID _kernel_tmax_scycid = (TMIN_CYCID + TNUM_SCYCID - 1);
 
 const CYCINIB _kernel_cycinib_table[TNUM_SCYCID] = {
 	{ (TA_STA), (intptr_t)(NULL), (bt_sio_cyc), (5), (1), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
-	{ (TA_NULL), (intptr_t)(0), (brick_button_cyc), (10), (0), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }}
+	{ (TA_STA), (intptr_t)(&dbsio_spp_master_test), (dbsio_cyc), (5), (1), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
+	{ (TA_NULL), (intptr_t)(0), (brick_button_cyc), (10), (0), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
+	{ (TA_NULL), (intptr_t)(0), (bluetooth_dma_cyc), (1), (0), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }}
 };
 
 CYCINIB _kernel_acycinib_table[16];
@@ -210,13 +220,12 @@ CYCCB _kernel_cyccb_table[TNUM_CYCID];
  *  Alarm Handler Functions
  */
 
-#define TNUM_SALMID	2
+#define TNUM_SALMID	1
 
 const ID _kernel_tmax_almid = (TMIN_ALMID + TNUM_ALMID - 1);
 const ID _kernel_tmax_salmid = (TMIN_ALMID + TNUM_SALMID - 1);
 
 const ALMINIB _kernel_alminib_table[TNUM_SALMID] = {
-	{ (TA_NULL), (intptr_t)(NULL), (bt_rcv_alm), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }},
 	{ (TA_NULL), (intptr_t)(0), (sound_device_stop), { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TACP_KERNEL }}
 };
 
@@ -234,13 +243,13 @@ const ACVCT _kernel_sysstat_acvct = { TACP_KERNEL, TACP_KERNEL, TACP_KERNEL, TAC
  *  Interrupt Management Functions
  */
 
-const uint_t _kernel_tnum_isr_queue = 17;
+const uint_t _kernel_tnum_isr_queue = 16;
 
-const ISR_ENTRY _kernel_isr_queue_list[17] = {
+const ISR_ENTRY _kernel_isr_queue_list[16] = {
 	{ 3, &(_kernel_isr_queue_table[0]) },
 	{ 4, &(_kernel_isr_queue_table[1]) },
 	{ 11, &(_kernel_isr_queue_table[2]) },
-	{ 16, &(_kernel_isr_queue_table[3]) },
+	{ 12, &(_kernel_isr_queue_table[3]) },
 	{ 21, &(_kernel_isr_queue_table[4]) },
 	{ 25, &(_kernel_isr_queue_table[5]) },
 	{ 42, &(_kernel_isr_queue_table[6]) },
@@ -252,11 +261,10 @@ const ISR_ENTRY _kernel_isr_queue_list[17] = {
 	{ 48, &(_kernel_isr_queue_table[12]) },
 	{ 49, &(_kernel_isr_queue_table[13]) },
 	{ 50, &(_kernel_isr_queue_table[14]) },
-	{ 53, &(_kernel_isr_queue_table[15]) },
-	{ 56, &(_kernel_isr_queue_table[16]) }
+	{ 53, &(_kernel_isr_queue_table[15]) }
 };
 
-QUEUE _kernel_isr_queue_table[17];
+QUEUE _kernel_isr_queue_table[16];
 
 void
 _kernel_inthdr_3(void)
@@ -283,11 +291,11 @@ _kernel_inthdr_11(void)
 }
 
 void
-_kernel_inthdr_16(void)
+_kernel_inthdr_12(void)
 {
-	i_begin_int(16);
+	i_begin_int(12);
 	_kernel_call_isr(&(_kernel_isr_queue_table[3]));
-	i_end_int(16);
+	i_end_int(12);
 }
 
 void
@@ -386,16 +394,8 @@ _kernel_inthdr_53(void)
 	i_end_int(53);
 }
 
-void
-_kernel_inthdr_56(void)
-{
-	i_begin_int(56);
-	_kernel_call_isr(&(_kernel_isr_queue_table[16]));
-	i_end_int(56);
-}
-
-#define TNUM_SISR	18
-#define TNUM_ISR	19
+#define TNUM_SISR	17
+#define TNUM_ISR	18
 
 const ID _kernel_tmax_isrid = (TMIN_ISRID + TNUM_ISRID - 1);
 const uint_t _kernel_tnum_sisr = TNUM_SISR;
@@ -404,7 +404,6 @@ const ISRINIB _kernel_sisrinib_table[TNUM_SISR] = {
 	{ (TA_NULL), (0), (INTNO_TIMER), (&(_kernel_isr_queue_table[4])), (target_timer_isr), (TMIN_ISRPRI) },
 	{ (TA_NULL), (0), (INTNO_TIMER), (&(_kernel_isr_queue_table[4])), (hires_cyc_isr), (TMIN_ISRPRI) },
 	{ (TA_NULL), (0), (INTNO_TIMER), (&(_kernel_isr_queue_table[4])), (hires_alm_isr), (TMIN_ISRPRI) },
-	{ (TA_NULL), (0), (SYS_INT_MMCSDINT0), (&(_kernel_isr_queue_table[3])), (MMCSDIsr), (TMIN_ISRPRI) },
 	{ (TA_NULL), (0), (GPIO_B0INT), (&(_kernel_isr_queue_table[6])), (gpio_irq_dispatcher), (TMAX_ISRPRI) },
 	{ (TA_NULL), (1), (GPIO_B1INT), (&(_kernel_isr_queue_table[7])), (gpio_irq_dispatcher), (TMAX_ISRPRI) },
 	{ (TA_NULL), (2), (GPIO_B2INT), (&(_kernel_isr_queue_table[8])), (gpio_irq_dispatcher), (TMAX_ISRPRI) },
@@ -414,11 +413,11 @@ const ISRINIB _kernel_sisrinib_table[TNUM_SISR] = {
 	{ (TA_NULL), (6), (GPIO_B6INT), (&(_kernel_isr_queue_table[12])), (gpio_irq_dispatcher), (TMAX_ISRPRI) },
 	{ (TA_NULL), (7), (GPIO_B7INT), (&(_kernel_isr_queue_table[13])), (gpio_irq_dispatcher), (TMAX_ISRPRI) },
 	{ (TA_NULL), (8), (GPIO_B8INT), (&(_kernel_isr_queue_table[14])), (gpio_irq_dispatcher), (TMAX_ISRPRI) },
-	{ (TA_NULL), (0), (LCD_SPI_INT), (&(_kernel_isr_queue_table[16])), (lcd_spi_isr), (TMIN_ISRPRI) },
 	{ (TA_NULL), (INTNO_UART_PORT2), (INTNO_UART_PORT2), (&(_kernel_isr_queue_table[5])), (uart_sensor_isr), (TMIN_ISRPRI) },
 	{ (TA_NULL), (INTNO_UART_PORT3), (INTNO_UART_PORT3), (&(_kernel_isr_queue_table[1])), (uart_sensor_isr), (TMIN_ISRPRI) },
 	{ (TA_NULL), (INTNO_UART_PORT4), (INTNO_UART_PORT4), (&(_kernel_isr_queue_table[0])), (uart_sensor_isr), (TMIN_ISRPRI) },
-	{ (TA_NULL), (0), (SYS_INT_CCINT0), (&(_kernel_isr_queue_table[2])), (EDMA30ComplIsr), (TMIN_ISRPRI) }
+	{ (TA_NULL), (0), (SYS_INT_CCINT0), (&(_kernel_isr_queue_table[2])), (EDMA30ComplIsr), (TMIN_ISRPRI) },
+	{ (TA_NULL), (SYS_INT_CCERRINT), (SYS_INT_CCERRINT), (&(_kernel_isr_queue_table[3])), (EDMA30CCErrIsr), (TMIN_ISRPRI) }
 };
 
 ISRINIB _kernel_aisrinib_table[1];
@@ -428,11 +427,12 @@ ISRCB _kernel_isrcb_table[TNUM_ISR];
 #define TNUM_INHNO	18
 const uint_t _kernel_tnum_inhno = TNUM_INHNO;
 
-INTHDR_ENTRY(UART2_INT, 61, bluetooth_uart_isr)
+INTHDR_ENTRY(INTNO_I2C_TIMER, 23, inthdr_i2c_timer)
+INTHDR_ENTRY(SYS_INT_USB0, 58, USB0DeviceIntHandler)
 INTHDR_ENTRY(3, 3, _kernel_inthdr_3)
 INTHDR_ENTRY(4, 4, _kernel_inthdr_4)
 INTHDR_ENTRY(11, 11, _kernel_inthdr_11)
-INTHDR_ENTRY(16, 16, _kernel_inthdr_16)
+INTHDR_ENTRY(12, 12, _kernel_inthdr_12)
 INTHDR_ENTRY(21, 21, _kernel_inthdr_21)
 INTHDR_ENTRY(25, 25, _kernel_inthdr_25)
 INTHDR_ENTRY(42, 42, _kernel_inthdr_42)
@@ -445,14 +445,14 @@ INTHDR_ENTRY(48, 48, _kernel_inthdr_48)
 INTHDR_ENTRY(49, 49, _kernel_inthdr_49)
 INTHDR_ENTRY(50, 50, _kernel_inthdr_50)
 INTHDR_ENTRY(53, 53, _kernel_inthdr_53)
-INTHDR_ENTRY(56, 56, _kernel_inthdr_56)
 
 const INHINIB _kernel_inhinib_table[TNUM_INHNO] = {
-	{ (UART2_INT), (TA_NULL), (FP)(INT_ENTRY(UART2_INT, bluetooth_uart_isr)) },
+	{ (INTNO_I2C_TIMER), (TA_NULL), (FP)(INT_ENTRY(INTNO_I2C_TIMER, inthdr_i2c_timer)) },
+	{ (SYS_INT_USB0), (TA_NULL), (FP)(INT_ENTRY(SYS_INT_USB0, USB0DeviceIntHandler)) },
 	{ (3), (TA_NULL), (FP)(INT_ENTRY(3, _kernel_inthdr_3)) },
 	{ (4), (TA_NULL), (FP)(INT_ENTRY(4, _kernel_inthdr_4)) },
 	{ (11), (TA_NULL), (FP)(INT_ENTRY(11, _kernel_inthdr_11)) },
-	{ (16), (TA_NULL), (FP)(INT_ENTRY(16, _kernel_inthdr_16)) },
+	{ (12), (TA_NULL), (FP)(INT_ENTRY(12, _kernel_inthdr_12)) },
 	{ (21), (TA_NULL), (FP)(INT_ENTRY(21, _kernel_inthdr_21)) },
 	{ (25), (TA_NULL), (FP)(INT_ENTRY(25, _kernel_inthdr_25)) },
 	{ (42), (TA_NULL), (FP)(INT_ENTRY(42, _kernel_inthdr_42)) },
@@ -464,8 +464,7 @@ const INHINIB _kernel_inhinib_table[TNUM_INHNO] = {
 	{ (48), (TA_NULL), (FP)(INT_ENTRY(48, _kernel_inthdr_48)) },
 	{ (49), (TA_NULL), (FP)(INT_ENTRY(49, _kernel_inthdr_49)) },
 	{ (50), (TA_NULL), (FP)(INT_ENTRY(50, _kernel_inthdr_50)) },
-	{ (53), (TA_NULL), (FP)(INT_ENTRY(53, _kernel_inthdr_53)) },
-	{ (56), (TA_NULL), (FP)(INT_ENTRY(56, _kernel_inthdr_56)) }
+	{ (53), (TA_NULL), (FP)(INT_ENTRY(53, _kernel_inthdr_53)) }
 };
 
 #define TNUM_INTNO	18
@@ -473,7 +472,6 @@ const uint_t _kernel_tnum_intno = TNUM_INTNO;
 
 const INTINIB _kernel_intinib_table[TNUM_INTNO] = {
 	{ (INTNO_TIMER), (TA_ENAINT|INTATR_TIMER), (INTPRI_TIMER) },
-	{ (SYS_INT_MMCSDINT0), (TA_ENAINT), (TMIN_INTPRI) },
 	{ (GPIO_B0INT), (TA_ENAINT), (TMIN_INTPRI) },
 	{ (GPIO_B1INT), (TA_ENAINT), (TMIN_INTPRI) },
 	{ (GPIO_B2INT), (TA_ENAINT), (TMIN_INTPRI) },
@@ -483,13 +481,14 @@ const INTINIB _kernel_intinib_table[TNUM_INTNO] = {
 	{ (GPIO_B6INT), (TA_ENAINT), (TMIN_INTPRI) },
 	{ (GPIO_B7INT), (TA_ENAINT), (TMIN_INTPRI) },
 	{ (GPIO_B8INT), (TA_ENAINT), (TMIN_INTPRI) },
-	{ (LCD_SPI_INT), (TA_ENAINT), (INTPRI_LCD_SPI) },
+	{ (INTNO_I2C_TIMER), (TA_ENAINT), (INTPRI_I2C_TIMER) },
 	{ (INTNO_UART_PORT1), (TA_NULL), (INTPRI_UART_PORT1) },
 	{ (INTNO_UART_PORT2), (TA_NULL), (INTPRI_UART_PORT2) },
 	{ (INTNO_UART_PORT3), (TA_NULL), (INTPRI_UART_PORT3) },
 	{ (INTNO_UART_PORT4), (TA_NULL), (INTPRI_UART_PORT4) },
 	{ (SYS_INT_CCINT0), (TA_ENAINT), (TMIN_INTPRI) },
-	{ (UART2_INT), (TA_ENAINT), (INTPRI_BLUETOOTH) }
+	{ (SYS_INT_CCERRINT), (TA_ENAINT), (TMIN_INTPRI) },
+	{ (SYS_INT_USB0), (TA_ENAINT), (INTPRI_USBMSC) }
 };
 
 /*
@@ -542,7 +541,9 @@ const SVCINIB _kernel_svcinib_table[TMAX_FNCD] = {
 	{ (EXTSVC)(extsvc_newlib_lseek_r), 1024 },
 	{ (EXTSVC)(extsvc_filesys_opendir), 1024 },
 	{ (EXTSVC)(extsvc_filesys_readdir), 1024 },
-	{ (EXTSVC)(extsvc_filesys_closedir), 1024 }
+	{ (EXTSVC)(extsvc_filesys_closedir), 1024 },
+	{ (EXTSVC)(extsvc_start_i2c_transaction), 1024 },
+	{ (EXTSVC)(extsvc_spp_master_test_connect), 1024 }
 };
 
 /*
@@ -597,6 +598,8 @@ _kernel_initialize_object(void)
 	_kernel_initialize_task();
 	_kernel_initialize_semaphore();
 	_kernel_initialize_eventflag();
+	_kernel_initialize_dataqueue();
+	_kernel_initialize_pridataq();
 	_kernel_initialize_mutex();
 	_kernel_initialize_cyclic();
 	_kernel_initialize_alarm();
@@ -616,16 +619,17 @@ _kernel_call_inirtn(void)
 	((INIRTN)(target_timer_initialize))((intptr_t)(0));
 	((INIRTN)(syslog_initialize))((intptr_t)(0));
 	((INIRTN)(print_banner))((intptr_t)(0));
-	((INIRTN)(sio_initialize))((intptr_t)(NULL));
 	((INIRTN)(serial_initialize))((intptr_t)(0));
 	((INIRTN)(initialize_brick_dri))((intptr_t)(NULL));
 	((INIRTN)(initialize_analog_dri))((intptr_t)(0));
 	((INIRTN)(initialize_motor_dri))((intptr_t)(0));
 	((INIRTN)(initialize_newlib_dri))((intptr_t)(0));
+	((INIRTN)(initialize_i2c_dri))((intptr_t)(0));
 	((INIRTN)(initialize_uart_dri))((intptr_t)(0));
 	((INIRTN)(soc_edma3_initialize))((intptr_t)(0));
 	((INIRTN)(initialize_sound_dri))((intptr_t)(0));
 	((INIRTN)(initialize_bluetooth_dri))((intptr_t)(NULL));
+	((INIRTN)(initialize_usbmsc_dri))((intptr_t)(0));
 }
 
 /*
@@ -674,18 +678,18 @@ const uint8_t _kernel_cfgint_tbl[101] = {
  	0U, /* 0x009 */
  	0U, /* 0x00a */
  	1U, /* 0x00b */
- 	0U, /* 0x00c */
+ 	1U, /* 0x00c */
  	0U, /* 0x00d */
  	0U, /* 0x00e */
  	0U, /* 0x00f */
- 	1U, /* 0x010 */
+ 	0U, /* 0x010 */
  	0U, /* 0x011 */
  	0U, /* 0x012 */
  	0U, /* 0x013 */
  	0U, /* 0x014 */
  	1U, /* 0x015 */
  	0U, /* 0x016 */
- 	0U, /* 0x017 */
+ 	1U, /* 0x017 */
  	0U, /* 0x018 */
  	1U, /* 0x019 */
  	0U, /* 0x01a */
@@ -718,12 +722,12 @@ const uint8_t _kernel_cfgint_tbl[101] = {
  	1U, /* 0x035 */
  	0U, /* 0x036 */
  	0U, /* 0x037 */
- 	1U, /* 0x038 */
+ 	0U, /* 0x038 */
  	0U, /* 0x039 */
- 	0U, /* 0x03a */
+ 	1U, /* 0x03a */
  	0U, /* 0x03b */
  	0U, /* 0x03c */
- 	1U, /* 0x03d */
+ 	0U, /* 0x03d */
  	0U, /* 0x03e */
  	0U, /* 0x03f */
  	0U, /* 0x040 */

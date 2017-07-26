@@ -148,12 +148,14 @@ extern void free_irq(unsigned int, void *);
 
 struct device;
 
-extern int devm_request_threaded_irq(struct device *dev, unsigned int irq,
+extern int __must_check
+devm_request_threaded_irq(struct device *dev, unsigned int irq,
 			  irq_handler_t handler, irq_handler_t thread_fn,
 			  unsigned long irqflags, const char *devname,
 			  void *dev_id);
 
-static inline int devm_request_irq(struct device *dev, unsigned int irq, irq_handler_t handler,
+static inline int __must_check
+devm_request_irq(struct device *dev, unsigned int irq, irq_handler_t handler,
 		 unsigned long irqflags, const char *devname, void *dev_id)
 {
 	return devm_request_threaded_irq(dev, irq, handler, NULL, irqflags,

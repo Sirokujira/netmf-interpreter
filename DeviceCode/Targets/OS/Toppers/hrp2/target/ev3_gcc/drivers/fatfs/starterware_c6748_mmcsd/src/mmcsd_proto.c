@@ -295,6 +295,8 @@ unsigned int MMCSDTranSpeedSet(mmcsdCtrlInfo *ctrl)
   }
 
   cmdStatus = ctrl->xferStatusGet(ctrl);
+#define MMCSD_MMCST0_DATDNE     (0x00000001u) // TODO: include 'hw_mmcsd?'
+  ctrl->waitMMCST0(ctrl, MMCSD_MMCST0_DATDNE);
 
   if (cmdStatus == 0)
   {
@@ -393,7 +395,8 @@ unsigned int MMCSDStopCmdSend(mmcsdCtrlInfo *ctrl)
   cmd.flags = SD_CMDRSP_R1 | SD_CMDRSP_BUSY;
   cmd.arg   = 0;
 
-  MMCSDCmdSend(ctrl, &cmd);
+  status = MMCSDCmdSend(ctrl, &cmd);
+  assert(status == 1);
 
 #if 0
   /*TODO: xferStatusGet() expects a DMA transfer in progress. */
@@ -700,7 +703,7 @@ static unsigned int MMCSDCardGetCSD(mmcsdCtrlInfo *ctrl)
 
     card->tranSpeed = pcsd->tran_speed;
     card->blkLen    = 1 << pcsd->read_bl_len;
-    card->size      = (pcsd->c_size+1)<<19;
+    card->size      = ((uint64_t)(pcsd->c_size+1))<<19;
     card->nBlks     = (card->size) >> pcsd->read_bl_len;
 
     card->tran_speed   = tran_speed_to_freq(pcsd->tran_speed);
@@ -735,9 +738,11 @@ static unsigned int MMCSDCardGetCSD(mmcsdCtrlInfo *ctrl)
     if(card->blkLen > MMCSD_MAX_BLOCK_LEN)
       card->blkLen = MMCSD_MAX_BLOCK_LEN;
   }
+#if defined(DEBUG_MMCSD)
+  syslog(LOG_NOTICE, "CSD: ver=%d,speed=%d,blklen=%d,size=%u MiB,blks=%u",
+          csd_ver, card->tranSpeed, card->blkLen, (uint32_t)(card->size >> 20), card->nBlks);
+#endif
 #if DEBUG_PRINT
-  UARTprintf("CSD: ver=%d,speed=%d,blklen=%d,size=%u,blks=%d\r\n",
-             csd_ver, card->tranSpeed,card->blkLen,card->size,card->nBlks);
   UARTprintf("CSD: trans_speed=%u Hz,read_bl_len=%d bytes,write_bl_len=%d bytes\r\n",
              card->tran_speed, card->read_bl_len, card->write_bl_len);
 #endif
@@ -1070,9 +1075,8 @@ static unsigned int MMCSDCardGetSCR(mmcsdCtrlInfo *ctrl)
   card->sd_ver   = scr.sd_spec;
   card->busWidth = scr.sd_bus_widths;
 
-#if DEBUG_PRINT
-  UARTprintf("raw_scr=%08x,%08x\r\n", card->raw_scr[1], card->raw_scr[0]);
-  UARTprintf("sd_ver=%d,busWidth=%d\r\n", card->sd_ver, card->busWidth);
+#if defined(DEBUG_MMSCD)
+  syslog(LOG_NOTICE, "%s():raw_scr=%08x %08x, sd_ver=%d, busWidth=%d", __FUNCTION__, card->raw_scr[1], card->raw_scr[0], card->sd_ver, card->busWidth);
 #endif
 
   return(status);
@@ -1145,6 +1149,7 @@ unsigned int MMCSDCardInit(mmcsdCtrlInfo *ctrl)
     status = MMCSDCardSendOPCond(ctrl);
     if (status == 0) return 0;
 
+#if 0
     while(1) { // TODO: support multiple cards correctly -- ertl-liyixiao
     status = MMCSDCardGetCID(ctrl);
     if (status == 0) break;
@@ -1152,12 +1157,12 @@ unsigned int MMCSDCardInit(mmcsdCtrlInfo *ctrl)
     status = MMCSDCardGetRCA(ctrl);
     if (status == 0) { assert(false); return 0; }
     }
-#if 0
+#else
     status = MMCSDCardGetCID(ctrl);
-    if (status == 0) return 0;
+    if (status == 0) { assert(false); return 0;}
 
     status = MMCSDCardGetRCA(ctrl);
-    if (status == 0) return 0;
+    if (status == 0) { assert(false); return 0;}
 #endif
 
     status =  MMCSDCardGetCSD(ctrl);

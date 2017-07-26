@@ -15,6 +15,8 @@
 #include "../app/common/module_common.h"
 #include "elf32.h"
 #include "platform_interface_layer.h"
+#include "kernel/kernel_impl.h"
+#include "kernel/dataqueue.h"
 
 ////// EV3RT specific part ////////////
 void destroy_all_ev3cyc();
@@ -150,7 +152,8 @@ handle_module_cfg_tab(T_LDM_CAN *ldm_can) {
             assert(probe_ldm_memory(ent->argument, sizeof(T_CSEM), ldm_can));
             assert(probe_ldm_memory(ent->retvalptr, sizeof(ID), ldm_can));
             T_CSEM pk_csem = *(T_CSEM*)ent->argument;
-            // TODO: check pk_csem
+			assert(get_atrdomid(pk_csem.sematr) == TDOM_SELF);             // Check original DOMID
+			pk_csem.sematr |= TA_DOM(ldm_can->domid);                      // Set new DOMID
             ercd = acre_sem(&pk_csem);
             assert(ercd > 0);
             if(ercd > 0) {
@@ -170,7 +173,8 @@ handle_module_cfg_tab(T_LDM_CAN *ldm_can) {
             assert(probe_ldm_memory(ent->argument, sizeof(T_CFLG), ldm_can));
             assert(probe_ldm_memory(ent->retvalptr, sizeof(ID), ldm_can));
             T_CFLG pk_cflg = *(T_CFLG*)ent->argument;
-            // TODO: check pk_csem
+			assert(get_atrdomid(pk_cflg.flgatr) == TDOM_SELF);             // Check original DOMID
+			pk_cflg.flgatr |= TA_DOM(ldm_can->domid);                      // Set new DOMID
             ercd = acre_flg(&pk_cflg);
             assert(ercd > 0);
             if(ercd > 0) {
@@ -179,6 +183,71 @@ handle_module_cfg_tab(T_LDM_CAN *ldm_can) {
 
 #if defined(DEBUG) || 1
                 syslog(LOG_NOTICE, "%s(): Event flag (id = %d) is created.", __FUNCTION__, *(ID*)ent->retvalptr);
+#endif
+
+                ercd = E_OK;
+            }
+            break; }
+
+        case TSFN_CRE_DTQ: {
+            syslog(LOG_DEBUG, "%s(): MOD_CFG_ENTRY TSFN_CRE_DTQ", __FUNCTION__);
+            assert(probe_ldm_memory(ent->argument, sizeof(T_CDTQ), ldm_can));
+            assert(probe_ldm_memory(ent->retvalptr, sizeof(ID), ldm_can));
+            T_CDTQ pk_cdtq = *(T_CDTQ*)ent->argument;
+			assert(pk_cdtq.dtqmb == NULL || probe_ldm_memory(pk_cdtq.dtqmb, sizeof(DTQMB) * pk_cdtq.dtqcnt, ldm_can)); // Check memory
+			assert(get_atrdomid(pk_cdtq.dtqatr) == TDOM_SELF);             // Check original DOMID
+			pk_cdtq.dtqatr |= TA_DOM(ldm_can->domid);                      // Set new DOMID
+            ercd = acre_dtq(&pk_cdtq);
+            assert(ercd > 0);
+            if(ercd > 0) {
+                // Store ID
+                *(ID*)ent->retvalptr = ercd;
+
+#if defined(DEBUG) || 1
+                syslog(LOG_NOTICE, "%s(): Data queue (id = %d) is created.", __FUNCTION__, *(ID*)ent->retvalptr);
+#endif
+
+                ercd = E_OK;
+            }
+            break; }
+
+        case TSFN_CRE_PDQ: {
+            syslog(LOG_DEBUG, "%s(): MOD_CFG_ENTRY TSFN_CRE_PDQ", __FUNCTION__);
+            assert(probe_ldm_memory(ent->argument, sizeof(T_CPDQ), ldm_can));
+            assert(probe_ldm_memory(ent->retvalptr, sizeof(ID), ldm_can));
+            T_CPDQ pk_cpdq = *(T_CPDQ*)ent->argument;
+			assert(pk_cpdq.pdqmb == NULL); // Check memory
+			assert(get_atrdomid(pk_cpdq.pdqatr) == TDOM_SELF);             // Check original DOMID
+			pk_cpdq.pdqatr |= TA_DOM(ldm_can->domid);                      // Set new DOMID
+            ercd = acre_pdq(&pk_cpdq);
+            assert(ercd > 0);
+            if(ercd > 0) {
+                // Store ID
+                *(ID*)ent->retvalptr = ercd;
+
+#if defined(DEBUG) || 1
+                syslog(LOG_NOTICE, "%s(): Priority data queue (id = %d) is created.", __FUNCTION__, *(ID*)ent->retvalptr);
+#endif
+
+                ercd = E_OK;
+            }
+            break; }
+
+        case TSFN_CRE_MTX: {
+            syslog(LOG_DEBUG, "%s(): MOD_CFG_ENTRY TSFN_CRE_MTX", __FUNCTION__);
+            assert(probe_ldm_memory(ent->argument, sizeof(T_CMTX), ldm_can));
+            assert(probe_ldm_memory(ent->retvalptr, sizeof(ID), ldm_can));
+            T_CMTX pk_cmtx = *(T_CMTX*)ent->argument;
+			assert(get_atrdomid(pk_cmtx.mtxatr) == TDOM_SELF);             // Check original DOMID
+			pk_cmtx.mtxatr |= TA_DOM(ldm_can->domid);                      // Set new DOMID
+            ercd = acre_mtx(&pk_cmtx);
+            assert(ercd > 0);
+            if(ercd > 0) {
+                // Store ID
+                *(ID*)ent->retvalptr = ercd;
+
+#if defined(DEBUG) || 1
+                syslog(LOG_NOTICE, "%s(): Mutex (id = %d) is created.", __FUNCTION__, *(ID*)ent->retvalptr);
 #endif
 
                 ercd = E_OK;
@@ -207,6 +276,15 @@ handle_module_cfg_tab(T_LDM_CAN *ldm_can) {
             	assert(ercd == E_OK);
         	}
             break; }
+
+        case TSFN_CRE_SEM:
+        case TSFN_CRE_FLG:
+        case TSFN_CRE_DTQ:
+        case TSFN_CRE_PDQ:
+        case TSFN_CRE_MTX:
+            // Do nothing
+            break;
+
         default:
             syslog(LOG_ERROR, "%s(): Unsupported static function code %d.", __FUNCTION__, ent->sfncd);
         }
@@ -250,7 +328,7 @@ ER _dmloader_ins_ldm(const uint8_t *mod_data, uint32_t mod_data_sz, ID ldm_can_i
     uint32_t mod_pil_version = *(uint32_t*)ctx.sym__module_pil_version;
     if (PIL_VERSION != mod_pil_version) {
     	syslog(LOG_ERROR, "%s(): Wrong PIL version. FW PIL VER: %d, APP PIL VER: %d.", __FUNCTION__, PIL_VERSION, mod_pil_version);
-    	ercd = E_PAR;
+    	ercd = E_NOSPT;
     	goto error_exit;
     }
 
@@ -319,6 +397,27 @@ ER _dmloader_rmv_ldm(ID ldm_can_id) {
         	syslog(LOG_DEBUG, "%s(): RMV MOD_CFG_ENTRY TSFN_CRE_FLG", __FUNCTION__);
         	ID flgid = *(ID*)ent->retvalptr;
         	ercd = del_flg(flgid);
+        	assert(ercd == E_OK);
+        	break; }
+
+        case TSFN_CRE_DTQ: {
+        	syslog(LOG_DEBUG, "%s(): RMV MOD_CFG_ENTRY TSFN_CRE_DTQ", __FUNCTION__);
+        	ID dtqid = *(ID*)ent->retvalptr;
+        	ercd = del_dtq(dtqid);
+        	assert(ercd == E_OK);
+        	break; }
+
+        case TSFN_CRE_PDQ: {
+        	syslog(LOG_DEBUG, "%s(): RMV MOD_CFG_ENTRY TSFN_CRE_PDQ", __FUNCTION__);
+        	ID pdqid = *(ID*)ent->retvalptr;
+        	ercd = del_pdq(pdqid);
+        	assert(ercd == E_OK);
+        	break; }
+
+        case TSFN_CRE_MTX: {
+        	syslog(LOG_DEBUG, "%s(): RMV MOD_CFG_ENTRY TSFN_CRE_MTX", __FUNCTION__);
+        	ID mtxid = *(ID*)ent->retvalptr;
+        	ercd = del_mtx(mtxid);
         	assert(ercd == E_OK);
         	break; }
 

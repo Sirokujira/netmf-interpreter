@@ -4,6 +4,8 @@ $FILE "module_cfg.c"$
 #include "target_config.h"$NL$
 #include "platform_interface_layer.h"$NL$
 $INCLUDES$
+$FILE "module_cfg.h"$
+#pragma once
 
 $tnum_mod_cfg_entries = 0$
 
@@ -69,6 +71,9 @@ $ $TRACE(DEFAULT.ACPTN[1])$
 
 $INCLUDE"dmloader_semaphore.tf"$
 $INCLUDE"dmloader_eventflag.tf"$
+$INCLUDE"dmloader_dataqueue.tf"$
+$INCLUDE"dmloader_pridataqueue.tf"$
+$INCLUDE"dmloader_mutex.tf"$
 
 $ ===========================
 $ Generate '_module_cfg_tab'

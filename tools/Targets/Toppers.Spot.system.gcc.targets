@@ -70,11 +70,6 @@
         <CFLAGS>-fPIC -mno-pic-data-is-text-relative -nostdlib -std=gnu99 -fno-strict-aliasing -mcpu=$(DEVICE_TYPE) -mlittle-endian -D__TARGET_ARCH_ARM=7 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM</CFLAGS>
         <CXXFLAGS>-fPIC -mno-pic-data-is-text-relative -nostdlib -std=gnu11 -fno-strict-aliasing -mcpu=$(DEVICE_TYPE) -mlittle-endian -D__TARGET_ARCH_ARM=7 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM</CXXFLAGS>
         
-        <!-- http://stackoverflow.com/questions/24881/how-do-i-fix-for-loop-initial-declaration-used-outside-c99-mode-gcc-error -->
-        <!-- Toppers Custom -->
-        <CTOPPERS_EV3_WARNING_OFF_FLAGS>-Wimplicit-function-declaration</CTOPPERS_EV3_WARNING_OFF_FLAGS>
-        <CXXTOPPERS_EV3_WARNING_OFF_FLAGS></CXXTOPPERS_EV3_WARNING_OFF_FLAGS>
-        
         <!--
             <FLOATING_POINT_FLAG Condition="'$(INSTRUCTION_SET)'=='thumb'  and'$(PLATFORM_EMULATED_FLOATINGPOINT)'!='true'">-mfloat-abi=soft</FLOATING_POINT_FLAG>
             <FLOATING_POINT_FLAG Condition="'$(INSTRUCTION_SET)'=='thumb2' and'$(PLATFORM_EMULATED_FLOATINGPOINT)'!='true'">-mfloat-abi=soft</FLOATING_POINT_FLAG>
@@ -100,13 +95,15 @@
         <!-- EV3 -->
         <!-- <CTOPPERS_EV3_FLAGS>-g -std=gnu99 -DBUILD_EV3_PLATFORM -DCONFIG_FB_DEFERRED_IO -D__KERNEL__ -DSUPPORT_XLOG_SYS -Dgcc -DALLFUNC -D__TARGET_ARCH_ARM=5 $(CTOPPERS_EV3_WARNING_OFF_FLAGS)</CTOPPERS_EV3_FLAGS> -->
         <!-- GR-PEACH -->
-        <CTOPPERS_EV3_FLAGS>-g -std=gnu99 $(AS_CC_CPP_COMMON_FLAGS) -DCONFIG_FB_DEFERRED_IO -D__KERNEL__ -DSUPPORT_XLOG_SYS -Dgcc -DALLFUNC -D__TARGET_ARCH_ARM=7 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM $(CTOPPERS_EV3_WARNING_OFF_FLAGS)</CTOPPERS_EV3_FLAGS>
+        <!-- <CTOPPERS_EV3_FLAGS>-g -std=gnu99 $(AS_CC_CPP_COMMON_FLAGS) -DCONFIG_FB_DEFERRED_IO -D__KERNEL__ -DSUPPORT_XLOG_SYS -Dgcc -DALLFUNC -D__TARGET_ARCH_ARM=7 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM $(CTOPPERS_EV3_WARNING_OFF_FLAGS)</CTOPPERS_EV3_FLAGS> -->
         <!-- -std=gnu++11 ng? -->
+        <CTOPPERS_EV3_FLAGS>$(CTOPPERS_EV3_FLAGS) $(AS_CC_CPP_COMMON_FLAGS)</CTOPPERS_EV3_FLAGS>
         <!-- EV3 -->
         <!-- <CXXTOPPERS_EV3_FLAGS>-fPIC -mno-pic-data-is-text-relative -nostdlib -fno-strict-aliasing -D__TARGET_ARCH_ARM=5 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM</CXXTOPPERS_EV3_FLAGS> -->
         <!-- GR-PEACH -->
-        <CXXTOPPERS_EV3_FLAGS>$(CC_CPP_COMMON_FLAGS) $(AS_CC_CPP_COMMON_FLAGS) -DCONFIG_FB_DEFERRED_IO -D__KERNEL__ -DSUPPORT_XLOG_SYS -Dgcc -D__TARGET_ARCH_ARM=7 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM $(CXXTOPPERS_EV3_WARNING_OFF_FLAGS)</CXXTOPPERS_EV3_FLAGS>
-        
+        <!-- <CXXTOPPERS_EV3_FLAGS>$(CC_CPP_COMMON_FLAGS) $(AS_CC_CPP_COMMON_FLAGS) -DCONFIG_FB_DEFERRED_IO -D__KERNEL__ -DSUPPORT_XLOG_SYS -Dgcc -D__TARGET_ARCH_ARM=7 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM $(CXXTOPPERS_EV3_WARNING_OFF_FLAGS)</CXXTOPPERS_EV3_FLAGS> -->
+        <CXXTOPPERS_EV3_FLAGS>$(CC_CPP_COMMON_FLAGS) $(AS_CC_CPP_COMMON_FLAGS) $(CXXTOPPERS_EV3_FLAGS)</CXXTOPPERS_EV3_FLAGS>
+
         <!-- Toppers Add -->
         <CC_FLAGS>$(CC_FLAGS) -xc $(CTOPPERS_EV3_FLAGS)</CC_FLAGS>
         <CPP_FLAGS>$(CPP_FLAGS) -xc++ -Wno-invalid-offsetof -fcheck-new $(CXXTOPPERS_EV3_FLAGS)</CPP_FLAGS>
@@ -338,9 +335,9 @@
         <!-- http://researchmap.jp/jo5arkly7-1778110/#_1778110 -->
         <!-- <Exec Condition="Exists('%(AssemblyFiles.FullPath)')" Command="$(CC) -c -mcpu=arm926ej-s -g -mlittle-endian -nostartfiles -O2 -Wall -DTOPPERS_LABEL_ASM -I. -I../include -I../arch -I..  -I../target/raspberry_pi_gcc -I../kernel -I../arch/arm_gcc/ -DALLFUNC -fno-strict-aliasing -o$(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT) %(AssemblyFiles.FullPath)"/> -->
         <!-- EV3 -->
-        <!-- <Exec Condition="Exists('%(AssemblyFiles.FullPath)')" Command="$(CC) -c $(ARCH_TYPE_FLAGS) -g -mlittle-endian -nostartfiles -O2 -Wall -DTOPPERS_LABEL_ASM -D__TARGET_ARCH_ARM=5 $(CC_CPP_INCS) -I$(SRCDIR)/kernel -DALLFUNC -fno-strict-aliasing -o$(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT) %(AssemblyFiles.FullPath)"/> -->
+        <Exec Condition="Exists('%(AssemblyFiles.FullPath)')" Command="$(CC) -c $(ARCH_TYPE_FLAGS) -g -mlittle-endian -nostartfiles -O2 -Wall -DTOPPERS_LABEL_ASM -D__TARGET_ARCH_ARM=5 $(CC_CPP_INCS) -I$(SRCDIR)/kernel -DALLFUNC -fno-strict-aliasing -o$(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT) %(AssemblyFiles.FullPath)"/>
         <!-- GR-PEACH -->
-        <Exec Condition="Exists('%(AssemblyFiles.FullPath)')" Command="$(CC) -c $(ARCH_TYPE_FLAGS) -g -mlittle-endian -nostdlib -O2 -Wall -DTOPPERS_LABEL_ASM -D__TARGET_ARCH_ARM=7 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM $(CC_CPP_INCS) -I$(SRCDIR)/kernel -DALLFUNC -fno-strict-aliasing -o$(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT) %(AssemblyFiles.FullPath)"/>
+        <!-- <Exec Condition="Exists('%(AssemblyFiles.FullPath)')" Command="$(CC) -c $(ARCH_TYPE_FLAGS) -g -mlittle-endian -nostdlib -O2 -Wall -DTOPPERS_LABEL_ASM -D__TARGET_ARCH_ARM=7 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM $(CC_CPP_INCS) -I$(SRCDIR)/kernel -DALLFUNC -fno-strict-aliasing -o$(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT) %(AssemblyFiles.FullPath)"/> -->
     </Target>
     
     <Target Name="DelBuildLib" Condition="'$(OutputType)'=='Library'" Inputs="@(FastCompileCPPFile);@(CPPFiles);@(FastCompileCFile);@(CFiles);@(AssemblyFiles);@(HFiles)" Outputs="@(TargetLib)">
@@ -436,10 +433,10 @@
         <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CC_FLAGS) $(POS_DEPENDENT) -o syslog.$(OBJ_EXT) -c $(SRCDIR)\syssvc\syslog.c" />
         
         <!-- EV3 -->
-        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_EV3_FLAGS) -nostdlib $(CFG1_OUT_LDFLAGS) -o $(CFG1_OUT) $(TOPPERS_START_OBJS) $(CFG1_OUT).$(OBJ_EXT) t_perror.o strerror.o vasyslog.o $(TOPPERS_BUILD_LIBS)"/> -->
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_EV3_FLAGS) -nostdlib $(CFG1_OUT_LDFLAGS) -o $(CFG1_OUT) $(TOPPERS_START_OBJS) $(CFG1_OUT).$(OBJ_EXT) t_perror.o strerror.o vasyslog.o $(TOPPERS_BUILD_LIBS)"/>
         <!-- GR_PEACH -->
         <!-- t_perror.o strerror.o vasyslog.o t_perror.o logtask.o syslog.o -->
-        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_EV3_FLAGS) -nostdlib $(CFG1_OUT_LDFLAGS) -o $(CFG1_OUT) $(TOPPERS_START_OBJS) $(CFG_OBJS)"/>
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_EV3_FLAGS) -nostdlib $(CFG1_OUT_LDFLAGS) -o $(CFG1_OUT) $(TOPPERS_START_OBJS) $(CFG_OBJS)"/> -->
         
         <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(NM) -n $(CFG1_OUT) > $(CFG1_OUT).syms "/>
         <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(FROMELF) -O srec -S $(CFG1_OUT) $(CFG1_OUT).srec "/>
@@ -456,14 +453,14 @@
 
     <!-- same name override target parameters -->
     <!-- EV3 use -->
-    <!--
     <Target Name="kernel_cfg3" Condition="'$(USE_CFG_PASS3)'=='true'" DependsOnTargets="kernel_mem_usePass3;kernel_mem_usePass4;">
     </Target>
-    -->
     
     <!-- GR-PEACH use -->
+    <!--
     <Target Name="kernel_cfg3" Condition="'$(USE_CFG_PASS3)'!='true'" DependsOnTargets="kernel_mem_nousePass3;">
     </Target>
+    -->
     
     <Target Name="kernel_offset">
         <!-- offset.h: $(APPL_CFG) kernel_cfg.timestamp -->
@@ -481,10 +478,9 @@
         <Delete Condition="Exists('$(OBJ_DIR)\$(CFG3_OUT_LDSCRIPT)')" Files="$(OBJ_DIR)\$(CFG3_OUT_LDSCRIPT)" ContinueOnError="true" />
         
         <!-- EV3 -->
-        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(CFG) $(APPL_CFG) ?-pass=3 ?-kernel=$(TOPPERS_OSTYPE) -I$(TARGETDIR)/api -I$(LOADERDIR)/app/common $(CFGINCLUDE) ?-rom-image cfg2_out.srec ?-symbol-table cfg2_out.syms ?-template-file=$(TARGETDIR)/target_opt.tf $(CFG_KERNEL_TABS)" /> -->
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(CFG) $(APPL_CFG) ?-pass=3 ?-kernel=$(TOPPERS_OSTYPE) -I$(TARGETDIR)/api -I$(LOADERDIR)/app/common $(CFGINCLUDE) ?-rom-image cfg2_out.srec ?-symbol-table cfg2_out.syms ?-template-file=$(TARGETDIR)/target_opt.tf $(CFG_KERNEL_TABS)" />
         <!-- GR_PEACH -->
-        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(CFG) $(APPL_CFG) ?-pass=3 ?-kernel=$(TOPPERS_OSTYPE) -I$(TARGETDIR)/api -I$(LOADERDIR)/app/common $(CFGINCLUDE) ?-rom-image $(CFG2_OUT).srec ?-symbol-table $(CFG2_OUT).syms ?-template-file=$(TARGETDIR)/target_check.tf $(CFG_KERNEL_TABS)" /> -->
-        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(CFG) $(APPL_CFG) --pass=3 --kernel=$(TOPPERS_OSTYPE) -I$(TARGETDIR)/api -I$(LOADERDIR)/app/common $(CFGINCLUDE) --rom-image $(CFG2_OUT).srec --symbol-table $(CFG2_OUT).syms --template-file=$(CFG3_OUT_TARGETFILE) $(CFG_KERNEL_TABS)" />
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(CFG) $(APPL_CFG) ?-pass=3 ?-kernel=$(TOPPERS_OSTYPE) -I$(TARGETDIR)/api -I$(LOADERDIR)/app/common $(CFGINCLUDE) ?-rom-image $(CFG2_OUT).srec ?-symbol-table $(CFG2_OUT).syms ?-template-file=$(CFG3_OUT_TARGETFILE) $(CFG_KERNEL_TABS)" /> -->
         
         <!-- <Exec Command= "if ! [ -f $(CFG3_OUT_LDSCRIPT) ]; then sed s/kernel_mem2\.o/kernel_mem3\.o/g &lt; $(CFG2_OUT_LDSCRIPT) > $(CFG3_OUT_LDSCRIPT); fi" /> -->
         <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="sed s/kernel_mem2.o/kernel_mem3.o/g &lt; $(CFG2_OUT_LDSCRIPT) > $(CFG3_OUT_LDSCRIPT)" /> -->
@@ -529,7 +525,7 @@
         <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="if ! [ -f $(LDSCRIPT) ]; then sed s/kernel_mem2\.o/kernel_mem\.o/g &lt; $(CFG2_OUT_LDSCRIPT) > $(LDSCRIPT); fi" /> -->
         <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="sed s/kernel_mem2.o/kernel_mem.o/g &lt; $(CFG2_OUT_LDSCRIPT) > $(LDSCRIPT)" /> -->
         <!-- EV3 only -->
-        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="powershell -NonInteractive -executionpolicy Unrestricted -command &quot;Get-content $(CFG2_OUT_LDSCRIPT) | Foreach-Object {$_ -replace \&quot;kernel_mem2.o&quot;, \&quot;kernel_mem.o\&quot;} | Set-Content $(LDSCRIPT)&quot;"/> -->
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="powershell -NonInteractive -executionpolicy Unrestricted -command &quot;Get-content $(CFG2_OUT_LDSCRIPT) | Foreach-Object {$_ -replace \&quot;kernel_mem2.o&quot;, \&quot;kernel_mem.o\&quot;} | Set-Content $(LDSCRIPT)&quot;"/>
         
         <!-- kernel_mem.c compile -->
         <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_EV3_FLAGS) $(CFG1_OUT_LDFLAGS) -o kernel_mem.o -c kernel_mem.c $(CFG1COMPILEINCLUDE)" /> -->

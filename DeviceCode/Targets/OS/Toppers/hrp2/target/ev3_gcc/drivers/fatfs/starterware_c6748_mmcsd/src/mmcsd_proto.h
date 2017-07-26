@@ -182,7 +182,7 @@ typedef struct _mmcsdCardInfo
   unsigned char highCap;
   unsigned int  blkLen;
   unsigned int  nBlks;
-  unsigned int  size;
+  uint64_t      size;
 
   /* Derived from u-boot */
   unsigned int  read_bl_len;  /* Bytes */
@@ -217,6 +217,7 @@ typedef struct _mmcsdCtrlInfo
   int (*busFreqConfig) (struct _mmcsdCtrlInfo *ctrl, unsigned int busFreq);
   unsigned int (*cmdStatusGet) (struct _mmcsdCtrlInfo *ctrl);
   unsigned int (*xferStatusGet) (struct _mmcsdCtrlInfo *ctrl);
+  unsigned int (*waitMMCST0) (struct _mmcsdCtrlInfo *ctrl, unsigned int pattern);
   void (*xferSetup) (struct _mmcsdCtrlInfo *ctrl, unsigned char rwFlag,
 					       void *ptr, unsigned int blkSize, unsigned int nBlks);
   unsigned int (*cardPresent) (struct _mmcsdCtrlInfo *ctrl);

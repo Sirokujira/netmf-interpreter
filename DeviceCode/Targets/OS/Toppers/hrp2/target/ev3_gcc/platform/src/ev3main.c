@@ -9,16 +9,17 @@
 #include "motor_dri.h"
 #include "uart_dri.h"
 #include "analog_dri.h"
-#include "ev3api.h"
+//#include "ev3api.h"
 
 #include <kernel.h>
 #include <t_stdlib.h>
 #include "syssvc/syslog.h"
 #include "syssvc/serial.h"
+#include "syssvc/logtask.h"
 #include "target_syssvc.h"
 #include "target_serial.h"
 #include "kernel_cfg.h"
-#include "platform.h"
+#include "csl.h"
 
 #define TMAX_DRI_NUM (16)
 static ev3_driver_t drivers[TMAX_DRI_NUM];
@@ -35,12 +36,27 @@ void ev3_main_task(intptr_t exinf) {
     /**
      * Initialize FatFS
      */
+    ter_tsk(LOGTASK); // Kill default logtask, TODO: remove LOGTASK from configuration to save memory?
     initialize_fatfs_dri();
 
     /**
      * Load configurations
      */
+    extern void ev3rt_load_configuration(); // TODO: extern from ev3rt_config.c
     ev3rt_load_configuration();
+
+    if ((*ev3rt_sensor_port_1_disabled)) {
+        T_CISR port1_isr;
+        port1_isr.isratr = TA_NULL;
+        port1_isr.exinf  = INTNO_UART_PORT1;
+        port1_isr.intno  = INTNO_UART_PORT1;
+        port1_isr.isr    = uart_sio_isr;
+        port1_isr.isrpri = TMIN_ISRPRI;
+        ercd = acre_isr(&port1_isr);
+        assert(ercd > 0);
+    }
+    serial_opn_por(SIO_PORT_UART);
+    act_tsk(EV3RT_LOGTASK); // Activate our logtask
 
     /**
      * Initialize LCD
@@ -73,19 +89,24 @@ void ev3_main_task(intptr_t exinf) {
 	platform_soft_reset();
 
 	// Banner
-	syslog(LOG_NOTICE, "");
-	syslog(LOG_NOTICE, "");
-	syslog(LOG_NOTICE, "");
-	syslog(LOG_NOTICE, "");
+    static char version_banner[] = "===========================<=";
+    char *ptr_version = version_banner + sizeof(version_banner) - strlen(CSL_VERSION_STRING) - 4;
+    ptr_version[0] = '>';
+    memcpy(ptr_version + 1, CSL_VERSION_STRING, strlen(CSL_VERSION_STRING));
 	syslog(LOG_NOTICE, "   _____   ______ ___  ______");
-	syslog(LOG_NOTICE, "  / __/ | / /_  // _ \/_  __/");
+	syslog(LOG_NOTICE, "  / __/ | / /_  // _ \\/_  __/");
 	syslog(LOG_NOTICE, " / _/ | |/ //_ </ , _/ / /");
 	syslog(LOG_NOTICE, "/___/ |___/____/_/|_| /_/");
-	syslog(LOG_NOTICE, "=============================");
+	syslog(LOG_NOTICE, " ");
+	syslog(LOG_NOTICE, "%s", version_banner);
+	syslog(LOG_NOTICE, " ");
 	syslog(LOG_NOTICE, "Powered by TOPPERS/HRP2 RTOS");
 	syslog(LOG_NOTICE, "Initialization is completed..");
 
+    // Pause the application when using standalone mode
+#if !defined(BUILD_LOADER)
 	platform_pause_application(true);
+#endif
 
 	is_initialized = true;
 
@@ -218,7 +239,7 @@ svc_perror(const char *file, int_t line, const char *expr, ER ercd) {
     }
 }
 
-#if 0 // Legacy code
+void ev3rt_logtask(intptr_t unused) {
+    logtask_main(SIO_PORT_DEFAULT);
+}
 
-
-#endif

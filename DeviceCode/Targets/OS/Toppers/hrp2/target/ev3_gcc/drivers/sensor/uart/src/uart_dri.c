@@ -799,15 +799,16 @@ static void initialize(intptr_t unused) {
     /**
      * Register ISR for Port 1
      */
-    T_CISR port1_isr;
-    port1_isr.isratr = TA_NULL;
-    port1_isr.exinf  = INTNO_UART_PORT1;
-    port1_isr.intno  = INTNO_UART_PORT1;
-    port1_isr.isr    = (*ev3rt_sensor_port_1_disabled) ? uart_sio_isr : uart_sensor_isr;
-    port1_isr.isrpri = TMIN_ISRPRI;
-    ercd = acre_isr(&port1_isr);
-    assert(ercd > 0);
-
+    if (!(*ev3rt_sensor_port_1_disabled)) {
+        T_CISR port1_isr;
+        port1_isr.isratr = TA_NULL;
+        port1_isr.exinf  = INTNO_UART_PORT1;
+        port1_isr.intno  = INTNO_UART_PORT1;
+        port1_isr.isr    = (*ev3rt_sensor_port_1_disabled) ? uart_sio_isr : uart_sensor_isr;
+        port1_isr.isrpri = TMIN_ISRPRI;
+        ercd = acre_isr(&port1_isr);
+        assert(ercd > 0);
+    }
 
 	UART0.PWREMU_MGMT = 0x6001;
 	//UART0.PWREMU_MGMT = 0x6001; //sio_opn_por(1); /* Uart port 2 & enable irq(side effect)*/
@@ -884,6 +885,10 @@ ER_UINT extsvc_uart_sensor_config(intptr_t port, intptr_t mode, intptr_t par3, i
 	if(mode == MODE_NONE_UART_SENSOR) {
 		devcon.Connection[port] = CONN_NONE;
 		devcon.Mode[port] = 0;
+		if (port != DEBUG_UART) { // Use as an I2C port if no UART sensor is connected
+            extern void setup_i2c_port(); // TODO: extern from i2c_dri.c
+			setup_i2c_port(port);
+		}
 	} else {
 		devcon.Connection[port] = CONN_INPUT_UART;
 		devcon.Mode[port] = mode;

@@ -459,7 +459,7 @@ void MMCSDCommandSend(unsigned int baseAddr, unsigned int cmd,
 		cmd |= MMCSD_MMCCMD_DMATRIG;
 
 		/* Set the command */
-#if defined(DEBUG)
+#if defined(DEBUG_FATFS_MMCSD)
   syslog(LOG_ERROR, "%s(): Send CMD%d, MMCSD_MMCCMD: 0x%x", __FUNCTION__, cmd & 0x3F, cmd);
 #endif
 		HWREG(baseAddr + MMCSD_MMCCMD) = cmd;
@@ -491,12 +491,14 @@ void MMCSDCommandSend(unsigned int baseAddr, unsigned int cmd,
 //			syslog(LOG_ERROR, "srcAddr: 0x%08x", param.srcAddr);
 //		}
 
+		HWREG(baseAddr + MMCSD_MMCCMD) = cmd;
+
 		/* enable DMA transfer */
 		assert(dmaEn == 1);
 		cmd |= MMCSD_MMCCMD_DMATRIG;
 
 		/* Set the command */
-#if defined(DEBUG) || 1
+#if defined(DEBUG_FATFS_MMCSD)
   syslog(LOG_ERROR, "%s(): Send CMD%d, MMCSD_MMCCMD: 0x%x", __FUNCTION__, cmd & 0x3F, cmd);
 #endif
 		HWREG(baseAddr + MMCSD_MMCCMD) = cmd;
@@ -510,12 +512,12 @@ void MMCSDCommandSend(unsigned int baseAddr, unsigned int cmd,
 		return;
 	}
 
-//	/**
-//	 * Send CMD12 (STOP_TRANSMISSION) command
-//	 */
-//	if ((cmd & 0x3F) == 12) {
-//		cmd |= MMCSD_MMCCMD_DCLR; // clear previous status
-//	}
+	/**
+	 * Send CMD12 (STOP_TRANSMISSION) command
+	 */
+	if ((cmd & 0x3F) == 12) {
+		cmd |= MMCSD_MMCCMD_DCLR; // clear previous status
+	}
 
   /* data command */
   if (data != NULL)
@@ -570,7 +572,7 @@ void MMCSDCommandSend(unsigned int baseAddr, unsigned int cmd,
   HWREG(baseAddr + MMCSD_MMCNBLK) |= nblks << MMCSD_MMCNBLK_NBLK_SHIFT;
 
   /* Set the command/command argument */
-#if defined(DEBUG) || 1
+#if defined(DEBUG_FATFS_MMCSD)
   syslog(LOG_ERROR, "%s(): Send CMD%d, MMCSD_MMCCMD: 0x%x", __FUNCTION__, cmd & 0x3F, cmd);
 #endif
   HWREG(baseAddr + MMCSD_MMCARGHL) = cmdarg;

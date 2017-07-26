@@ -112,14 +112,14 @@ static void log_view_refresh_ex(int32_t bottom_line) {
 	log_view_putc('\r');
 
 	// Fill the log view with (CONSOLE_LOG_VIEW_LINES - 1) lines
-	for (int i = bottom_line; i < bottom_line + CONSOLE_LOG_VIEW_LINES - 1; ++i)
+	for (int i = bottom_line + 1; i < bottom_line + CONSOLE_LOG_VIEW_LINES; ++i)
 		for (int j = 0; j < CONSOLE_LOG_VIEW_LINE_WIDTH; ++j)
-			log_view_putc(log_buffer[i + 1][j]);
+			log_view_putc(log_buffer[i][j]);
 
 	// Output bottom line
 	int columns = (bottom_line == log_current_line) ? log_current_column : CONSOLE_LOG_VIEW_LINE_WIDTH;
-	for (int j = 0; j < log_current_column; ++j)
-		log_view_putc(log_buffer[log_current_line + CONSOLE_LOG_VIEW_LINES][j]);
+	for (int j = 0; j < columns; ++j)
+		log_view_putc(log_buffer[bottom_line + CONSOLE_LOG_VIEW_LINES][j]);
 }
 
 static void log_view_scroll(bool_t up) {
@@ -183,7 +183,7 @@ void initialize_console_dri() {
  * Interface for CSL
  */
 
-static void ev3rt_console_set_visibility(bool_t visible) {
+void ev3rt_console_set_visibility(bool_t visible) {
 #if 0
 	if (loc_mtx(EV3RT_CONSOLE_LOG_MTX) != E_OK) {
 		assert(false);
@@ -192,7 +192,7 @@ static void ev3rt_console_set_visibility(bool_t visible) {
 #endif
 	ER ercd;
 
-	ercd = loc_cpu();
+	ercd = sns_ctx() ? iloc_cpu() : loc_cpu();
 	assert(ercd == E_OK);
 
 	if (console_visible != visible) { // visibility changed
@@ -208,7 +208,7 @@ static void ev3rt_console_set_visibility(bool_t visible) {
 		log_view_scroll_mode = false;
 	}
 
-	ercd = unl_cpu();
+	ercd = sns_ctx() ? iunl_cpu(): unl_cpu();
 	assert(ercd == E_OK);
 #if 0
 	if (unl_mtx(EV3RT_CONSOLE_LOG_MTX) != E_OK) {
@@ -218,7 +218,7 @@ static void ev3rt_console_set_visibility(bool_t visible) {
 #endif
 }
 
-void ev3rt_console_log_putc(char c) {
+void lcd_console_send_character(char c) {
 #if 0
 	ER ercd;
 
@@ -235,6 +235,7 @@ void ev3rt_console_log_putc(char c) {
     if (c != '\n') {
         log_put_char(c);
     } else {
+    	if (log_current_column != 0)
         for (int i = CONSOLE_LOG_VIEW_LINE_WIDTH - log_current_column; i > 0; --i)
             log_put_char(' ');
     }
@@ -245,11 +246,6 @@ void ev3rt_console_log_putc(char c) {
         return;
     }
 #endif
-}
-
-void ev3rt_console_start_app() {
-	ev3rt_console_set_visibility(false);
-	platform_pause_application(false);
 }
 
 /**

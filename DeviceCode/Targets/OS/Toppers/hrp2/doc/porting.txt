@@ -1,19 +1,19 @@
 
-		TOPPERS/HRP2�����ͥ�
-		�������åȰ�¸�� �ݡ��ƥ��󥰥�����
+		TOPPERS/HRP2カーネル
+		ターゲット依存部 ポーティングガイド
 
-		�б��С������: Release 2.2.0
-		�ǽ�����: 2014ǯ11��17��
+		対応バージョン: Release 2.2.0
+		最終更新: 2014年11月17日
 
-���Υɥ�����Ȥϡ�TOPPERS/HRP2�����ͥ��̤���ݡ��ȤΥ������åȥ���
-�ƥ�˥ݡ��ƥ��󥰤��뤿���ɬ�פȤʤ륿�����åȰ�¸���μ�����ˡ������
-�����ΤǤ��롥
+このドキュメントは，TOPPERS/HRP2カーネルを，未サポートのターゲットシス
+テムにポーティングするために必要となるターゲット依存部の実装方法を説明
+するものである．
 
-�������Ǥϡ������ʳ��ǡ��ɥ�����ȤȤ��ƴ������Ƥ��ʤ���
+現時点では，メモの段階で，ドキュメントとして完成していない．
 
-����¸�������β��ۥ�����
+○依存部処理の仮想コード
 
-��dispatcher�ν�������
+●dispatcherの処理内容
 
 ----------------------------------------
 void
@@ -24,62 +24,62 @@ dispatcher(void)
 #ifdef LOG_DSP_ENTER
 	log_dsp_enter(p_runtsk);
 #endif /* LOG_DSP_ENTER */
-	if (�����������桼��������) {
-		���������Υ桼�������å��ΰ�򥢥������Ǥ��ʤ����֤Ȥ���
+	if (自タスクがユーザタスク) {
+		自タスクのユーザスタック領域をアクセスできない状態とする
 	}
   dispatcher_0:
 	while ((p_runtsk = p_schedtsk) == NULL) {
-		����ߤ���Ĥ�����CPU���å�������֤ˤʤ�褦��������
-		�󥿥�������ƥ����Ȥ��ڤ괹���� �� (*1)
+		割込みを許可したらCPUロック解除状態になるよう準備する
+		非タスクコンテキストに切り換える … (*1)
 		do {
-			����ߤ򤹤٤Ƶ��Ĥ��������ȯ�����Ԥ� �� (*2)
-			����ߵ������ξ��֤��᤹�ʡᥫ���ͥ�����γ���ߤ�ػߤ����
+			割込みをすべて許可し，割込み発生を待つ … (*2)
+			割込み許可前の状態に戻す（＝カーネル管理の割込みを禁止する）
 		} while (!reqflg);
 		reqflg = false;
-		����������ƥ����Ȥ��᤹ �� (*1)
-		CPU���å����֤��᤹ ... (*3)
+		タスクコンテキストに戻す … (*1)
+		CPUロック状態に戻す ... (*3)
 	}
-	����������p_runtsk�ˤ�TCB���饹���å��ݥ��󥿤���������
+	自タスク（p_runtsk）のTCBからスタックポインタを復帰する
 	p_dominib = p_runtsk->p_tinib->p_dominib;
 	rundom = (p_runtsk->svclevel > 0U) ? TACP_KERNEL : p_dominib->domptn;
-	if (�����������桼��������) {
-		���������Υ桼�������å��ΰ�򥢥������Ǥ�����֤Ȥ���
+	if (自タスクがユーザタスク) {
+		自タスクのユーザスタック領域をアクセスできる状態とする
 		if (p_ctxdom != p_dominib) {
 			p_ctxdom = p_dominib;
-			p_dominib�˴ؤ��륢�������ݸ�����MMU/MPU�����ꤹ��
+			p_dominibに関するアクセス保護情報をMMU/MPUに設定する
 		}
 	}
 #ifdef LOG_DSP_LEAVE
 	log_dsp_leave(p_runtsk);
 #endif /* LOG_DSP_LEAVE */
-	����������TCB����¹ԺƳ����Ϥ���������������ʬ������
+	自タスクのTCBから実行再開番地を復帰し，そこへ分岐する
 }
 ----------------------------------------
 
-��dispatch�ν�������
+●dispatchの処理内容
 
 ----------------------------------------
 void
 dispatch(void)
 {
 #ifdef TOPPERS_SUPPORT_OVRHDR
-	ovrtimer_stop();					/* �����Х�󥿥��ޤ���� */
+	ovrtimer_stop();					/* オーバランタイマの停止 */
 #endif /* TOPPERS_SUPPORT_OVRHDR */
-	������å��쥸������������٤ƤΥ쥸�����򥹥��å�����¸����
-	if (�����������桼��������) {
-		�桼�������å��ݥ��󥿤򥹥��å�����¸����
+	スクラッチレジスタを除くすべてのレジスタをスタックに保存する
+	if (自タスクがユーザタスク) {
+		ユーザスタックポインタをスタックに保存する
 	}
-	�����å��ݥ��󥿤򼫥�������p_runtsk�ˤ�TCB����¸����
-	dispatch_r�򡤼¹ԺƳ����ϤȤ��Ƽ���������TCB����¸����
-	dispatcher��ʬ������
+	スタックポインタを自タスク（p_runtsk）のTCBに保存する
+	dispatch_rを，実行再開番地として自タスクのTCBに保存する
+	dispatcherに分岐する
 
   dispatch_r:
-	if (�����������桼��������) {
-		�桼�������å��ݥ��󥿤򥹥��å�������������
+	if (自タスクがユーザタスク) {
+		ユーザスタックポインタをスタックから復帰する
 	}
-	������å��쥸������������٤ƤΥ쥸�����򥹥��å�������������
+	スクラッチレジスタを除くすべてのレジスタをスタックから復帰する
 #ifdef TOPPERS_SUPPORT_OVRHDR
-	ovrtimer_start();					/* �����Х�󥿥��ޤ�ư��� */
+	ovrtimer_start();					/* オーバランタイマの動作開始 */
 #endif /* TOPPERS_SUPPORT_OVRHDR */
 	if (p_runtsk->enatex && p_runtsk->texptn != 0U && ipmflg
 					&& rundom == TACP_KERNEL && p_runtsk->svclevel == 0U) {
@@ -88,125 +88,125 @@ dispatch(void)
 }
 ----------------------------------------
 
-��start_dispatch�ν������ơ�ASP�����ͥ��Ʊ�͡�
+●start_dispatchの処理内容（ASPカーネルと同様）
 
 ----------------------------------------
 void
 start_dispatch(void)
 {
-	����������ƥ����Ȥ��ڤ괹����
-	CPU���å����֡������ͥ���٥ޥ�����������֤ˤ���
-	dispatcher_0��ʬ������
+	タスクコンテキストに切り換える
+	CPUロック状態・割込み優先度マスク全解除状態にする
+	dispatcher_0に分岐する
 }
 ----------------------------------------
 
-��exit_and_dispatch�ν�������
+●exit_and_dispatchの処理内容
 
 ----------------------------------------
 void
 exit_and_dispatch(void)
 {
-	dispatcher��ʬ������
+	dispatcherに分岐する
 }
 ----------------------------------------
 
-��activate_context��start_r�ν�������
+●activate_contextとstart_rの処理内容
 
 ----------------------------------------
 void
 activate_context(TCB *p_tcb)
 {
-	���ꤵ�줿��������p_tcb�ˤ�TCB��Υ����å��ݥ��󥿤���������
-	if (���ꤵ�줿���������桼��������) {
-		start_utask_r�򡤼¹ԺƳ����ϤȤ��Ƽ���������TCB����¸����
+	指定されたタスク（p_tcb）のTCB中のスタックポインタを初期化する
+	if (指定されたタスクがユーザタスク) {
+		start_utask_rを，実行再開番地として自タスクのTCBに保存する
 	}
 	else {
-		start_stask_r�򡤼¹ԺƳ����ϤȤ��Ƽ���������TCB����¸����
+		start_stask_rを，実行再開番地として自タスクのTCBに保存する
 	}
 	return;
 
   start_stask_r:
 #ifdef TOPPERS_SUPPORT_OVRHDR
-	ovrtimer_start();					/* �����Х�󥿥��ޤ�ư��� */
+	ovrtimer_start();					/* オーバランタイマの動作開始 */
 #endif /* TOPPERS_SUPPORT_OVRHDR */
-	CPU���å�������֤ˤ���
-	����������p_runtsk�ˤε�ư���Ϥ򡤳�ĥ�����ѥ�᡼���Ȥ��ƸƤӽФ�
-	ext_tsk��ʬ������
+	CPUロック解除状態にする
+	自タスク（p_runtsk）の起動番地を，拡張情報をパラメータとして呼び出す
+	ext_tskに分岐する
 
   start_utask_r:
-	���������Υ桼�������å��ݥ��󥿤���������
+	自タスクのユーザスタックポインタを初期化する
 #ifdef TOPPERS_SUPPORT_OVRHDR
-	ovrtimer_start();					/* �����Х�󥿥��ޤ�ư��� */
+	ovrtimer_start();					/* オーバランタイマの動作開始 */
 #endif /* TOPPERS_SUPPORT_OVRHDR */
-	�㳰/����ߤ���Υ꥿����ˤ�äơ�
-			���������ε�ư���Ϥ�ʬ������褦�˽������� �� (*1)
-	�㳰/����ߤ���Υ꥿����ˤ�äơ����ø��⡼�ɡ�CPU���å�������֡�
-			�����ͥ���٥ޥ�����������֤ˤʤ�褦�˽������� �� (*2)
-	���������ε�ư���Ϥ�ʬ������ݤˡ�
-			���������γ�ĥ���󤬥ѥ�᡼���Ȥ����Ϥ�褦�˽������� �� (*3)
-	���������ε�ư���Ϥ���Υ꥿����ˤ�ꡤ
-			call_ext_tsk�����Ϥ�ʬ������褦�˽������� �� (*4)
-	�㳰/����ߤ���Υ꥿����
+	例外/割込みからのリターンによって，
+			自タスクの起動番地へ分岐するように準備する … (*1)
+	例外/割込みからのリターンによって，非特権モード・CPUロック解除状態・
+			割込み優先度マスク全解除状態になるように準備する … (*2)
+	自タスクの起動番地へ分岐する際に，
+			自タスクの拡張情報がパラメータとして渡るように準備する … (*3)
+	自タスクの起動番地からのリターンにより，
+			call_ext_tskの番地へ分岐するように準備する … (*4)
+	例外/割込みからのリターン
 }
 ----------------------------------------
 
-������ߥϥ�ɥ�ν����������ν�������
+●割込みハンドラの出入口処理の処理内容
 
 ----------------------------------------
 void
-<����ߤν���������>(void)
+<割込みの出入口処理>(void)
 {
-	if (���ø��⡼�ɤǳ����ȯ��) {
-		�����å���¹Ծ��֤Υ������Υ����ƥॹ���å����ڤ괹����
+	if (非特権モードで割込み発生) {
+		スタックを実行状態のタスクのシステムスタックに切り換える
 	}
-	���ʤ��Ȥ⥫���ͥ�����γ���ߤ�ػߤ������֤ˤ��� �� (*f)
-	������å��쥸�����򥹥��å�����¸����
-	if (����������ƥ����Ȥǳ����ȯ��) {
+	少なくともカーネル管理の割込みを禁止した状態にする … (*f)
+	スクラッチレジスタをスタックに保存する
+	if (タスクコンテキストで割込み発生) {
 #ifdef TOPPERS_SUPPORT_OVRHDR
-		ovrtimer_stop();				/* �����Х�󥿥��ޤ���� */
+		ovrtimer_stop();				/* オーバランタイマの停止 */
 #endif /* TOPPERS_SUPPORT_OVRHDR */
-		�����å����󥿥�������ƥ������ѤΥ����å����ڤ괹����
-								�󥿥�������ƥ����Ȥ��ڤ괹����
+		スタックを非タスクコンテキスト用のスタックに切り換え，
+								非タスクコンテキストに切り換える
 	}
-	�����ͥ���٥ޥ����򡤼����դ���������׵�γ��ͥ���٤����ꤷ��
-				CPU���å�������֤ˤ���ʼ����դ�������ߤ���
-				ͥ���٤ι⤤����ߤ�����դ���褦�ˤ���ˡ� (*i)
+	割込み優先度マスクを，受け付けた割込み要求の割込優先度に設定し，
+				CPUロック解除状態にする（受け付けた割込みよりも
+				優先度の高い割込みを受け付けるようにする）… (*i)
 
 
 #ifdef LOG_INH_ENTER
-	log_inh_enter(����ߥϥ�ɥ��ֹ�);
+	log_inh_enter(割込みハンドラ番号);
 #endif /* LOG_INH_ENTER */
-	����ߥϥ�ɥ��ƤӽФ�
+	割込みハンドラを呼び出す
 #ifdef LOG_INH_LEAVE
-	log_inh_leave(����ߥϥ�ɥ��ֹ�);
+	log_inh_leave(割込みハンドラ番号);
 #endif /* LOG_INH_LEAVE */
 
   ret_int:
-	if (����������ƥ����Ȥǳ����ȯ��) {
-		�ʾ��ʤ��Ȥ�˥����ͥ�����γ���ߤ�ػߤ������֤ˤ��� �� (*d)
-		�����å��򥿥����ѤΥ����å����ᤷ������������ƥ����Ȥ��ڤ괹����
-																�� (*g)
+	if (タスクコンテキストで割込み発生) {
+		（少なくとも）カーネル管理の割込みを禁止した状態にする … (*d)
+		スタックをタスク用のスタックに戻し，タスクコンテキストに切り換える
+																… (*g)
 		if (reqflg) {
 			reqflg = false;
-			CPU���å����֤ˤ��� �� (*e)
-			�����ͥ���٥ޥ�������������֡�TIPM_ENAALL�ˤ����ꤹ�� �� (*h)
+			CPUロック状態にする … (*e)
+			割込み優先度マスクを，全解除状態（TIPM_ENAALL）に設定する … (*h)
 			if (dspflg && p_runtsk != p_schedtsk) {
-				������å��쥸������������٤ƤΥ쥸�����򥹥��å�����¸����
-				if (�����������桼��������) {
-					�桼�������å��ݥ��󥿤򥹥��å�����¸����
+				スクラッチレジスタを除くすべてのレジスタをスタックに保存する
+				if (自タスクがユーザタスク) {
+					ユーザスタックポインタをスタックに保存する
 				}
-				�����å��ݥ��󥿤򼫥�������p_runtsk�ˤ�TCB����¸����
-				ret_int_r�򡤼¹ԺƳ����ϤȤ��Ƽ���������TCB����¸���� �� (*a)
-				dispatcher��ʬ������
+				スタックポインタを自タスク（p_runtsk）のTCBに保存する
+				ret_int_rを，実行再開番地として自タスクのTCBに保存する … (*a)
+				dispatcherに分岐する
 
 			  ret_int_r:
-				if (�����������桼��������) {
-					�桼�������å��ݥ��󥿤򥹥��å�������������
+				if (自タスクがユーザタスク) {
+					ユーザスタックポインタをスタックから復帰する
 				}
-				������å��쥸������������٤ƤΥ쥸�����򥹥��å�������������
+				スクラッチレジスタを除くすべてのレジスタをスタックから復帰する
 			}
 #ifdef TOPPERS_SUPPORT_OVRHDR
-			ovrtimer_start();			/* �����Х�󥿥��ޤ�ư��� */
+			ovrtimer_start();			/* オーバランタイマの動作開始 */
 #endif /* TOPPERS_SUPPORT_OVRHDR */
 			if (p_runtsk->enatex && p_runtsk->texptn != 0U && ipmflg) {
 				if (rundom == TACP_KERNEL) {
@@ -217,8 +217,8 @@ void
 				else {
 					if (!i_sense_priv_runtsk()) {
 						if (prepare_texrtn_utask()) {
-							�������㳰�¹Գ��ϻ������å������㳰�ϥ�ɥ��
-																	�ƤӽФ�
+							タスク例外実行開始時スタック不正例外ハンドラを
+																	呼び出す
 						}
 					}
 				}
@@ -226,95 +226,95 @@ void
 		}
 #ifdef TOPPERS_SUPPORT_OVRHDR
 		else {
-			ovrtimer_start();			/* �����Х�󥿥��ޤ�ư��� */
+			ovrtimer_start();			/* オーバランタイマの動作開始 */
 		}
 #endif /* TOPPERS_SUPPORT_OVRHDR */
 	}
-	����߽�������Υ꥿�����ˡ������ͥ���٥ޥ�����
-									����߽��������ͤ����褦�˽�������
-	����߽�������Υ꥿�����ˡ�CPU���å�������֤����褦�˽�������
-	������å��쥸�����򥹥��å�������������
-	if (����褬���ø��⡼��) {
-		�����å���¹Ծ��֤Υ������Υ桼�������å����᤹
+	割込み処理からのリターン後に，割込み優先度マスクが
+									割込み処理前の値に戻るように準備する
+	割込み処理からのリターン後に，CPUロック解除状態に戻るように準備する
+	スクラッチレジスタをスタックから復帰する
+	if (戻り先が非特権モード) {
+		スタックを実行状態のタスクのユーザスタックに戻す
 	}
-	����߽�������Υ꥿����
+	割込み処理からのリターン
 }
 ----------------------------------------
 
-��CPU�㳰�ϥ�ɥ�ν����������ν�������
+●CPU例外ハンドラの出入口処理の処理内容
 
 ----------------------------------------
 void
-<CPU�㳰�ν���������>(void)
+<CPU例外の出入口処理>(void)
 {
-	if (���ø��⡼�ɤ�CPU�㳰ȯ��) {
-		�����å���¹Ծ��֤Υ������Υ����ƥॹ���å����ڤ괹����
+	if (非特権モードでCPU例外発生) {
+		スタックを実行状態のタスクのシステムスタックに切り換える
 	}
-	������å��쥸�����򥹥��å�����¸����
-	if (�����ͥ��������CPU�㳰) {
-		if (����������ƥ����Ȥ�CPU�㳰ȯ��) {
-			�����å����󥿥�������ƥ������ѤΥ����å����ڤ괹����
-									�󥿥�������ƥ����Ȥ��ڤ괹���� �� (*j)
+	スクラッチレジスタをスタックに保存する
+	if (カーネル管理外のCPU例外) {
+		if (タスクコンテキストでCPU例外発生) {
+			スタックを非タスクコンテキスト用のスタックに切り換え，
+									非タスクコンテキストに切り換える … (*j)
 		}
-		�����ƥ���֡ʥ���ƥ����ȤϽ����ˤ�CPU�㳰ȯ�����ξ��֤ˤ���
-		CPU�㳰�ϥ�ɥ��CPU�㳰�ξ���򵭲����Ƥ����ΰ����Ƭ���Ϥ�
-									�ѥ�᡼����p_excinf�ˤȤ��ƸƤӽФ�
-		if (����������ƥ����Ȥ�CPU�㳰ȯ��) {
-			�����å��򥿥����ѤΥ����å����ᤷ��
-									����������ƥ����Ȥ��ڤ괹���� �� (*j)
+		システム状態（コンテキストは除く）を，CPU例外発生時の状態にする
+		CPU例外ハンドラを，CPU例外の情報を記憶している領域の先頭番地を
+									パラメータ（p_excinf）として呼び出す
+		if (タスクコンテキストでCPU例外発生) {
+			スタックをタスク用のスタックに戻し，
+									タスクコンテキストに切り換える … (*j)
 		}
-		CPU�㳰��������Υ꥿�����ˡ�CPU�㳰ȯ�����Υ����ƥ���֤�
-													���褦�˽�������
+		CPU例外処理からのリターン後に，CPU例外発生時のシステム状態に
+													戻るように準備する
 	}
 	else {
-		if (����������ƥ����Ȥ�CPU�㳰ȯ��) {
-			�ʾ��ʤ��Ȥ�˥����ͥ�����γ���ߤ�ػߤ������֤ˤ���
+		if (タスクコンテキストでCPU例外発生) {
+			（少なくとも）カーネル管理の割込みを禁止した状態にする
 #ifdef TOPPERS_SUPPORT_OVRHDR
-			ovrtimer_stop();			/* �����Х�󥿥��ޤ���� */
+			ovrtimer_stop();			/* オーバランタイマの停止 */
 #endif /* TOPPERS_SUPPORT_OVRHDR */
-			�����å����󥿥�������ƥ������ѤΥ����å����ڤ괹����
-									�󥿥�������ƥ����Ȥ��ڤ괹����
+			スタックを非タスクコンテキスト用のスタックに切り換え，
+									非タスクコンテキストに切り換える
 		}
-		�����ͥ���٥ޥ�����CPU�㳰ȯ�������ͤ����ꤷ��
-				CPU���å�������֤ˤ����CPU�㳰ȯ�����γ����ͥ���٥ޥ���
-				����ͥ���٤ι⤤����ߤ�����դ���褦�ˤ����
+		割込み優先度マスクを，CPU例外発生時の値に設定し，
+				CPUロック解除状態にする（CPU例外発生時の割込み優先度マスク
+				よりも優先度の高い割込みを受け付けるようにする）
 
 #ifdef LOG_EXC_ENTER
-		log_exc_enter(CPU�㳰�ϥ�ɥ��ֹ�);
+		log_exc_enter(CPU例外ハンドラ番号);
 #endif /* LOG_EXC_ENTER */
-		CPU�㳰�ϥ�ɥ��CPU�㳰�ξ���򵭲����Ƥ����ΰ����Ƭ���Ϥ�
-									�ѥ�᡼����p_excinf�ˤȤ��ƸƤӽФ�
+		CPU例外ハンドラを，CPU例外の情報を記憶している領域の先頭番地を
+									パラメータ（p_excinf）として呼び出す
 #ifdef LOG_EXC_LEAVE
-		log_exc_leave(CPU�㳰�ϥ�ɥ��ֹ�);
+		log_exc_leave(CPU例外ハンドラ番号);
 #endif /* LOG_EXC_LEAVE */
 
 	  ret_exc:
-		if (����������ƥ����Ȥ�CPU�㳰ȯ��) {
-			�ʾ��ʤ��Ȥ�˥����ͥ�����γ���ߤ�ػߤ������֤ˤ��� �� (*d)
-			�����å��򥿥����ѤΥ����å����ᤷ������������ƥ����Ȥ��ڤ괹����
-																	�� (*g)
+		if (タスクコンテキストでCPU例外発生) {
+			（少なくとも）カーネル管理の割込みを禁止した状態にする … (*d)
+			スタックをタスク用のスタックに戻し，タスクコンテキストに切り換える
+																	… (*g)
 			if (reqflg) {
 				reqflg = false;
-				CPU���å����֤ˤ��� �� (*e)
+				CPUロック状態にする … (*e)
 				if (dspflg && p_runtsk != p_schedtsk) {
-					������å��쥸������������٤ƤΥ쥸�����򥹥��å�����¸����
-					if (�����������桼��������) {
-						�桼�������å��ݥ��󥿤򥹥��å�����¸����
+					スクラッチレジスタを除くすべてのレジスタをスタックに保存する
+					if (自タスクがユーザタスク) {
+						ユーザスタックポインタをスタックに保存する
 					}
-					�����å��ݥ��󥿤򼫥�������p_runtsk�ˤ�TCB����¸����
-					ret_exc_r�򡤼¹ԺƳ����ϤȤ��Ƽ���������TCB����¸����
-																	�� (*a)
-					dispatcher��ʬ������
+					スタックポインタを自タスク（p_runtsk）のTCBに保存する
+					ret_exc_rを，実行再開番地として自タスクのTCBに保存する
+																	… (*a)
+					dispatcherに分岐する
 
 				  ret_exc_r:
-					if (�����������桼��������) {
-						�桼�������å��ݥ��󥿤򥹥��å�������������
+					if (自タスクがユーザタスク) {
+						ユーザスタックポインタをスタックから復帰する
 					}
-					������å��쥸������������٤ƤΥ쥸������
-												�����å�������������
+					スクラッチレジスタを除くすべてのレジスタを
+												スタックから復帰する
 				}
 #ifdef TOPPERS_SUPPORT_OVRHDR
-				ovrtimer_start();		/* �����Х�󥿥��ޤ�ư��� */
+				ovrtimer_start();		/* オーバランタイマの動作開始 */
 #endif /* TOPPERS_SUPPORT_OVRHDR */
 				if (p_runtsk->enatex && p_runtsk->texptn != 0U && ipmflg) {
 					if (rundom == TACP_KERNEL) {
@@ -325,8 +325,8 @@ void
 					else {
 						if (!i_sense_priv_runtsk()) {
 							if (prepare_texrtn_utask()) {
-								�������㳰�¹Գ��ϻ������å������㳰�ϥ�ɥ��
-																	�ƤӽФ�
+								タスク例外実行開始時スタック不正例外ハンドラを
+																	呼び出す
 							}
 						}
 					}
@@ -334,64 +334,64 @@ void
 			}
 #ifdef TOPPERS_SUPPORT_OVRHDR
 			else {
-				ovrtimer_start();		/* �����Х�󥿥��ޤ�ư��� */
+				ovrtimer_start();		/* オーバランタイマの動作開始 */
 			}
 #endif /* TOPPERS_SUPPORT_OVRHDR */
 		}
-		CPU�㳰��������Υ꥿�����ˡ�CPU���å�������֤����褦�˽�������
+		CPU例外処理からのリターン後に，CPUロック解除状態に戻るように準備する
 	}
-	������å��쥸�����򥹥��å�������������
-	if (����褬���ø��⡼��) {
-		�����å���¹Ծ��֤Υ������Υ桼�������å����᤹
+	スクラッチレジスタをスタックから復帰する
+	if (戻り先が非特権モード) {
+		スタックを実行状態のタスクのユーザスタックに戻す
 	}
-	CPU�㳰��������Υ꥿����
+	CPU例外処理からのリターン
 }
 ----------------------------------------
 
-��svc_entry�ν�������
+●svc_entryの処理内容
 
 ----------------------------------------
 ER_UINT
-svc_entry(FN fncd, �ѥ�᡼���ꥹ��)
+svc_entry(FN fncd, パラメータリスト)
 {
 	ER_UINT		ercd;
 
-	if (���ø��⡼�ɤ���θƤӽФ�) {
-		�����å���¹Ծ��֤Υ������Υ����ƥॹ���å����ڤ괹����
+	if (非特権モードからの呼び出し) {
+		スタックを実行状態のタスクのシステムスタックに切り換える
 	}
 	if (fncd <= 0) {
 		/*
-		 *  �����ͥ�Υ����ӥ�������ξ��
+		 *  カーネルのサービスコールの場合
 		 */
 		if (fncd < TMIN_FNCD) {
 			ercd = E_RSFN;
 			goto error_exit;
 		}
-		���եȥ���������ߤˤ�ꥷ���ƥ���֤��Ѳ�������ˤϡ�
-							���եȥ�������������Υ����ƥ���֤��᤹
-		ercd = (*(svc_table[-fncd]))(�ѥ�᡼���ꥹ��);
-		���եȥ���������ߤ���꥿�����Υ����ƥ���֤���
-							���λ����ǤΥ����ƥ���֤ˤʤ�褦��������
-		�ʾ��ʤ��Ȥ�˥����ͥ�����γ���ߤ�ػߤ������֤ˤ���
-		if (����������ƥ����Ȥ���θƽФ� && p_runtsk->svclevel == 0U) {
+		ソフトウェア割込みによりシステム状態が変化する場合には，
+							ソフトウェア割込み前のシステム状態に戻す
+		ercd = (*(svc_table[-fncd]))(パラメータリスト);
+		ソフトウェア割込みからリターン後のシステム状態が，
+							この時点でのシステム状態になるよう準備する
+		（少なくとも）カーネル管理の割込みを禁止した状態にする
+		if (タスクコンテキストからの呼出し && p_runtsk->svclevel == 0U) {
 			p_runtsk->waifbd = false;
 
 			/*
-			 *  �������㳰�����롼����μ¹Գ��Ͻ���
+			 *  タスク例外処理ルーチンの実行開始処理
 			 */
 			if (p_runtsk->enatex && p_runtsk->texptn != 0U && ipmflg
-								&& �����ӥ������뤫��Υ꥿������
-									�����ƥ���֤�CPU���å����֤Ǥʤ�) {
+								&& サービスコールからのリターン後の
+									システム状態がCPUロック状態でない) {
 				assert(rundom != TACP_KERNEL);
 				if (prepare_texrtn_utask()) {
-					�������㳰�¹Գ��ϻ������å������㳰�ϥ�ɥ��ƤӽФ�
+					タスク例外実行開始時スタック不正例外ハンドラを呼び出す
 				}
 			}
 		}
 	}
 	else {
 		/*
-		 *  ��ĥ�����ӥ�������ξ��
+		 *  拡張サービスコールの場合
 		 */
 		const SVCINIB	*p_svcinib;
 		ID				cdmid;
@@ -406,26 +406,26 @@ svc_entry(FN fncd, �ѥ�᡼���ꥹ��)
 			goto error_exit;
 		}
 
-		if (�󥿥�������ƥ����Ȥ���θƽФ�) {
-			���եȥ���������ߤˤ�ꥷ���ƥ���֤��Ѳ�������ˤϡ�
-							���եȥ�������������Υ����ƥ���֤��᤹
-			LOG_EXTSVC_ENTER(fncd, �ѥ�᡼���ꥹ��, TDOM_KERNEL);
-			ercd = (*(p_svcinib->svcrtn))(�ѥ�᡼���ꥹ��, TDOM_KERNEL);
+		if (非タスクコンテキストからの呼出し) {
+			ソフトウェア割込みによりシステム状態が変化する場合には，
+							ソフトウェア割込み前のシステム状態に戻す
+			LOG_EXTSVC_ENTER(fncd, パラメータリスト, TDOM_KERNEL);
+			ercd = (*(p_svcinib->svcrtn))(パラメータリスト, TDOM_KERNEL);
 			LOG_EXTSVC_LEAVE(fncd, ercd);
-			���եȥ���������ߤ���꥿�����Υ����ƥ���֤���
-							���λ����ǤΥ����ƥ���֤ˤʤ�褦��������
+			ソフトウェア割込みからリターン後のシステム状態が，
+							この時点でのシステム状態になるよう準備する
 		}
 		else {
-			�ʾ��ʤ��Ȥ�˥����ͥ�����γ���ߤ�ػߤ������֤ˤ���
+			（少なくとも）カーネル管理の割込みを禁止した状態にする
 			if (p_runtsk->svclevel == UINT8_MAX) {
 				ercd = E_SYS;
-				���եȥ���������ߤ���꥿�����Υ����ƥ���֤���
-						���եȥ�������������Υ����ƥ���֤ˤʤ�褦��������
+				ソフトウェア割込みからリターン後のシステム状態が，
+						ソフトウェア割込み前のシステム状態になるよう準備する
 			}
-			else if (�����ƥॹ���å��ΰ�λĤꥵ���� < p_svcinib->stksz) {
+			else if (システムスタック領域の残りサイズ < p_svcinib->stksz) {
 				ercd = E_NOMEM;
-				���եȥ���������ߤ���꥿�����Υ����ƥ���֤���
-						���եȥ�������������Υ����ƥ���֤ˤʤ�褦��������
+				ソフトウェア割込みからリターン後のシステム状態が，
+						ソフトウェア割込み前のシステム状態になるよう準備する
 			}
 			else {
 				if (rundom == TACP_KERNEL) {
@@ -436,36 +436,36 @@ svc_entry(FN fncd, �ѥ�᡼���ꥹ��)
 				}
 				p_runtsk->svclevel++;
 				rundom = TACP_KERNEL;
-				���եȥ�������������Υ����ƥ���֤��᤹
-				LOG_EXTSVC_ENTER(fncd, �ѥ�᡼���ꥹ��, cdmid);
-				ercd = (*(p_svcinib->svcrtn))(�ѥ�᡼���ꥹ��, cdmid);
+				ソフトウェア割込み前のシステム状態に戻す
+				LOG_EXTSVC_ENTER(fncd, パラメータリスト, cdmid);
+				ercd = (*(p_svcinib->svcrtn))(パラメータリスト, cdmid);
 				LOG_EXTSVC_LEAVE(fncd, ercd);
-				���եȥ���������ߤ���꥿�����Υ����ƥ���֤���
-							���λ����ǤΥ����ƥ���֤ˤʤ�褦��������
-				�ʾ��ʤ��Ȥ�˥����ͥ�����γ���ߤ�ػߤ������֤ˤ���
+				ソフトウェア割込みからリターン後のシステム状態が，
+							この時点でのシステム状態になるよう準備する
+				（少なくとも）カーネル管理の割込みを禁止した状態にする
 				if (--p_runtsk->svclevel == 0U) {
 					rundom = p_runtsk->p_tinib->p_dominib->domptn;
 					p_runtsk->waifbd = false;
 
 					/*
-					 *  �������㳰�����롼����μ¹Գ��Ͻ���
+					 *  タスク例外処理ルーチンの実行開始処理
 					 */
 					if (p_runtsk->enatex && p_runtsk->texptn != 0U && ipmflg
-								&& ��ĥ�����ӥ������뤫��Υ꥿������
-									�����ƥ���֤�CPU���å����֤Ǥʤ�) {
+								&& 拡張サービスコールからのリターン後の
+									システム状態がCPUロック状態でない) {
 						if (rundom == TACP_KERNEL) {
-							���λ����ǤΥ����ƥ���֤򡤳�ĥ�����ӥ�������
-									����꥿�����Υ����ƥ���֤��Ф��ơ�
-									CPU���å����֤ˤ��������ƥ���֤��ѹ�����
+							この時点でのシステム状態を，拡張サービスコール
+									からリターン後のシステム状態に対して，
+									CPUロック状態にしたシステム状態に変更する
 							call_texrtn_stask();
-							���եȥ���������ߤ���꥿�����Υ����ƥ���֤���
-									CPU���å�������֡������ͥ���٥ޥ���
-									��������֤ˤʤ�褦�������� �� (*1)
+							ソフトウェア割込みからリターン後のシステム状態が，
+									CPUロック解除状態，割込み優先度マスク
+									全解除状態になるよう準備する … (*1)
 						}
 						else {
 							if (prepare_texrtn_utask()) {
-								�������㳰�¹Գ��ϻ������å������㳰�ϥ�ɥ��
-																	�ƤӽФ�
+								タスク例外実行開始時スタック不正例外ハンドラを
+																	呼び出す
 							}
 						}
 					}
@@ -475,14 +475,14 @@ svc_entry(FN fncd, �ѥ�᡼���ꥹ��)
 	}
 
   error_exit:
-	if (���ø��⡼�ɤ���θƤӽФ�) {
-		�����å���¹Ծ��֤Υ������Υ桼�������å����᤹
+	if (非特権モードからの呼び出し) {
+		スタックを実行状態のタスクのユーザスタックに戻す
 	}
 	return(ercd);
 }
 ----------------------------------------
 
-��prepare_texrtn_utask�ν�������
+●prepare_texrtn_utaskの処理内容
 
 ----------------------------------------
 bool_t
@@ -490,19 +490,19 @@ prepare_texrtn_utask()
 {
 	TEXPTN	texptn = p_runtsk->texptn;
 
-	if (!VALID_USTACK(�桼�������å��˾�����Ѥ��ΰ����Ƭ����, ������) {
+	if (!VALID_USTACK(ユーザスタックに情報を積む領域の先頭番地, サイズ) {
 		return(true);
 	}
-	�桼�������å��ˡ��������㳰�����롼���󤫤��������Ϥ��Ѥ�
-	�桼�������å��ˡ����ø��⡼�ɤǤΥ�����å��쥸�����ȥե饰���ͤ��Ѥ�
-	�桼�������å��ˡ�disdsp���ͤ��Ѥ�
-	����������α�㳰�װ���p_runtsk->texptn�ˤ�
-			��ĥ�����p_runtsk->p_tinib->exinf�ˤ���
-			�������㳰�����롼����ؤΥѥ�᡼���Ȥ����Ϥ�褦�˽�������
-	�������㳰�����롼���󤫤�Υ꥿����ˤ�ꡤ
-			call_ret_tex�����Ϥ�ʬ������褦�˽������� �� (*b)
-	�ø��⡼�ɤ���Υ꥿����ˤ�äơ��������㳰�����롼����
-			��p_runtsk->p_tinib->texrtn�ˤ�ʬ������褦�˽�������
+	ユーザスタックに，タスク例外処理ルーチンからの戻り番地を積む
+	ユーザスタックに，非特権モードでのスクラッチレジスタとフラグの値を積む
+	ユーザスタックに，disdspの値を積む
+	タスクの保留例外要因（p_runtsk->texptn）と
+			拡張情報（p_runtsk->p_tinib->exinf）が，
+			タスク例外処理ルーチンへのパラメータとして渡るように準備する
+	タスク例外処理ルーチンからのリターンにより，
+			call_ret_texの番地へ分岐するように準備する … (*b)
+	特権モードからのリターンによって，タスク例外処理ルーチン
+			（p_runtsk->p_tinib->texrtn）へ分岐するように準備する
 	p_runtsk->enatex = false;
 	p_runtsk->texptn = 0U;
 	LOG_TEX_ENTER(p_runtsk, texptn);
@@ -510,89 +510,89 @@ prepare_texrtn_utask()
 }
 ----------------------------------------
 
-��ret_tex�ν�������
+●ret_texの処理内容
 
 ----------------------------------------
 ER
 ret_tex(void)
 {
-	if (�ƤӽФ��������ø��⡼�ɤǤʤ�) {
-		���ͤ�E_CTX�Ȥ��ơ����եȥ���������ߤ���꥿����
+	if (呼び出し元が非特権モードでない) {
+		返値をE_CTXとして，ソフトウェア割込みからリターン
 	}
-	�����å���¹Ծ��֤Υ������Υ����ƥॹ���å����ڤ괹����
+	スタックを実行状態のタスクのシステムスタックに切り換える
 
-	if (!VALID_USTACK(prepare_texrtn_utask��
-						�桼�������å��˾�����Ѥ���ΰ����Ƭ����, ������) {
-		�������㳰�꥿����������å������㳰�ϥ�ɥ��ƤӽФ�
+	if (!VALID_USTACK(prepare_texrtn_utaskで
+						ユーザスタックに情報を積んだ領域の先頭番地, サイズ) {
+		タスク例外リターン時スタック不正例外ハンドラを呼び出す
 	}
 
 	LOG_TEX_LEAVE(p_runtsk);
-	�ʾ��ʤ��Ȥ�˥����ͥ�����γ���ߤ�ػߤ������֤ˤ���
-	���եȥ���������ߤ���꥿�����Υ����ƥ���֤���
-			CPU���å�������֡������ͥ���٥ޥ�����������֤ˤʤ�褦��������
+	（少なくとも）カーネル管理の割込みを禁止した状態にする
+	ソフトウェア割込みからリターン後のシステム状態が，
+			CPUロック解除状態，割込み優先度マスク全解除状態になるよう準備する
 	if ((rundom & sysstat_acvct.acptn1) != 0U) {
-		disdsp�򡤥桼�������å�����¸�����ͤ��᤹
+		disdspを，ユーザスタックに保存した値に戻す
 	}
 	dspflg = !disdsp;
 	if (p_runtsk != p_schedtsk && dspflg) {
-		CPU���å����֤ˤ���
+		CPUロック状態にする
 		dispatch();
 	}
 
 	if (p_runtsk->texptn != 0U) {
 		/*
-		 *  �������㳰�����롼����κ��٤μ¹Գ���
+		 *  タスク例外処理ルーチンの再度の実行開始
 		 */
 		TEXPTN	texptn = p_runtsk->texptn;
 
-		����������α�㳰�װ���p_runtsk->texptn�ˤ�
-				��ĥ�����p_runtsk->p_tinib->exinf�ˤ���
-				�������㳰�����롼����ؤΥѥ�᡼���Ȥ����Ϥ�褦�˽�������
-		�������㳰�����롼���󤫤�Υ꥿����ˤ�ꡤ
-				call_ret_tex�����Ϥ�ʬ������褦�˽������� �� (*b)
-		�ø��⡼�ɤ���Υ꥿����ˤ�äơ��������㳰�����롼����
-				��p_runtsk->p_tinib->texrtn�ˤ�ʬ������褦�˽�������
+		タスクの保留例外要因（p_runtsk->texptn）と
+				拡張情報（p_runtsk->p_tinib->exinf）が，
+				タスク例外処理ルーチンへのパラメータとして渡るように準備する
+		タスク例外処理ルーチンからのリターンにより，
+				call_ret_texの番地へ分岐するように準備する … (*b)
+		特権モードからのリターンによって，タスク例外処理ルーチン
+				（p_runtsk->p_tinib->texrtn）へ分岐するように準備する
 		p_runtsk->texptn = 0U;
 		LOG_TEX_ENTER(p_runtsk, texptn);
 	}
 	else {
 		/*
-		 *  �������㳰�����롼���󤫤�Υ꥿����
+		 *  タスク例外処理ルーチンからのリターン
 		 */
-		�桼�������å���Ρ�disdsp���ͤ�ΤƤ�ʻ��ѺѤߡ�
-		�桼�������å����顤���ø��⡼�ɤǤ�
-				������å��쥸�����ȥե饰���ͤ���Ф�
-		���եȥ���������ߤ���Υ꥿����ˤ�äơ�
-				������å��쥸�����ȥե饰�����Ф����ͤ����褦�˽�������
-		�桼�������å����顤�������㳰�����롼���󤫤��������Ϥ���Ф�
-		���եȥ���������ߤ���Υ꥿����ˤ�äơ�
-				�������㳰�����롼���󤫤��������Ϥ�ʬ������褦�˽�������
+		ユーザスタック上の，disdspの値を捨てる（使用済み）
+		ユーザスタックから，非特権モードでの
+				スクラッチレジスタとフラグの値を取り出す
+		ソフトウェア割込みからのリターンによって，
+				スクラッチレジスタとフラグが取り出した値に戻るように準備する
+		ユーザスタックから，タスク例外処理ルーチンからの戻り番地を取り出す
+		ソフトウェア割込みからのリターンによって，
+				タスク例外処理ルーチンからの戻り番地へ分岐するように準備する
 		p_runtsk->enatex = true;
 	}
-	p_runtsk->waifbd = false; �� (*x)
-	�����å���¹Ծ��֤Υ������Υ桼�������å����᤹
-	���եȥ���������ߤ���꥿����
+	p_runtsk->waifbd = false; … (*x)
+	スタックを実行状態のタスクのユーザスタックに戻す
+	ソフトウェア割込みからリターン
 }
 ----------------------------------------
 
-(*x)�ϡ�ret_tex���ƤФ�Ƥ��顤�����ͥ�����γ���ߤ�ػߤ���ޤǤδ֤ˡ�
-�����ͥ�����γ���ߤ�ȯ�������ǽ��������ץ����å��ˤ����ƤΤ�ɬ�ס�
+(*x)は，ret_texが呼ばれてから，カーネル管理の割込みを禁止するまでの間に，
+カーネル管理の割込みが発生する可能性があるプロセッサにおいてのみ必要．
 
-��i_check_tex_runtsk�ν�������
+●i_check_tex_runtskの処理内容
 
 ----------------------------------------
 bool_t
 i_check_tex_runtsk()
 {
-	if (!VALID_USTACK(prepare_texrtn_utask��
-						�桼�������å��˾�����Ѥ��ΰ����Ƭ����, ������) {
+	if (!VALID_USTACK(prepare_texrtn_utaskで
+						ユーザスタックに情報を積む領域の先頭番地, サイズ) {
 		return(true);
 	}
 	return(false);
 }
 ----------------------------------------
 
-��call_ret_tex�ν�������
+●call_ret_texの処理内容
 
 ----------------------------------------
 void
@@ -605,7 +605,7 @@ call_ret_tex(void)
 }
 ----------------------------------------
 
-��call_ext_tsk�ν�������
+●call_ext_tskの処理内容
 
 ----------------------------------------
 void

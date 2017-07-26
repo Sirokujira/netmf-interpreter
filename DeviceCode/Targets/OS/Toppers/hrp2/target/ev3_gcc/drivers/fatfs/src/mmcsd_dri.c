@@ -13,8 +13,6 @@
 #include "../starterware_c6748_mmcsd/src/mmcsd_proto.h"
 #include <string.h>
 
-static uint8_t data_recv_buf[MMCSD_MAX_BLOCK_LEN * 2] __attribute__((aligned(SOC_EDMA3_ALIGN_SIZE)));
-
 /**
  * Read or write block(s) from MMC/SD card. The implementation follows
  * '26.3.5 MMC/SD Mode Single-Block Read Operation Using EDMA' and
@@ -32,30 +30,24 @@ MMCSDReadWriteCmdSend(mmcsdCtrlInfo *ctrl, void *ptr, unsigned int block, unsign
 	unsigned int status = 0; // 0 for failure
 
 	/**
-	 * Translate multiple-block operation into single-block operations.
-	 * TODO: This is workaround for buggy READ_MULTI_BLOCK/WRITE_MULTI_BLOCK. Try to fix it if I have spare time.
+	 * Handle unaligned READ operation using data_recv_buf
 	 */
-	if (nblks > 1) {
-		for (unsigned int i = 0; i < nblks; ++i) {
-			status = MMCSDReadWriteCmdSend(ctrl, ptr + i * MMCSD_MAX_BLOCK_LEN, block + i, 1, rx);
+	if (rx && ((unsigned int)ptr % SOC_EDMA3_ALIGN_SIZE) != 0) {
+		static uint8_t data_recv_buf[MMCSD_MAX_BLOCK_LEN * 8] __attribute__((aligned(SOC_EDMA3_ALIGN_SIZE)));
+#define DATA_RECV_BUF_MAX_BLOCKS (sizeof(data_recv_buf) / MMCSD_MAX_BLOCK_LEN)
+
+		for (unsigned int i = 0; i < nblks; i += DATA_RECV_BUF_MAX_BLOCKS) {
+			unsigned int blocks_to_process = (i + DATA_RECV_BUF_MAX_BLOCKS <= nblks) ? DATA_RECV_BUF_MAX_BLOCKS : nblks - i;
+			status = MMCSDReadWriteCmdSend(ctrl, data_recv_buf, block + i, blocks_to_process, rx);
+			memcpy(ptr + i * MMCSD_MAX_BLOCK_LEN, data_recv_buf, MMCSD_MAX_BLOCK_LEN * blocks_to_process);
 			if (status == 0) break;
 		}
 		goto error_exit;
 	}
-	assert(nblks == 1);
 
-#if 0 // For debug
-	syslog(LOG_ERROR, "%s()", __FUNCTION__);
+#if defined(DEBUG_MMCSD)
+	syslog(LOG_NOTICE, "%s(): %s %d block(s), ptr=%p", __FUNCTION__, rx ? "Read" : "Write", nblks, ptr);
 #endif
-
-	/**
-	 * Acquire mutex for thread safety.
-	 */
-	ER ercd = loc_mtx(MMCSD_RW_MTX);
-	if (ercd != E_OK) {
-		syslog(LOG_ERROR, "%s(): Failed to acquire mutex.", __FUNCTION__);
-		goto error_exit;
-	}
 
 	/* 1. Write the card's relative address to the MMC argument registers (MMCARGH and MMCARGL). */
 	volatile struct st_mmcsd *mmc = (struct st_mmcsd *)ctrl->memBase;
@@ -105,10 +97,13 @@ MMCSDReadWriteCmdSend(mmcsdCtrlInfo *ctrl, void *ptr, unsigned int block, unsign
 	mmc->MMCFIFOCTL |=  MMCSD_MMCFIFOCTL_FIFOLEV; // => 64 bytes
 
 	/* 8. Set up DMA (DMA size needs to be greater than or equal to FIFOLEV setting). */
+#if defined(DEBUG_MMCSD) && 0
+	syslog(LOG_NOTICE, "%s(): Set up DMA", __FUNCTION__);
+#endif
 	if (rx) {
-		CacheDataCleanBuff(data_recv_buf, sizeof(data_recv_buf)); // Clean 'data_recv_buf'
+		CacheDataCleanBuff(ptr, MMCSD_MAX_BLOCK_LEN * nblks); // Clean 'data_recv_buf'
 		arm926_drain_write_buffer();                              // Memory barrier for 'data_recv_buf'
-		ctrl->xferSetup(ctrl, 1, data_recv_buf/*ptr*/, MMCSD_MAX_BLOCK_LEN, nblks);
+		ctrl->xferSetup(ctrl, 1, ptr, MMCSD_MAX_BLOCK_LEN, nblks);
 	} else {
 		data_cache_clean_buffer(ptr, MMCSD_MAX_BLOCK_LEN * nblks); // Clean data buffer to send
 		arm926_drain_write_buffer(); // Memory barrier for data buffer to send
@@ -116,34 +111,32 @@ MMCSDReadWriteCmdSend(mmcsdCtrlInfo *ctrl, void *ptr, unsigned int block, unsign
 	}
 
 	/* 9. Use MMCCMD to send the READ_BLOCK/WRITE_BLOCK command to the card. */
+#if defined(DEBUG_MMCSD) && 0
+	syslog(LOG_NOTICE, "%s(): Send READ/WRITE command", __FUNCTION__);
+#endif
 	mmcsdCmd cmd;
 	if (rx) {
 		cmd.flags = SD_CMDRSP_R1 | SD_CMDRSP_READ | SD_CMDRSP_DATA;
 		cmd.idx = SD_CMD(17);
 		cmd.nblks = nblks;
-#if 0
-		cmd.arg = address;
 		if (nblks > 1) {
 			cmd.flags |= SD_CMDRSP_ABORT;
 			cmd.idx = SD_CMD(18);
 		} else {
 			cmd.idx = SD_CMD(17);
 		}
-#endif
 	} else {
 		cmd.flags = SD_CMDRSP_R1 | SD_CMDRSP_WRITE | SD_CMDRSP_DATA;
 		cmd.idx = SD_CMD(24);
 		cmd.nblks = nblks;
-#if 0
-		cmd.arg = address;
 		if (nblks > 1) {
 		    cmd.idx = SD_CMD(25);
 		    cmd.flags |= SD_CMDRSP_ABORT;
 		} else {
 		    cmd.idx = SD_CMD(24);
 		}
-#endif
 	}
+
 	status = MMCSDCmdSend(ctrl, &cmd);
 	if (status == 0) {
 		syslog(LOG_ERROR, "%s(): MMCSDCmdSend() failed.", __FUNCTION__);
@@ -152,24 +145,43 @@ MMCSDReadWriteCmdSend(mmcsdCtrlInfo *ctrl, void *ptr, unsigned int block, unsign
 
 	/* 10. Set the DMATRIG bit in MMCCMD to trigger the first data transfer. */
 	// TODO: This step has already been done by last step.
+	//mmc->MMCCMD |= MMCSD_MMCCMD_DMATRIG;
 
 	/* 11. Wait for DMA sequence to complete. */
+#if defined(DEBUG_MMCSD) && 0
+	syslog(LOG_NOTICE, "%s(): Wait for DMA sequence to complete", __FUNCTION__);
+#endif
 	status = ctrl->xferStatusGet(ctrl);
+
 	if (status == 0) {
 		assert(false);
 		goto error_exit;
 	}
 	if (rx) { // Copy data received
-		CacheDataInvalidateBuff((unsigned int) data_recv_buf/*ptr*/, (MMCSD_MAX_BLOCK_LEN * nblks)); // Invalidate the data cache.
-		assert(sizeof(data_recv_buf) >= MMCSD_MAX_BLOCK_LEN * nblks);
-		memcpy(ptr, data_recv_buf, MMCSD_MAX_BLOCK_LEN * nblks);
+		CacheDataInvalidateBuff((unsigned int) ptr, MMCSD_MAX_BLOCK_LEN * nblks); // Invalidate the data cache.
 	}
 
     /* 12. Use the MMC status register 0 (MMCST0) to check for errors. */
-	// TODO: check this
+	if (rx || nblks == 1) {
+#if defined(DEBUG_MMCSD) && 0
+	syslog(LOG_NOTICE, "%s(): Wait for DATDNE", __FUNCTION__);
+#endif
+		ctrl->waitMMCST0(ctrl, MMCSD_MMCST0_DATDNE);
+	}
+
+	/* 13. Use MMCCMD to send the STOP_TRANSMISSION command. */
+	if (cmd.nblks > 1) {
+#if defined(DEBUG_MMCSD) && 0
+	syslog(LOG_NOTICE, "%s(): Send STOP_TRANSMISSION", __FUNCTION__);
+#endif
+		status = MMCSDStopCmdSend(ctrl);
+		assert(status != 0);
+
+		ctrl->waitMMCST0(ctrl, MMCSD_MMCST0_BSYDNE);
+		//while(HWREG(ctrl->memBase + MMCSD_MMCST1) & MMCSD_MMCST1_BUSY);
+	}
 
 error_exit:
-	unl_mtx(MMCSD_RW_MTX);
 	return status;
 }
 

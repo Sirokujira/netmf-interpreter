@@ -2,7 +2,7 @@
 
 makefile_config="Makefile.config"
 
-# ¥³¥Ş¥ó¥É¥é¥¤¥ó°ú¿ô¤Î½èÍı
+# ã‚³ãƒãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³å¼•æ•°ã®å‡¦ç†
 for arg in "$@"
 do
 	name=`echo $arg | cut -d "=" -f 1`
@@ -26,7 +26,7 @@ do
 	esac
 done
 
-# Boost C++ Libraries¤Î¥Ø¥Ã¥À¥Õ¥¡¥¤¥ë¤¬¤¢¤ë¥Ç¥£¥ì¥¯¥È¥ê¤ò¥µ¡¼¥Á
+# Boost C++ Librariesã®ãƒ˜ãƒƒãƒ€ãƒ•ã‚¡ã‚¤ãƒ«ãŒã‚ã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’ã‚µãƒ¼ãƒ
 for dir in $include_path "/usr/local/include" "/opt/local/include" "/opt/include" "/usr/include" "/mingw/include"
 do
 	ls $dir/boost* 2> /dev/null > /dev/null
@@ -43,7 +43,7 @@ do
 	fi
 done
 
-# Boost C++ Libraries¤Î¥é¥¤¥Ö¥é¥ê¥Õ¥¡¥¤¥ë¤¬¤¢¤ë¥Ç¥£¥ì¥¯¥È¥ê¤ò¥µ¡¼¥Á
+# Boost C++ Librariesã®ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãƒ•ã‚¡ã‚¤ãƒ«ãŒã‚ã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’ã‚µãƒ¼ãƒ
 for dir in $library_path "/usr/local/lib" "/opt/local/lib" "/opt/lib" "/usr/lib" "/lib" "/mingw/lib"
 do
 	ls $dir/libboost* 2> /dev/null > /dev/null
@@ -54,19 +54,19 @@ do
 	fi
 done
 
-##### °Ê²¼¡¢Makefile.config¤òÀ¸À®¤¹¤ë #####
+##### ä»¥ä¸‹ã€Makefile.configã‚’ç”Ÿæˆã™ã‚‹ #####
 
 rm Makefile.config 2> /dev/null
 
-# Boost C++ Libraries¤Î¥Ğ¡¼¥¸¥ç¥ó¤òÄ´¤Ù¤ë
+# Boost C++ Librariesã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã‚’èª¿ã¹ã‚‹
 boost_version=`echo "#include <boost/version.hpp>
 echo BOOST_VERSION" | g++ -E -I$include_path -L$library_path - | sh`
 
 boost_lib_version=`echo "#include <boost/version.hpp>
 echo BOOST_LIB_VERSION" | g++ -E -I$include_path -L$library_path - | sh`
 
-# ¥é¥¤¥Ö¥é¥ê¥Õ¥¡¥¤¥ë¤ÎÅº»ú¤òÄ´¤Ù¤ë
-# ´Ä¶­¤Ë¤è¤Ã¤Æ¡¢-gcc-mt-s, -mt-s, -gcc42-mt-s¤Ê¤É¡¢Åº»ú¤¬°Û¤Ê¤ë¤¿¤á
+# ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãƒ•ã‚¡ã‚¤ãƒ«ã®æ·»å­—ã‚’èª¿ã¹ã‚‹
+# ç’°å¢ƒã«ã‚ˆã£ã¦ã€-gcc-mt-s, -mt-s, -gcc42-mt-sãªã©ã€æ·»å­—ãŒç•°ãªã‚‹ãŸã‚
 libboost_regex_filename=`ls $library_path/libboost_regex*-s.* 2> /dev/null | head -1`
 if test -z $libboost_regex_filename
 then
@@ -75,7 +75,7 @@ fi
 libboost_suffix=`echo $libboost_regex_filename | sed -e s/.*libboost_regex//g -e s/\.[a-z]*$//g`
 echo "LIBBOOST_SUFFIX=$libboost_suffix" >> $makefile_config
 
-# ³Æ¼ïÊÑ¿ô¤ò½ĞÎÏ
+# å„ç¨®å¤‰æ•°ã‚’å‡ºåŠ›
 echo BOOST_VERSION=$boost_lib_version >> $makefile_config
 echo BOOST_DIR=$include_path >> $makefile_config
 echo XERCES_DIR=$include_path >> $makefile_config
@@ -87,7 +87,7 @@ then
 	echo HAS_CFG_XML=1 >> $makefile_config
 fi
 
-# À¸À®·ë²Ì¤òÉ½¼¨
+# ç”Ÿæˆçµæœã‚’è¡¨ç¤º
 cat Makefile.config
 
-# ½ª¤ï¤ê
+# çµ‚ã‚ã‚Š
