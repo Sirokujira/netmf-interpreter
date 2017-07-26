@@ -8,9 +8,9 @@ environment:
       GCC_VERSION: '4.9.3'
       GCC_TOOLS: 'C:\projects\gcc-arm-none-eabi'
 
-    - SPOROOT: 'C:\projects\netmf-interpreter\build-tools'
-      GCC_VERSION: '5.4.1'
-      GCC_TOOLS: 'C:\projects\gcc-arm-none-eabi'
+    # - SPOROOT: 'C:\projects\netmf-interpreter\build-tools'
+    #   GCC_VERSION: '5.4.1'
+    #   GCC_TOOLS: 'C:\projects\gcc-arm-none-eabi'
 
 
 # Tool Download
