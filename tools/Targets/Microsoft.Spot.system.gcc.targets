@@ -50,7 +50,7 @@
     <POS_INDEPENDENT>-fpic</POS_INDEPENDENT>
     <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'!='rza1'"     >$(CC_CPP_COMMON_FLAGS) -mabi=aapcs -ffunction-sections -fdata-sections -fomit-frame-pointer -mlong-calls -fdollars-in-identifiers -fshort-wchar -fno-exceptions -funsigned-char -mstructure-size-boundary=8</CC_CPP_COMMON_FLAGS>
     <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='rza1'"     >$(CC_CPP_COMMON_FLAGS) -fdollars-in-identifiers -fshort-wchar -fno-exceptions  -funsigned-char</CC_CPP_COMMON_FLAGS>
-    <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='rza1'"     >$(CC_CPP_COMMON_FLAGS) -fno-strict-aliasing -fno-rtti -fno-exceptions -fno-delete-null-pointer-checks -fmessage-length=0 -fno-builtin -mno-unaligned-access</CC_CPP_COMMON_FLAGS>
+    <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='rza1'"     >$(CC_CPP_COMMON_FLAGS) -fno-strict-aliasing -fno-exceptions -fno-delete-null-pointer-checks -fmessage-length=0 -fno-builtin -mno-unaligned-access</CC_CPP_COMMON_FLAGS>
     
     <CC_CPP_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='RTM'"          >$(CC_CPP_TARGETTYPE_FLAGS) -O3</CC_CPP_TARGETTYPE_FLAGS>
     <CC_CPP_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Debug'"        >$(CC_CPP_TARGETTYPE_FLAGS) -Og -femit-class-debug-always -g3 -ggdb</CC_CPP_TARGETTYPE_FLAGS>
