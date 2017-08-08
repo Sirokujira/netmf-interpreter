@@ -30,7 +30,7 @@
 
     <!-- based on cpu type, setup compiler-->
     <PropertyGroup>
-        <!-- We need to convert the RVDS CPU type to its GCC equivalent if needed-->
+        <!-- We need to convert the RVDS CPU type to its GCC equivalent if needed -->
         <ARCH_TYPE_FLAGS Condition="'$(DEVICE_TYPE)' == 'arm926EJ-S'">-mcpu=arm926ej-s</ARCH_TYPE_FLAGS>
         <ARCH_TYPE_FLAGS Condition="'$(DEVICE_TYPE)' == 'ARM7TDMI'">-mcpu=arm7tdmi</ARCH_TYPE_FLAGS>
         <ARCH_TYPE_FLAGS Condition="'$(DEVICE_TYPE)' == 'cortex-m4'">-mcpu=cortex-m4 -mthumb</ARCH_TYPE_FLAGS>
@@ -51,8 +51,10 @@
         <POS_DEPENDENT></POS_DEPENDENT>
         <POS_INDEPENDENT>-fpic</POS_INDEPENDENT>
         <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'!='rza1'"     >$(CC_CPP_COMMON_FLAGS) -mabi=aapcs -ffunction-sections -fdata-sections -fomit-frame-pointer -mlong-calls -fdollars-in-identifiers -fshort-wchar -fno-exceptions -funsigned-char -mstructure-size-boundary=8</CC_CPP_COMMON_FLAGS>
-        <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='rza1'"     >$(CC_CPP_COMMON_FLAGS) -fdollars-in-identifiers -fshort-wchar -fno-exceptions  -funsigned-char -fpermissive</CC_CPP_COMMON_FLAGS>
-        <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='rza1'"     >$(CC_CPP_COMMON_FLAGS) -fno-strict-aliasing -fno-rtti -fno-exceptions -fno-delete-null-pointer-checks -fmessage-length=0 -fno-builtin -mno-unaligned-access</CC_CPP_COMMON_FLAGS>
+        <!-- <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='rza1'"     >$(CC_CPP_COMMON_FLAGS) -fdollars-in-identifiers -fshort-wchar -fno-exceptions  -funsigned-char -fpermissive</CC_CPP_COMMON_FLAGS> -->
+        <!-- fpermissive not use C++/ObjC -->
+        <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='rza1'"     >$(CC_CPP_COMMON_FLAGS) -fdollars-in-identifiers -fshort-wchar -fno-exceptions  -funsigned-char</CC_CPP_COMMON_FLAGS>
+        <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='rza1'"     >$(CC_CPP_COMMON_FLAGS) -fno-strict-aliasing -fno-exceptions -fno-delete-null-pointer-checks -fmessage-length=0 -fno-builtin -mno-unaligned-access</CC_CPP_COMMON_FLAGS>
         
         <CC_CPP_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='RTM'"          >$(CC_CPP_TARGETTYPE_FLAGS) -O3</CC_CPP_TARGETTYPE_FLAGS>
         <CC_CPP_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Debug'"        >$(CC_CPP_TARGETTYPE_FLAGS) -Og -femit-class-debug-always -g3 -ggdb</CC_CPP_TARGETTYPE_FLAGS>
@@ -87,26 +89,14 @@
         <AS_CC_CPP_COMMON_FLAGS Condition="'$(ENDIANNESS)'=='le'">$(AS_CC_CPP_COMMON_FLAGS) -mlittle-endian</AS_CC_CPP_COMMON_FLAGS>
         <AS_CC_CPP_COMMON_FLAGS Condition="'$(ENDIANNESS)'=='be'">$(AS_CC_CPP_COMMON_FLAGS) -mbig-endian</AS_CC_CPP_COMMON_FLAGS>
 
-        <!-- lcd build -->
-        <!-- kernel/task.c build flag : -DALLFUNC -->
-        <!-- target_config.c build flag : -DBUILD_EV3_PLATFORM -->
         <!-- __TARGET_ARCH_ARM parameter -->
         <!-- http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0472lj/chr1359125007083_00018.html -->
-        <!-- EV3 -->
-        <!-- <CTOPPERS_EV3_FLAGS>-g -std=gnu99 -DBUILD_EV3_PLATFORM -DCONFIG_FB_DEFERRED_IO -D__KERNEL__ -DSUPPORT_XLOG_SYS -Dgcc -DALLFUNC -D__TARGET_ARCH_ARM=5 $(CTOPPERS_EV3_WARNING_OFF_FLAGS)</CTOPPERS_EV3_FLAGS> -->
-        <!-- GR-PEACH -->
-        <!-- <CTOPPERS_EV3_FLAGS>-g -std=gnu99 $(AS_CC_CPP_COMMON_FLAGS) -DCONFIG_FB_DEFERRED_IO -D__KERNEL__ -DSUPPORT_XLOG_SYS -Dgcc -DALLFUNC -D__TARGET_ARCH_ARM=7 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM $(CTOPPERS_EV3_WARNING_OFF_FLAGS)</CTOPPERS_EV3_FLAGS> -->
-        <!-- -std=gnu++11 ng? -->
-        <CTOPPERS_EV3_FLAGS>$(CTOPPERS_EV3_FLAGS) $(AS_CC_CPP_COMMON_FLAGS)</CTOPPERS_EV3_FLAGS>
-        <!-- EV3 -->
-        <!-- <CXXTOPPERS_EV3_FLAGS>-fPIC -mno-pic-data-is-text-relative -nostdlib -fno-strict-aliasing -D__TARGET_ARCH_ARM=5 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM</CXXTOPPERS_EV3_FLAGS> -->
-        <!-- GR-PEACH -->
-        <!-- <CXXTOPPERS_EV3_FLAGS>$(CC_CPP_COMMON_FLAGS) $(AS_CC_CPP_COMMON_FLAGS) -DCONFIG_FB_DEFERRED_IO -D__KERNEL__ -DSUPPORT_XLOG_SYS -Dgcc -D__TARGET_ARCH_ARM=7 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM $(CXXTOPPERS_EV3_WARNING_OFF_FLAGS)</CXXTOPPERS_EV3_FLAGS> -->
-        <CXXTOPPERS_EV3_FLAGS>$(CC_CPP_COMMON_FLAGS) $(AS_CC_CPP_COMMON_FLAGS) $(CXXTOPPERS_EV3_FLAGS)</CXXTOPPERS_EV3_FLAGS>
+        <CTOPPERS_CUSTOM_FLAGS>$(CTOPPERS_CUSTOM_FLAGS) $(AS_CC_CPP_COMMON_FLAGS)</CTOPPERS_CUSTOM_FLAGS>
+        <CXXTOPPERS_CUSTOM_FLAGS>$(CC_CPP_COMMON_FLAGS) $(AS_CC_CPP_COMMON_FLAGS) -fpermissive $(CXXTOPPERS_CUSTOM_FLAGS)</CXXTOPPERS_CUSTOM_FLAGS>
 
         <!-- Toppers Add -->
-        <CC_FLAGS>$(CC_FLAGS) -xc $(CTOPPERS_EV3_FLAGS)</CC_FLAGS>
-        <CPP_FLAGS>$(CPP_FLAGS) -xc++ -Wno-invalid-offsetof -fcheck-new $(CXXTOPPERS_EV3_FLAGS)</CPP_FLAGS>
+        <CC_FLAGS>$(CC_FLAGS) -xc $(CTOPPERS_CUSTOM_FLAGS)</CC_FLAGS>
+        <CPP_FLAGS>$(CPP_FLAGS) -xc++ -Wno-invalid-offsetof -fcheck-new $(CXXTOPPERS_CUSTOM_FLAGS)</CPP_FLAGS>
     </PropertyGroup>
     
     <!-- Assembler flags -->
@@ -173,7 +163,7 @@
         <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='rza1'"    >$(CC_CPP_COMMON_FLAGS) -DCOMPILE_ARM </CC_CPP_COMMON_FLAGS>
         
         <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='rza1'"     >$(CC_CPP_COMMON_FLAGS) -fdollars-in-identifiers -fshort-wchar -fno-exceptions  -funsigned-char</CC_CPP_COMMON_FLAGS>
-        <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='rza1'"     >$(CC_CPP_COMMON_FLAGS) -fno-strict-aliasing -fno-rtti -fno-exceptions -fno-delete-null-pointer-checks -fmessage-length=0 -fno-builtin -mno-unaligned-access</CC_CPP_COMMON_FLAGS>
+        <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='rza1'"     >$(CC_CPP_COMMON_FLAGS) -fno-strict-aliasing -fno-exceptions -fno-delete-null-pointer-checks -fmessage-length=0 -fno-builtin -mno-unaligned-access</CC_CPP_COMMON_FLAGS>
 
         <CC_CPP_COMMON_FLAGS Condition="'$(FLAVOR)'=='Instrumented' and '$(NATIVE_PROFILE_CLR)'!=''">$(CC_CPP_COMMON_FLAGS) -DNATIVE_PROFILE_CLR=$(NATIVE_PROFILE_CLR)</CC_CPP_COMMON_FLAGS>
         <CC_CPP_COMMON_FLAGS Condition="'$(FLAVOR)'=='Instrumented' and '$(NATIVE_PROFILE_PAL)'!=''">$(CC_CPP_COMMON_FLAGS) -DNATIVE_PROFILE_PAL=$(NATIVE_PROFILE_PAL)</CC_CPP_COMMON_FLAGS>
@@ -234,7 +224,8 @@
     
     <!-- CPP flags -->
     <PropertyGroup>
-        <CPP_FLAGS>$(CPP_FLAGS) $(CC_CPP_COMMON_FLAGS) $(ExtraCPPFlags) -Wabi </CPP_FLAGS>
+        <!-- <CPP_FLAGS>$(CPP_FLAGS) $(CC_CPP_COMMON_FLAGS) $(ExtraCPPFlags) -Wabi -fpermissive -fno-rtti</CPP_FLAGS> -->
+        <CPP_FLAGS>$(CPP_FLAGS) $(CC_CPP_COMMON_FLAGS) $(ExtraCPPFlags) -Wabi -fpermissive</CPP_FLAGS>
         <CPP_FLAGS Condition="'$(FLAVOR)'=='Debug'">$(CPP_FLAGS) -fno-default-inline</CPP_FLAGS>
     </PropertyGroup>
     
@@ -316,9 +307,9 @@
     
     <!-- Toppers Source Code build -->
     <Target Name="ArmCompileC2" Condition="'@(CFiles)'!='' or '@(FastCompileCFile)'==''" Inputs="@(FastCompileCFile);@(CFiles)" Outputs="@(ObjFiles)">
-        <Exec Condition="Exists('%(FastCompileCFile.FullPath)') and  '@(FastCompileCFile)'!='' and '$(ENABLE_FASTCOMPILE)'=='true'" Command="$(ADS_WRAPPER) $(CC) $(CTOPPERS_EV3_FLAGS) $(CC_CPP_INCS) $(POS_DEPENDENT) -o$(OBJ_DIR)\%(FastCompileCFile.Filename).$(OBJ_EXT) -c %(FastCompileCFile.FullPath) "/>
-        <!-- <Exec Condition="Exists('%(CFiles.FullPath)')           and  '@(CFiles)'!=''and ('$(ENABLE_FASTCOMPILE)'!='true' or '@(FastCompileCFile)'=='')" Command="$(ADS_WRAPPER) $(CC) $(CTOPPERS_EV3_FLAGS) $(CC_CPP_INCS) -o$(OBJ_DIR)\%(CFiles.Filename).$(OBJ_EXT) -c %(CFiles.FullPath) "/> -->
-        <Exec Condition="Exists('%(CFiles.FullPath)')           and  '@(CFiles)'!=''and ('$(ENABLE_FASTCOMPILE)'!='true' or '@(FastCompileCFile)'=='')" Command="$(ADS_WRAPPER) $(CC) $(CTOPPERS_EV3_FLAGS) $(CC_CPP_INCS) -o$(OBJ_DIR)\%(CFiles.Filename).o -c %(CFiles.FullPath) "/>
+        <Exec Condition="Exists('%(FastCompileCFile.FullPath)') and  '@(FastCompileCFile)'!='' and '$(ENABLE_FASTCOMPILE)'=='true'" Command="$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) $(CC_CPP_INCS) $(POS_DEPENDENT) -o$(OBJ_DIR)\%(FastCompileCFile.Filename).$(OBJ_EXT) -c %(FastCompileCFile.FullPath) "/>
+        <!-- <Exec Condition="Exists('%(CFiles.FullPath)')           and  '@(CFiles)'!=''and ('$(ENABLE_FASTCOMPILE)'!='true' or '@(FastCompileCFile)'=='')" Command="$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) $(CC_CPP_INCS) -o$(OBJ_DIR)\%(CFiles.Filename).$(OBJ_EXT) -c %(CFiles.FullPath) "/> -->
+        <Exec Condition="Exists('%(CFiles.FullPath)')           and  '@(CFiles)'!=''and ('$(ENABLE_FASTCOMPILE)'!='true' or '@(FastCompileCFile)'=='')" Command="$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) $(CC_CPP_INCS) -o$(OBJ_DIR)\%(CFiles.Filename).o -c %(CFiles.FullPath) "/>
     </Target>
     
     <Target Name="ArmAssemble" Condition="'@(AssemblyFiles)'!=''" Inputs="@(AssemblyFiles)" Outputs="@(AssemblyFiles->'$(OBJ_DIR)\%(FileName).$(OBJ_EXT)')">
@@ -330,14 +321,16 @@
     <!-- $(CC) -c $(CFLAGS) $(KERNEL_CFLAGS) $(KERNEL_ASMOBJS).o $(KERNEL_ASMOBJS).S -->
     <Target Name="ArmAssemble2" Condition="'@(AssemblyFiles)'!=''" Inputs="@(AssemblyFiles)" Outputs="@(AssemblyFiles->'$(OBJ_DIR)\%(FileName).$(OBJ_EXT)')">
         <Exec Condition="Exists('%(AssemblyFiles.FullPath)')" Command="del /q  $(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT)" ContinueOnError="true" />
-        <!-- <Exec Condition="Exists('%(AssemblyFiles.FullPath)')" Command="$(CC) $(CTOPPERS_EV3_FLAGS) $(CC_CPP_INCS) -I$(SRCDIR)/kernel -o$(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT) %(AssemblyFiles.FullPath)"/> -->
+        <!-- <Exec Condition="Exists('%(AssemblyFiles.FullPath)')" Command="$(CC) $(CTOPPERS_CUSTOM_FLAGS) $(CC_CPP_INCS) -I$(SRCDIR)/kernel -o$(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT) %(AssemblyFiles.FullPath)"/> -->
         <!-- http://researchmap.jp/joak1kvz7-1778110/?lang=japanese -->
         <!-- http://researchmap.jp/jo5arkly7-1778110/#_1778110 -->
         <!-- <Exec Condition="Exists('%(AssemblyFiles.FullPath)')" Command="$(CC) -c -mcpu=arm926ej-s -g -mlittle-endian -nostartfiles -O2 -Wall -DTOPPERS_LABEL_ASM -I. -I../include -I../arch -I..  -I../target/raspberry_pi_gcc -I../kernel -I../arch/arm_gcc/ -DALLFUNC -fno-strict-aliasing -o$(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT) %(AssemblyFiles.FullPath)"/> -->
         <!-- EV3 -->
-        <Exec Condition="Exists('%(AssemblyFiles.FullPath)')" Command="$(CC) -c $(ARCH_TYPE_FLAGS) -g -mlittle-endian -nostartfiles -O2 -Wall -DTOPPERS_LABEL_ASM -D__TARGET_ARCH_ARM=5 $(CC_CPP_INCS) -I$(SRCDIR)/kernel -DALLFUNC -fno-strict-aliasing -o$(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT) %(AssemblyFiles.FullPath)"/>
+        <!-- <Exec Condition="Exists('%(AssemblyFiles.FullPath)')" Command="$(CC) -c $(ARCH_TYPE_FLAGS) -g -mlittle-endian -nostartfiles -O2 -Wall -DTOPPERS_LABEL_ASM -D__TARGET_ARCH_ARM=5 $(CC_CPP_INCS) -I$(SRCDIR)/kernel -DALLFUNC -fno-strict-aliasing -o$(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT) %(AssemblyFiles.FullPath)"/> -->
         <!-- GR-PEACH -->
         <!-- <Exec Condition="Exists('%(AssemblyFiles.FullPath)')" Command="$(CC) -c $(ARCH_TYPE_FLAGS) -g -mlittle-endian -nostdlib -O2 -Wall -DTOPPERS_LABEL_ASM -D__TARGET_ARCH_ARM=7 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM $(CC_CPP_INCS) -I$(SRCDIR)/kernel -DALLFUNC -fno-strict-aliasing -o$(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT) %(AssemblyFiles.FullPath)"/> -->
+        <!-- share -->
+        <Exec Condition="Exists('%(AssemblyFiles.FullPath)')" Command="$(CC) -c $(ARCH_TYPE_FLAGS) $(CC_CPP_INCS) $(ASMTOPPERS_CUSTOM_FLAGS) -o$(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT) %(AssemblyFiles.FullPath)"/>
     </Target>
     
     <Target Name="DelBuildLib" Condition="'$(OutputType)'=='Library'" Inputs="@(FastCompileCPPFile);@(CPPFiles);@(FastCompileCFile);@(CFiles);@(AssemblyFiles);@(HFiles)" Outputs="@(TargetLib)">
@@ -371,7 +364,7 @@
     <!-- kernel_cfg1, 2 start compile kernel_cfg.h use -->
     <Target Name="ArmBuildLib3" Condition="'$(OutputType)'=='Kernel'" DependsOnTargets="kernel_cfg1;ArmAssemble2;kernel_cfg2;FindCompileFilesExistence;FindFastCompileFilesExistence;DelBuildLib2;ArmCompileC2;ArmCompileCPP;CreateLibManifest;libkernel;kernel_cfg3;$(ExtraTargets);">
     <!-- <Target Name="ArmBuildLib3" Condition="'$(OutputType)'=='Kernel'" DependsOnTargets="FindCompileFilesExistence;FindFastCompileFilesExistence;DelBuildLib2;ArmCompileC;ArmCompileCPP;ArmAssemble;CreateLibManifest;$(ExtraTargets);"> -->
-        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(CC) $(CTOPPERS_EV3_FLAGS) -nostdlib $(LDFLAGS) -o $(TOPPERS_OSTYPE) kernel_cfg.o $(TOPPERS_START_OBJS) $(TOPPERS_APPL_OBJS) $(TOPPERS_DRIVER_OBJS) $(SYSSVC_OBJS) $(KERNEL_LIB_OBJS) $(TOPPERS_KERNEL_LIBS)" />
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(CC) $(CTOPPERS_CUSTOM_FLAGS) -nostdlib $(LDFLAGS) -o $(TOPPERS_OSTYPE) kernel_cfg.o $(TOPPERS_START_OBJS) $(TOPPERS_APPL_OBJS) $(TOPPERS_DRIVER_OBJS) $(SYSSVC_OBJS) $(KERNEL_LIB_OBJS) $(TOPPERS_KERNEL_LIBS)" />
         <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(NM) -n $(TOPPERS_OSTYPE) > $(TOPPERS_OSTYPE).syms "/>
         
         <!-- GR_PEACH ROM/RAM -->
@@ -399,15 +392,15 @@
         
         <!-- warning : cannot find entry symbol _start; -->
         <!-- http://www.embedded.jp/pipermail/linux/2003-December/000018.html -->
-        <Exec Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_EV3_FLAGS) -Wl,-Ttext,$(TEXT_START_ADDRESS) -Wl,-e,0 -o cfg1_out.o -c cfg1_out.c $(CFG1COMPILEINCLUDE)" />
+        <Exec Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) -Wl,-Ttext,$(TEXT_START_ADDRESS) -Wl,-e,0 -o cfg1_out.o -c cfg1_out.c $(CFG1COMPILEINCLUDE)" />
     </Target>
     <!-- dynamicLoader no use? -->
     <Target Name="module_cfg2">
         <!-- module build -->
-        <Exec Command="@$(ADS_WRAPPER) $(CC) -nostartfiles -O2 $(CTOPPERS_EV3_FLAGS) $(CFG1COMPILEINCLUDE) -DBUILD_MODULE -Wl,-Ttext,0x00000000 -Wl,-e,0 -o cfg1_out.o cfg1_out.c" />
+        <Exec Command="@$(ADS_WRAPPER) $(CC) -nostartfiles -O2 $(CTOPPERS_CUSTOM_FLAGS) $(CFG1COMPILEINCLUDE) -DBUILD_MODULE -Wl,-Ttext,0x00000000 -Wl,-e,0 -o cfg1_out.o cfg1_out.c" />
         
         <!-- ok -->
-        <Exec Command="@$(ADS_WRAPPER) $(CC) -nostartfiles $(CTOPPERS_EV3_FLAGS) $(CFG1_OUT_LDFLAGS) -Wl,-e,0 -o $(CFG1_OUT) cfg1_out.o" />
+        <Exec Command="@$(ADS_WRAPPER) $(CC) -nostartfiles $(CTOPPERS_CUSTOM_FLAGS) $(CFG1_OUT_LDFLAGS) -Wl,-e,0 -o $(CFG1_OUT) cfg1_out.o" />
         <Exec Command="@$(NM) -n $(CFG1_OUT) > cfg1_out.syms" />
         <Exec Command="@$(FROMELF) -O srec -S $(CFG1_OUT) cfg1_out.srec" />
         
@@ -418,25 +411,31 @@
     
     <Target Name="kernel_cfg1">
         <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(CFG) $(APPL_CFG) --pass=1 --kernel=$(TOPPERS_OSTYPE) $(CFGINCLUDE) $(CFG_KERNEL_TABS)" />
-        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_EV3_FLAGS) $(CFG1_OUT_LDFLAGS) -o $(CFG1_OUT).$(OBJ_EXT) -c $(CFG1_OUT).c $(CFG1COMPILEINCLUDE)" />
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) $(CFG1_OUT_LDFLAGS) -o $(CFG1_OUT).$(OBJ_EXT) -c $(CFG1_OUT).c $(CFG1COMPILEINCLUDE)" />
     </Target>
     
     <Target Name="kernel_cfg2">
         <!-- use file build -->
-        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CC_FLAGS) $(POS_DEPENDENT) -o histogram.$(OBJ_EXT) -c $(SRCDIR)\library\histogram.c" />
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CC_FLAGS) $(POS_DEPENDENT) -o histogram.$(OBJ_EXT)  -c $(SRCDIR)\library\histogram.c" />
         <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CC_FLAGS) $(POS_DEPENDENT) -o log_output.$(OBJ_EXT) -c $(SRCDIR)\library\log_output.c" />
-        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CC_FLAGS) $(POS_DEPENDENT) -o strerror.$(OBJ_EXT) -c $(SRCDIR)\library\strerror.c" />
-        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CC_FLAGS) $(POS_DEPENDENT) -o t_perror.$(OBJ_EXT) -c $(SRCDIR)\library\t_perror.c" />
-        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CC_FLAGS) $(POS_DEPENDENT) -o vasyslog.$(OBJ_EXT) -c $(SRCDIR)\library\vasyslog.c" />
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CC_FLAGS) $(POS_DEPENDENT) -o strerror.$(OBJ_EXT)   -c $(SRCDIR)\library\strerror.c" />
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CC_FLAGS) $(POS_DEPENDENT) -o t_perror.$(OBJ_EXT)   -c $(SRCDIR)\library\t_perror.c" />
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CC_FLAGS) $(POS_DEPENDENT) -o vasyslog.$(OBJ_EXT)   -c $(SRCDIR)\library\vasyslog.c" />
         <!-- syssvc -->
-        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CC_FLAGS) $(POS_DEPENDENT) -o logtask.$(OBJ_EXT) -c $(SRCDIR)\syssvc\logtask.c" />
-        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CC_FLAGS) $(POS_DEPENDENT) -o syslog.$(OBJ_EXT) -c $(SRCDIR)\syssvc\syslog.c" />
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CC_FLAGS) $(POS_DEPENDENT) -o banner.$(OBJ_EXT)     -c $(SRCDIR)\syssvc\banner.c" />
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CC_FLAGS) $(POS_DEPENDENT) -o logtask.$(OBJ_EXT)    -c $(SRCDIR)\syssvc\logtask.c" />
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CC_FLAGS) $(POS_DEPENDENT) -o serial.$(OBJ_EXT)     -c $(SRCDIR)\syssvc\serial.c" />
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CC_FLAGS) $(POS_DEPENDENT) -o syslog.$(OBJ_EXT)     -c $(SRCDIR)\syssvc\syslog.c" />
         
         <!-- EV3 -->
-        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_EV3_FLAGS) -nostdlib $(CFG1_OUT_LDFLAGS) -o $(CFG1_OUT) $(TOPPERS_START_OBJS) $(CFG1_OUT).$(OBJ_EXT) t_perror.o strerror.o vasyslog.o $(TOPPERS_BUILD_LIBS)"/>
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) -nostdlib $(CFG1_OUT_LDFLAGS) -o $(CFG1_OUT) $(TOPPERS_START_OBJS) $(CFG1_OUT).$(OBJ_EXT) t_perror.o strerror.o vasyslog.o $(TOPPERS_BUILD_LIBS)"/> -->
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) -nostdlib $(CFG1_OUT_LDFLAGS) -o $(CFG1_OUT) $(TOPPERS_START_OBJS) $(CFG1_OUT).$(OBJ_EXT) $(SYSSVC_COBJS) $(TOPPERS_BUILD_LIBS)"/> -->
         <!-- GR_PEACH -->
         <!-- t_perror.o strerror.o vasyslog.o t_perror.o logtask.o syslog.o -->
-        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_EV3_FLAGS) -nostdlib $(CFG1_OUT_LDFLAGS) -o $(CFG1_OUT) $(TOPPERS_START_OBJS) $(CFG_OBJS)"/> -->
+        <!-- Build ok. execute NG? -->
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) -nostdlib $(CFG1_OUT_LDFLAGS) -o $(CFG1_OUT) $(TOPPERS_START_OBJS) $(CFG1_OUT).$(OBJ_EXT)"/>
+        <!-- Build ng. -->
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) -nostdlib $(CFG1_OUT_LDFLAGS) -o $(CFG1_OUT) $(TOPPERS_START_OBJS) $(CFG1_OUT).$(OBJ_EXT) $(SYSSVC_COBJS) $(TOPPERS_BUILD_LIBS)"/> -->
         
         <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(NM) -n $(CFG1_OUT) > $(CFG1_OUT).syms "/>
         <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(FROMELF) -O srec -S $(CFG1_OUT) $(CFG1_OUT).srec "/>
@@ -445,19 +444,21 @@
         
         <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="touch -r kernel_cfg.c kernel_cfg.timestamp" /> -->
         
-        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_EV3_FLAGS) $(CFG1_OUT_LDFLAGS) -o $(KERNEL1_OUT).$(OBJ_EXT) -c $(KERNEL1_OUT).c $(CFG1COMPILEINCLUDE)" />
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) $(CFG1_OUT_LDFLAGS) -o $(KERNEL1_OUT).$(OBJ_EXT) -c $(KERNEL1_OUT).c $(CFG1COMPILEINCLUDE)" />
         <!-- EV3 only? -->
-        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_EV3_FLAGS) $(CFG1_OUT_LDFLAGS) -o $(KERNEL2_MEMOUT).$(OBJ_EXT) -c $(KERNEL2_MEMOUT).c $(CFG1COMPILEINCLUDE)" /> -->
-        <Exec WorkingDirectory="$(OBJ_DIR)" Condition="Exists('$(OBJ_DIR)\$(KERNEL2_MEMOUT).c')" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_EV3_FLAGS) $(CFG1_OUT_LDFLAGS) -o $(KERNEL2_MEMOUT).$(OBJ_EXT) -c $(KERNEL2_MEMOUT).c $(CFG1COMPILEINCLUDE)" ContinueOnError="true" />
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) $(CFG1_OUT_LDFLAGS) -o $(KERNEL2_MEMOUT).$(OBJ_EXT) -c $(KERNEL2_MEMOUT).c $(CFG1COMPILEINCLUDE)" /> -->
+        <Exec WorkingDirectory="$(OBJ_DIR)" Condition="Exists('$(OBJ_DIR)\$(KERNEL2_MEMOUT).c')" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) $(CFG1_OUT_LDFLAGS) -o $(KERNEL2_MEMOUT).$(OBJ_EXT) -c $(KERNEL2_MEMOUT).c $(CFG1COMPILEINCLUDE)" ContinueOnError="true" />
     </Target>
 
     <!-- same name override target parameters -->
     <!-- EV3 use -->
+    <!-- <Target Name="kernel_cfg3_use_Mem" Condition="'$(USE_CFG_PASS3)'=='true'" DependsOnTargets="kernel_mem_usePass3;kernel_mem_usePass4;"> -->
     <Target Name="kernel_cfg3" Condition="'$(USE_CFG_PASS3)'=='true'" DependsOnTargets="kernel_mem_usePass3;kernel_mem_usePass4;">
     </Target>
     
     <!-- GR-PEACH use -->
     <!--
+    <Target Name="kernel_cfg3_no_use_Mem" Condition="'$(USE_CFG_PASS3)'=='true'" DependsOnTargets="kernel_mem_nousePass3;">
     <Target Name="kernel_cfg3" Condition="'$(USE_CFG_PASS3)'!='true'" DependsOnTargets="kernel_mem_nousePass3;">
     </Target>
     -->
@@ -488,7 +489,7 @@
         <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(PowerShellExe) -NonInteractive -executionpolicy Unrestricted -command &quot;(Get-content $(CFG2_OUT_LDSCRIPT)) | Foreach-Object {$_ -replace &quot;kernel_mem2.o&quot;, &quot;kernel_mem3.o&quot;} | Set-Content $(CFG3_OUT_LDSCRIPT)&quot;"/> -->
         <Exec WorkingDirectory="$(OBJ_DIR)" Command="powershell -NonInteractive -executionpolicy Unrestricted -command &quot;Get-content $(CFG2_OUT_LDSCRIPT) | Foreach-Object {$_ -replace \&quot;kernel_mem2.o&quot;, \&quot;kernel_mem3.o\&quot;} | Set-Content $(CFG3_OUT_LDSCRIPT)&quot;"/>
         
-        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_EV3_FLAGS) $(CFG1_OUT_LDFLAGS) -o $(KERNEL3_MEMOUT).$(OBJ_EXT) -c $(KERNEL3_MEMOUT).c $(CFG1COMPILEINCLUDE)" />
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) $(CFG1_OUT_LDFLAGS) -o $(KERNEL3_MEMOUT).$(OBJ_EXT) -c $(KERNEL3_MEMOUT).c $(CFG1COMPILEINCLUDE)" />
     </Target>
     
     <Target Name="kernel_mem_usePass4">
@@ -508,7 +509,7 @@
         <Exec WorkingDirectory="$(OBJ_DIR)" Command="powershell -NonInteractive -executionpolicy Unrestricted -command &quot;Get-content $(CFG3_OUT_LDSCRIPT) | Foreach-Object {$_ -replace \&quot;kernel_mem2.o&quot;, \&quot;kernel_mem.o\&quot;} | Set-Content $(LDSCRIPT)&quot;"/>
         
         <!-- kernel_mem.c compile -->
-        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_EV3_FLAGS) $(CFG1_OUT_LDFLAGS) -o $(KERNEL1_MEMOUT).$(OBJ_EXT) -c $(KERNEL1_MEMOUT).c $(CFG1COMPILEINCLUDE)" />
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) $(CFG1_OUT_LDFLAGS) -o $(KERNEL1_MEMOUT).$(OBJ_EXT) -c $(KERNEL1_MEMOUT).c $(CFG1COMPILEINCLUDE)" />
     </Target>
     
     <Target Name="kernel_mem_nousePass3">
@@ -528,7 +529,7 @@
         <Exec WorkingDirectory="$(OBJ_DIR)" Command="powershell -NonInteractive -executionpolicy Unrestricted -command &quot;Get-content $(CFG2_OUT_LDSCRIPT) | Foreach-Object {$_ -replace \&quot;kernel_mem2.o&quot;, \&quot;kernel_mem.o\&quot;} | Set-Content $(LDSCRIPT)&quot;"/>
         
         <!-- kernel_mem.c compile -->
-        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_EV3_FLAGS) $(CFG1_OUT_LDFLAGS) -o kernel_mem.o -c kernel_mem.c $(CFG1COMPILEINCLUDE)" /> -->
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) $(CFG1_OUT_LDFLAGS) -o kernel_mem.o -c kernel_mem.c $(CFG1COMPILEINCLUDE)" /> -->
     </Target>
     
     <!-- Kernel Library File Create -->
@@ -545,7 +546,7 @@
     
     <!-- $(CFG2_OUT_SRCS): kernel_cfg.timestamp -->
     <Target Name="kernel_cfg_timestamp">
-        <Exec Command="@$(LINK) $(CFG1_OUT) $(CTOPPERS_EV3_FLAGS) $(CFG1_OUT_LDFLAGS) -o $(CFG1_OUT) $(START_OBJS) $(CFG1_OUT).$(OBJ_EXT) $(END_OBJS)" />
+        <Exec Command="@$(LINK) $(CFG1_OUT) $(CTOPPERS_CUSTOM_FLAGS) $(CFG1_OUT_LDFLAGS) -o $(CFG1_OUT) $(START_OBJS) $(CFG1_OUT).$(OBJ_EXT) $(END_OBJS)" />
         <!-- $(call print_cmd, "NM", cfg1_out.syms) -->
         <Exec Command="@$(NM) $(CFG1_OUT).syms -n $(CFG1_OUT) > $(CFG1_OUT).syms" />
         <!--$(call print_cmd, "OBJCOPY", $(CFG1_OUT).srec) -->

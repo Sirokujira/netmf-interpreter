@@ -23,8 +23,12 @@
         <!-- Toppers Depends Environment Variant -->
         <!-- <TOPPERS_OSTYPE>hrp2</TOPPERS_OSTYPE> -->
         <!-- <TOPPERS_MODULES>EV3</TOPPERS_MODULES> -->
+        <!-- GR-PEACH -->
         <TOPPERS_OSTYPE>asp</TOPPERS_OSTYPE>
+        <!-- <TOPPERS_OSTYPE>asp3</TOPPERS_OSTYPE> -->
+        <!-- <TOPPERS_VERSION>3.2.0</TOPPERS_VERSION> -->
         <TOPPERS_MODULES>gr-peach</TOPPERS_MODULES>
+        <!-- Zynq(ZYBO) -->
         <!-- <TOPPERS_OSTYPE>fmp</TOPPERS_OSTYPE> -->
         <!-- <TOPPERS_MODULES>zynq</TOPPERS_MODULES> -->
         <SRCDIR>$(SPOCLIENT)/DeviceCode/Targets/OS/Toppers/$(TOPPERS_OSTYPE)</SRCDIR>
@@ -152,12 +156,12 @@
                 
                 <!-- http://stackoverflow.com/questions/24881/how-do-i-fix-for-loop-initial-declaration-used-outside-c99-mode-gcc-error -->
                 <!-- Toppers Custom -->
-                <CTOPPERS_EV3_WARNING_OFF_FLAGS>-Wimplicit-function-declaration</CTOPPERS_EV3_WARNING_OFF_FLAGS>
-                <CXXTOPPERS_EV3_WARNING_OFF_FLAGS></CXXTOPPERS_EV3_WARNING_OFF_FLAGS>
-                <CTOPPERS_EV3_FLAGS>-g -std=gnu99 -DBUILD_EV3_PLATFORM -DCONFIG_FB_DEFERRED_IO -D__KERNEL__ -DSUPPORT_XLOG_SYS -Dgcc -DALLFUNC -D__TARGET_ARCH_ARM=5 -Dam1808 $(CTOPPERS_EV3_WARNING_OFF_FLAGS)</CTOPPERS_EV3_FLAGS>
-                <!-- <CTOPPERS_EV3_FLAGS>-g -std=gnu99 $(AS_CC_CPP_COMMON_FLAGS) -DCONFIG_FB_DEFERRED_IO -D__KERNEL__ -DSUPPORT_XLOG_SYS -Dgcc -DALLFUNC -D__TARGET_ARCH_ARM=7 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM $(CTOPPERS_EV3_WARNING_OFF_FLAGS)</CTOPPERS_EV3_FLAGS> -->
+                <CTOPPERS_CUSTOM_WARNING_OFF_FLAGS>-Wimplicit-function-declaration</CTOPPERS_CUSTOM_WARNING_OFF_FLAGS>
+                <CXXTOPPERS_CUSTOM_WARNING_OFF_FLAGS></CXXTOPPERS_CUSTOM_WARNING_OFF_FLAGS>
+                <CTOPPERS_CUSTOM_FLAGS>-g -std=gnu99 -DBUILD_EV3_PLATFORM -DCONFIG_FB_DEFERRED_IO -D__KERNEL__ -DSUPPORT_XLOG_SYS -Dgcc -DALLFUNC -D__TARGET_ARCH_ARM=5 -Dam1808 $(CTOPPERS_CUSTOM_WARNING_OFF_FLAGS)</CTOPPERS_CUSTOM_FLAGS>
                 <!-- EV3 -->
-                <CXXTOPPERS_EV3_FLAGS>-fPIC -mno-pic-data-is-text-relative -nostdlib -fno-strict-aliasing -D__TARGET_ARCH_ARM=5 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM</CXXTOPPERS_EV3_FLAGS>
+                <CXXTOPPERS_CUSTOM_FLAGS>-fPIC -mno-pic-data-is-text-relative -nostdlib -fno-strict-aliasing -DCONFIG_FB_DEFERRED_IO -D__KERNEL__ -DSUPPORT_XLOG_SYS -Dgcc -DALLFUNC -D__TARGET_ARCH_ARM=5 -Dam1808 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT</CXXTOPPERS_CUSTOM_FLAGS>
+                <ASMTOPPERS_CUSTOM_FLAGS>-g -mlittle-endian -nostartfiles -O2 -Wall -DTOPPERS_LABEL_ASM -D__TARGET_ARCH_ARM=5 -I$(SRCDIR)/kernel -DALLFUNC -fno-strict-aliasing</ASMTOPPERS_CUSTOM_FLAGS>
                 
                 <TEXT_START_ADDRESS>0xC0008000</TEXT_START_ADDRESS>
                 <DATA_START_ADDRESS>0xC0108000</DATA_START_ADDRESS>
@@ -270,6 +274,14 @@
                 <!-- appl objs -->
                 <TOPPERS_APPL_OBJS>$(TOPPERS_APPL_OBJS) log_output.$(OBJEXT) t_perror.$(OBJEXT) </TOPPERS_APPL_OBJS>
                 
+                <!-- Toppers Custom -->
+                <CTOPPERS_CUSTOM_WARNING_OFF_FLAGS>-Wimplicit-function-declaration</CTOPPERS_CUSTOM_WARNING_OFF_FLAGS>
+                <CXXTOPPERS_CUSTOM_WARNING_OFF_FLAGS></CXXTOPPERS_CUSTOM_WARNING_OFF_FLAGS>
+                <CTOPPERS_CUSTOM_FLAGS>-g -std=gnu99 $(AS_CC_CPP_COMMON_FLAGS) -DCONFIG_FB_DEFERRED_IO -D__KERNEL__ -DSUPPORT_XLOG_SYS -Dgcc -DALLFUNC -D__TARGET_ARCH_ARM=7 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM $(CTOPPERS_CUSTOM_WARNING_OFF_FLAGS)</CTOPPERS_CUSTOM_FLAGS>
+                <!-- GR-PEACH -->
+                <CXXTOPPERS_CUSTOM_FLAGS>$(CC_CPP_COMMON_FLAGS) $(AS_CC_CPP_COMMON_FLAGS) -DCONFIG_FB_DEFERRED_IO -D__KERNEL__ -DSUPPORT_XLOG_SYS -Dgcc -D__TARGET_ARCH_ARM=7 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM $(CXXTOPPERS_CUSTOM_WARNING_OFF_FLAGS)</CXXTOPPERS_CUSTOM_FLAGS>
+                <ASMTOPPERS_CUSTOM_FLAGS>-g -mlittle-endian -nostdlib -O2 -Wall -DTOPPERS_LABEL_ASM -D__TARGET_ARCH_ARM=7 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM -I$(SRCDIR)/kernel -DALLFUNC -fno-strict-aliasing</ASMTOPPERS_CUSTOM_FLAGS>
+                
                 <TEXT_START_ADDRESS></TEXT_START_ADDRESS>
                 <DATA_START_ADDRESS></DATA_START_ADDRESS>
                 
@@ -292,7 +304,6 @@
                 <ALL_CFG_COBJS>$(CFG_COBJS) $(CFG2_COBJS) $(CFG3_COBJS) cfg1_out.$(OBJEXT)</ALL_CFG_COBJS>
                 <!-- <ALL_CFG_ASMOBJS>$(sort $(CFG_ASMOBJS) $(CFG2_ASMOBJS) $(CFG3_ASMOBJS))</ALL_CFG_ASMOBJS> -->
                 <ALL_CFG_ASMOBJS>$(CFG_ASMOBJS) $(CFG2_ASMOBJS) $(CFG3_ASMOBJS)</ALL_CFG_ASMOBJS>
-
                 
                 <CFG1_OUT_LDSCRIPT></CFG1_OUT_LDSCRIPT>
                 <CFG2_OUT_LDSCRIPT></CFG2_OUT_LDSCRIPT>
@@ -309,7 +320,6 @@
         <When Condition=" '$(TOPPERS_MODULES)'=='gr-peach' and '$(TOPPERS_OSTYPE)'=='asp' ">
             <PropertyGroup>
                 <!-- Toppers ASP + GR-PEACH -->
-                <!-- base "http://www.toppers.jp/download.cgi/asp_gr_peach_gcc-20160315.zip" -->
                 <APPNAME>sample1</APPNAME>
                 <CFGINCLUDE             Condition="'$(CFGINCLUDE)'==''">-I$(SRCDIR) -I$(SRCDIR)/arch -I$(SRCDIR)/include -I$(KERNELDIR) -I$(SRCDIR)/arch/arm_gcc/rza1 -I$(SRCDIR)/arch/arm_gcc/common -I$(TARGETDIR)</CFGINCLUDE>
                 <CFG1COMPILEINCLUDE     Condition="'$(CFG1COMPILEINCLUDE)'==''">-I$(SRCDIR) -I$(SRCDIR)/arch -I$(SRCDIR)/include -I$(KERNELDIR) -I$(SRCDIR)/arch/arm_gcc/rza1 -I$(SRCDIR)/arch/arm_gcc/common -I$(TARGETDIR) -I$(SPOCLIENT)/$(Directory)</CFG1COMPILEINCLUDE>
@@ -333,12 +343,13 @@
                 
                 <!-- http://stackoverflow.com/questions/24881/how-do-i-fix-for-loop-initial-declaration-used-outside-c99-mode-gcc-error -->
                 <!-- Toppers Custom -->
-                <CTOPPERS_EV3_WARNING_OFF_FLAGS>-Wimplicit-function-declaration</CTOPPERS_EV3_WARNING_OFF_FLAGS>
-                <CXXTOPPERS_EV3_WARNING_OFF_FLAGS></CXXTOPPERS_EV3_WARNING_OFF_FLAGS>
-                <CTOPPERS_EV3_FLAGS>-g -std=gnu99 $(AS_CC_CPP_COMMON_FLAGS) -DCONFIG_FB_DEFERRED_IO -D__KERNEL__ -DSUPPORT_XLOG_SYS -Dgcc -DALLFUNC -D__TARGET_ARCH_ARM=7 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM $(CTOPPERS_EV3_WARNING_OFF_FLAGS)</CTOPPERS_EV3_FLAGS>
+                <CTOPPERS_CUSTOM_WARNING_OFF_FLAGS>-Wimplicit-function-declaration</CTOPPERS_CUSTOM_WARNING_OFF_FLAGS>
+                <CXXTOPPERS_CUSTOM_WARNING_OFF_FLAGS></CXXTOPPERS_CUSTOM_WARNING_OFF_FLAGS>
+                <CTOPPERS_CUSTOM_FLAGS>-g -std=gnu99 $(AS_CC_CPP_COMMON_FLAGS) -DCONFIG_FB_DEFERRED_IO -D__KERNEL__ -DSUPPORT_XLOG_SYS -Dgcc -DALLFUNC -D__TARGET_ARCH_ARM=7 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM $(CTOPPERS_CUSTOM_WARNING_OFF_FLAGS)</CTOPPERS_CUSTOM_FLAGS>
                 <!-- GR-PEACH -->
-                <CXXTOPPERS_EV3_FLAGS>$(CC_CPP_COMMON_FLAGS) $(AS_CC_CPP_COMMON_FLAGS) -DCONFIG_FB_DEFERRED_IO -D__KERNEL__ -DSUPPORT_XLOG_SYS -Dgcc -D__TARGET_ARCH_ARM=7 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM $(CXXTOPPERS_EV3_WARNING_OFF_FLAGS)</CXXTOPPERS_EV3_FLAGS>
-
+                <CXXTOPPERS_CUSTOM_FLAGS>$(CC_CPP_COMMON_FLAGS) $(AS_CC_CPP_COMMON_FLAGS) -DCONFIG_FB_DEFERRED_IO -D__KERNEL__ -DSUPPORT_XLOG_SYS -Dgcc -D__TARGET_ARCH_ARM=7 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM $(CXXTOPPERS_CUSTOM_WARNING_OFF_FLAGS)</CXXTOPPERS_CUSTOM_FLAGS>
+                <ASMTOPPERS_CUSTOM_FLAGS>-g -mlittle-endian -nostdlib -O2 -Wall -DTOPPERS_LABEL_ASM -D__TARGET_ARCH_ARM=7 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM -I$(SRCDIR)/kernel -DALLFUNC -fno-strict-aliasing</ASMTOPPERS_CUSTOM_FLAGS>
+                
                 <!-- gr_peach_gcc\Makefile.target -->
                 <!-- use ld file -->
                 <TEXT_START_ADDRESS></TEXT_START_ADDRESS>
@@ -370,10 +381,103 @@
                 <CFG4_OUT_TARGETFILE></CFG4_OUT_TARGETFILE>
                 
                 <!-- rom -->
-                <CFG1_OUT_LDSCRIPT>$(SRCDIR)/target/gr_peach_gcc/gr_peach_rom.ld</CFG1_OUT_LDSCRIPT>
-                <CFG2_OUT_LDSCRIPT>$(SRCDIR)/target/gr_peach_gcc/gr_peach_rom.ld</CFG2_OUT_LDSCRIPT>
-                <CFG3_OUT_LDSCRIPT>$(SRCDIR)/target/gr_peach_gcc/gr_peach_rom.ld</CFG3_OUT_LDSCRIPT>
-                <LDSCRIPT>$(SRCDIR)/target/gr_peach_gcc/gr_peach_rom.ld</LDSCRIPT>
+                <CFG1_OUT_LDSCRIPT>$(SRCDIR)/target/$(TARGETNAME)/gr_peach_rom.ld</CFG1_OUT_LDSCRIPT>
+                <CFG2_OUT_LDSCRIPT>$(SRCDIR)/target/$(TARGETNAME)/gr_peach_rom.ld</CFG2_OUT_LDSCRIPT>
+                <CFG3_OUT_LDSCRIPT>$(SRCDIR)/target/$(TARGETNAME)/gr_peach_rom.ld</CFG3_OUT_LDSCRIPT>
+                <LDSCRIPT>$(SRCDIR)/target/$(TARGETNAME)/gr_peach_rom.ld</LDSCRIPT>
+                
+                <!-- chip_support.$(OBJEXT) -->
+                <KERNEL_ASMOBJS>$(KERNEL_ASMOBJS) core_support.$(OBJEXT)</KERNEL_ASMOBJS>
+                <KERNEL_ASMOBJS>$(KERNEL_ASMOBJS) gic_support.$(OBJEXT)</KERNEL_ASMOBJS>
+                <KERNEL_ASMOBJS>$(KERNEL_ASMOBJS) target_support.$(OBJEXT)</KERNEL_ASMOBJS>
+                
+                <!-- kernel common -->
+                <KERNEL_COBJS>alarm.$(OBJEXT) cyclic.$(OBJEXT) dataqueue.$(OBJEXT) eventflag.$(OBJEXT) exception.$(OBJEXT) interrupt.$(OBJEXT) mempfix.$(OBJEXT) pridataq.$(OBJEXT) semaphore.$(OBJEXT) startup.$(OBJEXT) sys_manage.$(OBJEXT) task.$(OBJEXT) task_except.$(OBJEXT) task_manage.$(OBJEXT) task_refer.$(OBJEXT) task_sync.$(OBJEXT) time_event.$(OBJEXT) time_manage.$(OBJEXT) wait.$(OBJEXT)</KERNEL_COBJS>
+                <!-- kernel target(rza1)[chip_serial.$(OBJEXT)] -->
+                <KERNEL_COBJS>$(KERNEL_COBJS) arm.$(OBJEXT) chip_serial.$(OBJEXT) core_config.$(OBJEXT) scif.$(OBJEXT) pl310.$(OBJEXT) sf_boot.$(OBJEXT) gic.$(OBJEXT) chip_config.$(OBJEXT) chip_timer.$(OBJEXT) target_config.$(OBJEXT)</KERNEL_COBJS>
+                <KERNEL_CFLAGS>$(KERNEL_CFLAGS) -I$(SRCDIR)/kernel</KERNEL_CFLAGS>
+                <APPL_COBJS>$(APPL_COBJS) log_output.$(OBJEXT) t_perror.$(OBJEXT)</APPL_COBJS>
+                <APPL_CFLAGS />
+                <APPL_LIBS>$(APPL_LIBS)</APPL_LIBS>
+                
+                <!-- Compiler Various Defines -->
+                <KERNEL_LIB_OBJS>$(KERNEL_ASMOBJS) $(KERNEL_COBJS)</KERNEL_LIB_OBJS>
+                
+                <USE_CFG_PASS3>false</USE_CFG_PASS3>
+                
+                <!-- ASP + GR_PEACH -->
+                <CFG_KERNEL_TABS>--api-table=$(KERNELDIR)/kernel_api.csv --cfg1-def-table=$(KERNELDIR)/kernel_def.csv --cfg1-def-table=$(SRCDIR)/arch/arm_gcc/common/core_def.csv </CFG_KERNEL_TABS>
+            </PropertyGroup>
+        </When>
+        <When Condition=" '$(TOPPERS_MODULES)'=='gr-peach' and '$(TOPPERS_OSTYPE)'=='asp3' ">
+            <PropertyGroup>
+                <!-- Toppers ASP3 + GR-PEACH -->
+                <!-- base ASP 3.2.0 -->
+                <APPNAME>sample1</APPNAME>
+                <CFGINCLUDE             Condition="'$(CFGINCLUDE)'==''">-I$(SRCDIR) -I$(SRCDIR)/arch -I$(SRCDIR)/include -I$(KERNELDIR) -I$(SRCDIR)/arch/arm_gcc/rza1 -I$(SRCDIR)/arch/arm_gcc/common -I$(TARGETDIR)</CFGINCLUDE>
+                <CFG1COMPILEINCLUDE     Condition="'$(CFG1COMPILEINCLUDE)'==''">-I$(SRCDIR) -I$(SRCDIR)/arch -I$(SRCDIR)/include -I$(KERNELDIR) -I$(SRCDIR)/arch/arm_gcc/rza1 -I$(SRCDIR)/arch/arm_gcc/common -I$(TARGETDIR) -I$(SPOCLIENT)/$(Directory)</CFG1COMPILEINCLUDE>
+                <APPLNAME               Condition="'$(APPLNAME)'==''">$(SPOCLIENT)/$(Directory)/$(APPNAME)</APPLNAME>
+                <APPL_CFG>$(APPLNAME).cfg</APPL_CFG>
+                <APPL_CDL>$(APPLNAME).cdl</APPL_CDL>
+                <APPL_ASMOBJS />
+                
+                <SYSSVC_COBJS>$(SYSSVC_COBJS) banner.$(OBJEXT) syslog.$(OBJEXT) serial.$(OBJEXT) logtask.$(OBJEXT) $(CXXRTS)</SYSSVC_COBJS>
+                <SYSSVC_COBJS>$(SYSSVC_COBJS) strerror.$(OBJEXT) vasyslog.$(OBJEXT)</SYSSVC_COBJS>
+                
+                <!-- start -->
+                <!-- ld file set -->
+                <TOPPERS_START_OBJS></TOPPERS_START_OBJS>
+                <!-- helloev3 -->
+                <TOPPERS_APPL_OBJS>$(TOPPERS_APPL_OBJS) sample1.$(OBJEXT)</TOPPERS_APPL_OBJS>
+                <!-- appl objs -->
+                <TOPPERS_APPL_OBJS>$(TOPPERS_APPL_OBJS) log_output.$(OBJEXT) t_perror.$(OBJEXT) </TOPPERS_APPL_OBJS>
+                <!-- ev3 drivers -->
+                <TOPPERS_DRIVER_OBJS></TOPPERS_DRIVER_OBJS>
+                
+                <!-- http://stackoverflow.com/questions/24881/how-do-i-fix-for-loop-initial-declaration-used-outside-c99-mode-gcc-error -->
+                <!-- Toppers Custom -->
+                <CTOPPERS_CUSTOM_WARNING_OFF_FLAGS>-Wimplicit-function-declaration</CTOPPERS_CUSTOM_WARNING_OFF_FLAGS>
+                <CXXTOPPERS_CUSTOM_WARNING_OFF_FLAGS></CXXTOPPERS_CUSTOM_WARNING_OFF_FLAGS>
+                <CTOPPERS_CUSTOM_FLAGS>-g -std=gnu99 $(AS_CC_CPP_COMMON_FLAGS) -DCONFIG_FB_DEFERRED_IO -D__KERNEL__ -DSUPPORT_XLOG_SYS -Dgcc -DALLFUNC -D__TARGET_ARCH_ARM=7 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM $(CTOPPERS_CUSTOM_WARNING_OFF_FLAGS)</CTOPPERS_CUSTOM_FLAGS>
+                <!-- GR-PEACH -->
+                <CXXTOPPERS_CUSTOM_FLAGS>$(CC_CPP_COMMON_FLAGS) $(AS_CC_CPP_COMMON_FLAGS) -DCONFIG_FB_DEFERRED_IO -D__KERNEL__ -DSUPPORT_XLOG_SYS -Dgcc -D__TARGET_ARCH_ARM=7 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM $(CXXTOPPERS_CUSTOM_WARNING_OFF_FLAGS)</CXXTOPPERS_CUSTOM_FLAGS>
+                <ASMTOPPERS_CUSTOM_FLAGS>-g -mlittle-endian -nostdlib -O2 -Wall -DTOPPERS_LABEL_ASM -D__TARGET_ARCH_ARM=7 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM -I$(SRCDIR)/kernel -DALLFUNC -fno-strict-aliasing</ASMTOPPERS_CUSTOM_FLAGS>
+                
+                <!-- gr_peach_gcc\Makefile.target -->
+                <!-- use ld file -->
+                <TEXT_START_ADDRESS></TEXT_START_ADDRESS>
+                <DATA_START_ADDRESS></DATA_START_ADDRESS>
+                
+                <!-- cfg parameter -->
+                <CFG_COBJS>$(CFG_COBJS) $(CFG1_OUT).$(OBJEXT)</CFG_COBJS>
+                <CFG_ASMOBJS>$(CFG_ASMOBJS)</CFG_ASMOBJS>
+                
+                <CFG2_OUT_SRCS>kernel_cfg.h kernel_cfg.c kernel_mem2.c $(CFG2_OUT_SRCS)</CFG2_OUT_SRCS>
+                <CFG2_COBJS>kernel_cfg.$(OBJEXT) kernel_mem2.$(OBJEXT) $(CFG2_COBJS)</CFG2_COBJS>
+                <CFG2_ASMOBJS>$(CFG2_ASMOBJS)</CFG2_ASMOBJS>
+                        
+                <CFG3_OUT_SRCS>kernel_cfg.h kernel_cfg.c kernel_mem3.c $(CFG3_OUT_SRCS)</CFG3_OUT_SRCS>
+                <CFG3_COBJS>kernel_cfg.$(OBJEXT) kernel_mem3.$(OBJEXT) $(CFG3_COBJS)</CFG3_COBJS>
+                <CFG3_ASMOBJS>$(CFG3_ASMOBJS)</CFG3_ASMOBJS>
+                
+                <!-- kernel app build obj -->
+                <ALL_CFG_COBJS>kernel_cfg.$(OBJEXT) kernel_mem.$(OBJEXT) kernel_mem2.$(OBJEXT) kernel_mem3.$(OBJEXT) cfg1_out.$(OBJEXT)</ALL_CFG_COBJS>
+                <!-- Configurator Rules -->
+                <!-- <ALL_CFG_COBJS>$(sort $(CFG_COBJS) $(CFG2_COBJS) $(CFG3_COBJS) cfg1_out.$(OBJEXT))</ALL_CFG_COBJS> -->
+                <ALL_CFG_COBJS>$(CFG_COBJS) $(CFG2_COBJS) $(CFG3_COBJS) cfg1_out.$(OBJEXT)</ALL_CFG_COBJS>
+                <!-- <ALL_CFG_ASMOBJS>$(sort $(CFG_ASMOBJS) $(CFG2_ASMOBJS) $(CFG3_ASMOBJS))</ALL_CFG_ASMOBJS> -->
+                <ALL_CFG_ASMOBJS>$(CFG_ASMOBJS) $(CFG2_ASMOBJS) $(CFG3_ASMOBJS)</ALL_CFG_ASMOBJS>
+                
+                <CFG1_OUT_TARGETFILE></CFG1_OUT_TARGETFILE>
+                <CFG2_OUT_TARGETFILE>$(TARGETDIR)/target.tf</CFG2_OUT_TARGETFILE>
+                <CFG3_OUT_TARGETFILE>$(TARGETDIR)/target_check.tf</CFG3_OUT_TARGETFILE>
+                <CFG4_OUT_TARGETFILE></CFG4_OUT_TARGETFILE>
+                
+                <!-- rom -->
+                <CFG1_OUT_LDSCRIPT>$(SRCDIR)/target/$(TARGETNAME)/gr_peach_rom.ld</CFG1_OUT_LDSCRIPT>
+                <CFG2_OUT_LDSCRIPT>$(SRCDIR)/target/$(TARGETNAME)/gr_peach_rom.ld</CFG2_OUT_LDSCRIPT>
+                <CFG3_OUT_LDSCRIPT>$(SRCDIR)/target/$(TARGETNAME)/gr_peach_rom.ld</CFG3_OUT_LDSCRIPT>
+                <LDSCRIPT>$(SRCDIR)/target/$(TARGETNAME)/gr_peach_rom.ld</LDSCRIPT>
                 
                 <!-- chip_support.$(OBJEXT) -->
                 <KERNEL_ASMOBJS>$(KERNEL_ASMOBJS) core_support.$(OBJEXT)</KERNEL_ASMOBJS>
