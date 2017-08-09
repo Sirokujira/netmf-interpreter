@@ -14,6 +14,8 @@
     <PLATFORM_TYPE>MBED</PLATFORM_TYPE>
     <NO_BOOTLOADER_COMPRESSION>true</NO_BOOTLOADER_COMPRESSION>
     <TCP_IP_STACK>LWIP_1_4_1_OS</TCP_IP_STACK>
+    <TOPPERS_OSTYPE>asp</TOPPERS_OSTYPE>
+    <TOPPERS_MODULES>gr-peach</TOPPERS_MODULES>
   </PropertyGroup>
   <PropertyGroup>
     <OEMSystemInfoString>MBED_GR_PEACH by Kentaro Sekimoto</OEMSystemInfoString>

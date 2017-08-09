@@ -12,9 +12,6 @@
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
     .syntax unified
-    .arch armv7-m
-    .thumb
-
     .global  IDelayLoop
 
     @AREA ||i.IDelayLoop||, CODE, READONLY @ void IDelayLoop(UINT32 count)

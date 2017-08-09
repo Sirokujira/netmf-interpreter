@@ -7,6 +7,14 @@ environment:
     - SPOROOT: 'C:\projects\netmf-interpreter\build-tools'
       GCC_VERSION: '4.9.3'
       GCC_TOOLS: 'C:\projects\gcc-arm-none-eabi'
+      SOLUTION_PATH : 'MBED_GR_PEACH_Native'
+      OUTPUT_BINARY : 'tinyclrnbl.bin'
+
+    - SPOROOT: 'C:\projects\netmf-interpreter\build-tools'
+      GCC_VERSION: '4.9.3'
+      GCC_TOOLS: 'C:\projects\gcc-arm-none-eabi'
+      SOLUTION_PATH : 'MBED_GR_PEACH'
+      OUTPUT_BINARY : 'tinyclr.bin'
 
     # - SPOROOT: 'C:\projects\netmf-interpreter\build-tools'
     #   GCC_VERSION: '5.4.1'
@@ -73,12 +81,12 @@ build_script:
 - cmd: >-
     setenv_gcc %GCC_VERSION% %GCC_TOOLS%
     
-    cd Solutions\MBED_GR_PEACH_Native
+    cd Solutions\%SOLUTION_PATH%
     
     MSbuild dotnetmf.proj /t:rebuild /p:flavor=release /p:memory=flash
 
 artifacts:
-- path: BuildOutput\RZA1\GCC4.9\le\FLASH\release\MBED_GR_PEACH\bin\tinyclrnbl.bin
+- path: BuildOutput\RZA1\GCC4.9\le\FLASH\release\MBED_GR_PEACH\bin\%OUTPUT_BINARY%
   name: Release
 # - path: BuildOutput\RZA1\GCC4.9\le\FLASH\release\MBED_GR_PEACH\bin\tinyclr.bin
 #   name: Release

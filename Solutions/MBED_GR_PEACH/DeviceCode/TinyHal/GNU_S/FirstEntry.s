@@ -2,21 +2,17 @@
 @
 @  Licensed under the Apache License, Version 2.0 (the "License")@
 @  you may not use this file except in compliance with the License.
-@  You may obtain a copy of the License at http:@www.apache.org/licenses/LICENSE-2.0
+@  You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 @
 @  Copyright (c) Microsoft Corporation. All rights reserved.
-@  Implementation for STM32: Copyright (c) Oberon microsystems, Inc.
+@  Implementation for GR-PEACH: Copyright (c) Tooru Oonuma.
 @
-@  CORTEX-M3 Standard Entry Code 
+@  CORTEX-A9 Standard Entry Code 
 @
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
     .syntax unified
-    .arch armv7-m
-    .thumb
-
     .global  EntryPoint
-    .global  __initial_sp
     .global Reset_Handler
     .global StackBottom
     .global StackTop
@@ -33,30 +29,49 @@
 
     @*************************************************************************
 
-    .section SectionForStackBottom, "w", %nobits
+#ifdef __STACK_SIZE
+    .equ    Stack_Size, __STACK_SIZE
+#else
+    .equ    Stack_Size, 0x1000
+#endif
+    .section SectionForStackBottom,     "a", %progbits
+    .align 3
+    .globl  __StackTop
+    .globl  __StackLimit
 StackBottom:
-    .word 0
+__StackLimit:
+    .space  Stack_Size
+    .size   __StackLimit, . - __StackLimit
+__StackTop:
+    .size   __StackTop, . - __StackTop
+__AStackLimit:
+    .space  Stack_Size
+    .size   __AStackLimit, . - __AStackLimit
+__AStackTop:
+    .size   __AStackTop, . - __AStackTop
+__BStackLimit:
+    .space  Stack_Size
+    .size   __BStackLimit, . - __StackLimit
+__BStackTop:
+    .size   __BStackTop, . - __BStackTop
+__CStackLimit:
+    .space  Stack_Size
+    .size   __CStackLimit, . - __CStackLimit
+__CStackTop:
+    .size   __CStackTop, . - __CStackTop
+    .section SectionForStackTop,        "a", %progbits
+StackTop:    .word 0
+    .section SectionForHeapBegin,       "a", %progbits
+HeapBegin:   .word 0
+    .section SectionForHeapEnd,         "a", %progbits
+HeapEnd:     .word 0
+    .section SectionForCustomHeapBegin, "a", %progbits
+CustomHeapBegin:   .word 0
+    .section SectionForCustomHeapEnd,   "a", %progbits
+CustomHeapEnd:     .word 0
+    .section .stack
 
-    .section SectionForStackTop, "w", %nobits
-__initial_sp:
-StackTop:
-    .word 0
-    
-    .section SectionForHeapBegin, "w", %nobits
-HeapBegin:
-    .word 0
-
-    .section SectionForHeapEnd, "w", %nobits
-HeapEnd:
-    .word 0
-
-    .section SectionForCustomHeapBegin, "w", %nobits
-CustomHeapBegin:
-    .word 0
-
-    .section SectionForCustomHeapEnd, "w", %nobits
-CustomHeapEnd:
-    .word 0
+    @.section    .text, "ax", %progbits
 
     @ Power On Reset vector table for the device
     @ This is placed at physical address 0 by the
@@ -90,11 +105,10 @@ Reset_Handler:
     b   BootEntry
 
     .pool
-    .size    Reset_Handler, . - Reset_Handler
+    .size   Reset_Handler, . - Reset_Handler
 
     .balign   4
 
-    .thumb_func
 Fault_Handler:
     b       Fault_Handler
 

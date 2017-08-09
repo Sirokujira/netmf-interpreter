@@ -2248,6 +2248,9 @@
     <Filter Include="DeviceCode\Targets\OS\Toppers\asp\library">
       <UniqueIdentifier>{dfe90b0a-ab4c-438f-9b25-797c48dfdbce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DeviceCode\Targets\Native\MBED">
+      <UniqueIdentifier>{630755be-e325-496e-a6e9-782606fd4f91}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Application\TinyBooter\Commands.cpp">
@@ -4539,6 +4542,90 @@
     <ClCompile Include="..\..\..\DeviceCode\Targets\OS\Toppers\asp\library\vasyslog.c">
       <Filter>DeviceCode\Targets\OS\Toppers\asp\library</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_Blockstorage\RZA1_QuadSerialFlash\Flash_Routine.c">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\GlobalLock.cpp">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_ANALOG\MBED_ANALOG_functions.cpp">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_Bootstrap\MBED_bootstrap.cpp">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_EMAC_lwip\MBED_EMAC_lwip.cpp">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_EMAC_lwip\MBED_EMAC_lwip_driver.cpp">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_FLASH\MBED_FLASH.cpp">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_GPIO\MBED_GPIO.cpp">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_I2C\MBED_I2C.cpp">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_I2C\MBED_I2C_functions.cpp">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_I2CSW\MBED_I2CSW.cpp">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_I2CSW\MBED_I2CSW_functions.cpp">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_INTC\MBED_INTC_functions.cpp">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_POWER\MBED_POWER.cpp">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_PWM\MBED_PWM.cpp">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_SPI\MBED_SPI_functions.cpp">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_TIME\MBED_TIME.cpp">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_USART\MBED_USART.cpp">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_USB\MBED_usb_functions.cpp">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_Blockstorage\RZA1_QuadSerialFlash\rza_io_regrw.c">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_Blockstorage\RZA1_QuadSerialFlash\RZA1_QuadSerialFlash.cpp">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\SmartPtr_gcc.cpp">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_Blockstorage\RZA1_QuadSerialFlash\spibsc_flash_api.c">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_Blockstorage\RZA1_QuadSerialFlash\spibsc_flash_userdef.c">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_Blockstorage\RZA1_QuadSerialFlash\spibsc_ioset_api.c">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_Blockstorage\RZA1_QuadSerialFlash\spibsc_ioset_drv.c">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_Blockstorage\RZA1_QuadSerialFlash\spibsc_ioset_userdef.c">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_USB\stub\usb_int.c">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Application\TinyBooter\Commands.h">
@@ -5584,6 +5671,51 @@
     </ClInclude>
     <ClInclude Include="..\..\..\DeviceCode\Targets\OS\Toppers\asp\kernel\wait.h">
       <Filter>DeviceCode\Targets\OS\Toppers\asp\kernel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_Blockstorage\RZA1_QuadSerialFlash\Flash.h">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED.h">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_ANALOG\MBED_ANALOG.h">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_EMAC_lwip\MBED_EMAC.h">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_EMAC_lwip\MBED_EMAC_lwip.h">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_EMAC_lwip\MBED_EMAC_lwip_driver.h">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_FLASH\MBED_FLASH.h">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_I2C\MBED_I2C.h">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_USB\MBED_usb_functions.h">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DeviceCode\Targets\Native\MBED\processor_selector.h">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_Blockstorage\RZA1_QuadSerialFlash\r_spibsc_flash_api.h">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_Blockstorage\RZA1_QuadSerialFlash\r_spibsc_ioset_api.h">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_Blockstorage\RZA1_QuadSerialFlash\RZA1_QuadSerialFlash.h">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_Blockstorage\RZA1_QuadSerialFlash\sflash.h">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_Blockstorage\RZA1_QuadSerialFlash\spibsc.h">
+      <Filter>DeviceCode\Targets\Native\MBED</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
