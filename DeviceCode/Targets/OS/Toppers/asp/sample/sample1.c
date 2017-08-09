@@ -113,6 +113,10 @@
 #include "kernel_cfg.h"
 #include "sample1.h"
 
+// NetMF 用
+// #include <tinyhal.h>
+// #include "OsHal.h"
+
 /*
  *  サービスコールのエラーのログ出力
  */
@@ -364,6 +368,59 @@ void main_task(intptr_t exinf)
 
 #endif /* TASK_LOOP */
 	tex_loop = task_loop / 4;
+    
+	// NetMF 初期化処理
+	// ここから
+	/*
+#if defined(TARGETLOCATION_RAM)
+    LOAD_IMAGE_Start  = (UINT32)&Load$$ER_RAM$$Base;
+    LOAD_IMAGE_Length = (UINT32)&Image$$ER_RAM$$Length;
+#elif defined(TARGETLOCATION_FLASH)
+    LOAD_IMAGE_Start  = (UINT32)&Load$$ER_FLASH$$Base;
+    LOAD_IMAGE_Length = (UINT32)&Image$$ER_FLASH$$Length;
+#else
+    !ERROR
+#endif
+    InitCRuntime();
+    LOAD_IMAGE_Length += (UINT32)&IMAGE_RAM_RO_LENGTH + (UINT32)&Image$$ER_RAM_RW$$Length;
+
+#if !defined(BUILD_RTM)
+    g_Boot_RAMConstants_CRC = Checksum_RAMConstants();
+#endif
+	
+    CPU_Initialize();
+
+    HAL_Time_Initialize();
+
+	#if defined(FIQ_SAMPLING_PROFILER)
+        FIQ_Profiler_Init();
+#endif
+    }
+
+    HAL_Initialize();
+
+    UINT8* BaseAddress;
+    UINT32 SizeInBytes;
+
+    HeapLocation( BaseAddress,    SizeInBytes );
+    memset      ( BaseAddress, 0, SizeInBytes );
+
+    // the runtime is by default using a watchdog 
+   
+    Watchdog_GetSetTimeout ( WATCHDOG_TIMEOUT , TRUE );
+    Watchdog_GetSetBehavior( WATCHDOG_BEHAVIOR, TRUE );
+    Watchdog_GetSetEnabled ( WATCHDOG_ENABLE, TRUE );
+*/
+   	// HAL initialization completed.  Interrupts are enabled.  Jump to the Application routine
+	ApplicationEntryPoint();
+/*
+#if defined(BUILD_RTM)
+    CPU_Reset();
+#else
+    CPU_Halt();
+#endif
+*/
+	// ここまで
 
 	/*
  	 *  タスクの起動

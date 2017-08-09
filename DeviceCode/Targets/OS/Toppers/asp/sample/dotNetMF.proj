@@ -79,8 +79,8 @@
         <HFiles Include="app.h" />
         
         <!-- netmf on OS -->
-        <HFiles Include="..\DeviceCode\include\tinyhal.h" />
-        <HFiles Include="..\DeviceCode\uItron4API.h" />
+        <!-- <HFiles Include="tinyhal.h" /> -->
+        <!-- <HFiles Include="uItron4API.h" /> -->
         
         <HFiles Include="..\syssvc\banner.h" />
         <HFiles Include="..\syssvc\serial.h" />
