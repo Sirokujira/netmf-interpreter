@@ -1,20 +1,56 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Copyright (c) Microsoft Corporation.  All rights reserved.
+// Portions Copyright (c) Secret Labs LLC.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <tinyhal.h>
 
-// use CMSIS version
-// #if defined(PLATFORM_ARM_OS_PORT)
-// #include <cmsis_os.h>
-// #include <stdint.h>
-// #endif
+#if !defined(__GNUC__)
+#include <rt_fp.h>
+#endif
+
+//--//
+
+// we need this to force inclusion from library at link time
+#pragma import(EntryPoint)
+
 
 #undef  TRACE_ALWAYS
 #define TRACE_ALWAYS               0x00000001
 
 #undef  DEBUG_TRACE
 #define DEBUG_TRACE (TRACE_ALWAYS)
+
+//--//
+
+#if !defined(BUILD_RTM) && !defined(PLATFORM_ARM_OS_PORT)
+
+UINT32 Stack_MaxUsed()
+{
+    // this is the value we check for stack overruns
+    const UINT32 StackCheckVal = 0xBAADF00D;
+
+    size_t  size = (size_t)&StackTop - (size_t)&StackBottom;
+    UINT32* ptr  = (UINT32*)&StackBottom;
+
+    DEBUG_TRACE1(TRACE_ALWAYS, "Stack Max  = %d\r\n", size);
+
+    while(*ptr == StackCheckVal)
+    {
+        size -= 4;
+        ptr++;
+    }
+
+    DEBUG_TRACE1(TRACE_ALWAYS, "Stack Used = %d\r\n", size);
+
+    return size;
+}
+
+#endif  // !defined(BUILD_RTM)
+
+//--//
+// this is the first C function called after bootstrapping ourselves into ram
+
 // these define the region to zero initialize
 extern UINT32 Image$$ER_RAM_RW$$ZI$$Base;
 extern UINT32 Image$$ER_RAM_RW$$ZI$$Length;
@@ -54,13 +90,16 @@ UINT32 LOAD_IMAGE_Start;
 UINT32 LOAD_IMAGE_Length;
 UINT32 LOAD_IMAGE_CalcCRC;
 
-#if defined(PLATFORM_ARM_OS_PORT) && defined(TCPIP_LWIP_OS)
-extern UINT32 Load$$ER_LWIP_OS$$RW$$Base; 
-extern UINT32 Image$$ER_LWIP_OS$$RW$$Base;
-extern UINT32 Image$$ER_LWIP_OS$$RW$$Length; 
-extern UINT32 Image$$ER_LWIP_OS$$ZI$$Base;
-extern UINT32 Image$$ER_LWIP_OS$$ZI$$Length;
-#endif
+//
+//  The ARM linker is not keeping FirstEntry.obj (and EntryPoint) for RTM builds of NativeSample (possibly others)
+//  The --keep FirstEntry.obj linker option also does not work, however, this unused method call to EntryPoint does the trick.
+//
+void KEEP_THE_LINKER_HAPPY_SINCE_KEEP_IS_NOT_WORKING()
+{
+    EntryPoint();
+}
+
+//--//
 
 #pragma arm section code = "SectionForBootstrapOperations"
 
@@ -168,6 +207,22 @@ extern "C" void PrepareImageRegions()
 #pragma arm section code
 
 //--//
+
+static void InitCRuntime()
+{
+#if (defined(HAL_REDUCESIZE) || defined(PLATFORM_EMULATED_FLOATINGPOINT))
+
+    // Don't initialize floating-point on small builds.
+
+#else
+
+#if  !defined(__GNUC__)
+    _fp_init();
+#endif
+
+   setlocale( LC_ALL, "" );
+#endif
+}
 
 #if !defined(BUILD_RTM)
 static UINT32 g_Boot_RAMConstants_CRC = 0;
@@ -314,7 +369,7 @@ void HAL_Initialize()
     HAL_Init_Custom_Heap();
 
     Time_Initialize();
-    // Events_Initialize();
+    Events_Initialize();
 
     CPU_GPIO_Initialize();
     CPU_SPI_Initialize();
@@ -332,15 +387,15 @@ void HAL_Initialize()
 
     BlockStorageList::InitializeDevices();
 
-    //FS_Initialize();
+    FS_Initialize();
 
-    //FileSystemVolumeList::Initialize();
+    FileSystemVolumeList::Initialize();
 
-    //FS_AddVolumes();
+    FS_AddVolumes();
 
-    //FileSystemVolumeList::InitializeVolumes();
+    FileSystemVolumeList::InitializeVolumes();
 
-    //LCD_Initialize();
+    LCD_Initialize();
     
 #if !defined(HAL_REDUCESIZE)
     CPU_InitializeCommunication();
@@ -351,18 +406,18 @@ void HAL_Initialize()
     Buttons_Initialize();
 
     // Initialize the backlight to a default off state
-    //BackLight_Initialize();
+    BackLight_Initialize();
 
-    //Piezo_Initialize();
+    Piezo_Initialize();
 
-    //Battery_Initialize();
+    Battery_Initialize();
 
-    //Charger_Initialize();
+    Charger_Initialize();
 
     PalEvent_Initialize();
-    //Gesture_Initialize();
-    //Ink_Initialize();
-    // TimeService_Initialize();
+    Gesture_Initialize();
+    Ink_Initialize();
+    TimeService_Initialize();
 
 #if defined(ENABLE_NATIVE_PROFILER)
     Native_Profiler_Init();
@@ -440,23 +495,23 @@ void HAL_Uninitialize()
         }
     }    
 
-    //LCD_Uninitialize();
+    LCD_Uninitialize();
 
     I2C_Uninitialize();
 
     Buttons_Uninitialize();
 
     // Initialize the backlight to a default off state
-    //BackLight_Uninitialize();
+    BackLight_Uninitialize();
 
-    //Piezo_Uninitialize();
+    Piezo_Uninitialize();
 
-    //Battery_Uninitialize();
-    //Charger_Uninitialize();
+    Battery_Uninitialize();
+    Charger_Uninitialize();
 
-    // TimeService_UnInitialize();
-    //Ink_Uninitialize();
-    //Gesture_Uninitialize();
+    TimeService_UnInitialize();
+    Ink_Uninitialize();
+    Gesture_Uninitialize();
     PalEvent_Uninitialize();
 
     SOCKETS_CloseConnections();
@@ -465,7 +520,7 @@ void HAL_Uninitialize()
     CPU_UninitializeCommunication();
 #endif
 
-    //FileSystemVolumeList::UninitializeVolumes();
+    FileSystemVolumeList::UninitializeVolumes();
 
     BlockStorageList::UnInitializeDevices();
 
@@ -479,7 +534,7 @@ void HAL_Uninitialize()
 
     DISABLE_INTERRUPTS();
 
-    // Events_Uninitialize();
+    Events_Uninitialize();
     Time_Uninitialize();
 
     HAL_CONTINUATION::Uninitialize();
@@ -488,21 +543,8 @@ void HAL_Uninitialize()
 
 extern "C"
 {
-#if defined( __GNUC__ )
-    extern "C++" int main(void);
-    extern void __libc_init_array();
-    void __main()
-    {
-        // Copy writeable data and zero init BSS
-        PrepareImageRegions();
 
-        // Call static constructors
-        __libc_init_array();
 
-        // Call the application's entry point.
-        main();
-    }
-#endif
 
 #if !defined(PLATFORM_ARM_OS_PORT)
 void BootEntry()
@@ -535,6 +577,8 @@ void BootEntry()
 #else
     !ERROR
 #endif
+
+    InitCRuntime();
 
     LOAD_IMAGE_Length += (UINT32)&IMAGE_RAM_RO_LENGTH + (UINT32)&Image$$ER_RAM_RW$$Length;
 
@@ -670,7 +714,7 @@ void SystemState_ClearNoLock( SYSTEM_STATE State )
 }
 
 
-BOOL SystemState_QueryNoLock( SYSTEM_STATE State )
+ BOOL SystemState_QueryNoLock( SYSTEM_STATE State )
 {
     //ASSERT(State < SYSTEM_STATE_TOTAL_STATES);
 
