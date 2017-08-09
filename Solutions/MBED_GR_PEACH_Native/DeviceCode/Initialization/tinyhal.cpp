@@ -90,6 +90,14 @@ UINT32 LOAD_IMAGE_Start;
 UINT32 LOAD_IMAGE_Length;
 UINT32 LOAD_IMAGE_CalcCRC;
 
+#if defined(PLATFORM_ARM_OS_PORT) && defined(TCPIP_LWIP_OS)
+extern UINT32 Load$$ER_LWIP_OS$$RW$$Base; 
+extern UINT32 Image$$ER_LWIP_OS$$RW$$Base;
+extern UINT32 Image$$ER_LWIP_OS$$RW$$Length; 
+extern UINT32 Image$$ER_LWIP_OS$$ZI$$Base;
+extern UINT32 Image$$ER_LWIP_OS$$ZI$$Length;
+#endif
+
 //
 //  The ARM linker is not keeping FirstEntry.obj (and EntryPoint) for RTM builds of NativeSample (possibly others)
 //  The --keep FirstEntry.obj linker option also does not work, however, this unused method call to EntryPoint does the trick.
@@ -539,12 +547,14 @@ void HAL_Uninitialize()
 
     HAL_CONTINUATION::Uninitialize();
     HAL_COMPLETION  ::Uninitialize();
+    
+#if defined(PLATFORM_ARM_OS_PORT) && defined(TCPIP_LWIP_OS)
+    LwipRegionInit();
+#endif
 }
 
 extern "C"
 {
-
-
 
 #if !defined(PLATFORM_ARM_OS_PORT)
 void BootEntry()
@@ -593,15 +603,6 @@ void BootEntry()
 
     HAL_Initialize();
 
-#if !defined(BUILD_RTM) 
-    DEBUG_TRACE4( STREAM_LCD, ".NetMF v%d.%d.%d.%d\r\n", VERSION_MAJOR, VERSION_MINOR, VERSION_BUILD, VERSION_REVISION);
-    DEBUG_TRACE3(TRACE_ALWAYS, "%s, Build Date:\r\n\t%s %s\r\n", HalName, __DATE__, __TIME__);
-#if defined(__GNUC__)
-    DEBUG_TRACE1(TRACE_ALWAYS, "GNU Compiler version %d\r\n", __GNUC__);
-#else
-    DEBUG_TRACE1(TRACE_ALWAYS, "ARM Compiler version %d\r\n", __ARMCC_VERSION);
-#endif
-
     UINT8* BaseAddress;
     UINT32 SizeInBytes;
 
@@ -614,8 +615,6 @@ void BootEntry()
     debug_printf("%-15s\r\n", "Build Date:");
     debug_printf("  %-13s\r\n", __DATE__);
     debug_printf("  %-13s\r\n", __TIME__);
-
-#endif  // !defined(BUILD_RTM)
 
     /***********************************************************************************/
 
