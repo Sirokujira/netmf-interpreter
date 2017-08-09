@@ -52,6 +52,8 @@ install:
     
     Start-FileDownload "https://github.com/NETMF/netmf-interpreter/releases/download/v4.4-RTW-20-Oct-2015/MicroFrameworkSDK.MSI"
     
+    Start-FileDownload "https://github.com/NETMF/netmf-interpreter/releases/download/v4.4-RTW-20-Oct-2015/NetMFVS14.vsix"
+    
     Import-Module ".\appveyor\PS-Zip\PS-Zip.psm1" -Force
     
     .\appveyor\install.ps1
@@ -59,6 +61,8 @@ install:
     msiexec.exe NetMFCryptoLibs.msi /VERYSILENT /NORESTART
     
     msiexec.exe MicroFrameworkSDK.MSI /VERYSILENT /NORESTART
+    
+    VSIXInstaller.exe /q /a NetMFVS14.vsix
 
 
 # NG : 
