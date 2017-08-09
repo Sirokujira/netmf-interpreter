@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <FeatureName>CQ_NETMF_CQ_FRK_FM3_Hardware</FeatureName>
-    <Guid>{84e6ae34-d798-49fe-a31b-c78957cfa5b7}</Guid>
+    <Guid>{b82e8d64-31d4-4eaf-bed6-c288e1c0218d}</Guid>
     <Description>&lt;Add Feature Description Here&gt;</Description>
     <Groups />
     <CQ_NETMF_CQ_FRK_FM3_HARDWARE_FEATUREPROJ>True</CQ_NETMF_CQ_FRK_FM3_HARDWARE_FEATUREPROJ>
