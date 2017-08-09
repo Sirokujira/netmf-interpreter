@@ -79,10 +79,6 @@ install:
 # cd Solutions\MBED_GR_PEACH_Native
 build_script:
 - cmd: >-
-    setenv_gcc %GCC_VERSION% %GCC_TOOLS%
-    
-    cd Solutions\%SOLUTION_PATH%
-    
     MSbuild DeviceCode\Targets\Native\Interop\ManagedCode\CQ_NETMF_CQ_FRK_FM3_Hardware\CQ_NETMF_CQ_FRK_FM3_Hardware.sln
     
     MSbuild DeviceCode\Targets\Native\Interop\ManagedCode\CQ_NETMF_CQFM3DUINO_Hardware\CQ_NETMF_CQ_FRK_FM3_Hardware.sln
@@ -100,6 +96,10 @@ build_script:
     MSbuild DeviceCode\Targets\Native\Interop\ManagedCode\CQ_NETMF_UTIL\CQ_NETMF_UTIL.sln
     
     MSbuild DeviceCode\Targets\Native\Interop\ManagedCode\Microsoft_SPOT_HAL\Microsoft_SPOT_HAL.sln
+    
+    setenv_gcc %GCC_VERSION% %GCC_TOOLS%
+    
+    cd Solutions\%SOLUTION_PATH%
     
     MSbuild dotnetmf.proj /t:rebuild /p:flavor=release /p:memory=flash
 
