@@ -81,8 +81,8 @@ install:
 # cd Solutions\MBED_GR_PEACH_Native
 build_script:
 - cmd: >-
-    "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\VSIXInstaller.exe" /q /a NetMFVS14.vsix
-
+    "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\VSIXInstaller.exe" /q /a C:\projects\netmf-interpreter\NetMFVS14.vsix
+    
     MSbuild DeviceCode\Targets\Native\Interop\ManagedCode\CQ_NETMF_CQ_FRK_FM3_Hardware\CQ_NETMF_CQ_FRK_FM3_Hardware.sln
     
     MSbuild DeviceCode\Targets\Native\Interop\ManagedCode\CQ_NETMF_CQFM3DUINO_Hardware\CQ_NETMF_CQ_FRK_FM3_Hardware.sln
