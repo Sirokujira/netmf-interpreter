@@ -90,6 +90,14 @@ UINT32 LOAD_IMAGE_Start;
 UINT32 LOAD_IMAGE_Length;
 UINT32 LOAD_IMAGE_CalcCRC;
 
+#if defined(PLATFORM_ARM_OS_PORT) && defined(TCPIP_LWIP_OS)
+extern UINT32 Load$$ER_LWIP_OS$$RW$$Base; 
+extern UINT32 Image$$ER_LWIP_OS$$RW$$Base;
+extern UINT32 Image$$ER_LWIP_OS$$RW$$Length; 
+extern UINT32 Image$$ER_LWIP_OS$$ZI$$Base;
+extern UINT32 Image$$ER_LWIP_OS$$ZI$$Length;
+#endif
+
 //
 //  The ARM linker is not keeping FirstEntry.obj (and EntryPoint) for RTM builds of NativeSample (possibly others)
 //  The --keep FirstEntry.obj linker option also does not work, however, this unused method call to EntryPoint does the trick.
@@ -539,6 +547,10 @@ void HAL_Uninitialize()
 
     HAL_CONTINUATION::Uninitialize();
     HAL_COMPLETION  ::Uninitialize();
+    
+#if defined(PLATFORM_ARM_OS_PORT) && defined(TCPIP_LWIP_OS)
+    LwipRegionInit();
+#endif
 }
 
 extern "C"
@@ -606,15 +618,6 @@ void BootEntry()
 
     HAL_Initialize();
 
-#if !defined(BUILD_RTM) 
-    DEBUG_TRACE4( STREAM_LCD, ".NetMF v%d.%d.%d.%d\r\n", VERSION_MAJOR, VERSION_MINOR, VERSION_BUILD, VERSION_REVISION);
-    DEBUG_TRACE3(TRACE_ALWAYS, "%s, Build Date:\r\n\t%s %s\r\n", HalName, __DATE__, __TIME__);
-#if defined(__GNUC__)
-    DEBUG_TRACE1(TRACE_ALWAYS, "GNU Compiler version %d\r\n", __GNUC__);
-#else
-    DEBUG_TRACE1(TRACE_ALWAYS, "ARM Compiler version %d\r\n", __ARMCC_VERSION);
-#endif
-
     UINT8* BaseAddress;
     UINT32 SizeInBytes;
 
@@ -627,8 +630,6 @@ void BootEntry()
     debug_printf("%-15s\r\n", "Build Date:");
     debug_printf("  %-13s\r\n", __DATE__);
     debug_printf("  %-13s\r\n", __TIME__);
-
-#endif  // !defined(BUILD_RTM)
 
     /***********************************************************************************/
 
@@ -661,8 +662,52 @@ void BootEntry()
 } // extern "C"
 
 
+// #if defined(PLATFORM_ARM_OS_PORT)
+// extern "C" void STM32F4_BootstrapCode();
+// 
+// // performs base level system initialization
+// // This typically consists of setting up clocks
+// // and PLLs along with any external memory needed
+// // to boot. 
+// // NOTE:
+// // It is important to keep in mind that this is 
+// // called *BEFORE* any C/C++ runtime initialization
+// // That is, zero init of uninitialied writeable data
+// // and copying of initialized values for initialized 
+// // writeable data have not yet occured. Thus, any code
+// // called from SystemInit must not use or rely on 
+// // initializtion having occured. This also precludes
+// // the use of any OS provided primitives and support
+// // as the kernel isn't initialized yet either.
+// extern "C" void SystemInit()
+// {
+//     STM32F4_BootstrapCode();
+//     CPU_Initialize();
+//     __enable_irq();
+// }
+// 
+// #endif //PLATFORM_ARM_OS_PORT
 
 #if !defined(BUILD_RTM)
+
+// void debug_printf( const char* format, ... )
+// {
+//     char buffer[256] = {0};
+//     va_list arg_ptr;
+// 
+//     va_start( arg_ptr, format );
+// 
+//    int len = hal_vsnprintf( buffer, sizeof(buffer)-1, format, arg_ptr );
+// 
+//    { // take CLR lock to send whole message
+//        GLOBAL_LOCK(clrLock);
+//        // send characters directly to the trace port
+//        for( char* p = buffer; *p != '\0' || p-buffer >= 256; ++p )
+//             ITM_SendChar( *p );
+//    }
+// 
+//     va_end( arg_ptr );
+// }
 
 void debug_printf( const char* format, ... )
 {
