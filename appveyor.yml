@@ -58,11 +58,12 @@ install:
     
     .\appveyor\install.ps1
     
-    msiexec.exe NetMFCryptoLibs.msi /VERYSILENT /NORESTART
+    msiexec.exe /i NetMFCryptoLibs.msi /quiet /norestart
     
-    msiexec.exe MicroFrameworkSDK.MSI /VERYSILENT /NORESTART
+    msiexec.exe /i MicroFrameworkSDK.MSI /quiet /norestart
     
     .\install-vsix-appveyor.ps1
+
 
 # NG : 
 # MSbuild dotnetmf.proj /t:GenerateCLRDefines
@@ -83,9 +84,7 @@ install:
 #     "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\VSIXInstaller.exe" /q /a C:\projects\netmf-interpreter\NetMFVS14.vsix
 build_script:
 - cmd: >-
-    where VSIXInstaller
-    
-    where MSbuild
+    dir "C:\Program Files (x86)\MSBuild\Microsoft"
     
     timeout 15
     
