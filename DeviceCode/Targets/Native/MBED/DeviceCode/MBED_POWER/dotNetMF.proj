@@ -42,8 +42,10 @@
   <ItemGroup>
     <Compile Include="MBED_POWER.cpp" />
   </ItemGroup>
+  <!--
   <ItemGroup>
-    <HFiles Include="$(SPOCLIENT)\devicecode\targets\native\MBED\devicecode\keypad\MBED_keypad.h" />
+    <HFiles Include="$(SPOCLIENT)\DeviceCode\targets\Native\MBED\DeviceCode\keypad\MBED_keypad.h" />
   </ItemGroup>
+  -->
   <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Targets" />
 </Project>
