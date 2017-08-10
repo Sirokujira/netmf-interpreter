@@ -6,7 +6,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- RAM(netmf axf + Topper elf) -->
-    <!-- <RequiredProjects Include="TinyBooter/TinyBooter.proj" /> -->
+    <RequiredProjects Include="TinyBooter/TinyBooter.proj" />
     <RequiredProjects Include="TinyCLR/TinyCLR.proj" />
     
     <!-- ROM(Topper bin + netmf dat) -->

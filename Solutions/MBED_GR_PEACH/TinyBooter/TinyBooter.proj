@@ -9,9 +9,10 @@
     <IsClrProject>False</IsClrProject>
     <InteropFeatures />
     <ExtraAssemblies />
-    <ProjectPath>$(SPOCLIENT)\Solutions\MBED_GR_PEACH\TinyBooter\TinyBooter.proj</ProjectPath>
+    <ProjectPath>$(MSBuildThisFileFullPath)</ProjectPath>
     <MFSettingsFile>$(SPOCLIENT)\Solutions\MBED_GR_PEACH\MBED_GR_PEACH.settings</MFSettingsFile>
     <IsSolutionWizardVisible>True</IsSolutionWizardVisible>
+    <reducesize>true</reducesize>
 	<EnableAnalog>false</EnableAnalog>
 	<EnableBootstrap>true</EnableBootstrap>
     <EnableCRC>true</EnableCRC>
@@ -58,8 +59,7 @@
     <IsSolutionWizardVisible>True</IsSolutionWizardVisible>
     <OutputType>Executable</OutputType>
     <IntelHexFormat>true</IntelHexFormat>
-    <reducesize>true</reducesize>
-    <MultipleOutputSections>false</MultipleOutputSections>
+    <MultipleOutputSections>true</MultipleOutputSections>
     <CustomAssemblyName>TinyBooter</CustomAssemblyName>
     <ExtraTargets>BuildSigFiles</ExtraTargets>
     <ExtraTargets>$(ExtraTargets);CompressBin</ExtraTargets>
@@ -211,10 +211,12 @@
     <DriverLibs Include="cpu_mmu_stubs.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Drivers\stubs\processor\stubs_MMU\dotNetMF.proj" />
   </ItemGroup>
+  <!--
   <ItemGroup>
     <DriverLibs Include="cpu_power_stubs.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Drivers\stubs\processor\stubs_power\dotNetMF.proj" />
   </ItemGroup>
+  -->
   <ItemGroup Condition="'$(EnablePWM)'!='true'">
     <DriverLibs Include="cpu_pwm_stubs.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Drivers\stubs\processor\stubs_PWM\dotNetMF.proj" />
