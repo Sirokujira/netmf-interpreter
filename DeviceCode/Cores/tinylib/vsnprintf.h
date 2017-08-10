@@ -1,0 +1,10 @@
+////////////////////////////////////////////////////////////////////////////
+// Copyright (c) 2012 Kentaro Sekimoto  All rights reserved.
+////////////////////////////////////////////////////////////////////////////
+
+#ifndef VSNPRINTF_H_
+#define VSNPRINTF_H_
+
+int vsnprintf(char *buf, size_t buf_size, const char *fmt, va_list args);
+
+#endif /* VSNPRINTF_H_ */
