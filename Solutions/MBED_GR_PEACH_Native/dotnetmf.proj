@@ -7,9 +7,8 @@
   <ItemGroup Condition="'$(flavor)'=='debug'">
 <!--
     <RequiredProjects Include="NativeSample\NativeSample.proj" />
-    <RequiredProjects Include="TinyBooter\TinyBooter.proj" />
 --> 
-    <RequiredProjects Include="TinyCLRNBL\TinyCLRNBL.proj" />
+    <RequiredProjects Include="TinyBooter\TinyBooter.proj" />
   </ItemGroup>
   <ItemGroup Condition="'$(flavor)'=='release'">
 <!--
@@ -19,6 +18,7 @@
     <RequiredProjects Include="TinyCLRNBL\TinyCLRNBL.proj" />
     <RequiredProjects Include="TinyCLRSSL\TinyCLRSSL.proj" />
 -->
+    <RequiredProjects Include="TinyBooter\TinyBooter.proj" />
     <RequiredProjects Include="TinyCLRNBL\TinyCLRNBL.proj" />
   </ItemGroup>
   <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Settings" />

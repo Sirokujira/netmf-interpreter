@@ -8,7 +8,7 @@
     <Set Name="BL_BaseAddress"              Value="0x18000000"/>
     <Set Name="BL_Size"                     Value="0x00004000"/>
     <Set Name="Code_BaseAddress"            Value="0x18004000"/>
-    <Set Name="Code_Size"                   Value="0x0001c000"/>
+    <Set Name="Code_Size"                   Value="0x0001f000"/>	<!-- debug -->
     <Set Name="ER_RAM_RO_BaseAddress"       Value="0x20100000"/>
     <Set Name="ER_RAM_RO_Size"              Value="0x001a0000"/>
     <Set Name="Heap_Begin"                  Value="0x20300000"/>
@@ -25,7 +25,7 @@
     <If Name="TARGETLOCATION" Value="FLASH">
         <Set Name="Valid"                   Value="true"/>
         <Set Name="Deploy_BaseAddress"      Value="0x18200000"/>
-        <Set Name="Config_BaseAddress"      Value="0x181f0000"/>    
+        <Set Name="Config_BaseAddress"      Value="0x181f0000"/>
         <Set Name="Config_Size"             Value="0x00001000"/>
         <Set Name="Valid"                   Value="true"/>
     </If>

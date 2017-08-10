@@ -877,85 +877,85 @@
   </ItemGroup>
   <ItemGroup>
     <DriverLibs Include="BlockStorage_AddDevices.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH\DeviceCode\BlockStorage\AddDevices\dotNetMF.proj" />
+    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH_Native\DeviceCode\BlockStorage\AddDevices\dotNetMF.proj" />
   </ItemGroup>
 <!--
   <ItemGroup>
     <DriverLibs Include="InternalFlash_BL_config_NBL.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH\DeviceCode\BlockStorage\InternalFlash\dotNetMF_NBL.proj" />
+    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH_Native\DeviceCode\BlockStorage\InternalFlash\dotNetMF_NBL.proj" />
   </ItemGroup>
 -->
   <ItemGroup Condition="'$(EnableSD)'=='true'">
     <DriverLibs Include="SD_Config.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH\DeviceCode\BlockStorage\SD\dotNetMF.proj" />
+    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH_Native\DeviceCode\BlockStorage\SD\dotNetMF.proj" />
   </ItemGroup>
   <ItemGroup>
     <DriverLibs Include="QuadSerialFlash_Config_NBL.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH\DeviceCode\BlockStorage\QuadSerialFlash\dotNetMF_NBL.proj" />
+    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH_Native\DeviceCode\BlockStorage\QuadSerialFlash\dotNetMF_NBL.proj" />
   </ItemGroup>
   <ItemGroup Condition="'$(EnableBootstrap)'=='true'">
     <DriverLibs Include="Bootstrap.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH\DeviceCode\Bootstrap\dotNetMF.proj" />
+    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH_Native\DeviceCode\Bootstrap\dotNetMF.proj" />
   </ItemGroup>
   <ItemGroup>
     <DriverLibs Include="Buttons.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH\DeviceCode\Buttons\dotNetMF.proj" />
+    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH_Native\DeviceCode\Buttons\dotNetMF.proj" />
   </ItemGroup>
   <ItemGroup Condition="'$(EnableSecurity)'=='true'">
     <DriverLibs Include="Crypto_Config.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH\DeviceCode\Crypto\dotnetmf.proj" />
+    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH_Native\DeviceCode\Crypto\dotnetmf.proj" />
   </ItemGroup>
   <ItemGroup Condition="'$(EnableSecurity)'=='true'">
     <DriverLibs Include="DebuggerPort_SSL.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH\DeviceCode\DebuggerPort\dotnetmf.proj" />
+    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH_Native\DeviceCode\DebuggerPort\dotnetmf.proj" />
   </ItemGroup>
   <ItemGroup Condition="'$(EnableLCD)'=='true' and '$(LCDController)'=='MARY_OLED'">
     <DriverLibs Include="Display_Config.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH\DeviceCode\Display\MARY_OLED\dotNetMF.proj" />
+    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH_Native\DeviceCode\Display\MARY_OLED\dotNetMF.proj" />
   </ItemGroup>
   <ItemGroup Condition="'$(EnableLCD)'=='true' and '$(LCDController)'=='AUTOLCD'">
     <DriverLibs Include="Display_Config.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH\DeviceCode\Display\DST2401PH\dotNetMF.proj" />
+    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH_Native\DeviceCode\Display\DST2401PH\dotNetMF.proj" />
   </ItemGroup>
   <ItemGroup Condition="'$(EnableLCD)'=='true' and '$(LCDController)'=='ILI9325_P8'">
     <DriverLibs Include="Display_Config.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH\DeviceCode\Display\DST2401PH\dotNetMF.proj" />
+    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH_Native\DeviceCode\Display\DST2401PH\dotNetMF.proj" />
   </ItemGroup>
   <ItemGroup Condition="'$(EnableLCD)'=='true' and '$(LCDController)'=='NOKIA6100'">
     <DriverLibs Include="Display_Config.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH\DeviceCode\Display\NOKIA6100\dotNetMF.proj" />
+    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH_Native\DeviceCode\Display\NOKIA6100\dotNetMF.proj" />
   </ItemGroup>
   <ItemGroup Condition="'$(EnableLCD)'=='true' and '$(LCDController)'=='T18SPI'">
     <DriverLibs Include="Display_Config.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH\DeviceCode\Display\T18SPI\dotNetMF.proj" />
+    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH_Native\DeviceCode\Display\T18SPI\dotNetMF.proj" />
   </ItemGroup>
   <ItemGroup Condition="'$(EnableLCD)'=='true' and '$(LCDController)'=='TS8026Y'">
     <DriverLibs Include="Display_Config.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH\DeviceCode\Display\TS8026Y\dotNetMF.proj" />
+    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH_Native\DeviceCode\Display\TS8026Y\dotNetMF.proj" />
   </ItemGroup>
   <ItemGroup Condition="'$(EnableFileSystem)'=='true'">
     <DriverLibs Include="FS_Config.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH\DeviceCode\FS\dotNetMF.proj" />
+    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH_Native\DeviceCode\FS\dotNetMF.proj" />
   </ItemGroup>
   <ItemGroup Condition="'$(EnableLWIP)'=='true'">
     <DriverLibs Include="LAN8700i_LWIP.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH\DeviceCode\EPHY_LWIP\dotNetMF.proj" />
+    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH_Native\DeviceCode\EPHY_LWIP\dotNetMF.proj" />
   </ItemGroup>
   <ItemGroup Condition="'$(EnableLWIP)'=='true'">
     <DriverLibs Include="Network_Config.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH\DeviceCode\network\dotNetMF.proj" />
+    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH_Native\DeviceCode\network\dotNetMF.proj" />
   </ItemGroup>
   <ItemGroup Condition="'$(EnableTouchPanel)'=='true'">
     <DriverLibs Include="TouchPanel_Config.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH\DeviceCode\TouchPanel\dotNetMF.proj" />
+    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH_Native\DeviceCode\TouchPanel\dotNetMF.proj" />
   </ItemGroup>
   <ItemGroup Condition="'$(EnableUSB)'=='true'">
     <DriverLibs Include="usb_config.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH\DeviceCode\USB\dotnetmf.proj" />
+    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH_Native\DeviceCode\USB\dotnetmf.proj" />
   </ItemGroup>
   <ItemGroup>
     <DriverLibs Include="VirtualKey.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH\DeviceCode\VirtualKey\dotNetMF.proj" />
+    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH_Native\DeviceCode\VirtualKey\dotNetMF.proj" />
   </ItemGroup>
   <ItemGroup>
     <PlatformIndependentLibs Include="CRC.$(LIB_EXT)" />
