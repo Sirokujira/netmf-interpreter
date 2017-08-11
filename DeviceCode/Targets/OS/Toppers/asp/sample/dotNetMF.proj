@@ -33,6 +33,17 @@
         <ARMBUILD_ONLY>true</ARMBUILD_ONLY>
     </PropertyGroup>
     <Import Project="$(SPOCLIENT)/tools/targets/Toppers.SPOT.System.Settings" />
+    <Import Project="$(SPOCLIENT)\Framework\Features\BlockStorage_PAL.libcatproj" />
+    <Import Project="$(SPOCLIENT)\Framework\Features\BlockStorageAddDevices_HAL.libcatproj" />
+    <Import Project="$(SPOCLIENT)\Framework\Features\Buttons_PAL.libcatproj" />
+    <Import Project="$(SPOCLIENT)\Framework\Features\COM_PAL.libcatproj" />
+    <Import Project="$(SPOCLIENT)\Framework\Features\SOCKETS_PAL.libcatproj" />
+    <Import Project="$(SPOCLIENT)\Framework\Features\I2C_PAL.libcatproj" />
+    <Import Project="$(SPOCLIENT)\Framework\Features\SPI_HAL.libcatproj" />
+    <Import Project="$(SPOCLIENT)\Framework\Features\PalEvent_PAL.libcatproj" />
+    <Import Project="$(SPOCLIENT)\Framework\Features\Time_PAL.libcatproj" />
+    <Import Project="$(SPOCLIENT)\Framework\Features\TimeService_PAL.libcatproj" />
+    <Import Project="$(SPOCLIENT)\Framework\Features\Heap_PAL.libcatproj" />
     <ItemGroup>
         <!-- Defines -->
         <!-- <CC_CPP_Defines Include="__CMSIS_RTOS" /> -->

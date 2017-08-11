@@ -140,6 +140,7 @@
         <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\sensor\uart\include" />
         <!-- bluetooth_dri.h -->
         <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\bluetooth\include" />
+        <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\bluetooth\btstack" />
         <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\target\ev3_gcc\drivers\bluetooth\btstack\include" />
         <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\modules\btstack\platforms\ev3rt" />
         <IncludePaths Include="DeviceCode\Targets\OS\Toppers\hrp2\modules\mbed-on-toppers\arch\ev3rt" />
@@ -299,23 +300,17 @@
         <CFiles Include="..\..\target\ev3_gcc\drivers\sensor\uart\d_uart\Linuxmod_AM1808\pru-firmware-05-31-2011-1423-v3.0\pru\hal\common\src\pru.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\sensor\uart\src\pru_suart.c" />
         <!-- bluetooth -->
-        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\bnep.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\btstack_memory.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\hci.c" />
+        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\hci_cmds.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\hci_dump.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\hci_transport_h4_dma.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\hci_transport_h4_ehcill_dma.c" />
-        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\hfp.c" />
-        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\hfp_ag.c" />
-        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\hfp_gsm_model.c" />
-        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\hfp_hf.c" />
-        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\hsp_ag.c" />
-        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\hsp_hs.c" />
+        <!-- <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\hci_transport_h5.c" /> -->
         <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\l2cap.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\l2cap_signaling.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\linked_list.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\memory_pool.c" />
-        <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\pan.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\remote_device_db_memory.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\rfcomm.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\run_loop.c" />
@@ -329,6 +324,7 @@
         <CFiles Include="..\..\target\ev3_gcc\drivers\bluetooth\btstack\src\utils.c" />
         <!-- mbed -->
         <CFiles Include="..\..\target\ev3_gcc\drivers\mbed\src\mbed_dri.c" />
+        <!-- soc -->
         <CFiles Include="..\..\target\ev3_gcc\drivers\soc\src\soc_cache.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\soc\src\soc_edma.c" />
         <CFiles Include="..\..\target\ev3_gcc\drivers\soc\src\soc_interrupt.c" />
@@ -345,7 +341,7 @@
             kernel objects (must libkernel.a make objects)
             alarm.obj cyclic.obj dataqueue.obj eventflag.obj exception.obj interrupt.obj mem_manage.obj memory.obj mempfix.obj mutex.obj overrun.obj pridataq.obj semaphore.obj startup.obj svc_table.obj sys_manage.obj task.obj task_except.obj task_manage.obj task_refer.obj task_sync.obj time_event.obj time_manage.obj wait.obj
         -->
-        <!-- <CFiles Include="..\..\target\ev3_gcc\kernel\alarm.c" /> -->
+        <CFiles Include="..\..\target\ev3_gcc\kernel\alarm.c" />
         <CFiles Include="..\..\target\ev3_gcc\kernel\cyclic.c" />
         <CFiles Include="..\..\target\ev3_gcc\kernel\dataqueue.c" />
         <CFiles Include="..\..\target\ev3_gcc\kernel\eventflag.c" />
