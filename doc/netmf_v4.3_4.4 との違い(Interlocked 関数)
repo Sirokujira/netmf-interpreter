@@ -1,0 +1,123 @@
+v4.3/4.4 との違い(Interlocked 関数)
+実体を アセンブリファイル(Interlocked.s) に記載している。
+#if !defined(_WIN32)
+extern "C" INT32 InterlockedIncrement( volatile LONG* lpAddend );
+extern "C" INT32 InterlockedDecrement( volatile LONG* lpAddend );
+extern "C" INT32 InterlockedExchange( volatile LONG* Target, INT32 Value );
+extern "C" INT32 InterlockedCompareExchange( LONG* Destination, LONG Exchange, LONG Comperand );
+extern "C" INT32 InterlockedExchangeAdd( volatile LONG* Addend, LONG Value );
+extern "C" INT32 InterlockedOr( volatile LONG* Destination, LONG Flag );
+extern "C" INT32 InterlockedAnd( volatile LONG* Destination, LONG Flag );
+#endif
+
+--- v4.3 ---
+
+#if defined(PLATFORM_ARM)
+
+__inline INT32 InterlockedIncrement( volatile INT32* lpAddend )
+{
+    SmartPtr_IRQ irq;
+
+    return ++(*lpAddend);
+}
+
+
+__inline INT32 InterlockedDecrement( volatile INT32* lpAddend )
+{
+    SmartPtr_IRQ irq;
+
+    return --(*lpAddend);
+}
+
+
+__inline INT32 InterlockedExchange( volatile INT32* Target, INT32 Value )
+{
+    SmartPtr_IRQ irq;
+
+    INT32 Result;
+
+    Result  = *Target;
+    *Target = Value;
+
+    return Result;
+}
+
+
+__inline void* InterlockedCompareExchange( void** Destination, void* Exchange, void* Comperand )
+{
+    SmartPtr_IRQ irq;
+
+    void* Result = *Destination;
+
+    if(Result == Comperand)
+    {
+        *Destination = Exchange;
+    }
+
+    return Result;
+}
+
+
+__inline INT32 InterlockedExchangeAdd( volatile INT32* Addend, INT32 Value )
+{
+    SmartPtr_IRQ irq;
+
+    INT32 Result;
+
+    Result    = (*Addend);
+    (*Addend) = Result + Value;
+
+    return Result;
+}
+
+
+__inline UINT32 InterlockedSet( volatile UINT32* Destination, UINT32 Flag )
+{
+    SmartPtr_IRQ irq;
+
+    UINT32 Result = *Destination;
+
+    if((Result & Flag) == 0)
+    {
+        *Destination = Result | Flag;
+    }
+
+    return Result;
+}
+
+
+__inline UINT32 InterlockedUnset( volatile UINT32* Destination, UINT32 Flag )
+{
+    SmartPtr_IRQ irq;
+
+    UINT32 Result = *Destination;
+
+    if(Result & Flag)
+    {
+        *Destination = Result & ~Flag;
+    }
+
+    return Result;
+}
+
+#else
+
+__inline UINT32 InterlockedSet( volatile UINT32* Destination, UINT32 Flag )
+{
+    return 0;
+}
+
+
+__inline UINT32 InterlockedUnset( volatile UINT32* Destination, UINT32 Flag )
+{
+    return 0;
+}
+
+#endif // PLATFORM_ARM
+
+SmartPtr_IRQ について、以下のファイルで対応していた様子。(MBED)
+
+SmartPtr_gcc.cpp, SmartPtr_gcc_asm.s
+※ DeviceCode\Targets\Native\MBED\DeviceCode フォルダ に存在している。
+
+

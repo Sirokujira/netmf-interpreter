@@ -1,0 +1,8 @@
+
+windows の Build
+winpcap の開発モジュールをコピー
+DeviceCode\Targets\OS\Win32\DeviceCode\WinPcap_Eth\Dependencies フォルダに
+WpdPack フォルダをコピーする。
+
+flash -> ram
+
