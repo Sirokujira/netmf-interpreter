@@ -79,6 +79,7 @@ bool WaitForTinyBooterUpload( INT32 &timeout_ms )
 
 // always wait forever when using RAM build
 
+// wait forever when using RAM build 
 #if defined(TARGETLOCATION_RAM)
     enterBooterMode = true;
     timeout_ms = -1;
@@ -253,7 +254,6 @@ bool CheckFlashSectorPermission( BlockStorageDevice *pDevice, ByteAddress addres
     
     return fAllowWrite;   
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////
 // TinyBooter_GetOemInfo

@@ -17,11 +17,12 @@
     <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Settings" />
     <Import Project="$(SPOCLIENT)\tools\Targets\Microsoft.SPOT.Build.Targets" />
     <PropertyGroup>
-        <IsSolutionWizardVisible>True</IsSolutionWizardVisible>
         <OutputType>Executable</OutputType>
-        <MultipleOutputSections Condition="'$(MEMORY)'=='FLASH'">true</MultipleOutputSections>
+        <IntelHexFormat>true</IntelHexFormat>
+        <!-- <MultipleOutputSections Condition="'$(MEMORY)'=='FLASH'">true</MultipleOutputSections> -->
+        <MultipleOutputSections Condition="'$(MEMORY)'=='FLASH'">false</MultipleOutputSections>
         <ADD_LOAD_IMAGE_CRC>true</ADD_LOAD_IMAGE_CRC>
-        <ExtraTargets>BuildSigFiles;CompressImage</ExtraTargets>
+        <ExtraTargets>BuildSigFiles</ExtraTargets>
         <ExtraEXETargets>MetaDataProcessorDat;TinyClrDat</ExtraEXETargets>
         <ImageLocation Condition="'$(MEMORY)'=='FLASH'">\ER_FLASH</ImageLocation>
         <LINK_FLAGS Condition="'$(COMPILER_TOOL)'!='GCC'">$(LINK_FLAGS) --verbose $(SWTC)keep *(.init_array)</LINK_FLAGS>
@@ -41,10 +42,10 @@
         <CompressImageCfg Include="$(BIN_DIR)\$(AssemblyName).bin\ER_CONFIG" />
     </ItemGroup>
     <ItemGroup>
-        <IncludePaths Include="DeviceCode\PAL" />
         <Compile Include="allocator.cpp" />
         <Compile Include="tinyclr.cpp" />
         <HFiles Include="$(SPOCLIENT)\clr\include\tinyclr_application.h" />
+        <IncludePaths Include="DeviceCode\PAL" />
         <ObjFiles Include="$(OBJ_DIR)\$(AssemblyName)_dat.$(OBJ_EXT)" />
         <ScatterFileReferences Include="$(SRC_DIR)\scatterfile_$(AssemblyName)_$(COMPILER_TOOL).$(SCATTER_EXT)" />
     </ItemGroup>
@@ -65,6 +66,12 @@
     <Import Condition="'$(SERIALIZATION_FEATUREPROJ)'==''" Project="$(SPOCLIENT)\Framework\Features\Serialization.featureproj" />
     <Import Condition="'$(WINDOWS_DEVICES_FEATUREPROJ)'==''" Project="$(SPOCLIENT)\Framework\Features\Windows_Devices.featureproj" />
     <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Interop.Settings" />
+    <!-- OS add? -->
+    <!-- Toppers hrp2 -->
+    <ItemGroup>
+        <DriverLibs Include="ToppersHRP2_RTX.$(LIB_EXT)" />
+        <RequiredProjects Include="$(SPOCLIENT)/DeviceCode/Targets/OS/Toppers/hrp2/workspace/helloev3onnetmf/dotnetmf.proj" />
+    </ItemGroup>
     <ItemGroup>
         <DriverLibs Include="LargeBuffer_hal_stubs.$(LIB_EXT)" />
         <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Drivers\LargeBuffer\stubs\dotNetMF.proj" />
@@ -134,6 +141,10 @@
         <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Drivers\BatteryMeasurement\stubs\dotNetMF.proj" />
     </ItemGroup>
     <ItemGroup>
+        <DriverLibs Include="GlobalLock_stubs.$(LIB_EXT)" />
+        <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Drivers\Stubs\GlobalLock\dotNetMF.proj" />
+    </ItemGroup>
+    <ItemGroup>
         <DriverLibs Include="STM32F4_GPIO.$(LIB_EXT)" />
         <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Drivers\Stubs\Processor\stubs_gpio\dotNetMF.proj" />
     </ItemGroup>
@@ -145,28 +156,9 @@
         <DriverLibs Include="STM32F4_time.$(LIB_EXT)" />
         <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Drivers\Stubs\Processor\stubs_time\dotNetMF.proj" />
     </ItemGroup>
-    <!-- main function add -->
-    <!--
-    <ItemGroup>
-        <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\OS\Toppers\hrp2\DeviceCode\dotNetMF.proj" />
-        <DriverLibs Include="ToppersHRP2onEV3_initialization_hal.$(LIB_EXT)" />
-    </ItemGroup>
-    <ItemGroup>
-        <RequiredProjects Include="$(SPOCLIENT)\Solutions\ToppersHRP2onEV3\DeviceCode\Initialization\dotNetMF.proj" />
-        <DriverLibs Include="ToppersHRP2onEV3_initialization_hal.$(LIB_EXT)" />
-    </ItemGroup>
-    -->
     <ItemGroup>
         <DriverLibs Include="cpu_watchdog_stubs.$(LIB_EXT)" />
         <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Drivers\stubs\Processor\stubs_watchdog\dotNetMF.proj" />
-    </ItemGroup>
-    <ItemGroup>
-        <DriverLibs Include="system_initialization_hal.$(LIB_EXT)" />
-        <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Initialization\dotNetMF.proj" />
-    </ItemGroup>
-    <ItemGroup>
-        <DriverLibs Include="TinyHal.$(LIB_EXT)"/>
-        <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Cores\arm\Processors\ARM9\TinyHal\dotNetMF.proj" />
     </ItemGroup>
     <ItemGroup>
         <DriverLibs Include="Watchdog_pal_stubs.$(LIB_EXT)" />
@@ -431,10 +423,15 @@
         <AssemblyFiles Include="$(SPOCLIENT)\DeviceCode\Targets\OS\Toppers\hrp2\arch\arm_gcc\common\start.S" />
     </ItemGroup>
     -->
-    <!-- OS add? -->
     <ItemGroup>
-        <DriverLibs Include="ToppersOS.$(LIB_EXT)" />
-        <RequiredProjects Include="$(SPOCLIENT)/DeviceCode/Targets/OS/Toppers/hrp2/workspace/helloev3onnetmf/dotnetmf.proj" />
+        <RequiredProjects Include="$(SPOCLIENT)\Solutions\ToppersHRP2onEV3\DeviceCode\Initialization\dotNetMF.proj" />
+        <DriverLibs Include="ToppersHRP2onEV3_initialization_hal.$(LIB_EXT)" />
     </ItemGroup>
+    <!--
+    <ItemGroup>
+        <DriverLibs Include="TinyHal.$(LIB_EXT)"/>
+        <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Cores\arm\Processors\ARM9\TinyHal\dotNetMF.proj" />
+    </ItemGroup>
+    -->
     <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Targets" />
 </Project>

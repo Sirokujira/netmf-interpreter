@@ -26,6 +26,7 @@ void ApplicationEntryPoint()
 #endif
 }
 
+
 BOOL Solution_GetReleaseInfo(MfReleaseInfo& releaseInfo)
 {
     MfReleaseInfo::Init(releaseInfo,

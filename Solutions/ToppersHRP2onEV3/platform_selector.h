@@ -28,6 +28,7 @@
 //
 /////////////////////////////////////////////////////////
 
+
 /////////////////////////////////////////////////////////
 //
 // constants
@@ -51,6 +52,30 @@
 #define CTSPROTECTRESISTOR              RESISTOR_DISABLED
 #define RTSPROTECTRESISTOR              RESISTOR_DISABLED
 
+#define INSTRUMENTATION_H_GPIO_PIN      0
+
+#if 1
+//#define DEBUG_TEXT_PORT    COM1     // for debugging
+#define DEBUG_TEXT_PORT    USB1
+#define STDIO              USB1
+#define DEBUGGER_PORT      USB1
+#define MESSAGING_PORT     USB1
+#else
+#define DEBUG_TEXT_PORT    COM1
+#define STDIO              COM1
+#define DEBUGGER_PORT      COM1
+#define MESSAGING_PORT     COM1
+#endif
+
+//
+// constants
+/////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////
+//
+// macros
+//
+
 #define GLOBAL_LOCK(x)                  SmartPtr_IRQ x
 #define DISABLE_INTERRUPTS()            SmartPtr_IRQ::ForceDisabled()
 #define ENABLE_INTERRUPTS()             SmartPtr_IRQ::ForceEnabled()
@@ -65,27 +90,21 @@
 #define ASSERT_IRQ_MUST_BE_ON()
 #endif
 
-#if 0
-    #define DEBUG_TEXT_PORT    USB1
-    #define STDIO              USB1
-    #define DEBUGGER_PORT      USB1
-    #define MESSAGING_PORT     USB1
-#elif 0
-    #define DEBUG_TEXT_PORT    USB1
-    #define STDIO              USB1
-    #define DEBUGGER_PORT      USB1
-    #define MESSAGING_PORT     USB1
-#else
-    #define DEBUG_TEXT_PORT    USB1
-    #define STDIO              USB1
-    #define DEBUGGER_PORT      USB1
-    #define MESSAGING_PORT     USB1
-#endif
+
 //
-// constants
+// macros
+//
 /////////////////////////////////////////////////////////
 
-#include <processor_selector.h>
+/////////////////////////////////////////////////////////
+//
+// global functions
+//
+
+//
+// global functions
+//
+/////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////
 // communicaiton facilities
@@ -119,6 +138,7 @@
 // #define PLATFORM_DEPENDENT_RX_USART_BUFFER_SIZE    512  // there is one RX for each usart port
 // #define PLATFORM_DEPENDENT_USB_QUEUE_PACKET_COUNT  2    // there is one queue for each pipe of each endpoint and the size of a single packet is sizeof(USB_PACKET64) == 68 bytes
 
+#include <processor_selector.h>
 
 #endif // PLATFORM_ARM_TOPPERSHRP2ONEV3
 

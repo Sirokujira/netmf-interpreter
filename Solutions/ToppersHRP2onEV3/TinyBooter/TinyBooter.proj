@@ -51,8 +51,8 @@
         <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Drivers\Stubs\Processor\stubs_PreStackInit\dotNetMF.proj" />
     </ItemGroup>
     <ItemGroup>
-        <DriverLibs Include="AT91_bootstrap.$(LIB_EXT)" />
-        <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\Native\AT91\DeviceCode\AT91_Bootstrap\dotNetMF.proj" />
+        <DriverLibs Include="MC9328MXL_Bootstrap.$(LIB_EXT)" />
+        <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\Native\MC9328MXL_Bootstrap\dotNetMF.proj" />
     </ItemGroup>
     <ItemGroup>
         <DriverLibs Include="cpu_cache_stubs.$(LIB_EXT)" />

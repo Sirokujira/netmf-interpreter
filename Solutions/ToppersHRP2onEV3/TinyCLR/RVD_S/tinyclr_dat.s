@@ -14,7 +14,7 @@
     EXPORT  TinyClr_Dat_Start
     EXPORT  TinyClr_Dat_End
 
-TinyClr_Dat_Start  DATA
+TinyClr_Dat_Start
     INCBIN tinyclr.dat
 TinyClr_Dat_End
 
