@@ -1,36 +1,50 @@
-<!-- Builds the MC9328MXL[_stub].$(LIB_EXT), for SPOT projects -->
-
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Directory>DeviceCode\Targets\Native\MC9328\DeviceCode</Directory>
+    <AssemblyName>MBED_HAL</AssemblyName>
+    <Size>
+    </Size>
+    <ProjectGuid>{0FD13751-16C0-42FF-9505-DF17DA24B265}</ProjectGuid>
+    <Description>MBED HAL</Description>
+    <Level>HAL</Level>
+    <LibraryFile>MBED_HAL.$(LIB_EXT)</LibraryFile>
+    <ProjectPath>$(SPOCLIENT)\DeviceCode\Targets\Native\MBED\DeviceCode\dotNetMF.proj</ProjectPath>
+    <ManifestFile>MBED.$(LIB_EXT).manifest</ManifestFile>
+    <Groups>OS\MBED</Groups>
+    <Documentation>
+    </Documentation>
+    <PlatformIndependent>False</PlatformIndependent>
+    <ProcessorSpecific>
+      <MFComponent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Template" Guid="{a169ed0f-7635-49f2-a74e-f69209485533}" xmlns="">
+        <VersionDependency xmlns="http://schemas.microsoft.com/netmf/InventoryFormat.xsd">
+          <Major>4</Major>
+          <Minor>0</Minor>
+          <Revision>0</Revision>
+          <Build>0</Build>
+          <Extra />
+          <Date>2011-08-11</Date>
+        </VersionDependency>
+        <ComponentType xmlns="http://schemas.microsoft.com/netmf/InventoryFormat.xsd">Processor</ComponentType>
+      </MFComponent>
+    </ProcessorSpecific>
+    <CustomFilter>
+    </CustomFilter>
+    <Required>False</Required>
+    <IgnoreDefaultLibPath>False</IgnoreDefaultLibPath>
+    <IsStub>False</IsStub>
+    <Directory>DeviceCode\Targets\Native\MBED\DeviceCode</Directory>
+    <OutputType>Library</OutputType>
+    <PlatformIndependentBuild>false</PlatformIndependentBuild>
+    <Version>4.0.0.0</Version>
   </PropertyGroup>
-
   <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Settings" />
-
+  <PropertyGroup />
   <ItemGroup>
-    <SubDirectories Include="MC9328MXL_Bootstrap"/>
-    <SubDirectories Include="MC9328MXL_PreStackInit"/>
-    <SubDirectories Include="MC9328MXL_Cache"/>
-    <SubDirectories Include="MC9328MXL_CMU"/>
-    <SubDirectories Include="MC9328MXL_DMA"/>    
-    <SubDirectories Include="MC9328MXL_EBIU"/>
-    <SubDirectories Include="MC9328MXL_GPIO"/>
-    <SubDirectories Include="MC9328MXL_I2C"/>
-    <SubDirectories Include="MC9328MXL_INTC"/>    
-    <SubDirectories Include="MC9328MXL_LCD"/>
-    <SubDirectories Include="MC9328MXL_PerformanceCounter"/>    
-    <SubDirectories Include="MC9328MXL_Power"/>
-    <SubDirectories Include="MC9328MXL_Security"/>
-    <SubDirectories Include="MC9328MXL_SPI"/>
-    <SubDirectories Include="MC9328MXL_time"/>    
-    <SubDirectories Include="MC9328MXL_timer"/>
-    <SubDirectories Include="MC9328MXL_USART"/>
-    <SubDirectories Include="MC9328MXL_USB"/>
-    <SubDirectories Include="MC9328MXL_Watchdog"/>    
+    <Compile Include="SmartPtr_gcc.cpp" />
+    <Compile Include="SmartPtr_gcc_asm.s" />
+    <Compile Include="startup.s" />
+    <!-- Native -->
+    <Compile Include="Interlocked.s" />
   </ItemGroup>
-
   <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Targets" />
-
 </Project>
-
