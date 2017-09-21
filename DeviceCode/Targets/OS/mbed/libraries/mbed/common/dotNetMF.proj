@@ -62,18 +62,17 @@
     <Compile Include="CAN.cpp" />
     <Compile Include="error.c" />
     <Compile Include="Ethernet.cpp" />
-    <Compile Include="exit.c" />
     <Compile Include="FileBase.cpp" />
     <Compile Include="FileLike.cpp" />
     <Compile Include="FilePath.cpp" />
     <Compile Include="FileSystemLike.cpp" />
-    <Compile Include="FunctionPointer.cpp" />
     <Compile Include="gpio.c" />
     <Compile Include="I2C.cpp" />
     <Compile Include="I2CSlave.cpp" />
     <Compile Include="InterruptIn.cpp" />
     <Compile Include="InterruptManager.cpp" />
     <Compile Include="LocalFileSystem.cpp" />
+    <Compile Include="lp_ticker_api.c" />
     <Compile Include="mbed_interface.c" />
     <Compile Include="pinmap_common.c" />
     <Compile Include="RawSerial.cpp" />
@@ -86,6 +85,7 @@
     <Compile Include="SPISlave.cpp" />
     <Compile Include="Stream.cpp" />
     <Compile Include="Ticker.cpp" />
+    <Compile Include="ticker_api.c" />
     <Compile Include="Timeout.cpp" />
     <Compile Include="Timer.cpp" />
     <Compile Include="TimerEvent.cpp" />
