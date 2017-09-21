@@ -16,6 +16,7 @@
 #ifndef MBED_TIMEREVENT_H
 #define MBED_TIMEREVENT_H
 
+#include "ticker_api.h"
 #include "us_ticker_api.h"
 
 namespace mbed {
@@ -24,7 +25,8 @@ namespace mbed {
 */
 class TimerEvent {
 public:
-    TimerEvent();
+	TimerEvent();	
+    TimerEvent(const ticker_data_t *data);
 
     /** The handler registered with the underlying timer interrupt
      */
@@ -45,6 +47,8 @@ protected:
     void remove();
 
     ticker_event_t event;
+
+    const ticker_data_t *_ticker_data;
 };
 
 } // namespace mbed
