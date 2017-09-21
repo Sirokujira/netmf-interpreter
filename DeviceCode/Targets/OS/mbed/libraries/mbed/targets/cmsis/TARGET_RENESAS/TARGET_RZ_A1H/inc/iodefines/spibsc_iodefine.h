@@ -24,7 +24,7 @@
 * File Name : spibsc_iodefine.h
 * $Rev: $
 * $Date::                           $
-* Description : Definition of I/O Register (V1.01a)
+* Description : Definition of I/O Register (V1.00a)
 ******************************************************************************/
 #ifndef SPIBSC_IODEFINE_H
 #define SPIBSC_IODEFINE_H
@@ -52,14 +52,11 @@ struct st_spibsc
     union iodefine_reg32_t  SMWDR1;                        /*  SMWDR1          */
     
     volatile uint32_t  CMNSR;                                  /*  CMNSR           */
-    volatile uint8_t   dummy2[4];                              /*                  */
-    volatile uint32_t  CKDLY;                                  /*  CKDLY           */
-    volatile uint8_t   dummy3[4];                              /*                  */
+    volatile uint8_t   dummy2[12];                             /*                  */
     volatile uint32_t  DRDMCR;                                 /*  DRDMCR          */
     volatile uint32_t  DRDRENR;                                /*  DRDRENR         */
     volatile uint32_t  SMDMCR;                                 /*  SMDMCR          */
     volatile uint32_t  SMDRENR;                                /*  SMDRENR         */
-    volatile uint32_t  SPODLY;                                 /*  SPODLY          */
 };
 
 
@@ -122,12 +119,10 @@ struct st_spibsc
 #define SMWDR1_0HL SPIBSC0.SMWDR1.UINT8[HL]
 #define SMWDR1_0HH SPIBSC0.SMWDR1.UINT8[HH]
 #define CMNSR_0 SPIBSC0.CMNSR
-#define CKDLY_0 SPIBSC0.CKDLY
 #define DRDMCR_0 SPIBSC0.DRDMCR
 #define DRDRENR_0 SPIBSC0.DRDRENR
 #define SMDMCR_0 SPIBSC0.SMDMCR
 #define SMDRENR_0 SPIBSC0.SMDRENR
-#define SPODLY_0 SPIBSC0.SPODLY
 #define CMNCR_1 SPIBSC1.CMNCR
 #define SSLDR_1 SPIBSC1.SSLDR
 #define SPBCR_1 SPIBSC1.SPBCR
@@ -170,11 +165,9 @@ struct st_spibsc
 #define SMWDR1_1HL SPIBSC1.SMWDR1.UINT8[HL]
 #define SMWDR1_1HH SPIBSC1.SMWDR1.UINT8[HH]
 #define CMNSR_1 SPIBSC1.CMNSR
-#define CKDLY_1 SPIBSC1.CKDLY
 #define DRDMCR_1 SPIBSC1.DRDMCR
 #define DRDRENR_1 SPIBSC1.DRDRENR
 #define SMDMCR_1 SPIBSC1.SMDMCR
 #define SMDRENR_1 SPIBSC1.SMDRENR
-#define SPODLY_1 SPIBSC1.SPODLY
 /* <-SEC M1.10.1 */
 #endif
