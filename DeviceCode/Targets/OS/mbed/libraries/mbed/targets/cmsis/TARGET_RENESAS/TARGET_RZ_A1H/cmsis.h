@@ -9,22 +9,4 @@
 
 #include "MBRZA1H.h"
 
-#if defined(__ARMCC_VERSION)
-
-#else
-//#ifndef __enable_irq
-//static inline void __enable_irq(void)
-//{
-//    __asm__("cpsie i");
-//}
-//#endif
-//
-//#ifndef __disable_irq
-//static inline void __disable_irq(void)
-//{
-//    __asm__("cpsid i");
-//}
-//#endif
-#endif
-
 #endif

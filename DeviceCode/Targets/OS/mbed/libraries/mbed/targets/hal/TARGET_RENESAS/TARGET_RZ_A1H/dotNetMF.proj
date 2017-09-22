@@ -55,6 +55,7 @@
   <PropertyGroup />
   <ItemGroup>
     <Compile Include="analogin_api.c" />
+    <Compile Include="can_api.c" />
     <Compile Include="ethernet_api.c" />
     <Compile Include="gpio_api.c" />
     <Compile Include="gpio_irq_api.c" />
@@ -62,6 +63,7 @@
     <Compile Include="pinmap.c" />
     <Compile Include="port_api.c" />
     <Compile Include="pwmout_api.c" />
+    <Compile Include="rtc_api.c" />
     <Compile Include="serial_api.c" />
     <Compile Include="spi_api.c" />
     <Compile Include="us_ticker.c" />

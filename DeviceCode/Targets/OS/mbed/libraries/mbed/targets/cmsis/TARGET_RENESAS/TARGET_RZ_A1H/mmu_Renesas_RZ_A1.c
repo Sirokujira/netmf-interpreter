@@ -65,6 +65,9 @@
 
 #include <stdint.h>
 #include "MBRZA1H.h"
+#if defined(__GNUC__)
+#include "core_ca_mmu.h"
+#endif
 
 //Import symbols from linker
 extern uint32_t Image$$VECTORS$$Base;
@@ -112,7 +115,7 @@ static uint32_t Page_L1_64k = 0x0;  //generic
 static uint32_t Page_4k_Device_RW;  //Shared device, not executable, rw, domain 0
 static uint32_t Page_64k_Device_RW; //Shared device, not executable, rw, domain 0
 
-void create_translation_table(void)
+void __attribute__((section("SectionForBootstrapOperations"))) create_translation_table(void)
 {
     mmu_region_attributes_Type region;
 
@@ -168,6 +171,7 @@ void create_translation_table(void)
     __TTSection (&Image$$TTB$$ZI$$Base, (uint32_t)&Image$$RW_DATA_NC$$Base, RW_DATA_NC_SIZE, Sect_Normal_NC);
     __TTSection (&Image$$TTB$$ZI$$Base, (uint32_t)&Image$$ZI_DATA_NC$$Base, ZI_DATA_NC_SIZE, Sect_Normal_NC);
 #endif
+    __TTSection (&Image$$TTB$$ZI$$Base, Renesas_RZ_A1_ONCHIP_SRAM_NC_BASE,         10, Sect_Normal_NC);
 
     /* Set location of level 1 page table
     ; 31:14 - Translation table base addr (31:14-TTBCR.N, TTBCR.N is 0 out of reset)

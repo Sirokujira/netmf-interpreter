@@ -35,6 +35,7 @@ struct i2c_s {
     uint8_t  width_low;
     uint8_t  width_hi;
     int      bbsy_wait_cnt;
+    int      last_stop_flag;
 };
 
 struct spi_s {
@@ -69,6 +70,10 @@ struct pwmout_s {
 
 struct analogin_s {
     ADCName adc;
+};
+
+struct can_s {
+    uint32_t ch;
 };
 
 #ifdef __cplusplus

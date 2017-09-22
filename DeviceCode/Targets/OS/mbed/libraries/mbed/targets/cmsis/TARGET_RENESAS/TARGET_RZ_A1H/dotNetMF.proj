@@ -54,11 +54,14 @@
   <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Settings" />
   <PropertyGroup />
   <ItemGroup>
+    <Compile Include="cmsis_nvic.c" />
     <Compile Include="gic.c" />
+    <Compile Include="nvic_wrapper.c" />
     <Compile Include="mbed_sf_boot.c" />
     <Compile Include="mmu_Renesas_RZ_A1.c" />
     <Compile Include="pl310.c" />
     <Compile Include="RZ_A1_Init.c" />
+    <Compile Include="rza_io_regrw.c" />
     <Compile Include="system_MBRZA1H.c" />
   </ItemGroup>
   <ItemGroup />

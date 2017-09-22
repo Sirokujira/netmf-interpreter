@@ -1,8 +1,8 @@
 /**************************************************************************//**
  * @file     pl310.c
- * @brief    Implementation of pl310 functions
+ * @brief    Implementation of PL310 PrimeCell Level 2 Cache Controller functions
  * @version
- * @date     11 June 2013
+ * @date     3 December 2014
  *
  * @note
  *
@@ -36,25 +36,25 @@
 #include "MBRZA1H.h"
 
 //Cache Sync operation
-void __attribute__((section("SectionForBootstrapOperations"))) PL310_Sync(void)
+void PL310_Sync(void)
 {
     PL310->CACHE_SYNC = 0x0;
 }
 
 //return Cache controller cache ID
-int __attribute__((section("SectionForBootstrapOperations"))) PL310_GetID (void)
+int PL310_GetID (void)
 {
     return PL310->CACHE_ID;
 }
 
 //return Cache controller cache Type
-int __attribute__((section("SectionForBootstrapOperations"))) PL310_GetType (void)
+int PL310_GetType (void)
 {
     return PL310->CACHE_TYPE;
 }
 
 //Invalidate all cache by way
-void __attribute__((section("SectionForBootstrapOperations"))) PL310_InvAllByWay (void)
+void PL310_InvAllByWay (void)
 {
     unsigned int assoc;
 
@@ -64,13 +64,13 @@ void __attribute__((section("SectionForBootstrapOperations"))) PL310_InvAllByWay
         assoc =  8;
 
     PL310->INV_WAY = (1 << assoc) - 1;
-    while(PL310->INV_WAY && ((1 << assoc) - 1)); //poll invalidate
+    while(PL310->INV_WAY & ((1 << assoc) - 1)); //poll invalidate
 
     PL310_Sync();
 }
 
 //Clean and Invalidate all cache by way
-void __attribute__((section("SectionForBootstrapOperations"))) PL310_CleanInvAllByWay (void)
+void PL310_CleanInvAllByWay (void)
 {
     unsigned int assoc;
 
@@ -80,16 +80,16 @@ void __attribute__((section("SectionForBootstrapOperations"))) PL310_CleanInvAll
         assoc =  8;
 
     PL310->CLEAN_INV_WAY = (1 << assoc) - 1;
-    while(PL310->CLEAN_INV_WAY && ((1 << assoc) - 1)); //poll invalidate
+    while(PL310->CLEAN_INV_WAY & ((1 << assoc) - 1)); //poll invalidate
 
     PL310_Sync();
 }
 
 //Enable Cache
-void __attribute__((section("SectionForBootstrapOperations"))) PL310_Enable(void)
+void PL310_Enable(void)
 {
     PL310->CONTROL = 0;
-    PL310->INTERRUPT_CLEAR = 0;
+    PL310->INTERRUPT_CLEAR = 0x000001FFuL;
     PL310->DEBUG_CONTROL = 0;
     PL310->DATA_LOCK_0_WAY = 0;
     PL310->CACHE_SYNC = 0;
@@ -98,28 +98,28 @@ void __attribute__((section("SectionForBootstrapOperations"))) PL310_Enable(void
     PL310_Sync();
 }
 //Disable Cache
-void __attribute__((section("SectionForBootstrapOperations"))) PL310_Disable(void)
+void PL310_Disable(void)
 {
     PL310->CONTROL = 0x00;
     PL310_Sync();
 }
 
 //Invalidate cache by physical address
-void __attribute__((section("SectionForBootstrapOperations"))) PL310_InvPa (void *pa)
+void PL310_InvPa (void *pa)
 {
     PL310->INV_LINE_PA = (unsigned int)pa;
     PL310_Sync();
 }
 
 //Clean cache by physical address
-void __attribute__((section("SectionForBootstrapOperations"))) PL310_CleanPa (void *pa)
+void PL310_CleanPa (void *pa)
 {
     PL310->CLEAN_LINE_PA = (unsigned int)pa;
     PL310_Sync();
 }
 
 //Clean and invalidate cache by physical address
-void __attribute__((section("SectionForBootstrapOperations"))) PL310_CleanInvPa (void *pa)
+void PL310_CleanInvPa (void *pa)
 {
     PL310->CLEAN_INV_LINE_PA = (unsigned int)pa;
     PL310_Sync();

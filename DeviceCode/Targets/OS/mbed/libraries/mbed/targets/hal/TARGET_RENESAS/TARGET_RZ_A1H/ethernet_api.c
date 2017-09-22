@@ -27,7 +27,6 @@
 #define NUM_OF_RX_DESCRIPTOR    (16)
 #define SIZE_OF_BUFFER          (1600)     /* Must be an integral multiple of 32 */
 #define MAX_SEND_SIZE           (1514)
-#define BUFF_BOUNDARY_MSK       (0x0000000F)
 /* Ethernet Descriptor Value Define */
 #define TD0_TFP_TOP_BOTTOM      (0x30000000)
 #define TD0_TACT                (0x80000000)
@@ -105,24 +104,13 @@ typedef struct tag_edmac_recv_desc {
 } edmac_recv_desc_t;
 
 /* memory */
-#pragma arm section zidata="NC_BSS"
 /* The whole transmit/receive descriptors (must be allocated in 16-byte boundaries) */
 /* Transmit/receive buffers (must be allocated in 16-byte boundaries) */
-
-#if defined(__ARMCC_VERSION)
-
-uint8_t ehernet_nc_memory[(sizeof(edmac_send_desc_t) * NUM_OF_TX_DESCRIPTOR) +
+static uint8_t ehernet_nc_memory[(sizeof(edmac_send_desc_t) * NUM_OF_TX_DESCRIPTOR) +
                                  (sizeof(edmac_recv_desc_t) * NUM_OF_RX_DESCRIPTOR) +
                                  (NUM_OF_TX_DESCRIPTOR * SIZE_OF_BUFFER) +
-                                 (NUM_OF_RX_DESCRIPTOR * SIZE_OF_BUFFER) + BUFF_BOUNDARY_MSK];
-#else
-edmac_send_desc_t eth_desc_dsend[NUM_OF_TX_DESCRIPTOR] __attribute__((aligned(32)));
-edmac_recv_desc_t eth_desc_drecv[NUM_OF_RX_DESCRIPTOR] __attribute__((aligned(32)));
-uint8_t dsend_buf[NUM_OF_TX_DESCRIPTOR * SIZE_OF_BUFFER] __attribute__((aligned(32)));
-uint8_t drecv_buf[NUM_OF_RX_DESCRIPTOR * SIZE_OF_BUFFER] __attribute__((aligned(32)));
-#endif
-
-#pragma arm section zidata
+                                 (NUM_OF_RX_DESCRIPTOR * SIZE_OF_BUFFER)]
+                                 __attribute((section("NC_BSS"),aligned(16)));  //16 bytes aligned!
 static int32_t            rx_read_offset;   /* read offset */
 static int32_t            tx_wite_offset;   /* write offset */
 static uint32_t           send_top_index;
@@ -132,8 +120,7 @@ static edmac_send_desc_t  *p_eth_desc_dsend = NULL;
 static edmac_recv_desc_t  *p_eth_desc_drecv = NULL;
 static edmac_recv_desc_t  *p_recv_end_desc  = NULL;
 static ethernetext_cb_fnc *p_recv_cb_fnc    = NULL;
-//static char               mac_addr[6]       = {0x00, 0x02, 0xF7, 0xF0, 0x00, 0x00}; /* MAC Address */
-static char               mac_addr[6]       = {0x1C, 0x00, 0x11, 0x33, 0x44, 0x55}; /* MAC Address */
+static char               mac_addr[6]       = {0x00, 0x02, 0xF7, 0xF0, 0x00, 0x00}; /* MAC Address */
 static uint32_t           phy_id            = 0;
 static uint32_t           start_stop        = 1;  /* 0:stop  1:start */
 
@@ -499,10 +486,8 @@ static void lan_desc_create(void) {
     int32_t i;
     uint8_t *p_memory_top;
 
-#if defined(__ARMCC_VERSION)
     (void)memset((void *)ehernet_nc_memory, 0, sizeof(ehernet_nc_memory));
-    p_memory_top = (uint8_t *)(((uint32_t)ehernet_nc_memory + BUFF_BOUNDARY_MSK) & ~BUFF_BOUNDARY_MSK);
-    p_memory_top = (uint8_t *)(&ehernet_nc_memory);
+    p_memory_top = ehernet_nc_memory;
 
     /* Descriptor area configuration */
     p_eth_desc_dsend  = (edmac_send_desc_t *)p_memory_top;
@@ -523,30 +508,10 @@ static void lan_desc_create(void) {
     for (i = 0; i < NUM_OF_RX_DESCRIPTOR; i++) {
         p_eth_desc_drecv[i].rd2  = p_memory_top;                     /* RD2 RBA */
         p_memory_top            += SIZE_OF_BUFFER;
-        p_eth_desc_drecv[i].rd1  = (uint32_t)(SIZE_OF_BUFFER << 16); /* RD1 RBL */
+        p_eth_desc_drecv[i].rd1  = ((uint32_t)SIZE_OF_BUFFER << 16); /* RD1 RBL */
         p_eth_desc_drecv[i].rd0  = RD0_RACT;                         /* RD0:reception enabled */
     }
     p_eth_desc_drecv[i - 1].rd0 |= RD0_RDLE;                         /* Set the last descriptor */
-#else
-    p_eth_desc_dsend = &eth_desc_dsend[0];
-    p_eth_desc_drecv = &eth_desc_drecv[0];
-
-    /* Transmit descriptor */
-    for (i = 0; i < NUM_OF_TX_DESCRIPTOR; i++) {
-        p_eth_desc_dsend[i].td2  = (uint8_t *)&dsend_buf[i*SIZE_OF_BUFFER];
-        p_eth_desc_dsend[i].td1  = 0;                                /* TD1 TDL */
-        p_eth_desc_dsend[i].td0  = TD0_TFP_TOP_BOTTOM;               /* TD0:1frame/1buf1buf, transmission disabled */
-    }
-    p_eth_desc_dsend[i - 1].td0 |= TD0_TDLE;                         /* Set the last descriptor */
-
-    /* Receive descriptor */
-    for (i = 0; i < NUM_OF_RX_DESCRIPTOR; i++) {
-        p_eth_desc_drecv[i].rd2  = (uint8_t *)&drecv_buf[i*SIZE_OF_BUFFER];
-        p_eth_desc_drecv[i].rd1  = (uint32_t)(SIZE_OF_BUFFER << 16); /* RD1 RBL */
-        p_eth_desc_drecv[i].rd0  = RD0_RACT;                         /* RD0:reception enabled */
-    }
-    p_eth_desc_drecv[i - 1].rd0 |= RD0_RDLE;                         /* Set the last descriptor */
-#endif
 
     /* Initialize descriptor management information */
     send_top_index  = 0;
@@ -607,7 +572,7 @@ static void lan_reg_set(int32_t link) {
         GIC_EnableIRQ(ETHERI_IRQn);                        /* Enables the E-DMAC interrupt */
     }
 
-    ETHERECMR0     |=  0x00000061;      /* RE Enable, TE Enable */
+    ETHERECMR0     |=  0x00000060;      /* RE Enable, TE Enable */
 
     /* Enable transmission/reception */
     if ((start_stop == 1) && ((ETHEREDRRR0 & 0x00000001) == 0)) {

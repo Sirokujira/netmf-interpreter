@@ -66,7 +66,7 @@ Private global variables and functions
 * @param         none
 * @retval        none
 ******************************************************************************/
-void __attribute__((section("SectionForBootstrapOperations"))) RZ_A1_SetSramWriteEnable(void)
+void RZ_A1_SetSramWriteEnable(void)
 {
     /* Enable SRAM write access */
     CPG.SYSCR3 = 0x0F;
@@ -83,7 +83,7 @@ void __attribute__((section("SectionForBootstrapOperations"))) RZ_A1_SetSramWrit
 * @param         none
 * @retval        none
 ******************************************************************************/
-void __attribute__((section("SectionForBootstrapOperations"))) RZ_A1_InitClock(void)
+void RZ_A1_InitClock(void)
 {
     /* Cancel L2C standby status before clock change */
     L2CREG15_POWER_CTRL = 0x00000001;
@@ -106,7 +106,7 @@ void __attribute__((section("SectionForBootstrapOperations"))) RZ_A1_InitClock(v
 * @retval        true  : clock mode 0
 * @retval        false : clock mode 1
 ******************************************************************************/
-int __attribute__((section("SectionForBootstrapOperations"))) RZ_A1_IsClockMode0(void)
+int RZ_A1_IsClockMode0(void)
 {
     /* ClockMode0 */
     return true;
@@ -121,7 +121,7 @@ int __attribute__((section("SectionForBootstrapOperations"))) RZ_A1_IsClockMode0
 * @param         none
 * @retval        none
 ******************************************************************************/
-void __attribute__((section("SectionForBootstrapOperations"))) RZ_A1_InitBus(void)
+void RZ_A1_InitBus(void)
 {
     /*************************************************************************/
     /* If need Pin Setting before run program, the setting will be wrote here*/

@@ -22,13 +22,14 @@
 #include "riic_iodefine.h"
 #include "RZ_A1_Init.h"
 #include "MBRZA1H.h"
-
-#if defined(__ARMCC_VERSION)
-#define FLOAT64_T   float64_t
-#elif defined(__GNUC__)
-#define FLOAT64_T   float
-#endif
-
+// C99
+#include <stdint.h>
+typedef float  float32_t;
+typedef double float64_t;
+// nothing C99?
+// #include <stdfloat.h>
+// #include <cstdint>
+// #include <cstdfloat>
 volatile struct st_riic *RIIC[] = RIIC_ADDRESS_LIST;
 
 #define REG(N) \
@@ -40,8 +41,9 @@ volatile struct st_riic *RIIC[] = RIIC_ADDRESS_LIST;
 
 /* RIICnCR2 */
 #define CR2_ST    (1 << 1)
+#define CR2_RS    (1 << 2)
 #define CR2_SP    (1 << 3)
-#define CR2_NACKF (1 << 4)
+#define CR2_TRS   (1 << 5)
 #define CR2_BBSY  (1 << 7)
 
 /* RIICnMR3 */
@@ -49,14 +51,21 @@ volatile struct st_riic *RIIC[] = RIIC_ADDRESS_LIST;
 #define MR3_ACKWP (1 << 4)
 #define MR3_WAIT  (1 << 6)
 
+/* RIICnSER */
+#define SER_SAR0E (1 << 0)
+
+/* RIICnSR1 */
+#define SR1_AAS0  (1 << 0)
+
 /* RIICnSR2 */
+#define SR2_START (1 << 2)
 #define SR2_STOP  (1 << 3)
 #define SR2_NACKF (1 << 4)
 #define SR2_RDRF  (1 << 5)
 #define SR2_TEND  (1 << 6)
 #define SR2_TDRE  (1 << 7)
 
-#define TIMEOUT_1S    (3600000)  /* Loop counter : Time-out is about 1s. By 3600000 loops, measured value is 969ms. */
+#define WAIT_TIMEOUT    (3600000)  /* Loop counter : Time-out is about 1s. By 3600000 loops, measured value is 969ms. */
 
 static const PinMap PinMap_I2C_SDA[] = {
     {P1_1 , I2C_0, 1},
@@ -73,33 +82,8 @@ static const PinMap PinMap_I2C_SCL[] = {
 };
 
 
-/* Clear the Transmit data Empty TDRE */
-static inline int i2c_addressed(i2c_t *obj) {
-    volatile int sar0 = (REG(SR1.UINT8[0])&1),
-                 trs  = (REG(CR2.UINT8[0])&0x20) >> 5;
-    return sar0 | (trs <<1);
-}
-
 static inline int i2c_status(i2c_t *obj) {
     return REG(SR2.UINT8[0]);
-}
-
-static inline void i2c_clear_TDRE(i2c_t *obj) {
-    REG(SR2.UINT32) &= ~SR2_TDRE;
-}
-
-static inline int i2c_wait_RDRF(i2c_t *obj) {
-    int timeout = 0;
-    
-    /* There is no timeout, but the upper limit value is set to avoid an infinite loop. */
-    while (!(i2c_status(obj) & SR2_RDRF)) {
-        timeout ++;
-        if (timeout >= TIMEOUT_1S) {
-            return -1;
-        }
-    }
-
-    return 0;
 }
 
 static void i2c_reg_reset(i2c_t *obj) {
@@ -125,14 +109,27 @@ static void i2c_reg_reset(i2c_t *obj) {
     REG(CR1.UINT32) &= ~CR1_RST;   // CR1.IICRST negate reset
 }
 
-/* Wait until the Trans Data Empty (TDRE) is set */
+static inline int i2c_wait_RDRF(i2c_t *obj) {
+    int timeout = 0;
+    
+    /* There is no timeout, but the upper limit value is set to avoid an infinite loop. */
+    while ((i2c_status(obj) & SR2_RDRF) == 0) {
+        timeout ++;
+        if (timeout >= WAIT_TIMEOUT) {
+            return -1;
+        }
+    }
+
+    return 0;
+}
+
 static int i2c_wait_TDRE(i2c_t *obj) {
     int timeout = 0;
 
     /* There is no timeout, but the upper limit value is set to avoid an infinite loop. */
-    while (!(i2c_status(obj) & SR2_TDRE)) {
+    while ((i2c_status(obj) & SR2_TDRE) == 0) {
         timeout ++;
-        if (timeout >= TIMEOUT_1S) {
+        if (timeout >= WAIT_TIMEOUT) {
             return -1;
         }
     }
@@ -144,9 +141,9 @@ static int i2c_wait_TEND(i2c_t *obj) {
     int timeout = 0;
     
     /* There is no timeout, but the upper limit value is set to avoid an infinite loop. */
-    while (!(i2c_status(obj) & SR2_TEND)) {
+    while ((i2c_status(obj) & SR2_TEND) == 0) {
         timeout ++;
-        if (timeout >= TIMEOUT_1S) {
+        if (timeout >= WAIT_TIMEOUT) {
             return -1;
         }
     }
@@ -154,14 +151,28 @@ static int i2c_wait_TEND(i2c_t *obj) {
     return 0;
 }
 
+
+static int i2c_wait_START(i2c_t *obj) {
+    int timeout = 0;
+    
+    /* There is no timeout, but the upper limit value is set to avoid an infinite loop. */
+    while ((i2c_status(obj) & SR2_START) == 0) {
+        timeout ++;
+        if (timeout >= WAIT_TIMEOUT) {
+            return -1;
+        }
+    }
+
+    return 0;
+}
 
 static int i2c_wait_STOP(i2c_t *obj) {
     int timeout = 0;
     
     /* There is no timeout, but the upper limit value is set to avoid an infinite loop. */
-    while (!(i2c_status(obj) & SR2_STOP)) {
+    while ((i2c_status(obj) & SR2_STOP) == 0) {
         timeout ++;
-        if (timeout >= TIMEOUT_1S) {
+        if (timeout >= WAIT_TIMEOUT) {
             return -1;
         }
     }
@@ -169,26 +180,51 @@ static int i2c_wait_STOP(i2c_t *obj) {
     return 0;
 }
 
-static void i2c_set_NACKF_STOP(i2c_t *obj) {
+static int i2c_set_STOP(i2c_t *obj) {
+    /* SR2.STOP = 0 */
+    REG(SR2.UINT32) &= ~SR2_STOP;
+    /* Stop condition */
+    REG(CR2.UINT32) |= CR2_SP;
+
+    return 0;
+}
+
+static void i2c_set_SR2_NACKF_STOP(i2c_t *obj) {
     /* SR2.NACKF = 0 */
     REG(SR2.UINT32) &= ~SR2_NACKF;
-    /* SR2.STOP  = 0 */
+    /* SR2.STOP = 0 */
     REG(SR2.UINT32) &= ~SR2_STOP;
 }
 
-static void i2c_set_err_noslave(i2c_t *obj) {
-    i2c_stop(obj);
-    (void)i2c_wait_STOP(obj);
-    i2c_set_NACKF_STOP(obj);
+static void i2c_set_MR3_NACK(i2c_t *obj) {
+    /* send a NOT ACK */
+    REG(MR3.UINT32) |=  MR3_ACKWP;
+    REG(MR3.UINT32) |=  MR3_ACKBT;
+    REG(MR3.UINT32) &= ~MR3_ACKWP;
+}
+
+static void i2c_set_MR3_ACK(i2c_t *obj) {
+    /* send a ACK */
+    REG(MR3.UINT32) |=  MR3_ACKWP;
+    REG(MR3.UINT32) &= ~MR3_ACKBT;
+    REG(MR3.UINT32) &= ~MR3_ACKWP;
 }
 
 static inline void i2c_power_enable(i2c_t *obj) {
     volatile uint8_t dummy;
     switch ((int)obj->i2c) {
-        case I2C_0: CPGSTBCR9 &= ~(0x80); break;
-        case I2C_1: CPGSTBCR9 &= ~(0x40); break;
-        case I2C_2: CPGSTBCR9 &= ~(0x20); break;
-        case I2C_3: CPGSTBCR9 &= ~(0x10); break;
+        case I2C_0:
+            CPGSTBCR9 &= ~(0x80);
+            break;
+        case I2C_1:
+            CPGSTBCR9 &= ~(0x40);
+            break;
+        case I2C_2:
+            CPGSTBCR9 &= ~(0x20);
+            break;
+        case I2C_3:
+            CPGSTBCR9 &= ~(0x10);
+            break;
     }
     dummy = CPGSTBCR9;
 }
@@ -208,18 +244,17 @@ void i2c_init(i2c_t *obj, PinName sda, PinName scl) {
 
     pinmap_pinout(sda, PinMap_I2C_SDA);
     pinmap_pinout(scl, PinMap_I2C_SCL);
+    
+    obj->last_stop_flag = 1;
 }
 
 inline int i2c_start(i2c_t *obj) {
     int timeout = 0;
 
-    while (REG(CR2.UINT32) & CR2_BBSY) {
+    while ((REG(CR2.UINT32) & CR2_BBSY) != 0) {
         timeout ++;
         if (timeout >= obj->bbsy_wait_cnt) {
-            i2c_reg_reset(obj);
-            /* Start Condition */
-            REG(CR2.UINT8[0]) |= CR2_ST;
-            return 0;
+            break;
         }
     }
     /* Start Condition */
@@ -228,51 +263,56 @@ inline int i2c_start(i2c_t *obj) {
     return 0;
 }
 
-inline int i2c_stop(i2c_t *obj) {
-    /* SR2.STOP  = 0 */
-    REG(SR2.UINT32) &= ~SR2_STOP;
-    /* Stop condition */
-    REG(CR2.UINT32) |= CR2_SP;
+static inline int i2c_restart(i2c_t *obj) {
+    /* SR2.START = 0 */
+    REG(SR2.UINT32) &= ~SR2_START;
+    /* ReStart condition */
+    REG(CR2.UINT32) |= CR2_RS;
 
     return 0;
+}
+
+inline int i2c_stop(i2c_t *obj) {
+    (void)i2c_set_STOP(obj);
+    (void)i2c_wait_STOP(obj);
+    i2c_set_SR2_NACKF_STOP(obj);
+    
+    return 0;
+}
+
+static void i2c_set_err_noslave(i2c_t *obj) {
+    (void)i2c_set_STOP(obj);
+    (void)i2c_wait_STOP(obj);
+    i2c_set_SR2_NACKF_STOP(obj);
+    obj->last_stop_flag = 1;
 }
 
 static inline int i2c_do_write(i2c_t *obj, int value) {
     int timeout = 0;
 
-    if (!(i2c_status(obj) & SR2_NACKF)) {
-        /* RIICnSR2.NACKF=0 */
-        /* There is no timeout, but the upper limit value is set to avoid an infinite loop. */
-        while (!(i2c_status(obj) & SR2_TDRE)) {
-            /* RIICnSR2.TDRE=0 */
-            timeout ++;
-            if (timeout >= TIMEOUT_1S) {
-                return -1;
-            }
-            if (i2c_status(obj) & SR2_NACKF) {
-                /* RIICnSR2.NACKF=1 */
-                return -1;
-            }
+    /* There is no timeout, but the upper limit value is set to avoid an infinite loop. */
+    while ((i2c_status(obj) & SR2_TDRE) == 0) {
+        timeout ++;
+        if (timeout >= WAIT_TIMEOUT) {
+            return -1;
         }
-        /* write the data */
-        REG(DRT.UINT32) = value;
-    } else {
-        return -1;
     }
+    /* write the data */
+    REG(DRT.UINT32) = value;
 
     return 0;
 }
 
 static inline int i2c_read_address_write(i2c_t *obj, int value) {
     int status;
+    
     status = i2c_wait_TDRE(obj);
     if (status == 0) {
         /* write the data */
         REG(DRT.UINT32) = value;
-        return 0;
-    } else {
-        return status;
     }
+    
+    return status;
 
 }
 
@@ -282,15 +322,9 @@ static inline int i2c_do_read(i2c_t *obj, int last) {
         /* Set MR3 WAIT bit is 1 */;
         REG(MR3.UINT32) |= MR3_WAIT;
     } else if (last == 1) {
-        /* send a NOT ACK */
-        REG(MR3.UINT32) |=  MR3_ACKWP;
-        REG(MR3.UINT32) |=  MR3_ACKBT;
-        REG(MR3.UINT32) &= ~MR3_ACKWP;
+        i2c_set_MR3_NACK(obj);
     } else {
-        /* send a ACK */
-        REG(MR3.UINT32) |=  MR3_ACKWP;
-        REG(MR3.UINT32) &= ~MR3_ACKBT;
-        REG(MR3.UINT32) &= ~MR3_ACKWP;
+        i2c_set_MR3_ACK(obj);
     }
 
     /* return the data */
@@ -298,11 +332,11 @@ static inline int i2c_do_read(i2c_t *obj, int last) {
 }
 
 void i2c_frequency(i2c_t *obj, int hz) {
-    FLOAT64_T pclk_val;
-    FLOAT64_T wait_utime;
-    volatile FLOAT64_T bps;
-    volatile FLOAT64_T L_time;         /* H Width period */
-    volatile FLOAT64_T H_time;         /* L Width period */
+    float64_t pclk_val;
+    float64_t wait_utime;
+    volatile float64_t bps;
+    volatile float64_t L_time;         /* H Width period */
+    volatile float64_t H_time;         /* L Width period */
     uint32_t tmp_L_width;
     uint32_t tmp_H_width;
     uint32_t remainder;
@@ -310,9 +344,9 @@ void i2c_frequency(i2c_t *obj, int hz) {
 
     /* set PCLK */
     if (false == RZ_A1_IsClockMode0()) {
-        pclk_val = (FLOAT64_T)CM1_RENESAS_RZ_A1_P0_CLK;
+        pclk_val = (float64_t)CM1_RENESAS_RZ_A1_P0_CLK;
     } else {
-        pclk_val = (FLOAT64_T)CM0_RENESAS_RZ_A1_P0_CLK;
+        pclk_val = (float64_t)CM0_RENESAS_RZ_A1_P0_CLK;
     }
 
     /* Min 10kHz, Max 400kHz */
@@ -321,7 +355,7 @@ void i2c_frequency(i2c_t *obj, int hz) {
     } else if (hz > 400000) {
         bps = 400000;
     } else {
-        bps = (FLOAT64_T)hz;
+        bps = (float64_t)hz;
     }
 
     /* Calculation L width time */
@@ -389,27 +423,36 @@ int i2c_read(i2c_t *obj, int address, char *data, int length, int stop) {
     int value;
     volatile uint32_t work_reg = 0;
 
-    status = i2c_start(obj);
-    if (status != 0) {
-        i2c_set_err_noslave(obj);
-        return I2C_ERROR_BUS_BUSY;
+    if(length <= 0) {
+        return 0;
     }
+    i2c_set_MR3_ACK(obj);
+    /* There is a STOP condition for last processing */
+    if (obj->last_stop_flag != 0) {
+        status = i2c_start(obj);
+        if (status != 0) {
+            i2c_set_err_noslave(obj);
+            return I2C_ERROR_BUS_BUSY;
+        }
+    }
+    obj->last_stop_flag = stop;
     /*  Send Slave address */
     status = i2c_read_address_write(obj, (address | 0x01));
     if (status != 0) {
         i2c_set_err_noslave(obj);
         return I2C_ERROR_NO_SLAVE;
     }
-    /* wati RDRF */
+    /* wait RDRF */
     status = i2c_wait_RDRF(obj);
     /* check ACK/NACK */
-    if ((status != 0) || (REG(SR2.UINT32) & CR2_NACKF == 1)) {
+    if ((status != 0) || ((REG(SR2.UINT32) & SR2_NACKF) != 0)) {
         /* Slave sends NACK */
-        i2c_stop(obj);
+        (void)i2c_set_STOP(obj);
         /* dummy read */
         value = REG(DRR.UINT32);
         (void)i2c_wait_STOP(obj);
-        i2c_set_NACKF_STOP(obj);
+        i2c_set_SR2_NACKF_STOP(obj);
+        obj->last_stop_flag = 1;
         return I2C_ERROR_NO_SLAVE;
     }
     /* Read in all except last byte */
@@ -434,7 +477,7 @@ int i2c_read(i2c_t *obj, int address, char *data, int length, int stop) {
             data[count] = (char)value;
         }
     } else if (length == 2) {
-        /* Set MR3 WATI bit is 1 */;
+        /* Set MR3 WATI bit is 1 */
         REG(MR3.UINT32) |= MR3_WAIT;
         /* dummy read */
         value = REG(DRR.UINT32);
@@ -444,23 +487,16 @@ int i2c_read(i2c_t *obj, int address, char *data, int length, int stop) {
             i2c_set_err_noslave(obj);
             return I2C_ERROR_NO_SLAVE;
         }
-        /* send a NOT ACK */
-        REG(MR3.UINT32) |=  MR3_ACKWP;
-        REG(MR3.UINT32) |=  MR3_ACKBT;
-        REG(MR3.UINT32) &= ~MR3_ACKWP;
+        i2c_set_MR3_NACK(obj);
         data[count] = (char)REG(DRR.UINT32);
         count++;
-    } else if (length == 1) {
+    } else {
+        /* length == 1 */
         /* Set MR3 WATI bit is 1 */;
         REG(MR3.UINT32) |=  MR3_WAIT;
-        /* send a NOT ACK */
-        REG(MR3.UINT32) |=  MR3_ACKWP;
-        REG(MR3.UINT32) |=  MR3_ACKBT;
-        REG(MR3.UINT32) &= ~MR3_ACKWP;
+        i2c_set_MR3_NACK(obj);
         /* dummy read */
         value = REG(DRR.UINT32);
-    } else {
-        return I2C_ERROR_NO_SLAVE;
     }
     /* wait for it to arrive */
     status = i2c_wait_RDRF(obj);
@@ -468,26 +504,28 @@ int i2c_read(i2c_t *obj, int address, char *data, int length, int stop) {
         i2c_set_err_noslave(obj);
         return I2C_ERROR_NO_SLAVE;
     }
+
     /* If not repeated start, send stop. */
     if (stop) {
-    /* RIICnSR2.STOP = 0 */
-    REG(SR2.UINT32) &= ~SR2_STOP;
-    /* RIICnCR2.SP   = 1 */
-    REG(CR2.UINT32) |= CR2_SP;
-    /* RIICnDRR read */
-    value = REG(DRR.UINT32) & 0xFF;
-    data[count] = (char)value;
-    /* RIICnMR3.WAIT = 0 */
-    REG(MR3.UINT32) &= ~MR3_WAIT;
-    (void)i2c_wait_STOP(obj);
-    } else {
+        (void)i2c_set_STOP(obj);
         /* RIICnDRR read */
-        value = REG(DRR.UINT32) & 0xFF;
+        value = (REG(DRR.UINT32) & 0xFF);
         data[count] = (char)value;
         /* RIICnMR3.WAIT = 0 */
         REG(MR3.UINT32) &= ~MR3_WAIT;
+        (void)i2c_wait_STOP(obj);
+        i2c_set_SR2_NACKF_STOP(obj);
+    } else {
+        (void)i2c_restart(obj);
+        /* RIICnDRR read */
+        value = (REG(DRR.UINT32) & 0xFF);
+        data[count] = (char)value;
+        /* RIICnMR3.WAIT = 0 */
+        REG(MR3.UINT32) &= ~MR3_WAIT;
+        (void)i2c_wait_START(obj);
+        /* SR2.START = 0 */
+        REG(SR2.UINT32) &= ~SR2_START;
     }
-    i2c_set_NACKF_STOP(obj);
 
     return length;
 }
@@ -496,14 +534,29 @@ int i2c_write(i2c_t *obj, int address, const char *data, int length, int stop) {
     int cnt;
     int status;
 
-    status = i2c_start(obj);
-    if (status != 0) {
-        i2c_set_err_noslave(obj);
-        return I2C_ERROR_BUS_BUSY;
+    if(length <= 0) {
+        return 0;
     }
+
+    /* There is a STOP condition for last processing */
+    if (obj->last_stop_flag != 0) {
+        status = i2c_start(obj);
+        if (status != 0) {
+            i2c_set_err_noslave(obj);
+            return I2C_ERROR_BUS_BUSY;
+        }
+    }
+    obj->last_stop_flag = stop;
     /*  Send Slave address */
     status = i2c_do_write(obj, address);
     if (status != 0) {
+        i2c_set_err_noslave(obj);
+        return I2C_ERROR_NO_SLAVE;
+    }
+    /* Wait send end */
+    status = i2c_wait_TEND(obj);
+    if ((status != 0) || ((REG(SR2.UINT32) & SR2_NACKF) != 0)) {
+        /* Slave sends NACK */
         i2c_set_err_noslave(obj);
         return I2C_ERROR_NO_SLAVE;
     }
@@ -513,54 +566,75 @@ int i2c_write(i2c_t *obj, int address, const char *data, int length, int stop) {
         if(status != 0) {
             i2c_set_err_noslave(obj);
             return cnt;
+        } else {
+            /* Wait send end */
+            status = i2c_wait_TEND(obj);
+            if ((status != 0) || ((REG(SR2.UINT32) & SR2_NACKF) != 0)) {
+                /* Slave sends NACK */
+                i2c_set_err_noslave(obj);
+                return I2C_ERROR_NO_SLAVE;
+            }
         }
-    }
-    /* Wait send end */
-    status = i2c_wait_TEND(obj);
-    if (status != 0) {
-        i2c_set_err_noslave(obj);
-        return I2C_ERROR_NO_SLAVE;
     }
     /* If not repeated start, send stop. */
     if (stop) {
-    i2c_stop(obj);
-    (void)i2c_wait_STOP(obj);
+        (void)i2c_set_STOP(obj);
+        (void)i2c_wait_STOP(obj);
+        i2c_set_SR2_NACKF_STOP(obj);
+    } else {
+        (void)i2c_restart(obj);
+        (void)i2c_wait_START(obj);
+        /* SR2.START = 0 */
+        REG(SR2.UINT32) &= ~SR2_START;
+
     }
-    i2c_set_NACKF_STOP(obj);
     
     return length;
 }
 
 void i2c_reset(i2c_t *obj) {
-    i2c_stop(obj);
+    (void)i2c_set_STOP(obj);
     (void)i2c_wait_STOP(obj);
-    i2c_set_NACKF_STOP(obj);
+    i2c_set_SR2_NACKF_STOP(obj);
 }
 
 int i2c_byte_read(i2c_t *obj, int last) {
     int status;
+    int data;
 
-    /* dummy read */
-    (void)REG(DRR.UINT32);
+    data = i2c_do_read(obj, last);
     /* wait for it to arrive */
     status = i2c_wait_RDRF(obj);
     if (status != 0) {
-        i2c_stop(obj);
-        (void)i2c_wait_STOP(obj);
-        i2c_set_NACKF_STOP(obj);
+        i2c_set_SR2_NACKF_STOP(obj);
         return I2C_ERROR_NO_SLAVE;
     }
     
-    return (i2c_do_read(obj, last) & 0xFF);
+    return data;
 }
 
 int i2c_byte_write(i2c_t *obj, int data) {
-    int ack;
-    int status = i2c_do_write(obj, (data & 0xFF));
+    int ack = 0;
+    int status;
+    int timeout = 0;
+    
+    status = i2c_do_write(obj, (data & 0xFF));
     if (status != 0) {
-        ack = 0;
+        i2c_set_SR2_NACKF_STOP(obj);
     } else {
-        ack = 1;
+        while (((i2c_status(obj) & SR2_RDRF) == 0) && ((i2c_status(obj) & SR2_TEND) == 0)) {
+            timeout++;
+            if (timeout >= WAIT_TIMEOUT) {
+                return ack;
+            }
+        }
+        /* check ACK/NACK */
+        if ((REG(SR2.UINT32) & SR2_NACKF) != 0) {
+            /* NACK */
+            i2c_set_SR2_NACKF_STOP(obj);
+        } else {
+            ack = 1;
+        }
     }
 
     return ack;
@@ -568,9 +642,9 @@ int i2c_byte_write(i2c_t *obj, int data) {
 
 void i2c_slave_mode(i2c_t *obj, int enable_slave) {
     if (enable_slave != 0) {
-        REG(SER.UINT32)  =  0x01;  // only slave addr 1 is enabled
+        REG(SER.UINT32) |= SER_SAR0E;   // only slave addr 0 is enabled
     } else {
-        REG(SER.UINT32)  =  0x00;  // no slave addr enabled
+        REG(SER.UINT32) &= ~SER_SAR0E;  // no slave addr enabled
     }
 }
 
@@ -578,67 +652,107 @@ int i2c_slave_receive(i2c_t *obj) {
     int status;
     int retval;
 
-    status = i2c_addressed(obj);
+    status = (REG(SR1.UINT8[0]) & SR1_AAS0);
+    status |= (REG(CR2.UINT8[0]) & CR2_TRS) >> 4;
+
     switch(status) {
-        case 0x3: retval = 1; break;
-        case 0x2: retval = 2; break;
-        case 0x1: retval = 3; break;
-        default : retval = 1; break;
+        case 0x01:
+            /* the master is writing to this slave */
+            retval = 3;
+            break;
+        case 0x02:
+            /* the master is writing to all slave  */
+            retval = 2;
+            break;
+        case 0x03:
+            /* the master has requested a read from this slave */
+            retval = 1;
+            break;
+        default :
+            /* no data */
+            retval = 0;
+            break;
     }
 
-    return(retval);
+    return retval;
 }
 
 int i2c_slave_read(i2c_t *obj, char *data, int length) {
-    int count = 0;
-    int status;
+    int timeout = 0;
+    int count;
+    int break_flg = 0;
 
-    volatile int dummy = REG(DRR.UINT32) ;
-
-    do {
-        i2c_wait_RDRF(obj);
-        status = i2c_status(obj);
-        if(!(status & 0x10)) {
-            data[count] = REG(DRR.UINT32) & 0xFF;
-        }
-        count++;
-    } while ( !(status & 0x10)  && (count < length) );
-
-    if(status & 0x10) {
-        i2c_stop(obj);
-        (void)i2c_wait_STOP(obj);
-        i2c_set_NACKF_STOP(obj);
+    if(length <= 0) {
+        return 0;
     }
+    for (count = 0; ((count < (length + 1)) && (break_flg == 0)); count++) {
+        /* There is no timeout, but the upper limit value is set to avoid an infinite loop. */
+        while (((i2c_status(obj) & SR2_STOP) != 0) || ((i2c_status(obj) & SR2_RDRF) == 0)) {
+            if ((i2c_status(obj) & SR2_STOP) != 0) {
+                break_flg = 1;
+                break;
+            }
+            timeout ++;
+            if (timeout >= WAIT_TIMEOUT) {
+                return -1;
+            }
+        }
+        if (break_flg == 0) {
+            if (count == 0) {
+                /* dummy read */
+                (void)REG(DRR.UINT32);
+            } else {
+                data[count - 1] = (char)(REG(DRR.UINT32) & 0xFF);
+            }
+        }
+    }
+    if (break_flg == 0) {
+        (void)i2c_wait_STOP(obj);
+    } else {
+        if ((i2c_status(obj) & SR2_RDRF) != 0) {
+            if (count <= 1) {
+                /* fail safe */
+                /* dummy read */
+                (void)REG(DRR.UINT32);
+            } else {
+                data[count - 2] = (char)(REG(DRR.UINT32) & 0xFF);
+            }
+        }
+    }
+    /* SR2.STOP = 0 */
+    REG(SR2.UINT32) &= ~SR2_STOP;
 
-    //i2c_clear_TDRE(obj);
-
-    return count;
+    return (count - 1);
 }
 
 int i2c_slave_write(i2c_t *obj, const char *data, int length) {
     int count = 0;
-    int status;
+    int status = 0;
 
     if(length <= 0) {
-        return(0);
+        return 0;
     }
 
-    do {
+    while ((count < length) && (status == 0)) {
         status = i2c_do_write(obj, data[count]);
+        if(status == 0) {
+            /* Wait send end */
+            status = i2c_wait_TEND(obj);
+            if ((status != 0) || ((count < (length - 1)) && ((REG(SR2.UINT32) & SR2_NACKF) != 0))) {
+                /* NACK */
+                break;
+            }
+        }
         count++;
-    } while ((count < length) && !(status & 0x10));
-
-    if (!(status & 0x10)) {
-        i2c_stop(obj);
-        (void)i2c_wait_STOP(obj);
-        i2c_set_NACKF_STOP(obj);
     }
+    /* dummy read */
+    (void)REG(DRR.UINT32);
+    (void)i2c_wait_STOP(obj);
+    i2c_set_SR2_NACKF_STOP(obj);
 
-    i2c_clear_TDRE(obj);
-
-    return(count);
+    return count;
 }
 
 void i2c_slave_address(i2c_t *obj, int idx, uint32_t address, uint32_t mask) {
-    REG(SAR0.UINT32) = address & 0xfe;
+    REG(SAR0.UINT32) = (address & 0xfffffffe);
 }
