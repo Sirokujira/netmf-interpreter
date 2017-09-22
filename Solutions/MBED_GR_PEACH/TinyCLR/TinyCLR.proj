@@ -9,6 +9,7 @@
     <IsClrProject>True</IsClrProject>
     <InteropFeatures />
     <ExtraAssemblies />
+    <ProjectPath>$(MSBuildThisFileFullPath)</ProjectPath>
     <MFSettingsFile>$(SPOCLIENT)\Solutions\MBED_GR_PEACH\MBED_GR_PEACH.settings</MFSettingsFile>
     <IsSolutionWizardVisible>True</IsSolutionWizardVisible>
     <reducesize>false</reducesize>
@@ -66,8 +67,10 @@
     <ImageLocation Condition="'$(MEMORY)'=='FLASH'">\ER_FLASH</ImageLocation>
     <LINK_FLAGS Condition="'$(COMPILER_TOOL)'!='GCC'">$(LINK_FLAGS) $(SWTC)keep *(.init_array)</LINK_FLAGS>
     <MMP_DAT_SKIP>false</MMP_DAT_SKIP>
-    <MMP_DAT_CreateDatabaseFile>$(BIN_DIR)\tinyclr.dat</MMP_DAT_CreateDatabaseFile>
-    <EXEScatterFileDefinition>$(SRC_DIR)\scatterfile_tinyclr_$(COMPILER_TOOL).$(SCATTER_EXT)</EXEScatterFileDefinition>
+    <MMP_DAT_CreateDatabaseFile>$(BIN_DIR)\$(AssemblyName).dat</MMP_DAT_CreateDatabaseFile>
+    <EXEScatterFileDefinition>$(SRC_DIR)\scatterfile_$(AssemblyName)_$(COMPILER_TOOL).$(SCATTER_EXT)</EXEScatterFileDefinition>
+    <!-- newlib-nano does not support long-long and long-double formatting, use standard newlib instead -->
+    <NewlibNano Condition="'$(COMPILER_TOOL)'=='GCC'">false</NewlibNano>
   </PropertyGroup>
   <ItemGroup />
   <ItemGroup Condition="'$(EnableOpenSSL)'=='true'" >
@@ -782,10 +785,12 @@
     <DriverLibs Include="MBED_bootstrap.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_Bootstrap\dotNetMF.proj" />
   </ItemGroup>
+  <!--
   <ItemGroup>
     <DriverLibs Include="RZA1_QuadSerialFlash_BL_Driver.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_BlockStorage\RZA1_QuadSerialFlash\dotNetMF.proj" />
   </ItemGroup>
+  -->
   <!-- Native Start Sequence
   <ItemGroup>
     <DriverLibs Include="MBED_HAL.$(LIB_EXT)" />

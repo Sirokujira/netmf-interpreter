@@ -81,7 +81,7 @@ const struct USB_DYNAMIC_CONFIGURATION UsbDefaultConfiguration =
         },
         USB_DEVICE_DESCRIPTOR_LENGTH,       // Length of device descriptor
         USB_DEVICE_DESCRIPTOR_TYPE,         // USB device descriptor type
-        0x0200,                             // USB Version 1.10 (BCD)
+        0x0200,                             // USB Version 2.00 (BCD) (2.0 required for Extended ID recognition)
         0,                                  // Device class (none)
         0,                                  // Device subclass (none)
         0,                                  // Device protocol (none)
