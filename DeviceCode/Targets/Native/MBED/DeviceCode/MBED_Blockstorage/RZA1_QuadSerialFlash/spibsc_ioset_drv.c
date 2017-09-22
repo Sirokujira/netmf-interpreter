@@ -36,6 +36,7 @@ Includes   <System Includes> , "Project Includes"
 #include "rza_io_regrw.h"
 #include "spibsc.h"
 #include "r_spibsc_ioset_api.h"
+#include "spibsc_iobitmask.h"
 
 void lcd_printf( const char* format, ... );
 

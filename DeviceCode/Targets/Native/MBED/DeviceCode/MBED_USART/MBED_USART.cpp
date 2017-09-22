@@ -29,12 +29,14 @@
 
 #include "scif_iodefine.h"
 #include "cpg_iodefine.h"
+#include "core_caFunc.h"
 
-extern "C"
-{
-void __disable_irq();
-void __enable_irq();
-}
+// DeviceCode\Targets\OS\mbed\libraries\mbed\targets\cmsis\core_caFunc.h
+// extern "C"
+// {
+// void __disable_irq();
+// void __enable_irq();
+// }
 static void USART_RxISR(UINT32 port);
 static void USART_TxISR(UINT32 port);
 
