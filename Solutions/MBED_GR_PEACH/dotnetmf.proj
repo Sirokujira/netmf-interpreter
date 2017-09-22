@@ -2,17 +2,17 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
   <PropertyGroup>
     <Directory>Solutions\MBED_GR_PEACH</Directory>
-    <MFSettingsFile>$(SPOCLIENT)\Solutions\MBED_GR_PEACH\MBED_GR_PEACH.settings</MFSettingsFile>
+    <MFSettingsFile>$(SPOCLIENT)/Solutions/MBED_GR_PEACH\MBED_GR_PEACH.settings</MFSettingsFile>
   </PropertyGroup>
   <ItemGroup>
     <!-- RAM(netmf axf + Topper elf) -->
-    <RequiredProjects Include="TinyBooter/TinyBooter.proj" />
+    <!-- <RequiredProjects Include="TinyBooter/TinyBooter.proj" /> -->
     <RequiredProjects Include="TinyCLR/TinyCLR.proj" />
     
     <!-- ROM(Topper bin + netmf dat) -->
     <!-- <RequiredProjects Include="TinyCLR_NONET/TinyCLR_NONET.proj" /> -->
   </ItemGroup>
 
-  <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Settings" />
-  <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Targets" />
+  <Import Project="$(SPOCLIENT)/tools/targets/Microsoft.SPOT.System.Settings" />
+  <Import Project="$(SPOCLIENT)/tools/targets/Microsoft.SPOT.System.Targets" />
 </Project>
