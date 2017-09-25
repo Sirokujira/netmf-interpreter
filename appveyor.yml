@@ -86,7 +86,11 @@ build_script:
 - cmd: >-
     dir "C:\Program Files (x86)\MSBuild\Microsoft"
     
-    timeout 15
+    dir .
+    
+    install-vsix.cmd
+    
+    timeout 30
     
     MSbuild DeviceCode\Targets\Native\Interop\ManagedCode\CQ_NETMF_CQ_FRK_FM3_Hardware\CQ_NETMF_CQ_FRK_FM3_Hardware.sln
     
