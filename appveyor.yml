@@ -86,9 +86,9 @@ build_script:
 - cmd: >-
     dir "C:\Program Files (x86)\MSBuild\Microsoft"
     
-    dir .
+    build_sdk.cmd
     
-    install-vsix.cmd
+    dir .
     
     timeout 30
     
