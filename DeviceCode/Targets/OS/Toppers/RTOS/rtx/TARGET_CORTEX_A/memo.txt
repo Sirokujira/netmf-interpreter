@@ -1,0 +1,4 @@
+mbed library を使いつつ Toppers OS を使用する場合、
+ここの処理を Toppers OS の API を使うように書き換えること。
+
+ASP/FMP/HRP 毎に分ける必要がある？

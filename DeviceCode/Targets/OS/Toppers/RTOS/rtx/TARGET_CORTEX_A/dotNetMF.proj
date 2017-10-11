@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" InitialTargets="CheckPreRquisitesInstalled" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <AssemblyName>TOPPERS_RTX</AssemblyName>
+        <Size>
+        </Size>
+        <ProjectGuid>{E2856248-4EC5-4C21-AE1B-1EF28E195840}</ProjectGuid>
+        <Description>TOPPERS-RTX OS</Description>
+        <Level>HAL</Level>
+        <LibraryFile>TOPPERS_RTX.$(LIB_EXT)</LibraryFile>
+        <ProjectPath>$(SPOCLIENT)/DeviceCode/Targets/OS/Toppers/RTOS/rtx/TARGET_CORTEX_A/dotNetMF.proj</ProjectPath>
+        <ManifestFile>TOPPERS_RTX.$(LIB_EXT).manifest</ManifestFile>
+        <Groups>OS/TOPPERS_ASP</Groups>
+        <LibraryCategory>
+            <MFComponent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="OS" Guid="{F0C31986-B463-437E-9814-EDAB2BE46109}" Conditional="" xmlns="">
+                <ComponentType xmlns="http://schemas.microsoft.com/netmf/InventoryFormat.xsd">LibraryCategory</ComponentType>
+            </MFComponent>
+        </LibraryCategory>
+        <Documentation>
+        </Documentation>
+        <PlatformIndependent>False</PlatformIndependent>
+        <CustomFilter>
+        </CustomFilter>
+        <Required>False</Required>
+        <IgnoreDefaultLibPath>False</IgnoreDefaultLibPath>
+        <IsStub>False</IsStub>
+        <Directory>DeviceCode/Targets/OS/Toppers/asp/RTOS/rtx/TARGET_CORTEX_A</Directory>
+        <OutputType>Library</OutputType>
+        <PlatformIndependentBuild>false</PlatformIndependentBuild>
+        <Version>4.0.0.0</Version>
+    </PropertyGroup>
+    <Import Project="$(SPOCLIENT)/tools/targets/Microsoft.SPOT.System.Settings" />
+    <ItemGroup>
+        <IncludePaths Include="DeviceCode/Targets/OS/Toppers/RTOS/rtx/TARGET_CORTEX_A" />
+        <IncludePaths Include="DeviceCode/Targets/OS/mbed/libraries/mbed/targets/cmsis" />
+        <!-- <IncludePaths Include="CMSIS/CMSIS/Include" /> -->
+        <!-- <IncludePaths Include="CMSIS/CMSIS/Driver/Include" /> -->
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Condition="$(AS_SUBDIR) == 'RVD_S'" Include="TOOLCHAIN_ARM/SVC_Table.s" />
+        <Compile Condition="$(AS_SUBDIR) == 'GNU_S'" Include="TOOLCHAIN_GCC/SVC_Table.s" />
+        <Compile Include="HAL_CA.c" />
+        <Compile Include="rt_CMSIS.c" />
+        <Compile Include="rt_Event.c" />
+        <Compile Include="rt_List.c" />
+        <Compile Include="rt_Mailbox.c" />
+        <Compile Include="rt_MemBox.c" />
+        <Compile Include="rt_Memory.c" />
+        <Compile Include="rt_Mutex.c" />
+        <Compile Include="rt_Robin.c" />
+        <Compile Include="rt_Semaphore.c" />
+        <Compile Include="rt_System.c" />
+        <Compile Include="rt_Task.c" />
+        <Compile Include="rt_Time.c" />
+      
+        <HFiles Include="RTX_Config.h" />
+        <HFiles Include="rt_Event.h" />
+        <HFiles Include="rt_HAL_CA.h" />
+        <HFiles Include="rt_HAL_CM.h" />
+        <HFiles Include="rt_List.h" />
+        <HFiles Include="rt_Mailbox.h" />
+        <HFiles Include="rt_MemBox.h" />
+        <HFiles Include="rt_Memory.h" />
+        <HFiles Include="rt_Mutex.h" />
+        <HFiles Include="rt_Robin.h" />
+        <HFiles Include="rt_Semaphore.h" />
+        <HFiles Include="rt_System.h" />
+        <HFiles Include="rt_Task.c" />
+        <HFiles Include="rt_Task.h" />
+        <HFiles Include="rt_Time.c" />
+        <HFiles Include="rt_Time.h" />
+        <HFiles Include="rt_Timer.h" />
+        <HFiles Include="rt_TypeDef.h" />
+        
+        <Compile Condition="$(AS_SUBDIR) == 'RVD_S'" Include="TOOLCHAIN_ARM/HAL_CA9.c" />
+        <Compile Condition="$(AS_SUBDIR) == 'GNU_S'" Include="TOOLCHAIN_GCC/HAL_CA9.S" />
+    </ItemGroup>
+    <!-- REVIEW:
+         It may be worth considering a seperate lib for these so that
+         this library can remain core neutral. We'll have the same
+         sort of thing with the CMSIS libs and support as well since
+         those have support specific to an architecture, a core, an
+         SOC and a physical board. 
+    -->
+    <Import Project="$(SPOCLIENT)/Framework/Features/RTX_Config.libcatproj" />
+    <Import Project="$(SPOCLIENT)/tools/targets/Microsoft.SPOT.System.Targets" />
+    <Target Name="CheckPreRquisitesInstalled">
+        <Error Code="NETMFBLD"
+               Condition="!EXISTS('$(SPOCLIENT)/DeviceCode/Targets/OS/Toppers/RTOS/ARM.CMSIS.pdsc')"
+               Text="Missing Toppers installation at: $(SPOCLIENT)/DeviceCode/Targets/OS/Toppers/RTOS/*"
+               />
+    </Target>
+</Project>
