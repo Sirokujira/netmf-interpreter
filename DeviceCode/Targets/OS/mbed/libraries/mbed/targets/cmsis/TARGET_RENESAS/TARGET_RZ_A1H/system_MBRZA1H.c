@@ -49,9 +49,11 @@ void FPUEnable(void);
 
 #endif
 
-//uint32_t IRQNestLevel;
-extern uint32_t IRQNestLevel;
-unsigned char seen_id0_active = 0; // single byte to hold a flag used in the workaround for GIC errata 733075
+// netmf - Native
+uint32_t IRQNestLevel;
+// use RTOS(Toppers -> RZA1H.ld PROVIDE)
+// extern uint32_t IRQNestLevel;
+// unsigned char seen_id0_active = 0; // single byte to hold a flag used in the workaround for GIC errata 733075
 
 /**
  * Initialize the cache.
@@ -137,15 +139,16 @@ void InitMemorySubsystem(void) {
 
 #endif 
 
-
-//IRQHandler IRQTable[Renesas_RZ_A1_IRQ_MAX+1];
-extern IRQHandler IRQTable[Renesas_RZ_A1_IRQ_MAX+1];
+// netmf - Native
+IRQHandler IRQTable[Renesas_RZ_A1_IRQ_MAX+1];
+// use RTOS(Toppers -> RZA1H.ld PROVIDE)
+// extern IRQHandler IRQTable[Renesas_RZ_A1_IRQ_MAX+1];
 
 uint32_t IRQCount = sizeof IRQTable / 4;
 
 uint32_t InterruptHandlerRegister (IRQn_Type irq, IRQHandler handler)
 {
-	set_led(3,0);
+	// set_led(3,0);
 	
     if (irq < IRQCount) {
         IRQTable[irq] = handler;

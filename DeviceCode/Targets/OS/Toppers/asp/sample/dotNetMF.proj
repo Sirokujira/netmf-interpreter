@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" InitialTargets="CheckPreRquisitesInstalled" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <AssemblyName>ToppersASP_RTX</AssemblyName>
+        <AssemblyName>ToppersASP_Sample</AssemblyName>
         <Size>
         </Size>
         <ProjectGuid>{E2856248-4EC5-4C21-AE1B-1EF28E195840}</ProjectGuid>
-        <Description>ToppersASP_RTX OS</Description>
+        <Description>ToppersASP_Sample OS</Description>
         <Level>HAL</Level>
-        <LibraryFile>ToppersASP_RTX.$(LIB_EXT)</LibraryFile>
+        <LibraryFile>ToppersASP_Sample.$(LIB_EXT)</LibraryFile>
         <ProjectPath>$(SPOCLIENT)/DeviceCode/Targets/OS/Toppers/asp/sample/dotNetMF.proj</ProjectPath>
-        <ManifestFile>ToppersASP_RTX.$(LIB_EXT).manifest</ManifestFile>
-        <Groups>OS\ToppersASP_RTOS</Groups>
+        <ManifestFile>ToppersASP_Sample.$(LIB_EXT).manifest</ManifestFile>
+        <Groups>OS/TOPPERS_ASP</Groups>
         <LibraryCategory>
             <MFComponent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="OS" Guid="{F0C31986-B463-437E-9814-EDAB2BE46109}" Conditional="" xmlns="">
                 <ComponentType xmlns="http://schemas.microsoft.com/netmf/InventoryFormat.xsd">LibraryCategory</ComponentType>
@@ -33,6 +33,7 @@
         <ARMBUILD_ONLY>true</ARMBUILD_ONLY>
     </PropertyGroup>
     <Import Project="$(SPOCLIENT)/tools/targets/Toppers.SPOT.System.Settings" />
+    <!--
     <Import Project="$(SPOCLIENT)\Framework\Features\BlockStorage_PAL.libcatproj" />
     <Import Project="$(SPOCLIENT)\Framework\Features\BlockStorageAddDevices_HAL.libcatproj" />
     <Import Project="$(SPOCLIENT)\Framework\Features\Buttons_PAL.libcatproj" />
@@ -44,6 +45,7 @@
     <Import Project="$(SPOCLIENT)\Framework\Features\Time_PAL.libcatproj" />
     <Import Project="$(SPOCLIENT)\Framework\Features\TimeService_PAL.libcatproj" />
     <Import Project="$(SPOCLIENT)\Framework\Features\Heap_PAL.libcatproj" />
+    -->
     <ItemGroup>
         <!-- Defines -->
         <!-- <CC_CPP_Defines Include="__CMSIS_RTOS" /> -->
@@ -185,12 +187,5 @@
         <Compile Include="sample1.c" />
     </ItemGroup>
     
-    <Import Project="$(SPOCLIENT)\Framework\Features\RTX_Config.libcatproj" />
     <Import Project="$(SPOCLIENT)/tools/targets/Toppers.SPOT.System.Targets" />
-    <Target Name="CheckPreRquisitesInstalled">
-        <Error Code="NETMFBLD"
-               Condition="!EXISTS('$(SPOCLIENT)\DeviceCode\Targets\OS\Toppers\asp\ARM.ToppersASP.pdsc')"
-               Text="Missing Toppers installation at: $(SPOCLIENT)\DeviceCode\Targets\OS\Toppers\asp\*"
-               />
-    </Target>
 </Project>

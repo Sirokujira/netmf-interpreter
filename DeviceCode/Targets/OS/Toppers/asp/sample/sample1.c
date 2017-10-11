@@ -397,6 +397,7 @@ void main_task(intptr_t exinf)
 #endif
     }
 */
+	/*
     HAL_Initialize();
 
     // UINT8* BaseAddress;
@@ -416,6 +417,7 @@ void main_task(intptr_t exinf)
 
     // HAL initialization completed.  Interrupts are enabled.  Jump to the Application routine
     ApplicationEntryPoint();
+    */
 /*
 #if defined(BUILD_RTM)
     CPU_Reset();

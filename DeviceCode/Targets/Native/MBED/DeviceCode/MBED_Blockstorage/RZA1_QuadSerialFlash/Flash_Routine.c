@@ -55,7 +55,8 @@ Imported global variables and functions (from other files)
 /******************************************************************************
 Exported global variables and functions (to be accessed by other files)
 ******************************************************************************/
-st_spibsc_cfg_t g_spibsc_cfg;
+// st_spibsc_cfg_t g_spibsc_cfg;
+extern st_spibsc_cfg_t g_spibsc_cfg;
 
 
 /******************************************************************************
