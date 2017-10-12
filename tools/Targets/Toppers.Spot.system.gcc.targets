@@ -316,7 +316,7 @@
         <Delete Condition="Exists('$(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT)')" Files="$(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT)" ContinueOnError="true" />
         <!-- <Exec Condition="Exists('%(AssemblyFiles.FullPath)')" Command="$(AS) $(AS_FLAGS) -a=$(OBJ_DIR)\%(AssemblyFiles.Filename).txt -o $(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT) %(AssemblyFiles.FullPath)"/> -->
         <!-- share -->
-        <Exec Condition="Exists('%(AssemblyFiles.FullPath)')" Command="$(CC) -c $(ARCH_TYPE_FLAGS) $(CC_CPP_INCS) $(ASMTOPPERS_CUSTOM_FLAGS) -o$(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT) %(AssemblyFiles.FullPath)"/>
+        <Exec Condition="Exists('%(AssemblyFiles.FullPath)')" Command="$(CC) -c $(ARCH_TYPE_FLAGS) $(FLOATING_POINT_FLAG) $(CC_CPP_INCS) $(ASMTOPPERS_CUSTOM_FLAGS) -o$(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT) %(AssemblyFiles.FullPath)"/>
     </Target>
     
     <!-- Toppers Assemble Code build -->

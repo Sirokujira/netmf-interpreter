@@ -25,6 +25,7 @@
         <!-- <TOPPERS_MODULES>EV3</TOPPERS_MODULES> -->
         <!-- GR-PEACH -->
         <TOPPERS_OSTYPE>asp</TOPPERS_OSTYPE>
+        <TOPPERS_VERSION>1.9.2</TOPPERS_VERSION>
         <!-- <TOPPERS_OSTYPE>asp3</TOPPERS_OSTYPE> -->
         <!-- <TOPPERS_VERSION>3.2.0</TOPPERS_VERSION> -->
         <TOPPERS_MODULES>gr-peach</TOPPERS_MODULES>
@@ -152,7 +153,7 @@
                 <!-- dmloader? -->
                 <TOPPERS_MODULES_OBJS>apploader.$(OBJEXT) dmloader.$(OBJEXT)</TOPPERS_MODULES_OBJS>
                 <!-- ev3 drivers -->
-                <TOPPERS_DRIVER_OBJS>analog_dri.$(OBJEXT) bluetooth_dri.$(OBJEXT) brick_dri.$(OBJEXT) console_dri.$(OBJEXT) console_menu.$(OBJEXT) cp15.$(OBJEXT) cppi41dma.$(OBJEXT) crc16.$(OBJEXT) crc32.$(OBJEXT) davinci_iic_dri.$(OBJEXT) diskio.$(OBJEXT) driver_debug.$(OBJEXT) driver_interface_bluetooth.$(OBJEXT) driver_interface_brick.$(OBJEXT) driver_interface_filesys.$(OBJEXT) driver_interface_sound.$(OBJEXT) edma.$(OBJEXT) elf32.$(OBJEXT) evmAM1808_usb.$(OBJEXT) fatfs_dri.$(OBJEXT) fatfs_syscall.$(OBJEXT) ff.$(OBJEXT) gpio_dri.$(OBJEXT) gui.$(OBJEXT) hires_alarm.$(OBJEXT) hires_cyclic.$(OBJEXT) i2c_dri.$(OBJEXT) lcd_dri.$(OBJEXT) lcd_font.$(OBJEXT) lcd_spi.$(OBJEXT) mbed_dri.$(OBJEXT) minIni.$(OBJEXT) mmcsd.$(OBJEXT) mmcsd_dri.$(OBJEXT) mmcsd_proto.$(OBJEXT) mmcsd_rw.$(OBJEXT) mmcsdlib.$(OBJEXT) motor_dri.$(OBJEXT) newlib_dri.$(OBJEXT) pru.$(OBJEXT) pru_suart.$(OBJEXT) psc.$(OBJEXT) serial.$(OBJEXT) serial_mod.$(OBJEXT) soc_cache.$(OBJEXT) soc_edma.$(OBJEXT) soc_interrupt.$(OBJEXT) sound_dri.$(OBJEXT) spi.$(OBJEXT) suart_api.$(OBJEXT) suart_utils.$(OBJEXT) target_serial_dbsio.$(OBJEXT) uart.$(OBJEXT) uart_dri.$(OBJEXT) unicode.$(OBJEXT) utils.$(OBJEXT) mmcsd_proto.$(OBJEXT) ev3cyclic_dri.$(OBJEXT) ev3_hacks.$(OBJEXT) ev3main.$(OBJEXT) ev3rt_config.$(OBJEXT) target_serial.$(OBJEXT) lcd_dri.$(OBJEXT) ev3exception.$(OBJEXT) core_config.$(OBJEXT) usb_dev_msc.$(OBJEXT) usb_msc_structs.$(OBJEXT) usbmsc_dri.$(OBJEXT) usbmsc_media_functions.$(OBJEXT) usbphyGS60.$(OBJEXT) zmodem-newlib.$(OBJEXT) zmodem-toppers.$(OBJEXT)</TOPPERS_DRIVER_OBJS>
+                <TOPPERS_DRIVER_OBJS>analog_dri.$(OBJEXT) bluetooth_dri.$(OBJEXT) brick_dri.$(OBJEXT) console_dri.$(OBJEXT) console_menu.$(OBJEXT) cp15.$(OBJEXT) cppi41dma.$(OBJEXT) crc16.$(OBJEXT) crc32.$(OBJEXT) davinci_iic_dri.$(OBJEXT) diskio.$(OBJEXT) driver_debug.$(OBJEXT) driver_interface_bluetooth.$(OBJEXT) driver_interface_brick.$(OBJEXT) driver_interface_filesys.$(OBJEXT) driver_interface_sound.$(OBJEXT) edma.$(OBJEXT) elf32.$(OBJEXT) evmAM1808_usb.$(OBJEXT) fatfs_dri.$(OBJEXT) fatfs_syscall.$(OBJEXT) ff.$(OBJEXT) gpio_dri.$(OBJEXT) hires_alarm.$(OBJEXT) hires_cyclic.$(OBJEXT) i2c_dri.$(OBJEXT) lcd_dri.$(OBJEXT) lcd_font.$(OBJEXT) lcd_spi.$(OBJEXT) mbed_dri.$(OBJEXT) minIni.$(OBJEXT) mmcsd.$(OBJEXT) mmcsd_dri.$(OBJEXT) mmcsd_proto.$(OBJEXT) mmcsd_rw.$(OBJEXT) mmcsdlib.$(OBJEXT) motor_dri.$(OBJEXT) newlib_dri.$(OBJEXT) pru.$(OBJEXT) pru_suart.$(OBJEXT) psc.$(OBJEXT) serial.$(OBJEXT) serial_mod.$(OBJEXT) soc_cache.$(OBJEXT) soc_edma.$(OBJEXT) soc_interrupt.$(OBJEXT) sound_dri.$(OBJEXT) spi.$(OBJEXT) suart_api.$(OBJEXT) suart_utils.$(OBJEXT) target_serial_dbsio.$(OBJEXT) uart.$(OBJEXT) uart_dri.$(OBJEXT) unicode.$(OBJEXT) utils.$(OBJEXT) mmcsd_proto.$(OBJEXT) ev3cyclic_dri.$(OBJEXT) ev3_hacks.$(OBJEXT) ev3main.$(OBJEXT) ev3rt_config.$(OBJEXT) target_serial.$(OBJEXT) lcd_dri.$(OBJEXT) ev3exception.$(OBJEXT) core_config.$(OBJEXT) usb_dev_msc.$(OBJEXT) usb_msc_structs.$(OBJEXT) usbmsc_dri.$(OBJEXT) usbmsc_media_functions.$(OBJEXT) usbphyGS60.$(OBJEXT) zmodem-newlib.$(OBJEXT) zmodem-toppers.$(OBJEXT)</TOPPERS_DRIVER_OBJS>
                 
                 <!-- http://stackoverflow.com/questions/24881/how-do-i-fix-for-loop-initial-declaration-used-outside-c99-mode-gcc-error -->
                 <!-- Toppers Custom -->
@@ -500,7 +501,7 @@
                 
                 <USE_CFG_PASS3>false</USE_CFG_PASS3>
                 
-                <!-- ASP + GR_PEACH -->
+                <!-- ASP3 + GR_PEACH -->
                 <CFG_KERNEL_TABS>--api-table=$(KERNELDIR)/kernel_api.csv --cfg1-def-table=$(KERNELDIR)/kernel_def.csv --cfg1-def-table=$(SRCDIR)/arch/arm_gcc/common/core_def.csv </CFG_KERNEL_TABS>
             </PropertyGroup>
         </When>
