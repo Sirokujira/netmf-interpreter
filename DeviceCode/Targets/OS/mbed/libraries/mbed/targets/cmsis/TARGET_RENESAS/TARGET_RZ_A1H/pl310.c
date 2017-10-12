@@ -36,25 +36,25 @@
 #include "MBRZA1H.h"
 
 //Cache Sync operation
-void PL310_Sync(void)
+void __attribute__((section("SectionForBootstrapOperations"))) PL310_Sync(void)
 {
     PL310->CACHE_SYNC = 0x0;
 }
 
 //return Cache controller cache ID
-int PL310_GetID (void)
+int __attribute__((section("SectionForBootstrapOperations"))) PL310_GetID (void)
 {
     return PL310->CACHE_ID;
 }
 
 //return Cache controller cache Type
-int PL310_GetType (void)
+int __attribute__((section("SectionForBootstrapOperations"))) PL310_GetType (void)
 {
     return PL310->CACHE_TYPE;
 }
 
 //Invalidate all cache by way
-void PL310_InvAllByWay (void)
+void __attribute__((section("SectionForBootstrapOperations"))) PL310_InvAllByWay (void)
 {
     unsigned int assoc;
 
@@ -70,7 +70,7 @@ void PL310_InvAllByWay (void)
 }
 
 //Clean and Invalidate all cache by way
-void PL310_CleanInvAllByWay (void)
+void __attribute__((section("SectionForBootstrapOperations"))) PL310_CleanInvAllByWay (void)
 {
     unsigned int assoc;
 
@@ -86,7 +86,7 @@ void PL310_CleanInvAllByWay (void)
 }
 
 //Enable Cache
-void PL310_Enable(void)
+void __attribute__((section("SectionForBootstrapOperations"))) PL310_Enable(void)
 {
     PL310->CONTROL = 0;
     PL310->INTERRUPT_CLEAR = 0x000001FFuL;
@@ -98,28 +98,28 @@ void PL310_Enable(void)
     PL310_Sync();
 }
 //Disable Cache
-void PL310_Disable(void)
+void __attribute__((section("SectionForBootstrapOperations"))) PL310_Disable(void)
 {
     PL310->CONTROL = 0x00;
     PL310_Sync();
 }
 
 //Invalidate cache by physical address
-void PL310_InvPa (void *pa)
+void __attribute__((section("SectionForBootstrapOperations"))) PL310_InvPa (void *pa)
 {
     PL310->INV_LINE_PA = (unsigned int)pa;
     PL310_Sync();
 }
 
 //Clean cache by physical address
-void PL310_CleanPa (void *pa)
+void __attribute__((section("SectionForBootstrapOperations"))) PL310_CleanPa (void *pa)
 {
     PL310->CLEAN_LINE_PA = (unsigned int)pa;
     PL310_Sync();
 }
 
 //Clean and invalidate cache by physical address
-void PL310_CleanInvPa (void *pa)
+void __attribute__((section("SectionForBootstrapOperations"))) PL310_CleanInvPa (void *pa)
 {
     PL310->CLEAN_INV_LINE_PA = (unsigned int)pa;
     PL310_Sync();

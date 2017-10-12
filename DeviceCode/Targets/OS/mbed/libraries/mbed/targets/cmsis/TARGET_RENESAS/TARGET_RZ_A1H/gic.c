@@ -43,34 +43,34 @@
 const uint32_t GICDistributor_BASE = Renesas_RZ_A1_GIC_DISTRIBUTOR_BASE;
 const uint32_t GICInterface_BASE = Renesas_RZ_A1_GIC_INTERFACE_BASE;
 
-void GIC_EnableDistributor(void)
+void __attribute__((section("SectionForBootstrapOperations"))) GIC_EnableDistributor(void)
 {
     GICDistributor->ICDDCR |= 1; //enable distributor
 }
 
-void GIC_DisableDistributor(void)
+void __attribute__((section("SectionForBootstrapOperations"))) GIC_DisableDistributor(void)
 {
     GICDistributor->ICDDCR &=~1; //disable distributor
 }
 
-uint32_t GIC_DistributorInfo(void)
+uint32_t __attribute__((section("SectionForBootstrapOperations"))) GIC_DistributorInfo(void)
 {
     return (uint32_t)(GICDistributor->ICDICTR);
 }
 
-uint32_t GIC_DistributorImplementer(void)
+uint32_t __attribute__((section("SectionForBootstrapOperations"))) GIC_DistributorImplementer(void)
 {
     return (uint32_t)(GICDistributor->ICDIIDR);
 }
 
-void GIC_SetTarget(IRQn_Type IRQn, uint32_t cpu_target)
+void __attribute__((section("SectionForBootstrapOperations"))) GIC_SetTarget(IRQn_Type IRQn, uint32_t cpu_target)
 {
     volatile uint8_t* field = (volatile uint8_t*)&(GICDistributor->ICDIPTR[IRQn / 4]);
     field += IRQn % 4;
     *field = (uint8_t)cpu_target & 0xf;
 }
 
-void GIC_SetICDICFR (const uint32_t *ICDICFRn)
+void __attribute__((section("SectionForBootstrapOperations"))) GIC_SetICDICFR (const uint32_t *ICDICFRn)
 {
     uint32_t i, num_irq;
 
@@ -83,54 +83,54 @@ void GIC_SetICDICFR (const uint32_t *ICDICFRn)
     }
 }
 
-uint32_t GIC_GetTarget(IRQn_Type IRQn)
+uint32_t __attribute__((section("SectionForBootstrapOperations"))) GIC_GetTarget(IRQn_Type IRQn)
 {
     volatile uint8_t* field = (volatile uint8_t*)&(GICDistributor->ICDIPTR[IRQn / 4]);
     field += IRQn % 4;
     return ((uint32_t)*field & 0xf);
 }
 
-void GIC_EnableInterface(void)
+void __attribute__((section("SectionForBootstrapOperations"))) GIC_EnableInterface(void)
 {
     GICInterface->ICCICR |= 1; //enable interface
 }
 
-void GIC_DisableInterface(void)
+void __attribute__((section("SectionForBootstrapOperations"))) GIC_DisableInterface(void)
 {
     GICInterface->ICCICR &=~1; //disable distributor
 }
 
-IRQn_Type GIC_AcknowledgePending(void)
+IRQn_Type __attribute__((section("SectionForBootstrapOperations"))) GIC_AcknowledgePending(void)
 {
     return (IRQn_Type)(GICInterface->ICCIAR);
 }
 
-void GIC_EndInterrupt(IRQn_Type IRQn)
+void __attribute__((section("SectionForBootstrapOperations"))) GIC_EndInterrupt(IRQn_Type IRQn)
 {
     GICInterface->ICCEOIR = IRQn;
 }
 
-void GIC_EnableIRQ(IRQn_Type IRQn)
+void __attribute__((section("SectionForBootstrapOperations"))) GIC_EnableIRQ(IRQn_Type IRQn)
 {
     GICDistributor->ICDISER[IRQn / 32] = 1 << (IRQn % 32);
 }
 
-void GIC_DisableIRQ(IRQn_Type IRQn)
+void __attribute__((section("SectionForBootstrapOperations"))) GIC_DisableIRQ(IRQn_Type IRQn)
 {
     GICDistributor->ICDICER[IRQn / 32] = 1 << (IRQn % 32);
 }
 
-void GIC_SetPendingIRQ(IRQn_Type IRQn)
+void __attribute__((section("SectionForBootstrapOperations"))) GIC_SetPendingIRQ(IRQn_Type IRQn)
 {
     GICDistributor->ICDISPR[IRQn / 32] = 1 << (IRQn % 32);
 }
 
-void GIC_ClearPendingIRQ(IRQn_Type IRQn)
+void __attribute__((section("SectionForBootstrapOperations"))) GIC_ClearPendingIRQ(IRQn_Type IRQn)
 {
     GICDistributor->ICDICPR[IRQn / 32] = 1 << (IRQn % 32);
 }
 
-void GIC_SetLevelModel(IRQn_Type IRQn, int8_t edge_level, int8_t model)
+void __attribute__((section("SectionForBootstrapOperations"))) GIC_SetLevelModel(IRQn_Type IRQn, int8_t edge_level, int8_t model)
 {
     volatile uint8_t* field = (volatile uint8_t*)&(GICDistributor->ICDICFR[IRQn / 16]);
     int  bit_shift = (IRQn % 16)<<1;
@@ -145,36 +145,36 @@ void GIC_SetLevelModel(IRQn_Type IRQn, int8_t edge_level, int8_t model)
     *field = save_byte | ((uint8_t)((edge_level<<1) | model)<< bit_shift);
 }
 
-void GIC_SetPriority(IRQn_Type IRQn, uint32_t priority)
+void __attribute__((section("SectionForBootstrapOperations"))) GIC_SetPriority(IRQn_Type IRQn, uint32_t priority)
 {
     volatile uint8_t* field = (volatile uint8_t*)&(GICDistributor->ICDIPR[IRQn / 4]);
     field += (IRQn % 4);
     *field = (uint8_t)priority;
 }
 
-uint32_t GIC_GetPriority(IRQn_Type IRQn)
+uint32_t __attribute__((section("SectionForBootstrapOperations"))) GIC_GetPriority(IRQn_Type IRQn)
 {
     volatile uint8_t* field = (volatile uint8_t*)&(GICDistributor->ICDIPR[IRQn / 4]);
     field += (IRQn % 4);
     return (uint32_t)*field;
 }
 
-void GIC_InterfacePriorityMask(uint32_t priority)
+void __attribute__((section("SectionForBootstrapOperations"))) GIC_InterfacePriorityMask(uint32_t priority)
 {
     GICInterface->ICCPMR = priority & 0xff; //set priority mask
 }
 
-void GIC_SetBinaryPoint(uint32_t binary_point)
+void __attribute__((section("SectionForBootstrapOperations"))) GIC_SetBinaryPoint(uint32_t binary_point)
 {
     GICInterface->ICCBPR = binary_point & 0x07; //set binary point
 }
 
-uint32_t GIC_GetBinaryPoint(uint32_t binary_point)
+uint32_t __attribute__((section("SectionForBootstrapOperations"))) GIC_GetBinaryPoint(uint32_t binary_point)
 {
     return (uint32_t)GICInterface->ICCBPR;
 }
 
-uint32_t GIC_GetIRQStatus(IRQn_Type IRQn)
+uint32_t __attribute__((section("SectionForBootstrapOperations"))) GIC_GetIRQStatus(IRQn_Type IRQn)
 {
     uint32_t pending, active;
 
@@ -184,12 +184,12 @@ uint32_t GIC_GetIRQStatus(IRQn_Type IRQn)
     return ((active<<1) | pending);
 }
 
-void GIC_SendSGI(IRQn_Type IRQn, uint32_t target_list, uint32_t filter_list)
+void __attribute__((section("SectionForBootstrapOperations"))) GIC_SendSGI(IRQn_Type IRQn, uint32_t target_list, uint32_t filter_list)
 {
     GICDistributor->ICDSGIR = ((filter_list & 0x3) << 24) | ((target_list & 0xff) << 16) | (IRQn & 0xf);
 }
 
-void GIC_DistInit(void)
+void __attribute__((section("SectionForBootstrapOperations"))) GIC_DistInit(void)
 {
     //IRQn_Type i;
     uint32_t i;
@@ -261,7 +261,7 @@ void GIC_DistInit(void)
     GIC_EnableDistributor();
 }
 
-void GIC_CPUInterfaceInit(void)
+void __attribute__((section("SectionForBootstrapOperations"))) GIC_CPUInterfaceInit(void)
 {
     IRQn_Type i;
     uint32_t priority_field;
@@ -297,7 +297,7 @@ void GIC_CPUInterfaceInit(void)
     GIC_InterfacePriorityMask(0xff);
 }
 
-void GIC_Enable(void)
+void __attribute__((section("SectionForBootstrapOperations"))) GIC_Enable(void)
 {
     GIC_DistInit();
     GIC_CPUInterfaceInit(); //per CPU

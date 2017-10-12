@@ -237,7 +237,7 @@ typedef struct RegionStruct {
 
     \return          0  
  */
-__STATIC_INLINE int __xn_section(uint32_t *descriptor_l1, mmu_execute_Type xn)
+__STATIC_INLINE int __attribute__((section("SectionForBootstrapOperations"))) __xn_section(uint32_t *descriptor_l1, mmu_execute_Type xn)
 {
     *descriptor_l1 &= SECTION_XN_MASK;
     *descriptor_l1 |= ((xn & 0x1) << SECTION_XN_SHIFT);
@@ -253,7 +253,7 @@ __STATIC_INLINE int __xn_section(uint32_t *descriptor_l1, mmu_execute_Type xn)
 
     \return          0  
  */
-__STATIC_INLINE int __domain_section(uint32_t *descriptor_l1, uint8_t domain)
+__STATIC_INLINE int __attribute__((section("SectionForBootstrapOperations"))) __domain_section(uint32_t *descriptor_l1, uint8_t domain)
 {
     *descriptor_l1 &= SECTION_DOMAIN_MASK;
     *descriptor_l1 |= ((domain & 0xF) << SECTION_DOMAIN_SHIFT);
@@ -269,7 +269,7 @@ __STATIC_INLINE int __domain_section(uint32_t *descriptor_l1, uint8_t domain)
 
     \return          0  
  */
-__STATIC_INLINE int __p_section(uint32_t *descriptor_l1, mmu_ecc_check_Type p_bit)
+__STATIC_INLINE int __attribute__((section("SectionForBootstrapOperations"))) __p_section(uint32_t *descriptor_l1, mmu_ecc_check_Type p_bit)
 {
     *descriptor_l1 &= SECTION_P_MASK;
     *descriptor_l1 |= ((p_bit & 0x1) << SECTION_P_SHIFT);
@@ -287,7 +287,7 @@ __STATIC_INLINE int __p_section(uint32_t *descriptor_l1, mmu_ecc_check_Type p_bi
 
     \return          0  
  */
-__STATIC_INLINE int __ap_section(uint32_t *descriptor_l1, mmu_access_Type user, mmu_access_Type priv,  uint32_t afe)
+__STATIC_INLINE int __attribute__((section("SectionForBootstrapOperations"))) __ap_section(uint32_t *descriptor_l1, mmu_access_Type user, mmu_access_Type priv,  uint32_t afe)
 {
     uint32_t ap = 0;
 
@@ -323,7 +323,7 @@ __STATIC_INLINE int __ap_section(uint32_t *descriptor_l1, mmu_access_Type user, 
 
     \return          0  
  */
-__STATIC_INLINE int __shared_section(uint32_t *descriptor_l1, mmu_shared_Type s_bit)
+__STATIC_INLINE int __attribute__((section("SectionForBootstrapOperations"))) __shared_section(uint32_t *descriptor_l1, mmu_shared_Type s_bit)
 {
     *descriptor_l1 &= SECTION_S_MASK;
     *descriptor_l1 |= ((s_bit & 0x1) << SECTION_S_SHIFT);
@@ -339,7 +339,7 @@ __STATIC_INLINE int __shared_section(uint32_t *descriptor_l1, mmu_shared_Type s_
 
     \return          0  
  */
-__STATIC_INLINE int __global_section(uint32_t *descriptor_l1, mmu_global_Type g_bit)
+__STATIC_INLINE int __attribute__((section("SectionForBootstrapOperations"))) __global_section(uint32_t *descriptor_l1, mmu_global_Type g_bit)
 {
     *descriptor_l1 &= SECTION_NG_MASK;
     *descriptor_l1 |= ((g_bit & 0x1) << SECTION_NG_SHIFT);
@@ -355,7 +355,7 @@ __STATIC_INLINE int __global_section(uint32_t *descriptor_l1, mmu_global_Type g_
 
     \return          0  
  */
-__STATIC_INLINE int __secure_section(uint32_t *descriptor_l1, mmu_secure_Type s_bit)
+__STATIC_INLINE int __attribute__((section("SectionForBootstrapOperations"))) __secure_section(uint32_t *descriptor_l1, mmu_secure_Type s_bit)
 {
     *descriptor_l1 &= SECTION_NS_MASK;
     *descriptor_l1 |= ((s_bit & 0x1) << SECTION_NS_SHIFT);
@@ -373,7 +373,7 @@ __STATIC_INLINE int __secure_section(uint32_t *descriptor_l1, mmu_secure_Type s_
    
     \return          0  
  */
-__STATIC_INLINE int __xn_page(uint32_t *descriptor_l2, mmu_execute_Type xn, mmu_region_size_Type page)
+__STATIC_INLINE int __attribute__((section("SectionForBootstrapOperations"))) __xn_page(uint32_t *descriptor_l2, mmu_execute_Type xn, mmu_region_size_Type page)
 {
     if (page == PAGE_4k)
     {
@@ -397,7 +397,7 @@ __STATIC_INLINE int __xn_page(uint32_t *descriptor_l2, mmu_execute_Type xn, mmu_
 
     \return          0  
  */
-__STATIC_INLINE int __domain_page(uint32_t *descriptor_l1, uint8_t domain)
+__STATIC_INLINE int __attribute__((section("SectionForBootstrapOperations"))) __domain_page(uint32_t *descriptor_l1, uint8_t domain)
 {
     *descriptor_l1 &= PAGE_DOMAIN_MASK;
     *descriptor_l1 |= ((domain & 0xf) << PAGE_DOMAIN_SHIFT);
@@ -413,7 +413,7 @@ __STATIC_INLINE int __domain_page(uint32_t *descriptor_l1, uint8_t domain)
 
     \return          0  
  */
-__STATIC_INLINE int __p_page(uint32_t *descriptor_l1, mmu_ecc_check_Type p_bit)
+__STATIC_INLINE int __attribute__((section("SectionForBootstrapOperations"))) __p_page(uint32_t *descriptor_l1, mmu_ecc_check_Type p_bit)
 {
     *descriptor_l1 &= SECTION_P_MASK;
     *descriptor_l1 |= ((p_bit & 0x1) << SECTION_P_SHIFT);
@@ -431,7 +431,7 @@ __STATIC_INLINE int __p_page(uint32_t *descriptor_l1, mmu_ecc_check_Type p_bit)
 
     \return          0  
  */
-__STATIC_INLINE int __ap_page(uint32_t *descriptor_l2, mmu_access_Type user, mmu_access_Type priv,  uint32_t afe)
+__STATIC_INLINE int __attribute__((section("SectionForBootstrapOperations"))) __ap_page(uint32_t *descriptor_l2, mmu_access_Type user, mmu_access_Type priv,  uint32_t afe)
 {
     uint32_t ap = 0;
 
@@ -467,7 +467,7 @@ __STATIC_INLINE int __ap_page(uint32_t *descriptor_l2, mmu_access_Type user, mmu
 
     \return          0  
  */
-__STATIC_INLINE int __shared_page(uint32_t *descriptor_l2, mmu_shared_Type s_bit)
+__STATIC_INLINE int __attribute__((section("SectionForBootstrapOperations"))) __shared_page(uint32_t *descriptor_l2, mmu_shared_Type s_bit)
 {
     *descriptor_l2 &= PAGE_S_MASK;
     *descriptor_l2 |= ((s_bit & 0x1) << PAGE_S_SHIFT);
@@ -483,7 +483,7 @@ __STATIC_INLINE int __shared_page(uint32_t *descriptor_l2, mmu_shared_Type s_bit
 
     \return          0  
  */
-__STATIC_INLINE int __global_page(uint32_t *descriptor_l2, mmu_global_Type g_bit)
+__STATIC_INLINE int __attribute__((section("SectionForBootstrapOperations"))) __global_page(uint32_t *descriptor_l2, mmu_global_Type g_bit)
 {
     *descriptor_l2 &= PAGE_NG_MASK;
     *descriptor_l2 |= ((g_bit & 0x1) << PAGE_NG_SHIFT);
@@ -499,7 +499,7 @@ __STATIC_INLINE int __global_page(uint32_t *descriptor_l2, mmu_global_Type g_bit
 
     \return          0  
  */
-__STATIC_INLINE int __secure_page(uint32_t *descriptor_l1, mmu_secure_Type s_bit)
+__STATIC_INLINE int __attribute__((section("SectionForBootstrapOperations"))) __secure_page(uint32_t *descriptor_l1, mmu_secure_Type s_bit)
 {
     *descriptor_l1 &= PAGE_NS_MASK;
     *descriptor_l1 |= ((s_bit & 0x1) << PAGE_NS_SHIFT);
@@ -518,7 +518,7 @@ __STATIC_INLINE int __secure_page(uint32_t *descriptor_l1, mmu_secure_Type s_bit
 
     \return          0  
  */
-__STATIC_INLINE int __memory_section(uint32_t *descriptor_l1, mmu_memory_Type mem, mmu_cacheability_Type outer, mmu_cacheability_Type inner)
+__STATIC_INLINE int __attribute__((section("SectionForBootstrapOperations"))) __memory_section(uint32_t *descriptor_l1, mmu_memory_Type mem, mmu_cacheability_Type outer, mmu_cacheability_Type inner)
 {
     *descriptor_l1 &= SECTION_TEXCB_MASK;
 
@@ -581,7 +581,7 @@ __STATIC_INLINE int __memory_section(uint32_t *descriptor_l1, mmu_memory_Type me
 
     \return          0  
  */
-__STATIC_INLINE int __memory_page(uint32_t *descriptor_l2, mmu_memory_Type mem, mmu_cacheability_Type outer, mmu_cacheability_Type inner, mmu_region_size_Type page)
+__STATIC_INLINE int __attribute__((section("SectionForBootstrapOperations"))) __memory_page(uint32_t *descriptor_l2, mmu_memory_Type mem, mmu_cacheability_Type outer, mmu_cacheability_Type inner, mmu_region_size_Type page)
 {
     *descriptor_l2 &= PAGE_4K_TEXCB_MASK;
 
@@ -656,7 +656,7 @@ __STATIC_INLINE int __memory_page(uint32_t *descriptor_l2, mmu_memory_Type mem, 
 
     \return          0  
  */
-__STATIC_INLINE int __get_section_descriptor(uint32_t *descriptor, mmu_region_attributes_Type reg)
+__STATIC_INLINE int __attribute__((section("SectionForBootstrapOperations"))) __get_section_descriptor(uint32_t *descriptor, mmu_region_attributes_Type reg)
 {
     *descriptor  = 0;
 
@@ -689,7 +689,7 @@ __STATIC_INLINE int __get_section_descriptor(uint32_t *descriptor, mmu_region_at
 
     \return          0  
  */
-__STATIC_INLINE int __get_page_descriptor(uint32_t *descriptor, uint32_t *descriptor2, mmu_region_attributes_Type reg)
+__STATIC_INLINE int __attribute__((section("SectionForBootstrapOperations"))) __get_page_descriptor(uint32_t *descriptor, uint32_t *descriptor2, mmu_region_attributes_Type reg)
 {
     *descriptor  = 0;
     *descriptor2 = 0;
@@ -744,7 +744,7 @@ __STATIC_INLINE int __get_page_descriptor(uint32_t *descriptor, uint32_t *descri
     \param [in]     descriptor_l1  L1 descriptor (region attributes) 
 
  */
-__STATIC_INLINE void __TTSection(uint32_t *ttb, uint32_t base_address, uint32_t count, uint32_t descriptor_l1)
+__STATIC_INLINE void __attribute__((section("SectionForBootstrapOperations"))) __TTSection(uint32_t *ttb, uint32_t base_address, uint32_t count, uint32_t descriptor_l1)
 {
     uint32_t offset;
     uint32_t entry;
@@ -774,7 +774,7 @@ __STATIC_INLINE void __TTSection(uint32_t *ttb, uint32_t base_address, uint32_t 
     \param [in]     descriptor_l2  L2 descriptor (region attributes) 
 
  */
-__STATIC_INLINE void __TTPage_4k(uint32_t *ttb, uint32_t base_address, uint32_t count, uint32_t descriptor_l1, uint32_t *ttb_l2, uint32_t descriptor_l2 )
+__STATIC_INLINE void __attribute__((section("SectionForBootstrapOperations"))) __TTPage_4k(uint32_t *ttb, uint32_t base_address, uint32_t count, uint32_t descriptor_l1, uint32_t *ttb_l2, uint32_t descriptor_l2 )
 {
 
     uint32_t offset, offset2;
@@ -811,7 +811,7 @@ __STATIC_INLINE void __TTPage_4k(uint32_t *ttb, uint32_t base_address, uint32_t 
     \param [in]     descriptor_l2  L2 descriptor (region attributes) 
 
  */
-__STATIC_INLINE void __TTPage_64k(uint32_t *ttb, uint32_t base_address, uint32_t count, uint32_t descriptor_l1, uint32_t *ttb_l2, uint32_t descriptor_l2 )
+__STATIC_INLINE void __attribute__((section("SectionForBootstrapOperations"))) __TTPage_64k(uint32_t *ttb, uint32_t base_address, uint32_t count, uint32_t descriptor_l1, uint32_t *ttb_l2, uint32_t descriptor_l2 )
 {
     uint32_t offset, offset2;
     uint32_t entry, entry2;

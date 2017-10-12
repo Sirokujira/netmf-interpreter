@@ -63,6 +63,8 @@
     <Compile Include="RZ_A1_Init.c" />
     <Compile Include="rza_io_regrw.c" />
     <Compile Include="system_MBRZA1H.c" />
+    <!-- __v7_all_cache function -->
+    <Compile Include="..\..\TOOLCHAIN_GCC\TARGET_CORTEX_A\cache.S" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Targets" />

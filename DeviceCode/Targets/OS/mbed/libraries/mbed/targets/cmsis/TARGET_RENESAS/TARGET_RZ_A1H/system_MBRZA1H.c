@@ -146,7 +146,7 @@ IRQHandler IRQTable[Renesas_RZ_A1_IRQ_MAX+1];
 
 uint32_t IRQCount = sizeof IRQTable / 4;
 
-uint32_t InterruptHandlerRegister (IRQn_Type irq, IRQHandler handler)
+uint32_t __attribute__((section("SectionForBootstrapOperations"))) InterruptHandlerRegister (IRQn_Type irq, IRQHandler handler)
 {
 	// set_led(3,0);
 	
@@ -159,7 +159,7 @@ uint32_t InterruptHandlerRegister (IRQn_Type irq, IRQHandler handler)
     }
 }
 
-uint32_t InterruptHandlerUnregister (IRQn_Type irq)
+uint32_t __attribute__((section("SectionForBootstrapOperations"))) InterruptHandlerUnregister (IRQn_Type irq)
 {
     if (irq < IRQCount) {
         IRQTable[irq] = 0;
@@ -179,7 +179,7 @@ uint32_t InterruptHandlerUnregister (IRQn_Type irq)
  * @brief  Setup the microcontroller system.
  *         Initialize the System.
  */
-void SystemInit (void)
+void __attribute__((section("SectionForBootstrapOperations"))) SystemInit (void)
 {
     IRQNestLevel = 0;
 /*       do not use global variables because this function is called before
@@ -216,7 +216,7 @@ void SystemInit (void)
 #define FSR_ASYNC_EXTERNAL_ABORT             0x16   //DFSR only - async/external
 #define FSR_ASYNC_PARITY_ERROR               0x18   //DFSR only - async/external
 
-void CDAbtHandler(uint32_t DFSR, uint32_t DFAR, uint32_t LR) {
+void __attribute__((section("SectionForBootstrapOperations"))) CDAbtHandler(uint32_t DFSR, uint32_t DFAR, uint32_t LR) {
     uint32_t FS = (DFSR & (1 << 10)) >> 6 | (DFSR & 0x0f); //Store Fault Status
 
     switch(FS) {
@@ -251,7 +251,7 @@ void CDAbtHandler(uint32_t DFSR, uint32_t DFAR, uint32_t LR) {
     }
 }
 
-void CPAbtHandler(uint32_t IFSR, uint32_t IFAR, uint32_t LR) {
+void __attribute__((section("SectionForBootstrapOperations"))) CPAbtHandler(uint32_t IFSR, uint32_t IFAR, uint32_t LR) {
     uint32_t FS = (IFSR & (1 << 10)) >> 6 | (IFSR & 0x0f); //Store Fault Status
 
     switch(FS) {
