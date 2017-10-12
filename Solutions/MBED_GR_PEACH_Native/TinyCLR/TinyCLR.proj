@@ -12,15 +12,15 @@
     <ProjectPath>$(SPOCLIENT)\Solutions\MBED_GR_PEACH\TinyCLR\TinyCLR.proj</ProjectPath>
     <MFSettingsFile>$(SPOCLIENT)\Solutions\MBED_GR_PEACH\MBED_GR_PEACH.settings</MFSettingsFile>
     <IsSolutionWizardVisible>True</IsSolutionWizardVisible>
-	<EnableAnalog>true</EnableAnalog>
+    <EnableAnalog>true</EnableAnalog>
     <EnableBootstrap>true</EnableBootstrap>
     <EnableCRC>true</EnableCRC>
     <EnableCrypto>true</EnableCrypto>
     <EnableDataStorage>true</EnableDataStorage>
     <EnableFileSystem>true</EnableFileSystem>
     <EnableGesture>false</EnableGesture>
-	<EnableGraphics>true</EnableGraphics>
-	<EnableGPIO>true</EnableGPIO>
+    <EnableGraphics>true</EnableGraphics>
+    <EnableGPIO>true</EnableGPIO>
     <EnableI2C>true</EnableI2C>
     <EnableI2CSW>false</EnableI2CSW>
     <EnableInk>false</EnableInk>
@@ -261,20 +261,20 @@
     <RequiredProjects Include="$(SPOCLIENT)\CLR\Graphics\BMP\dotNetMF.proj" />
   </ItemGroup>
   <ItemGroup Condition="'$(EnableGraphics)'=='true'">
-    <PlatformIndependentLibs Include="Graphics.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\CLR\Graphics\dotNetMF.proj" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(EnableGraphics)'!='true'">
-    <PlatformIndependentLibs Include="Graphics_stub.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\CLR\Graphics\dotNetMF_stub.proj" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(EnableGraphics)'=='true'">
     <PlatformIndependentLibs Include="Graphics_Gif.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\CLR\Graphics\GIF\dotNetMF.proj" />
   </ItemGroup>
   <ItemGroup Condition="'$(EnableGraphics)'=='true'">
     <PlatformIndependentLibs Include="Graphics_Jpeg.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\CLR\Graphics\Jpeg\dotNetMF.proj" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(EnableGraphics)'=='true'">
+    <PlatformIndependentLibs Include="Graphics.$(LIB_EXT)" />
+    <RequiredProjects Include="$(SPOCLIENT)\CLR\Graphics\dotNetMF.proj" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(EnableGraphics)'!='true'">
+    <PlatformIndependentLibs Include="Graphics_stub.$(LIB_EXT)" />
+    <RequiredProjects Include="$(SPOCLIENT)\CLR\Graphics\dotNetMF_stub.proj" />
   </ItemGroup>
   <ItemGroup>
     <PlatformIndependentLibs Include="CorLib.$(LIB_EXT)" />

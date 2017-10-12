@@ -349,9 +349,16 @@
     <DriverLibs Include="TimeService_pal_stubs.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Pal\TimeService\stubs\dotNetMF.proj" />
   </ItemGroup>
+  <!-- use loader? -->
+  <!-- 
   <ItemGroup>
     <DriverLibs Include="tinycrt_pal.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\devicecode\pal\TinyCRT\dotNetMF.proj" />
+  </ItemGroup>
+  -->
+  <ItemGroup>
+    <DriverLibs Include="tinycrt_pal_loader.$(LIB_EXT)" />
+    <RequiredProjects Include="$(SPOCLIENT)\devicecode\pal\TinyCRT\dotNetMF_loader.proj" />
   </ItemGroup>
   <ItemGroup Condition="'$(EnableTouchPanel)'=='true'">
     <DriverLibs Include="TouchPanel_pal.$(LIB_EXT)" />

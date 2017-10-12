@@ -9,6 +9,7 @@
     <IsClrProject>True</IsClrProject>
     <InteropFeatures />
     <ExtraAssemblies />
+    <ProjectPath>$(MSBuildThisFileFullPath)</ProjectPath>
     <MFSettingsFile>$(SPOCLIENT)\Solutions\MBED_GR_PEACH_Native\MBED_GR_PEACH_Native.settings</MFSettingsFile>
     <IsSolutionWizardVisible>True</IsSolutionWizardVisible>
     <reducesize>false</reducesize>
@@ -70,6 +71,11 @@
     <MMP_DAT_Verbose>true</MMP_DAT_Verbose>
     <MMP_DAT_CreateDatabaseFile>$(BIN_DIR)\tinyclrnbl.dat</MMP_DAT_CreateDatabaseFile>
     <EXEScatterFileDefinition>$(SRC_DIR)\scatterfile_tinyclr_$(COMPILER_TOOL).$(SCATTER_EXT)</EXEScatterFileDefinition>
+    <CompressImageFlashSym>EntryPoint</CompressImageFlashSym>
+    <CompressImageDatSym>TinyClr_Dat_Start</CompressImageDatSym>
+    <CompressImageCfgSym>g_ConfigurationSector</CompressImageCfgSym>
+    <!-- newlib-nano does not support long-long and long-double formatting, use standard newlib instead -->
+    <NewlibNano Condition="'$(COMPILER_TOOL)'=='GCC'">false</NewlibNano>
   </PropertyGroup>
   <ItemGroup />
   <ItemGroup Condition="'$(EnableOpenSSL)'=='true'" >
@@ -773,7 +779,7 @@
   </ItemGroup>
   <ItemGroup>
     <DriverLibs Include="tinycrt_pal.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\devicecode\pal\TinyCRT\dotNetMF.proj" />
+    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Pal\TinyCRT\dotNetMF.proj" />
   </ItemGroup>
   <ItemGroup Condition="'$(EnableTouchPanel)'=='true'">
     <DriverLibs Include="TouchPanel_pal.$(LIB_EXT)" />
