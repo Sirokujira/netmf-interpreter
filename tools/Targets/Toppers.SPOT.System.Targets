@@ -382,11 +382,15 @@
         <CreateItem Include="@(Compile)" Condition="'%(Extension)' == '.s'">
             <Output TaskParameter="Include" ItemName="AssemblyFiles" />
         </CreateItem>
+        
+        <CreateItem Include="@(Compile)" Condition="'%(Extension)' == '.cfg'">
+            <Output TaskParameter="Include" ItemName="ConfigFiles" />
+        </CreateItem>
 
         <Message Condition="'$(MSBUILD_DEBUG)'=='true' and '@(CFiles)'!=''"        Text="split c file : @(CFiles)"/>
-        <Message Condition="'$(MSBUILD_DEBUG)'=='true' and '@(CPPFiles)'!=''"      Text="split cPP file : @(CPPFiles)"/>
-        <Message Condition="'$(MSBUILD_DEBUG)'=='true' and '@(AssemblyFiles)'!=''" Text="split asm file  : @(AssemblyFiles)"/>
-
+        <Message Condition="'$(MSBUILD_DEBUG)'=='true' and '@(CPPFiles)'!=''"      Text="split cpp file : @(CPPFiles)"/>
+        <Message Condition="'$(MSBUILD_DEBUG)'=='true' and '@(AssemblyFiles)'!=''" Text="split asm file : @(AssemblyFiles)"/>
+        <Message Condition="'$(MSBUILD_DEBUG)'=='true' and '@(ConfigFiles)'!=''"   Text="split toppers config file : @(ConfigFiles)"/>
     </Target>
 
     <Target Name="CompressImage" Inputs="@(CompressImageFlash);@(CompressImageDat);@(CompressImageCfg);@(CompressImageSymdef)" Outputs="$(BIN_DIR)\$(EXEName).nmf')" Condition="'$(MEMORY)'!='RAM'" >
