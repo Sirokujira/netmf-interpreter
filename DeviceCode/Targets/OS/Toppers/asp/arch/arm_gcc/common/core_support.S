@@ -74,7 +74,8 @@ ALABEL(vector_table)
 	AGLOBAL(vector_ref_tbl)
 ALABEL(vector_ref_tbl)
 ALABEL(reset_vector)
-	ALONG  start
+	ALONG  Reset_Handler
+//	ALONG  start
 ALABEL(undef_vector)
 	ALONG  undef_handler
 ALABEL(svc_vector)
@@ -287,6 +288,7 @@ ALABEL(call_exit_kernel)
 	AGLOBAL(start_r)
 ALABEL(start_r)
 	msr   cpsr_cxsf, #(CPSR_SVC AOR CPSR_ALWAYS_SET) /* CPUロック解除状態に */
+	
 	ldr   lr, =ext_tsk                      /* 戻り番地設定 */
 	ldr   r2, [r1, #TCB_p_tinib]            /* p_runtsk->p_tinibをr2に  */
 	ldr   r0, [r2, #TINIB_exinf]            /* exinfを引数レジスタr0に  */
@@ -344,7 +346,6 @@ ALABEL(ret_int_1)
 	ldmfd sp!, {r0-r3,ip,lr}
 	rfeia sp!
 #endif /* (__TARGET_ARCH_ARM == 6) || (__TARGET_ARCH_ARM == 7) */
-
 
 ALABEL(ret_int_2)
 ALABEL(ret_int_3)
@@ -419,6 +420,7 @@ ALABEL(ret_int_4)
 	tst   r0,r0
 	blne  call_texrtn            /* タスク例外ルーチンの呼び出し    */
 ALABEL(ret_int_5)
+
 	/*
 	 *  割込み処理からのリターンにより，CPUロック解除状態に移行するよ
 	 *  うにする．ARMはCPSRのIRQビットによってCPUロック状態を表してい

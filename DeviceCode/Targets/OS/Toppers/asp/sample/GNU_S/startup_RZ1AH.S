@@ -19,12 +19,14 @@
     .extern _start
     .extern _kernel_irq_handler
 
+    .global  EntryPoint
     .global StackBottom
     .global StackTop
     .global HeapBegin
     .global HeapEnd
     .global CustomHeapBegin
     .global CustomHeapEnd
+    .global __initial_sp
     .global Reset_Handler
 
     .extern  SystemInit

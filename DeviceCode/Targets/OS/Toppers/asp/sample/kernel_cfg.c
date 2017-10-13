@@ -279,7 +279,7 @@ const FP _kernel_exch_tbl[TNUM_EXCH] = {
 };
 
 
-const FP _kernel_inh_tbl[TNUM_INH] = {
+FP _kernel_inh_tbl[TNUM_INH] = {
  	(FP)(_kernel_default_int_handler), /* 0 */
  	(FP)(_kernel_default_int_handler), /* 1 */
  	(FP)(_kernel_default_int_handler), /* 2 */

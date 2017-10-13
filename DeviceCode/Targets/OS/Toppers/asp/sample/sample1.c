@@ -118,6 +118,31 @@
 // #include "OsHal.h"
 
 /*
+ *  start.Sから呼び出されるソフトウェア環境の初期化処理
+ */
+void
+software_init_hook(void)
+{
+	// Copy writeable data and zero init BSS
+    // PrepareImageRegions();
+	
+	__libc_init_array();
+	
+	// NetMF 初期化処理
+	// main(void)
+}
+
+/*
+ *  ソフトウェア環境の終了処理
+ */
+void
+software_term_hook(void)
+{
+
+}
+
+
+/*
  *  サービスコールのエラーのログ出力
  */
 Inline void

@@ -112,6 +112,7 @@
  *  非タスクコンテキスト用のスタック初期値
  */
 #define TOPPERS_ISTKPT(istk, istksz) ((STK_T *)((uint8_t *)(istk) + (istksz)))
+// #define TOPPERS_ISTKPT(istk, istksz) ((STK_T *)&__StackTop)
 
 /*
  *  プロセッサの特殊命令のインライン関数定義

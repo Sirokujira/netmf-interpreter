@@ -28,7 +28,8 @@ $
 $  割込みハンドラテーブル
 $ 
 $NL$
-const FP _kernel_inh_tbl[TNUM_INH] = {$NL$
+$ const FP _kernel_inh_tbl[TNUM_INH] = {$NL$
+FP _kernel_inh_tbl[TNUM_INH] = {$NL$
 $FOREACH inhno INHNO_VALID$ 
 	$IF LENGTH(INH.INHNO[inhno])$
 		$TAB$(FP)($INH.INTHDR[inhno]$),

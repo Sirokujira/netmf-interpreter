@@ -120,7 +120,7 @@ TOPPERS_set_fiq_irq(uint32_t TOPPERS_irq_fiq_mask)
  *  微少時間待ち
  */
 Inline void
-sil_dly_nse(ulong_t dlytim)
+sil_dly_nse(ulong_t dlytim) throw()
 {
     register uint32_t r0 asm("r0") = (uint32_t) dlytim;    
     Asm("bl _sil_dly_nse" : "=g"(r0) : "0"(r0) : "lr","cc");

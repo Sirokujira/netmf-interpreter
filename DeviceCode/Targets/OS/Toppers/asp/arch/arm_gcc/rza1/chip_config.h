@@ -80,11 +80,13 @@
 #define VALID_INTNO_DISINT(intno)    VALID_INTNO(intno)
 #define VALID_INTNO_CFGINT(intno)    VALID_INTNO(intno)
 #define VALID_INTNO_ATTISR(intno)    VALID_INTNO(intno)
+#define	VALID_INTNO_CREISR(intno)	 VALID_INTNO(intno)
 
 /*
  *  割込みハンドラの登録用テーブル
  */
-extern const FP inh_tbl[TNUM_INH];
+//extern const FP inh_tbl[TNUM_INH];
+extern FP inh_tbl[TNUM_INH];
 
 /*
  *  割込みハンドラの設定

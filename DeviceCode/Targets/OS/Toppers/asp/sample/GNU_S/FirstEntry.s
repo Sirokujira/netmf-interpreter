@@ -13,6 +13,7 @@
 
     .syntax unified
     .global  EntryPoint
+    .global  __initial_sp
     .global Reset_Handler
     .global StackBottom
     .global StackTop
@@ -24,7 +25,7 @@
     .extern  PreStackInit
 
 
-    .extern __main
+    .extern BootEntry
     .extern BootstrapCode
 
     @*************************************************************************
@@ -102,7 +103,7 @@ PowerOnReset:
 EntryPoint:
 Reset_Handler:
     bl  BootstrapCode
-    b   __main
+    b   BootEntry
 
     .pool
     .size   Reset_Handler, . - Reset_Handler

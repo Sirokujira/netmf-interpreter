@@ -33,7 +33,8 @@
         <ARMBUILD_ONLY>true</ARMBUILD_ONLY>
     </PropertyGroup>
     <Import Project="$(SPOCLIENT)/tools/targets/Toppers.SPOT.System.Settings" />
-    <!--
+
+    <!-- tinyhal.h -->
     <Import Project="$(SPOCLIENT)\Framework\Features\BlockStorage_PAL.libcatproj" />
     <Import Project="$(SPOCLIENT)\Framework\Features\BlockStorageAddDevices_HAL.libcatproj" />
     <Import Project="$(SPOCLIENT)\Framework\Features\Buttons_PAL.libcatproj" />
@@ -45,7 +46,6 @@
     <Import Project="$(SPOCLIENT)\Framework\Features\Time_PAL.libcatproj" />
     <Import Project="$(SPOCLIENT)\Framework\Features\TimeService_PAL.libcatproj" />
     <Import Project="$(SPOCLIENT)\Framework\Features\Heap_PAL.libcatproj" />
-    -->
     <ItemGroup>
         <!-- Defines -->
         <!-- <CC_CPP_Defines Include="__CMSIS_RTOS" /> -->
@@ -178,7 +178,7 @@
         
         <!-- custom -->
         <!-- BUILD_Kernel -->
-        <!-- <Compile Include="kernel_cfg.c" /> -->
+        <Compile Include="kernel_cfg.c" />
         <!-- <Compile Include="kernel_mem.c" /> -->
         <!-- <Compile Include="kernel_mem2.c" /> -->
         <!-- <Compile Include="kernel_mem3.c" /> -->
@@ -186,6 +186,22 @@
         <!-- App -->
         <Compile Include="sample1.c" />
         <Compile Include="sample1.cfg" />
+        
+        <!-- startPoint -->
+        <!-- <Compile Include="GNU_S\AppEntry.s" /> -->
+        <Compile Include="GNU_S\startup_RZ1AH.S" />
+        <Compile Include="GNU_S\IDelayLoop.s" />
+        <Compile Include="GNU_S\Interlocked.s" />
+        <!-- <Compile Include="$(AS_SUBDIR)\AppEntry.s" /> -->
+        <!-- <Compile Include="$(AS_SUBDIR)\IDelayLoop.s" /> -->
+        <!-- <Compile Include="$(AS_SUBDIR)\Interlocked.s" /> -->
+        <!-- <Compile Include="$(AS_SUBDIR)\startup_armv7-m.S" /> -->
+        <!-- <Compile Include="$(AS_SUBDIR)\startup_RZ1AH.S" /> -->
+        <!-- <Compile Include="Aborts.cpp" /> -->
+        <!-- <Compile Include="CpuPower.cpp"/> -->
+        <!-- <Compile Include="Retarget.cpp"/> -->
+        <!-- <Compile Include="main.cpp" /> -->
+        <!-- <HFile Include="OsHal.h" /> -->
     </ItemGroup>
     
     <Import Project="$(SPOCLIENT)/tools/targets/Toppers.SPOT.System.Targets" />

@@ -76,6 +76,8 @@
 #define LOOP_REF		ULONG_C(1000000)	/* 速度計測用のループ回数 */
 #endif /* LOOP_REF */
 
+// software_init_hook
+
 /*
  *  関数のプロトタイプ宣言
  */

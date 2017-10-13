@@ -51,8 +51,8 @@
 
 	ATEXT
 	AALIGN(2)
-	AGLOBAL(start)
-ALABEL(start)
+	AGLOBAL(_start)
+ALABEL(_start)
 	/*
 	 * プロセッサモードの初期化
 	 * スーパーバイザーモード，FIQ/IRQ禁止
