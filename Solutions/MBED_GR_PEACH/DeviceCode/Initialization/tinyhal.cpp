@@ -555,8 +555,11 @@ void HAL_Uninitialize()
 
 extern "C"
 {
+/*
+	replace software_init_hook(Toppers)
 #if defined( __GNUC__ )
-    extern "C++" int main(void);
+    // extern "C++" int main(void);
+    extern void main_task(intptr_t exinf);
     extern void __libc_init_array();
     void __main()
     {
@@ -566,11 +569,11 @@ extern "C"
         // Call static constructors
         __libc_init_array();
 
-        // Call the application's entry point.
-        main();
+        // NetMF Initialize
     }
 #endif
-
+*/
+	
 #if !defined(PLATFORM_ARM_OS_PORT)
 void BootEntry()
 {

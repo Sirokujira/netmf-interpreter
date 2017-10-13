@@ -11,12 +11,16 @@
     <Set Name="Code_Size"                   Value="0x001df000"/>
     <Set Name="ER_RAM_RO_BaseAddress"       Value="0x20100000"/>
     <Set Name="ER_RAM_RO_Size"              Value="0x001a0000"/>
-    <Set Name="Heap_Begin"                  Value="0x20300000"/>
+    <!-- <Set Name="Heap_Begin"                  Value="0x20300000"/> -->
+    <Set Name="Heap_Begin"                  Value="0x20400000"/>
     <Set Name="Heap_End"                    Value="0x209dfffc"/>
     <Set Name="CustomHeap_Begin"            Value="0x202a0000"/>
     <Set Name="CustomHeap_End"              Value="0x202efffc"/>
     <Set Name="Stack_Bottom"                Value="0x202f0000"/>
-    <Set Name="Stack_Top"                   Value="0x202ffffc"/>
+    <!-- <Set Name="Stack_Top"                   Value="0x202ffffc"/> -->
+    <Set Name="Stack_Top"                   Value="0x203ffffc"/>
+    
+    <!-- ER_STACK_TOP loaded at [202ffffc,202fffff] overlaps section ER_STACK_BOTTOM loaded at [202f0000,203072ff] -->
 <!--
     <Set Name="Rvectors_Begin"              Value="0x1802f000"/>
     <Set Name="Fvectors_Begin"              Value="0x1802ff80"/>
@@ -25,7 +29,7 @@
     <If Name="TARGETLOCATION" Value="FLASH">
         <Set Name="Valid"                   Value="true"/>
         <Set Name="Deploy_BaseAddress"      Value="0x18200000"/>
-        <Set Name="Config_BaseAddress"      Value="0x181f0000"/>    
+        <Set Name="Config_BaseAddress"      Value="0x181f0000"/>
         <Set Name="Config_Size"             Value="0x00001000"/>
         <Set Name="Valid"                   Value="true"/>
     </If>
@@ -33,7 +37,7 @@
     <If Name="TARGETLOCATION" Value="RAM">
         <Set Name="Valid"                   Value="true"/>
         <Set Name="Deploy_BaseAddress"      Value="0x20100000"/>
-        <Set Name="Config_BaseAddress"      Value="0x201d0000"/>    
+        <Set Name="Config_BaseAddress"      Value="0x201d0000"/>
         <Set Name="Config_Size"             Value="0x00002000"/>
         <Set Name="Valid"                   Value="true"/>
     </If>
@@ -41,6 +45,22 @@
     <If Name="Valid" Value="false">
         <Error Message="Configuration not recognized"/>
     </If>
+
+<!-- Toppers -->
+<!-- 
+PROVIDE(software_init_hook = 0);
+PROVIDE(hardware_init_hook = 0);
+PROVIDE(software_term_hook = 0);
+PROVIDE(IRQTable = _kernel_inh_tbl);
+PROVIDE(IRQNestLevel = _kernel_excpt_nest_count);
+-->
+<FileMapping Name="PROVIDE(software_init_hook = 0);" />
+<FileMapping Name="PROVIDE(hardware_init_hook = 0);" />
+<FileMapping Name="PROVIDE(software_term_hook = 0);" />
+<FileMapping Name="PROVIDE(IRQTable = _kernel_inh_tbl);" />
+<FileMapping Name="PROVIDE(IRQNestLevel = _kernel_excpt_nest_count);" />
+<!-- <FileMapping Name="PROVIDE(_start = 0);"/> -->
+
 
     <NamedGroup Name="MEMORY">
         <LoadRegion Name="ER_TTB" Base="%TTB_BaseAddress%" Size="%TTB_Size%"/>
@@ -63,7 +83,8 @@
 -->
     </NamedGroup>
 
-    <EntryPoint Name="EntryPoint"/>
+    <EntryPoint Name="EntryPoint" />
+    <!-- <EntryPoint Name="Reset_Handler" /> -->
 
     <NamedGroup Name="SECTIONS">
 <!--
@@ -105,8 +126,34 @@
             <FileMapping Name="*" Options="(.data*)" />
         </ExecRegion>
 
+        <ExecRegion Name=".copy.table" Options="&gt;LR_FLASH">
+            <FileMapping Name=". = ALIGN(4);" />
+            <FileMapping Name="__copy_table_start__ = .;" />
+            <!--
+            <FileMapping Name="LONG" Options="(__etext)" />
+            <FileMapping Name="LONG" Options="(__data_start__)" />
+            <FileMapping Name="LONG" Options="(__data_end__ - __data_start__)" />
+            <FileMapping Name="LONG" Options="(__etext2)" />
+            <FileMapping Name="LONG" Options="(__nc_data_start)" />
+            <FileMapping Name="LONG" Options="(__nc_data_end - __nc_data_start)" />
+            -->
+            <FileMapping Name="__copy_table_end__ = .;" />
+        </ExecRegion>
+
+        <ExecRegion Name=".zero.table" Options="&gt;LR_FLASH">
+            <FileMapping Name=". = ALIGN(4);" />
+            <FileMapping Name="__zero_table_start__ = .;" />
+            <!--
+            <FileMapping Name="LONG" Options="(__bss_start__)" />
+            <FileMapping Name="LONG" Options="(__bss_end__ - __bss_start__)" />
+            <FileMapping Name="LONG" Options="(__nc_bss_start)" />
+            <FileMapping Name="LONG" Options="(__nc_bss_end - __nc_bss_start)" />
+            -->
+            <FileMapping Name="__zero_table_end__ = .;" />
+        </ExecRegion>
+
         <ExecRegion Name=".bss" Align="0x10" Options="&gt;RELOC_RAM">
-        <FileMapping Name="*" Options="(.zidata*)" />
+            <FileMapping Name="*" Options="(.zidata*)" />
             <FileMapping Name="*" Options="(.bss*)" />
             <FileMapping Name="PROVIDE(__exidx_start = .);" />
             <FileMapping Name="PROVIDE(__exidx_end = .);" />
