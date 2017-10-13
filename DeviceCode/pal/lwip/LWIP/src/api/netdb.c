@@ -94,7 +94,7 @@ lwip_gethostbyname(const char *name)
   /* query host IP address */
   err = netconn_gethostbyname(name, &addr);
   if (err != ERR_OK) {
-    LWIP_DEBUGF(DNS_DEBUG, ("lwip_gethostbyname(%s) failed, err=%d\n", name, err));
+    // LWIP_DEBUGF(DNS_DEBUG, ("lwip_gethostbyname(%s) failed, err=%d\n", name, err));
     h_errno = HOST_NOT_FOUND;
     return NULL;
   }
@@ -110,23 +110,23 @@ lwip_gethostbyname(const char *name)
 
 #if DNS_DEBUG
   /* dump hostent */
-  LWIP_DEBUGF(DNS_DEBUG, ("hostent.h_name           == %s\n", s_hostent.h_name));
-  LWIP_DEBUGF(DNS_DEBUG, ("hostent.h_aliases        == %p\n", s_hostent.h_aliases));
+  // LWIP_DEBUGF(DNS_DEBUG, ("hostent.h_name           == %s\n", s_hostent.h_name));
+  // LWIP_DEBUGF(DNS_DEBUG, ("hostent.h_aliases        == %p\n", s_hostent.h_aliases));
   if (s_hostent.h_aliases != NULL) {
     u8_t idx;
     for ( idx=0; s_hostent.h_aliases[idx]; idx++) {
-      LWIP_DEBUGF(DNS_DEBUG, ("hostent.h_aliases[%i]->   == %p\n", idx, s_hostent.h_aliases[idx]));
-      LWIP_DEBUGF(DNS_DEBUG, ("hostent.h_aliases[%i]->   == %s\n", idx, s_hostent.h_aliases[idx]));
+      // LWIP_DEBUGF(DNS_DEBUG, ("hostent.h_aliases[%i]->   == %p\n", idx, s_hostent.h_aliases[idx]));
+      // LWIP_DEBUGF(DNS_DEBUG, ("hostent.h_aliases[%i]->   == %s\n", idx, s_hostent.h_aliases[idx]));
     }
   }
-  LWIP_DEBUGF(DNS_DEBUG, ("hostent.h_addrtype       == %d\n", s_hostent.h_addrtype));
-  LWIP_DEBUGF(DNS_DEBUG, ("hostent.h_length         == %d\n", s_hostent.h_length));
-  LWIP_DEBUGF(DNS_DEBUG, ("hostent.h_addr_list      == %p\n", s_hostent.h_addr_list));
+  // LWIP_DEBUGF(DNS_DEBUG, ("hostent.h_addrtype       == %d\n", s_hostent.h_addrtype));
+  // LWIP_DEBUGF(DNS_DEBUG, ("hostent.h_length         == %d\n", s_hostent.h_length));
+  // LWIP_DEBUGF(DNS_DEBUG, ("hostent.h_addr_list      == %p\n", s_hostent.h_addr_list));
   if (s_hostent.h_addr_list != NULL) {
     u8_t idx;
     for ( idx=0; s_hostent.h_addr_list[idx]; idx++) {
-      LWIP_DEBUGF(DNS_DEBUG, ("hostent.h_addr_list[%i]   == %p\n", idx, s_hostent.h_addr_list[idx]));
-      LWIP_DEBUGF(DNS_DEBUG, ("hostent.h_addr_list[%i]-> == %s\n", idx, ip_ntoa(s_hostent.h_addr_list[idx])));
+      // LWIP_DEBUGF(DNS_DEBUG, ("hostent.h_addr_list[%i]   == %p\n", idx, s_hostent.h_addr_list[idx]));
+      // LWIP_DEBUGF(DNS_DEBUG, ("hostent.h_addr_list[%i]-> == %s\n", idx, ip_ntoa(s_hostent.h_addr_list[idx])));
     }
   }
 #endif /* DNS_DEBUG */
@@ -196,7 +196,7 @@ lwip_gethostbyname_r(const char *name, struct hostent *ret, char *buf,
   /* query host IP address */
   err = netconn_gethostbyname(name, &(h->addr));
   if (err != ERR_OK) {
-    LWIP_DEBUGF(DNS_DEBUG, ("lwip_gethostbyname(%s) failed, err=%d\n", name, err));
+    // LWIP_DEBUGF(DNS_DEBUG, ("lwip_gethostbyname(%s) failed, err=%d\n", name, err));
     *h_errnop = ENSRNOTFOUND;
     return -1;
   }

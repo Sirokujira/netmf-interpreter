@@ -84,7 +84,6 @@
     <IncludePaths Include="DeviceCode\pal\lwip\contrib\include" />
     <IncludePaths Include="DeviceCode\pal\lwip\tinyclr" />
     <IncludePaths Include="DeviceCode\pal\lwip\rtpcore" />
-    <IncludePaths Include="DeviceCode\pal\lwip\tinyclr" />
   </ItemGroup>
   <ItemGroup>
     <HFiles Include="$(SPOCLIENT)\devicecode\pal\lwip\LWIP\contrib\ports\arm\include\arch\cc.h" />

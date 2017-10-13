@@ -122,7 +122,7 @@ static void
 ip_reass_timer(void *arg)
 {
   LWIP_UNUSED_ARG(arg);
-  LWIP_DEBUGF(TCPIP_DEBUG, ("tcpip: ip_reass_tmr()\n"));
+  // LWIP_DEBUGF(TCPIP_DEBUG, ("tcpip: ip_reass_tmr()\n"));
   ip_reass_tmr();
   sys_timeout(IP_TMR_INTERVAL, ip_reass_timer, NULL);
 }
@@ -138,7 +138,7 @@ static void
 arp_timer(void *arg)
 {
   LWIP_UNUSED_ARG(arg);
-  LWIP_DEBUGF(TCPIP_DEBUG, ("tcpip: etharp_tmr()\n"));
+  // LWIP_DEBUGF(TCPIP_DEBUG, ("tcpip: etharp_tmr()\n"));
   etharp_tmr();
   sys_timeout(ARP_TMR_INTERVAL, arp_timer, NULL);
 }
@@ -154,7 +154,7 @@ static void
 dhcp_timer_coarse(void *arg)
 {
   LWIP_UNUSED_ARG(arg);
-  LWIP_DEBUGF(TCPIP_DEBUG, ("tcpip: dhcp_coarse_tmr()\n"));
+  // LWIP_DEBUGF(TCPIP_DEBUG, ("tcpip: dhcp_coarse_tmr()\n"));
   dhcp_coarse_tmr();
   sys_timeout(DHCP_COARSE_TIMER_MSECS, dhcp_timer_coarse, NULL);
 }
@@ -168,7 +168,7 @@ static void
 dhcp_timer_fine(void *arg)
 {
   LWIP_UNUSED_ARG(arg);
-  LWIP_DEBUGF(TCPIP_DEBUG, ("tcpip: dhcp_fine_tmr()\n"));
+  // LWIP_DEBUGF(TCPIP_DEBUG, ("tcpip: dhcp_fine_tmr()\n"));
   dhcp_fine_tmr();
   sys_timeout(DHCP_FINE_TIMER_MSECS, dhcp_timer_fine, NULL);
 }
@@ -184,7 +184,7 @@ static void
 autoip_timer(void *arg)
 {
   LWIP_UNUSED_ARG(arg);
-  LWIP_DEBUGF(TCPIP_DEBUG, ("tcpip: autoip_tmr()\n"));
+  // LWIP_DEBUGF(TCPIP_DEBUG, ("tcpip: autoip_tmr()\n"));
   autoip_tmr();
   sys_timeout(AUTOIP_TMR_INTERVAL, autoip_timer, NULL);
 }
@@ -200,7 +200,7 @@ static void
 igmp_timer(void *arg)
 {
   LWIP_UNUSED_ARG(arg);
-  LWIP_DEBUGF(TCPIP_DEBUG, ("tcpip: igmp_tmr()\n"));
+  // LWIP_DEBUGF(TCPIP_DEBUG, ("tcpip: igmp_tmr()\n"));
   igmp_tmr();
   sys_timeout(IGMP_TMR_INTERVAL, igmp_timer, NULL);
 }
@@ -216,7 +216,7 @@ static void
 dns_timer(void *arg)
 {
   LWIP_UNUSED_ARG(arg);
-  LWIP_DEBUGF(TCPIP_DEBUG, ("tcpip: dns_tmr()\n"));
+  // LWIP_DEBUGF(TCPIP_DEBUG, ("tcpip: dns_tmr()\n"));
   dns_tmr();
   sys_timeout(DNS_TMR_INTERVAL, dns_timer, NULL);
 }
@@ -312,13 +312,13 @@ tcpip_thread(void *arg)
     switch (msg->type) {
 #if LWIP_NETCONN
     case TCPIP_MSG_API:
-      LWIP_DEBUGF(TCPIP_DEBUG, ("tcpip_thread: API message %p\n", (void *)msg));
+      // LWIP_DEBUGF(TCPIP_DEBUG, ("tcpip_thread: API message %p\n", (void *)msg));
       msg->msg.apimsg->function(&(msg->msg.apimsg->msg));
       break;
 #endif /* LWIP_NETCONN */
 
     case TCPIP_MSG_INPKT:
-      LWIP_DEBUGF(TCPIP_DEBUG, ("tcpip_thread: PACKET %p\n", (void *)msg));
+      // LWIP_DEBUGF(TCPIP_DEBUG, ("tcpip_thread: PACKET %p\n", (void *)msg));
 #if LWIP_ARP
       if (msg->msg.inp.netif->flags & NETIF_FLAG_ETHARP) {
         ethernet_input(msg->msg.inp.p, msg->msg.inp.netif);
@@ -331,24 +331,24 @@ tcpip_thread(void *arg)
 
 #if LWIP_NETIF_API
     case TCPIP_MSG_NETIFAPI:
-      LWIP_DEBUGF(TCPIP_DEBUG, ("tcpip_thread: Netif API message %p\n", (void *)msg));
+      // LWIP_DEBUGF(TCPIP_DEBUG, ("tcpip_thread: Netif API message %p\n", (void *)msg));
       msg->msg.netifapimsg->function(&(msg->msg.netifapimsg->msg));
       break;
 #endif /* LWIP_NETIF_API */
 
     case TCPIP_MSG_CALLBACK:
-      LWIP_DEBUGF(TCPIP_DEBUG, ("tcpip_thread: CALLBACK %p\n", (void *)msg));
+      // LWIP_DEBUGF(TCPIP_DEBUG, ("tcpip_thread: CALLBACK %p\n", (void *)msg));
       msg->msg.cb.f(msg->msg.cb.ctx);
       memp_free(MEMP_TCPIP_MSG_API, msg);
       break;
 
     case TCPIP_MSG_TIMEOUT:
-      LWIP_DEBUGF(TCPIP_DEBUG, ("tcpip_thread: TIMEOUT %p\n", (void *)msg));
+      // LWIP_DEBUGF(TCPIP_DEBUG, ("tcpip_thread: TIMEOUT %p\n", (void *)msg));
       sys_timeout(msg->msg.tmo.msecs, msg->msg.tmo.h, msg->msg.tmo.arg);
       memp_free(MEMP_TCPIP_MSG_API, msg);
       break;
     case TCPIP_MSG_UNTIMEOUT:
-      LWIP_DEBUGF(TCPIP_DEBUG, ("tcpip_thread: UNTIMEOUT %p\n", (void *)msg));
+      // LWIP_DEBUGF(TCPIP_DEBUG, ("tcpip_thread: UNTIMEOUT %p\n", (void *)msg));
       sys_untimeout(msg->msg.tmo.h, msg->msg.tmo.arg);
       memp_free(MEMP_TCPIP_MSG_API, msg);
       break;
