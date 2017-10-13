@@ -334,7 +334,7 @@
                 
                 <!-- start -->
                 <!-- ld file set -->
-                <TOPPERS_START_OBJS></TOPPERS_START_OBJS>
+                <TOPPERS_START_OBJS>start.o</TOPPERS_START_OBJS>
                 <!-- helloev3 -->
                 <TOPPERS_APPL_OBJS>$(TOPPERS_APPL_OBJS) sample1.$(OBJEXT)</TOPPERS_APPL_OBJS>
                 <!-- appl objs -->
@@ -428,7 +428,7 @@
                 
                 <!-- start -->
                 <!-- ld file set -->
-                <TOPPERS_START_OBJS></TOPPERS_START_OBJS>
+                <TOPPERS_START_OBJS>start.o</TOPPERS_START_OBJS>
                 <!-- helloev3 -->
                 <TOPPERS_APPL_OBJS>$(TOPPERS_APPL_OBJS) sample1.$(OBJEXT)</TOPPERS_APPL_OBJS>
                 <!-- appl objs -->
