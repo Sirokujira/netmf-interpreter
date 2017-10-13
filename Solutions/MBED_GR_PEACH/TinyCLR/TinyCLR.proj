@@ -189,8 +189,8 @@
     <DriverLibs Include="ToppersASP_Sample.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)/DeviceCode/Targets/OS/Toppers/asp/sample/dotnetmf.proj" />
   </ItemGroup>
-  <!--
   <!-- GR-PEACH library examples -->
+  <!--
   <ItemGroup>
     <DriverLibs Include="ToppersASP_blinky.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)/DeviceCode/Targets/OS/Toppers/asp/examples/blinky/dotnetmf.proj" />
