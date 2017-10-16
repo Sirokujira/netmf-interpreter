@@ -120,26 +120,20 @@
 /*
  *  start.Sから呼び出されるソフトウェア環境の初期化処理
  */
-void
-software_init_hook(void)
-{
-	// Copy writeable data and zero init BSS
-    // PrepareImageRegions();
-	
-	__libc_init_array();
-	
-	// NetMF 初期化処理
-	// main(void)
-}
+
+extern void software_init_hook();
+
+// netmf の実行?
+extern void ApplicationEntryPoint();
 
 /*
  *  ソフトウェア環境の終了処理
  */
-void
-software_term_hook(void)
-{
-
-}
+// void
+// software_term_hook(void)
+// {
+// 
+// }
 
 
 /*
@@ -422,34 +416,7 @@ void main_task(intptr_t exinf)
 #endif
     }
 */
-	/*
-    HAL_Initialize();
 
-    // UINT8* BaseAddress;
-    // UINT32 SizeInBytes;
-    unsigned char* BaseAddress;
-    unsigned long SizeInBytes;
-
-    HeapLocation( BaseAddress,    SizeInBytes );
-    memset      ( BaseAddress, 0, SizeInBytes );
-
-    // the runtime is by default using a watchdog 
-
-    // stm32f4xx
-    // Watchdog_GetSetTimeout ( WATCHDOG_TIMEOUT , TRUE );
-    // Watchdog_GetSetBehavior( WATCHDOG_BEHAVIOR, TRUE );
-    // Watchdog_GetSetEnabled ( WATCHDOG_ENABLE, TRUE );
-
-    // HAL initialization completed.  Interrupts are enabled.  Jump to the Application routine
-    ApplicationEntryPoint();
-    */
-/*
-#if defined(BUILD_RTM)
-    CPU_Reset();
-#else
-    CPU_Halt();
-#endif
-*/
     // ここまで
 
     /*

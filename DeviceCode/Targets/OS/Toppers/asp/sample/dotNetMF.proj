@@ -92,8 +92,10 @@
         <HFiles Include="app.h" />
         
         <!-- netmf on OS -->
+        <IncludePaths Include="DeviceCode\Include" />
         <!-- <HFiles Include="tinyhal.h" /> -->
         <!-- <HFiles Include="uItron4API.h" /> -->
+        <HFiles Include="DeviceCode\include\tinyhal.h" />
         
         <HFiles Include="..\syssvc\banner.h" />
         <HFiles Include="..\syssvc\serial.h" />
@@ -192,16 +194,6 @@
         <Compile Include="GNU_S\startup_RZ1AH.S" />
         <Compile Include="GNU_S\IDelayLoop.s" />
         <Compile Include="GNU_S\Interlocked.s" />
-        <!-- <Compile Include="$(AS_SUBDIR)\AppEntry.s" /> -->
-        <!-- <Compile Include="$(AS_SUBDIR)\IDelayLoop.s" /> -->
-        <!-- <Compile Include="$(AS_SUBDIR)\Interlocked.s" /> -->
-        <!-- <Compile Include="$(AS_SUBDIR)\startup_armv7-m.S" /> -->
-        <!-- <Compile Include="$(AS_SUBDIR)\startup_RZ1AH.S" /> -->
-        <!-- <Compile Include="Aborts.cpp" /> -->
-        <!-- <Compile Include="CpuPower.cpp"/> -->
-        <!-- <Compile Include="Retarget.cpp"/> -->
-        <!-- <Compile Include="main.cpp" /> -->
-        <!-- <HFile Include="OsHal.h" /> -->
     </ItemGroup>
     
     <Import Project="$(SPOCLIENT)/tools/targets/Toppers.SPOT.System.Targets" />
