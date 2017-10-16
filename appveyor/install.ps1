@@ -17,7 +17,18 @@ function InstallNETMFSDK()
     # NG?
     # Start-FileDownload "https://github.com/NETMF/netmf-interpreter/releases/download/NETMFCryptoLibraries/NetMFCryptoLibs.msi"
     Write-Output "NetMFCryptoLibs.msi : InstallStart"
-    msiexec.exe NetMFCryptoLibs.msi /S /v/norestart /v/qn
+    # msiexec.exe NetMFCryptoLibs.msi /S /v/norestart /v/qn
+    $msipath = "NetMFCryptoLibs.msi"
+    
+    # http://www.ibm.com/support/knowledgecenter/SS2RWS_2.1.0/com.ibm.zsecure.doc_2.1/visual_client/responseexamples.html?lang=ja
+    $install_args = "/S /v/qn /v/norestart"
+    RunCommand "schtasks" "/create /tn pclinstall /RL HIGHEST /tr `"$msipath $install_args`" /sc once /st 23:59"
+    # Check TaskList
+    RunCommand "schtasks" "/query /v"
+    RunCommand "sleep" "10"
+    RunCommand "schtasks" "/run /tn pclinstall"
+    RunCommand "sleep" "30"
+    RunCommand "schtasks" "/delete /tn pclinstall /f"
 }
 
 function InstallNETMFSDK_44()
