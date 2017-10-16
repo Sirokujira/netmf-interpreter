@@ -20,6 +20,7 @@
     .extern _kernel_irq_handler
 
     .global  EntryPoint
+    .global HARD_Breakpoint
     .global StackBottom
     .global StackTop
     .global HeapBegin
@@ -557,6 +558,10 @@ ret_irq:
 
                 def_default_handler    SVC_Handler
 
+
+@ netmf BreakPoint
+HARD_Breakpoint:
+    blx HARD_Breakpoint
 
 /* User Initial Stack & Heap */
 
