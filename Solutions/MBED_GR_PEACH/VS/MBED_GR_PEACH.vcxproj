@@ -407,6 +407,7 @@
     <None Include="..\..\..\DeviceCode\Targets\OS\CMSIS_RTOS\dotNetMF.proj" />
     <None Include="..\..\..\DeviceCode\Targets\OS\CMSIS_RTOS\readme.txt" />
     <None Include="..\..\..\DeviceCode\Targets\OS\Toppers\asp\kernel\kernel_rename.def" />
+    <None Include="..\..\..\DeviceCode\Targets\OS\Toppers\asp\sample\sample1.cfg" />
     <None Include="..\..\..\DeviceCode\Targets\OS\Win32\DeviceCode\dotnetmf.proj" />
     <None Include="..\..\..\DeviceCode\Targets\OS\Win32\DeviceCode\WinPcap_Eth\Dependencies\WINPCAP_IN_NETMF_README.txt" />
     <None Include="..\..\..\DeviceCode\Targets\OS\Win32\DeviceCode\WinPcap_Eth\dotNetMF.proj" />
@@ -1272,6 +1273,7 @@
     <ClCompile Include="..\..\..\DeviceCode\Targets\OS\Toppers\asp\library\test_lib.c" />
     <ClCompile Include="..\..\..\DeviceCode\Targets\OS\Toppers\asp\library\t_perror.c" />
     <ClCompile Include="..\..\..\DeviceCode\Targets\OS\Toppers\asp\library\vasyslog.c" />
+    <ClCompile Include="..\..\..\DeviceCode\Targets\OS\Toppers\asp\sample\sample1.c" />
     <ClCompile Include="..\..\..\DeviceCode\Targets\OS\Win32\DeviceCode\WinPcap_Eth\pcapif.c" />
     <ClCompile Include="..\..\..\DeviceCode\Targets\OS\Win32\DeviceCode\WinPcap_Eth\pcapif_helper.c" />
     <ClCompile Include="..\..\..\DeviceCode\Targets\OS\Win32\DeviceCode\WinPcap_Eth\WinPcap_Eth_lwIP_Adapter.cpp" />
@@ -1631,6 +1633,7 @@
     <ClInclude Include="..\..\..\DeviceCode\Targets\OS\Toppers\asp\kernel\task.h" />
     <ClInclude Include="..\..\..\DeviceCode\Targets\OS\Toppers\asp\kernel\time_event.h" />
     <ClInclude Include="..\..\..\DeviceCode\Targets\OS\Toppers\asp\kernel\wait.h" />
+    <ClInclude Include="..\..\..\DeviceCode\Targets\OS\Toppers\asp\sample\sample1.h" />
     <ClInclude Include="..\..\..\DeviceCode\Targets\OS\Win32\CpuOsIrq.h" />
     <ClInclude Include="..\..\..\DeviceCode\Targets\OS\Win32\DeviceCode\WinPcap_Eth\pcapif.h" />
     <ClInclude Include="..\..\..\DeviceCode\Targets\OS\Win32\DeviceCode\WinPcap_Eth\pcapif_helper.h" />
@@ -1686,6 +1689,7 @@
     <OutDir>$(BUILD_ROOT_BASE)\</OutDir>
     <IntDir>$(BUILD_ROOT_BASE)\</IntDir>
     <NMakeReBuildCommandLine>$(SolutionDir)build.cmd $(SPOCLIENT) $(SolutionName) "/p:Flavor=Release /t:Rebuild"</NMakeReBuildCommandLine>
+    <NMakeIncludeSearchPath>$(SPOCLIENT)\DeviceCode\Targets\OS\Toppers\asp\include;$(SPOCLIENT)\DeviceCode\Targets\OS\Toppers\asp\kernel;$(SPOCLIENT)\DeviceCode\Targets\OS\Toppers\asp;$(SPOCLIENT)\DeviceCode\Targets\OS\Toppers\asp\target\gr_peach_gcc;$(SPOCLIENT)\DeviceCode\Targets\OS\Toppers\asp\arch\arm_gcc\rza1</NMakeIncludeSearchPath>
   </PropertyGroup>
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -8,7 +8,7 @@ within Visual Studio IDE, using GCC toolchain and OpenOCD debugger on GR-PEACH b
 1. [Visual Studio 2015 Community](https://www.visualstudio.com/en-us/products/visual-studio-community-vs.aspx) or higher edition,
 2. [Visual C++ for IoT Development](https://visualstudiogallery.msdn.microsoft.com/35dbae07-8c1a-4f9d-94b7-bac16cad9c01) extension,
 3. [GNU ARM Embedded Toolchain](https://launchpad.net/gcc-arm-embedded) (4.9.3 at the time of writing),
-4. OpenOCD debugger - prebuilt binaries with STM32F7 support available at Freddie Chopin's [OpenOCD dev](http://www.freddiechopin.info/en/download/category/10-openocd-dev)
+4. OpenOCD debugger - prebuilt binaries with GR-PEACH support available at GNU ARM Eclipse [OpenOCD dev](https://github.com/gnuarmeclipse/openocd/releases/tag/gae-0.10.0-20160110)
 
 ### Build
 
@@ -39,8 +39,8 @@ binary fits into the flash memory region._
 If the connection is successfully established, OpenOCD output should be similar to
 ```
 ...
-Info : STLINK v2 JTAG v27 API v2 SWIM v15 VID 0x0483 PID 0x374B
-Info : using stlink api v2
-Info : Target voltage: 3.238270
-Info : stm32f7x.cpu: hardware has 8 breakpoints, 4 watchpoints
+Info : ?????
+Info : ?????
+Info : ?????
+Info : ?????
 ```

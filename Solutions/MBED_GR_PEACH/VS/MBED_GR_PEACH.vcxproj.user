@@ -3,4 +3,14 @@
   <PropertyGroup>
     <ShowAllFiles>false</ShowAllFiles>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <OCDDebuggerExecutable>$(GNU_TOOLS)\bin\arm-none-eabi-gdb.exe</OCDDebuggerExecutable>
+    <OCDDebugBinary>$(SPOCLIENT)\BuildOutput\RZA1\$(COMPILER_TOOL_VERSION)\le\FLASH\debug\MBED_GR_PEACH\bin\tinyclrnbl.bin</OCDDebugBinary>
+    <DebuggerFlavor>OCDDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <DebuggerFlavor>OCDDebugger</DebuggerFlavor>
+    <OCDDebuggerExecutable>$(GNU_TOOLS)\bin\arm-none-eabi-gdb.exe</OCDDebuggerExecutable>
+    <OCDDebugBinary>$(SPOCLIENT)\BuildOutput\RZA1\$(COMPILER_TOOL_VERSION)\le\FLASH\debug\MBED_GR_PEACH\bin\tinyclrnbl.bin</OCDDebugBinary>
+  </PropertyGroup>
 </Project>
