@@ -58,11 +58,10 @@
         <!-- <Compile Include="$(AS_SUBDIR)\startup_RZ1AH.S" /> -->
     </ItemGroup>
     <ItemGroup>
-        <!-- <Compile Include="Aborts.cpp" /> -->
+        <Compile Include="Aborts.cpp" />
         <!-- <Compile Include="CpuPower.cpp"/> -->
-        <!-- <Compile Include="Retarget.cpp"/> -->
+        <Compile Include="Retarget.cpp"/>
         <Compile Include="main.cpp" />
-        <!-- <HFile Include="OsHal.h" /> -->
         <HFile Include="MasterConfig.h" />
     </ItemGroup>
     <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Targets" />

@@ -29,6 +29,6 @@ extern struct BLOCK_CONFIG        g_SerialFlash_BL_Config;          // InternalF
 void BlockStorage_AddDevices()
 {   
     //BlockStorageList::AddDevice(&g_INTERNALFLASH, &g_MBED_INTERNALFLASH_DeviceTable, &g_INTERNALFLASH_Config, FALSE);
-    BlockStorageList::AddDevice(&g_SerialFlash_Device, &g_SerialFlash_BL_DeviceTable, &g_SerialFlash_BL_Config, FALSE);
+    // BlockStorageList::AddDevice(&g_SerialFlash_Device, &g_SerialFlash_BL_DeviceTable, &g_SerialFlash_BL_Config, FALSE);
 }
 

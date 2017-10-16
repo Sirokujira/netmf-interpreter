@@ -573,7 +573,23 @@ extern "C"
     }
 #endif
 */
-	
+
+// Toppers
+/*
+ *  start.Sから呼び出されるソフトウェア環境の初期化処理
+ */
+#if defined( __GNUC__ )
+    extern "C++" int main(void);
+    extern void __libc_init_array();
+    void software_init_hook()
+    {
+		__libc_init_array();
+    	
+		// NetMF 初期化処理
+		main();
+    }
+#endif
+
 #if !defined(PLATFORM_ARM_OS_PORT)
 void BootEntry()
 {

@@ -1202,6 +1202,9 @@
     <None Include="..\TinyBooter\TinyBooter.proj">
       <Filter>Solutions\MBED_GR_PEACH\TinyBooter</Filter>
     </None>
+    <None Include="..\..\..\DeviceCode\Targets\OS\Toppers\asp\sample\sample1.cfg">
+      <Filter>DeviceCode\Targets\OS\Toppers\asp\sample</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Application">
@@ -2250,6 +2253,9 @@
     </Filter>
     <Filter Include="DeviceCode\Targets\Native\MBED">
       <UniqueIdentifier>{630755be-e325-496e-a6e9-782606fd4f91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DeviceCode\Targets\OS\Toppers\asp\sample">
+      <UniqueIdentifier>{54f261c1-75e4-4e65-bc07-493a5bc86872}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -4626,6 +4632,9 @@
     <ClCompile Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_USB\stub\usb_int.c">
       <Filter>DeviceCode\Targets\Native\MBED</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\DeviceCode\Targets\OS\Toppers\asp\sample\sample1.c">
+      <Filter>DeviceCode\Targets\OS\Toppers\asp\sample</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Application\TinyBooter\Commands.h">
@@ -5716,6 +5725,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_Blockstorage\RZA1_QuadSerialFlash\spibsc.h">
       <Filter>DeviceCode\Targets\Native\MBED</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\DeviceCode\Targets\OS\Toppers\asp\sample\sample1.h">
+      <Filter>DeviceCode\Targets\OS\Toppers\asp\sample</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
