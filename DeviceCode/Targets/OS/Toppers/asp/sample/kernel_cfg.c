@@ -41,6 +41,7 @@ static STK_T _kernel_stack_LOGTASK[COUNT_STK_T(LOGTASK_STACK_SIZE)];
 static STK_T _kernel_stack_TASK1[COUNT_STK_T(STACK_SIZE)];
 static STK_T _kernel_stack_TASK2[COUNT_STK_T(STACK_SIZE)];
 static STK_T _kernel_stack_TASK3[COUNT_STK_T(STACK_SIZE)];
+static STK_T _kernel_stack_NETMFTASK[COUNT_STK_T(STACK_SIZE)];
 static STK_T _kernel_stack_MAIN_TASK[COUNT_STK_T(STACK_SIZE)];
 
 const TINIB _kernel_tinib_table[TNUM_TSKID] = {
@@ -48,13 +49,14 @@ const TINIB _kernel_tinib_table[TNUM_TSKID] = {
 	{ (TA_NULL), (intptr_t)(1), ((TASK)(task)), INT_PRIORITY(MID_PRIORITY), ROUND_STK_T(STACK_SIZE), _kernel_stack_TASK1, (TA_NULL), (tex_routine) },
 	{ (TA_NULL), (intptr_t)(2), ((TASK)(task)), INT_PRIORITY(MID_PRIORITY), ROUND_STK_T(STACK_SIZE), _kernel_stack_TASK2, (TA_NULL), (tex_routine) },
 	{ (TA_NULL), (intptr_t)(3), ((TASK)(task)), INT_PRIORITY(MID_PRIORITY), ROUND_STK_T(STACK_SIZE), _kernel_stack_TASK3, (TA_NULL), (tex_routine) },
+	{ (TA_NULL), (intptr_t)(4), ((TASK)(task_netmf)), INT_PRIORITY(LOW_PRIORITY), ROUND_STK_T(STACK_SIZE), _kernel_stack_NETMFTASK, (TA_NULL), (tex_routine_netmf) },
 	{ (TA_ACT), (intptr_t)(0), ((TASK)(main_task)), INT_PRIORITY(MAIN_PRIORITY), ROUND_STK_T(STACK_SIZE), _kernel_stack_MAIN_TASK, (TA_NULL), (NULL) }
 };
 
 TCB _kernel_tcb_table[TNUM_TSKID];
 
 const ID _kernel_torder_table[TNUM_TSKID] = {
-	LOGTASK, TASK1, TASK2, TASK3, MAIN_TASK
+	LOGTASK, TASK1, TASK2, TASK3, NETMFTASK, MAIN_TASK
 };
 
 /*

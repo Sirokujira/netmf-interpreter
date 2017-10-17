@@ -19,7 +19,7 @@
     .extern _start
     .extern _kernel_irq_handler
 
-    .global  EntryPoint
+    .global EntryPoint
     .global HARD_Breakpoint
     .global StackBottom
     .global StackTop
@@ -30,7 +30,11 @@
     .global __initial_sp
     .global Reset_Handler
 
-    .extern  SystemInit
+    @.extern SystemInit
+    .extern boot_loader
+    .extern RZ_A1_SetSramWriteEnable
+    .extern InitMemorySubsystem
+    @.extern create_translation_table
 
 @ Standard definitions of mode bits and interrupt (I & F) flags in PSRs
     .equ    USR_MODE        ,   0x10

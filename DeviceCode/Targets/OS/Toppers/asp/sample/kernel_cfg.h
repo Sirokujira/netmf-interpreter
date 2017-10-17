@@ -2,7 +2,7 @@
 #ifndef TOPPERS_KERNEL_CFG_H
 #define TOPPERS_KERNEL_CFG_H
 
-#define TNUM_TSKID	5
+#define TNUM_TSKID	6
 #define TNUM_SEMID	8
 #define TNUM_FLGID	0
 #define TNUM_DTQID	0
@@ -16,7 +16,8 @@
 #define TASK1	2
 #define TASK2	3
 #define TASK3	4
-#define MAIN_TASK	5
+#define NETMFTASK	5
+#define MAIN_TASK	6
 #define SERIAL_RCV_SEM1	1
 #define SERIAL_SND_SEM1	2
 #define SERIAL_RCV_SEM2	3

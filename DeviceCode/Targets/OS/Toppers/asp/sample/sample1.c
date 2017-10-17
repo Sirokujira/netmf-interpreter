@@ -222,9 +222,51 @@ void task(intptr_t exinf)
 }
 
 /*
+*  並行実行されるタスク(NETMF)
+ */
+void task_netmf(intptr_t exinf)
+{
+    volatile ulong_t    i;
+    int_t       n = 0;
+    int_t       tskno = (int_t) exinf;
+    const char  *graph[] = { "|", "  +", "    *" };
+    char        c;
+
+    SVC_PERROR(ena_tex());
+    while (true) {
+        syslog(LOG_NOTICE, "task%d is running (%03d).   %s", tskno, ++n, graph[tskno-1]);
+        
+    	for (i = 0; i < task_loop; i++);
+        c = message[tskno-1];
+        message[tskno-1] = 0;
+    	
+     	// ApplicationEntryPoint();
+    }
+}
+
+
+/*
  *  並行して実行されるタスク用のタスク例外処理ルーチン
  */
 void tex_routine(TEXPTN texptn, intptr_t exinf)
+{
+    volatile ulong_t    i;
+    int_t   tskno = (int_t) exinf;
+
+    syslog(LOG_NOTICE, "task%d receives exception 0x%04x.", tskno, texptn);
+    for (i = 0; i < tex_loop; i++);
+
+    if ((texptn & 0x8000U) != 0U) {
+        syslog(LOG_INFO, "#%d#ext_tsk()", tskno);
+        SVC_PERROR(ext_tsk());
+        assert(0);
+    }
+}
+
+/*
+ *  並行して実行されるタスク用のタスク例外処理ルーチン
+ */
+void tex_routine_netmf(TEXPTN texptn, intptr_t exinf)
 {
     volatile ulong_t    i;
     int_t   tskno = (int_t) exinf;
@@ -388,43 +430,13 @@ void main_task(intptr_t exinf)
 #endif /* TASK_LOOP */
     tex_loop = task_loop / 4;
     
-    // NetMF 初期化処理
-    // ここから
-    /*
-#if defined(TARGETLOCATION_RAM)
-    LOAD_IMAGE_Start  = (UINT32)&Load$$ER_RAM$$Base;
-    LOAD_IMAGE_Length = (UINT32)&Image$$ER_RAM$$Length;
-#elif defined(TARGETLOCATION_FLASH)
-    LOAD_IMAGE_Start  = (UINT32)&Load$$ER_FLASH$$Base;
-    LOAD_IMAGE_Length = (UINT32)&Image$$ER_FLASH$$Length;
-#else
-    !ERROR
-#endif
-    InitCRuntime();
-    LOAD_IMAGE_Length += (UINT32)&IMAGE_RAM_RO_LENGTH + (UINT32)&Image$$ER_RAM_RW$$Length;
-
-#if !defined(BUILD_RTM)
-    g_Boot_RAMConstants_CRC = Checksum_RAMConstants();
-#endif
-    
-    CPU_Initialize();
-
-    HAL_Time_Initialize();
-
-    #if defined(FIQ_SAMPLING_PROFILER)
-        FIQ_Profiler_Init();
-#endif
-    }
-*/
-
-    // ここまで
-
     /*
      *  タスクの起動
      */
     SVC_PERROR(act_tsk(TASK1));
     SVC_PERROR(act_tsk(TASK2));
     SVC_PERROR(act_tsk(TASK3));
+	SVC_PERROR(act_tsk(NETMFTASK));
 
     /*
      *  メインループ
