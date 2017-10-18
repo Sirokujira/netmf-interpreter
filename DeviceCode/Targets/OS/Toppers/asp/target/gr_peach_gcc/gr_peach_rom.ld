@@ -7,7 +7,7 @@ PROVIDE(hardware_init_hook = 0);
 PROVIDE(software_init_hook = 0);
 PROVIDE(software_term_hook = 0);
 
-ENTRY(start);
+ENTRY(_start);
 
 MEMORY
 {

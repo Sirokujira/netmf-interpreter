@@ -25,7 +25,7 @@
         <IgnoreDefaultLibPath>False</IgnoreDefaultLibPath>
         <IsStub>False</IsStub>
         <Directory>DeviceCode/Targets/OS/Toppers/asp/sample</Directory>
-        <OutputType>Library</OutputType>
+        <OutputType>OSLibrary</OutputType>
         <PlatformIndependentBuild>false</PlatformIndependentBuild>
         <Version>4.0.0.0</Version>
     </PropertyGroup>
@@ -190,7 +190,6 @@
         <Compile Include="sample1.cfg" />
         
         <!-- startPoint -->
-        <!-- <Compile Include="GNU_S\AppEntry.s" /> -->
         <Compile Include="GNU_S\startup_RZ1AH.S" />
         <Compile Include="GNU_S\IDelayLoop.s" />
         <Compile Include="GNU_S\Interlocked.s" />

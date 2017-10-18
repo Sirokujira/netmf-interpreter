@@ -33,7 +33,8 @@
         <ARMBUILD_ONLY>true</ARMBUILD_ONLY>
     </PropertyGroup>
     <Import Project="$(SPOCLIENT)/tools/targets/Toppers.SPOT.System.Settings" />
-    <!--
+
+    <!-- tinyhal.h -->
     <Import Project="$(SPOCLIENT)\Framework\Features\BlockStorage_PAL.libcatproj" />
     <Import Project="$(SPOCLIENT)\Framework\Features\BlockStorageAddDevices_HAL.libcatproj" />
     <Import Project="$(SPOCLIENT)\Framework\Features\Buttons_PAL.libcatproj" />
@@ -45,7 +46,6 @@
     <Import Project="$(SPOCLIENT)\Framework\Features\Time_PAL.libcatproj" />
     <Import Project="$(SPOCLIENT)\Framework\Features\TimeService_PAL.libcatproj" />
     <Import Project="$(SPOCLIENT)\Framework\Features\Heap_PAL.libcatproj" />
-    -->
     <ItemGroup>
         <!-- Defines -->
         <!-- <CC_CPP_Defines Include="__CMSIS_RTOS" /> -->
@@ -80,100 +80,111 @@
         <IncludePaths Include="DeviceCode\Targets\OS\Toppers\asp\extension\rstr_task\include" />
         <!-- Custom(End) -->
         
+        <!-- mbed libraries -->
+        <IncludePaths Include="DeviceCode\Targets\OS\mbed\libraries\mbed\api" />
+        <IncludePaths Include="DeviceCode\Targets\OS\mbed\libraries\mbed\hal" />
+        <IncludePaths Include="DeviceCode\Targets\OS\mbed\libraries\mbed\targets\hal\TARGET_RENESAS\TARGET_RZ_A1H" />
+        <IncludePaths Include="DeviceCode\Targets\OS\mbed\libraries\mbed\targets\cmsis" />
+        <IncludePaths Include="DeviceCode\Targets\OS\mbed\libraries\mbed\targets\cmsis\TARGET_RENESAS\TARGET_RZ_A1H" />
+        <IncludePaths Include="DeviceCode\Targets\OS\mbed\libraries\mbed\targets\cmsis\TARGET_RENESAS\TARGET_RZ_A1H\inc" />
+        <IncludePaths Include="DeviceCode\Targets\OS\mbed\libraries\mbed\targets\cmsis\TARGET_RENESAS\TARGET_RZ_A1H\inc\iodefines" />
+        <IncludePaths Include="DeviceCode\Targets\OS\mbed\libraries\mbed\targets\cmsis\TARGET_RENESAS\TARGET_RZ_A1H\inc\iobitmasks" />
+        
         <!-- HFiles -->
-        <HFiles Include="..\arch\arm_gcc\common\arm.h" />
-        <HFiles Include="..\syssvc\logtask.h" />
-        <HFiles Include="..\syssvc\syslog.h" />
-        <HFiles Include="..\arch\logtrace\trace_config.h" />
-        <HFiles Include="..\arch\arm_gcc\rza1\chip_config.h" />
-        <HFiles Include="..\arch\arm_gcc\common\kernel_rename.h" />
-        <HFiles Include="..\arch\arm_gcc\common\core_rename.h" />
-        <HFiles Include="..\arch\arm_gcc\common\core_config.h" />
-        <HFiles Include="..\arch\arm_gcc\rza1\rza1.h" />
-        <HFiles Include="..\arch\arm_gcc\rza1\chip_kernel.h" />
+        <HFiles Include="..\..\arch\arm_gcc\common\arm.h" />
+        <HFiles Include="..\..\syssvc\logtask.h" />
+        <HFiles Include="..\..\syssvc\syslog.h" />
+        <HFiles Include="..\..\arch\logtrace\trace_config.h" />
+        <HFiles Include="..\..\arch\arm_gcc\rza1\chip_config.h" />
+        <HFiles Include="..\..\arch\arm_gcc\common\kernel_rename.h" />
+        <HFiles Include="..\..\arch\arm_gcc\common\core_rename.h" />
+        <HFiles Include="..\..\arch\arm_gcc\common\core_config.h" />
+        <HFiles Include="..\..\arch\arm_gcc\rza1\rza1.h" />
+        <HFiles Include="..\..\arch\arm_gcc\rza1\chip_kernel.h" />
         <HFiles Include="app.h" />
         
         <!-- netmf on OS -->
+        <IncludePaths Include="DeviceCode\Include" />
         <!-- <HFiles Include="tinyhal.h" /> -->
         <!-- <HFiles Include="uItron4API.h" /> -->
+        <HFiles Include="DeviceCode\include\tinyhal.h" />
         
-        <HFiles Include="..\syssvc\banner.h" />
-        <HFiles Include="..\syssvc\serial.h" />
-        <HFiles Include="kernel_cfg.h" />
+        <HFiles Include="..\..\syssvc\banner.h" />
+        <HFiles Include="..\..\syssvc\serial.h" />
         
         <!-- CFiles -->
         <!-- Toppers library -->
-        <Compile Include="..\library\histogram.c" />
-        <Compile Include="..\library\log_output.c" />
-        <Compile Include="..\library\strerror.c" />
-        <Compile Include="..\library\t_perror.c" />
-        <Compile Include="..\library\test_lib.c" />
-        <Compile Include="..\library\vasyslog.c" />
+        <Compile Include="..\..\library\histogram.c" />
+        <Compile Include="..\..\library\log_output.c" />
+        <Compile Include="..\..\library\strerror.c" />
+        <Compile Include="..\..\library\t_perror.c" />
+        <Compile Include="..\..\library\test_lib.c" />
+        <Compile Include="..\..\library\vasyslog.c" />
         
         <!-- Toppers syssvc -->
         <!-- define -Dgcc -->
-        <Compile Include="..\syssvc\banner.c" />
-        <Compile Include="..\syssvc\logtask.c" />
-        <Compile Include="..\syssvc\serial.c" />
-        <Compile Include="..\syssvc\syslog.c" />
-        <Compile Include="..\syssvc\serial.c" />
+        <Compile Include="..\..\syssvc\banner.c" />
+        <Compile Include="..\..\syssvc\logtask.c" />
+        <Compile Include="..\..\syssvc\serial.c" />
+        <Compile Include="..\..\syssvc\syslog.c" />
+        <Compile Include="..\..\syssvc\serial.c" />
         
         <!-- Toppers Kernel -->
-        <Compile Include="..\kernel\alarm.c" />
-        <Compile Include="..\kernel\cyclic.c" />
-        <Compile Include="..\kernel\dataqueue.c" />
-        <Compile Include="..\kernel\eventflag.c" />
-        <Compile Include="..\kernel\exception.c" />
-        <Compile Include="..\kernel\interrupt.c" />
-        <Compile Include="..\kernel\mempfix.c" />
-        <!-- <Compile Include="..\extension\mutex\kernel\mutex.c" /> -->
-        <!-- <Compile Include="..\extension\ovrhdr\kernel\overrun.c" /> -->
-        <Compile Include="..\kernel\pridataq.c" />
-        <Compile Include="..\kernel\semaphore.c" />
-        <Compile Include="..\kernel\startup.c" />
-        <Compile Include="..\kernel\sys_manage.c" />
-        <Compile Include="..\kernel\task.c" />
-        <Compile Include="..\kernel\task_except.c" />
-        <Compile Include="..\kernel\task_manage.c" />
-        <Compile Include="..\kernel\task_refer.c" />
-        <Compile Include="..\kernel\task_sync.c" />
-        <Compile Include="..\kernel\time_event.c" />
-        <Compile Include="..\kernel\time_manage.c" />
-        <Compile Include="..\kernel\wait.c" />
+        <Compile Include="..\..\kernel\alarm.c" />
+        <Compile Include="..\..\kernel\cyclic.c" />
+        <Compile Include="..\..\kernel\dataqueue.c" />
+        <Compile Include="..\..\kernel\eventflag.c" />
+        <Compile Include="..\..\kernel\exception.c" />
+        <Compile Include="..\..\kernel\interrupt.c" />
+        <Compile Include="..\..\kernel\mempfix.c" />
+        <!-- <Compile Include="..\..\extension\mutex\kernel\mutex.c" /> -->
+        <!-- <Compile Include="..\..\extension\ovrhdr\kernel\overrun.c" /> -->
+        <Compile Include="..\..\kernel\pridataq.c" />
+        <Compile Include="..\..\kernel\semaphore.c" />
+        <Compile Include="..\..\kernel\startup.c" />
+        <Compile Include="..\..\kernel\sys_manage.c" />
+        <Compile Include="..\..\kernel\task.c" />
+        <Compile Include="..\..\kernel\task_except.c" />
+        <Compile Include="..\..\kernel\task_manage.c" />
+        <Compile Include="..\..\kernel\task_refer.c" />
+        <Compile Include="..\..\kernel\task_sync.c" />
+        <Compile Include="..\..\kernel\time_event.c" />
+        <Compile Include="..\..\kernel\time_manage.c" />
+        <Compile Include="..\..\kernel\wait.c" />
         
         <!-- target(mbed) -->
-        <Compile Include="..\arch\arm_gcc\common\arm.c" />
-        <Compile Include="..\arch\arm_gcc\rza1\scif.c" />
-        <Compile Include="..\arch\arm_gcc\rza1\pl310.c" />
-        <Compile Include="..\arch\arm_gcc\rza1\chip_config.c" />
+        <Compile Include="..\..\arch\arm_gcc\common\arm.c" />
+        <Compile Include="..\..\arch\arm_gcc\rza1\scif.c" />
+        <Compile Include="..\..\arch\arm_gcc\rza1\pl310.c" />
+        <Compile Include="..\..\arch\arm_gcc\rza1\chip_config.c" />
         <!-- comment -->
-        <Compile Include="..\arch\arm_gcc\rza1\chip_serial.c" />
-        <Compile Include="..\arch\arm_gcc\rza1\chip_timer.c" />
-        <Compile Include="..\target\gr_peach_gcc\target_config.c" />
-        <Compile Include="..\target/gr_peach_gcc/sf_boot.c" />
+        <Compile Include="..\..\arch\arm_gcc\rza1\chip_serial.c" />
+        <Compile Include="..\..\arch\arm_gcc\rza1\chip_timer.c" />
+        <Compile Include="..\..\target\gr_peach_gcc\target_config.c" />
+        <Compile Include="..\..\target/gr_peach_gcc/sf_boot.c" />
         
         <!-- common -->
         <!-- netmf on OS -->
         <!-- 
-        <Compile Include="..\DeviceCode\uIron4API.c" />
-        <Compile Include="..\DeviceCode\configuration.cpp" />
-        <Compile Include="..\DeviceCode\cpu.cpp" />
-        <Compile Include="..\DeviceCode\GlobalLock.cpp" />
-        <Compile Include="..\DeviceCode\Various_uIron4.cpp" />
+        <Compile Include="..\..\DeviceCode\uIron4API.c" />
+        <Compile Include="..\..\DeviceCode\configuration.cpp" />
+        <Compile Include="..\..\DeviceCode\cpu.cpp" />
+        <Compile Include="..\..\DeviceCode\GlobalLock.cpp" />
+        <Compile Include="..\..\DeviceCode\Various_uIron4.cpp" />
         -->
         
         <!-- Assembly -->
-        <Compile Include="..\target\gr_peach_gcc\target_support.S" />
-        <Compile Include="..\arch\arm_gcc\common\start.S" />
+        <Compile Include="..\..\target\gr_peach_gcc\target_support.S" />
+        <Compile Include="..\..\arch\arm_gcc\common\start.S" />
         
         <!-- Unsupported Compiler error -->
         
         <!-- use assemble(core_support.S) -->
-        <Compile Include="..\arch\arm_gcc\common\core_config.c" />
-        <Compile Include="..\arch\arm_gcc\common\core_support.S" />
+        <Compile Include="..\..\arch\arm_gcc\common\core_config.c" />
+        <Compile Include="..\..\arch\arm_gcc\common\core_support.S" />
         
-        <Compile Include="..\arch\arm_gcc\common\gic.c" />
-        <Compile Include="..\arch\arm_gcc\common\gic_support.S" />
+        <Compile Include="..\..\arch\arm_gcc\common\gic.c" />
+        <Compile Include="..\..\arch\arm_gcc\common\gic_support.S" />
         
         <!-- cfg -->
         <!-- common -->
@@ -181,6 +192,8 @@
         <!-- custom -->
         <!-- BUILD_Kernel -->
         <!-- <Compile Include="kernel_cfg.c" /> -->
+        <!-- <HFiles Include="kernel_cfg.h" /> -->
+        
         <!-- <Compile Include="kernel_mem.c" /> -->
         <!-- <Compile Include="kernel_mem2.c" /> -->
         <!-- <Compile Include="kernel_mem3.c" /> -->
@@ -188,6 +201,10 @@
         <!-- App -->
         <Compile Include="sslClient.cpp" />
         <Compile Include="sslClient.cfg" />
+        <!-- startPoint -->
+        <Compile Include="GNU_S\startup_RZ1AH.S" />
+        <Compile Include="GNU_S\IDelayLoop.s" />
+        <Compile Include="GNU_S\Interlocked.s" />
     </ItemGroup>
     
     <Import Project="$(SPOCLIENT)/tools/targets/Toppers.SPOT.System.Targets" />
