@@ -25,7 +25,7 @@
         <IgnoreDefaultLibPath>False</IgnoreDefaultLibPath>
         <IsStub>False</IsStub>
         <Directory>DeviceCode/Targets/OS/Toppers/asp/sample</Directory>
-        <OutputType>OSLibrary</OutputType>
+        <OutputType>Library</OutputType>
         <PlatformIndependentBuild>false</PlatformIndependentBuild>
         <Version>4.0.0.0</Version>
     </PropertyGroup>

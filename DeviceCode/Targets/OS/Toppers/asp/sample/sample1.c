@@ -113,29 +113,6 @@
 #include "kernel_cfg.h"
 #include "sample1.h"
 
-// NetMF 用
-// #include <tinyhal.h>
-// #include "OsHal.h"
-
-/*
- *  start.Sから呼び出されるソフトウェア環境の初期化処理
- */
-
-extern void software_init_hook();
-
-// netmf の実行?
-extern void ApplicationEntryPoint();
-
-/*
- *  ソフトウェア環境の終了処理
- */
-// void
-// software_term_hook(void)
-// {
-// 
-// }
-
-
 /*
  *  サービスコールのエラーのログ出力
  */
@@ -222,51 +199,9 @@ void task(intptr_t exinf)
 }
 
 /*
-*  並行実行されるタスク(NETMF)
- */
-void task_netmf(intptr_t exinf)
-{
-    volatile ulong_t    i;
-    int_t       n = 0;
-    int_t       tskno = (int_t) exinf;
-    const char  *graph[] = { "|", "  +", "    *" };
-    char        c;
-
-    SVC_PERROR(ena_tex());
-    while (true) {
-        syslog(LOG_NOTICE, "task%d is running (%03d).   %s", tskno, ++n, graph[tskno-1]);
-        
-    	for (i = 0; i < task_loop; i++);
-        c = message[tskno-1];
-        message[tskno-1] = 0;
-    	
-     	// ApplicationEntryPoint();
-    }
-}
-
-
-/*
  *  並行して実行されるタスク用のタスク例外処理ルーチン
  */
 void tex_routine(TEXPTN texptn, intptr_t exinf)
-{
-    volatile ulong_t    i;
-    int_t   tskno = (int_t) exinf;
-
-    syslog(LOG_NOTICE, "task%d receives exception 0x%04x.", tskno, texptn);
-    for (i = 0; i < tex_loop; i++);
-
-    if ((texptn & 0x8000U) != 0U) {
-        syslog(LOG_INFO, "#%d#ext_tsk()", tskno);
-        SVC_PERROR(ext_tsk());
-        assert(0);
-    }
-}
-
-/*
- *  並行して実行されるタスク用のタスク例外処理ルーチン
- */
-void tex_routine_netmf(TEXPTN texptn, intptr_t exinf)
 {
     volatile ulong_t    i;
     int_t   tskno = (int_t) exinf;
