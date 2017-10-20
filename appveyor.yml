@@ -82,11 +82,11 @@ install:
 # dir "C:\projects\netmf-interpreter"
 # cd Solutions\MBED_GR_PEACH_Native
 #     "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\VSIXInstaller.exe" /q /a C:\projects\netmf-interpreter\NetMFVS14.vsix
+# sdk build ng
+# build_sdk.cmd
 build_script:
 - cmd: >-
     dir "C:\Program Files (x86)\MSBuild\Microsoft"
-    
-    build_sdk.cmd
     
     dir .
     
