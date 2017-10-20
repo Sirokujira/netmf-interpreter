@@ -27,7 +27,8 @@ void ApplicationEntryPoint()
     Flash_ChipReadOnly( FALSE );
     for(int i = 0; i < nSects; i++)
     {
-        if((sects[ i ].Usage & MEMORY_USAGE_MASK) == MEMORY_USAGE_DEPLOYMENT)
+        // if((sects[ i ].Usage & MEMORY_USAGE_MASK) == MEMORY_USAGE_DEPLOYMENT)
+    	if((sects[ i ].Usage & BlockRange::USAGE_MASK) == BlockUsage::DEPLOYMENT)
         {
             hal_printf( "Erasing sector %d (0x%08x)\r\n", i, (UINT32)sects[ i ].Start );
             if(!Flash_IsSectorErased( &sects[ i ] ))

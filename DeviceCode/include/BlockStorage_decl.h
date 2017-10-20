@@ -139,12 +139,13 @@ struct BlockUsage
     static const UINT32 BOOTSTRAP   = 0x0010;
     static const UINT32 CODE        = 0x0020;
     static const UINT32 CONFIG      = 0x0030;
-    static const UINT32 FILESYSTEM  = 0x0040;    
+    static const UINT32 FILESYSTEM  = 0x0040;
 
-    static const UINT32 DEPLOYMENT  = 0x0050; 
+    static const UINT32 DEPLOYMENT  = 0x0050;
 
     static const UINT32 UPDATE      = 0x0060;
-
+    static const UINT32 JITTER      = 0x0070;
+	
     static const UINT32 SIMPLE_A    = 0x0090;
     static const UINT32 SIMPLE_B    = 0x00A0;
     
@@ -194,6 +195,7 @@ public:
     static const UINT32 BLOCKTYPE_STORAGE_B  =                  RESERVED | DATATYPE_RAW         | BlockUsage::STORAGE_B;  // Part B of EWR Storage
     static const UINT32 BLOCKTYPE_FILESYSTEM =                             DATATYPE_RAW         | BlockUsage::FILESYSTEM; // File System
     static const UINT32 BLOCKTYPE_UPDATE     =                  RESERVED | DATATYPE_RAW         | BlockUsage::UPDATE;     // Used for MFUpdate for firmware/assembly/etc updates
+	static const UINT32 BLOCKTYPE_JITTER     =                  RESERVED | DATATYPE_RAW         | BlockUsage::JITTER;     // Used for JITTER
 
     static BOOL IsBlockTinyBooterAgnostic( UINT32 BlockType )
     {
@@ -222,6 +224,7 @@ public:
     BOOL IsConfig() const           { return ((RangeType & BLOCKTYPE_CONFIG) == BLOCKTYPE_CONFIG); }
     BOOL IsDeployment() const  { return ((RangeType & USAGE_MASK) == BlockUsage::DEPLOYMENT);}
     BOOL IsFileSystem() const     { return ((RangeType & USAGE_MASK) == BlockUsage::FILESYSTEM); }
+	BOOL IsJitter() const     { return ((RangeType & USAGE_MASK) == BlockUsage::JITTER); }
     UINT32 GetBlockCount() const    { return (EndBlock - StartBlock + 1); }
 
     // NOTE: This is the application native code only (not including the managed DAT section)

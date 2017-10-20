@@ -76,6 +76,11 @@
     <NewlibNano Condition="'$(COMPILER_TOOL)'=='GCC'">false</NewlibNano>
   </PropertyGroup>
   <ItemGroup />
+  <ItemGroup>
+    <!-- Defines -->
+    <!-- <CC_CPP_Defines Include="__CMSIS_RTOS" /> -->
+    <CC_CPP_Defines Include="TINYCLR_JITTER" />
+  </ItemGroup>
   <ItemGroup Condition="'$(EnableOpenSSL)'=='true'" >
     <IncludePaths Include="DeviceCode\PAL\OpenSSL" />
     <IncludePaths Include="DeviceCode\PAL\OpenSSL\OpenSSL_1_0" />
@@ -326,6 +331,12 @@
     <PlatformIndependentLibs Include="Graphics_Jpeg.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\CLR\Graphics\Jpeg\dotNetMF.proj" />
   </ItemGroup>
+  <!--
+  <ItemGroup>
+    <PlatformIndependentLibs Include="Jitter.$(LIB_EXT)" />
+    <RequiredProjects Include="$(SPOCLIENT)\CLR\Jitter\dotNetMF.proj" />
+  </ItemGroup>
+  -->
   <ItemGroup>
     <PlatformIndependentLibs Include="CorLib.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\CLR\Libraries\CorLib\dotNetMF.proj" />

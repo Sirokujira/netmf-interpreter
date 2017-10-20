@@ -86,11 +86,11 @@ install:
 # build_sdk.cmd
 build_script:
 - cmd: >-
+    timeout 15
+    
     dir "C:\Program Files (x86)\MSBuild\Microsoft"
     
     dir .
-    
-    timeout 45
     
     MSbuild DeviceCode\Targets\Native\Interop\ManagedCode\CQ_NETMF_CQ_FRK_FM3_Hardware\CQ_NETMF_CQ_FRK_FM3_Hardware.sln
     

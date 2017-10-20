@@ -18,6 +18,16 @@ struct CLR_RADIAN
     short sin;
 };
 
+
+#define TINYCLR_JITTER
+/*
+struct FLASH_SECTOR 
+{
+    UINT32 Start;
+    UINT32 Length;
+    UINT32 Usage;
+} *pData = NULL;
+*/
 extern const CLR_RADIAN c_CLR_radians[];
 
 #if defined(PLATFORM_WINCE)
@@ -3027,11 +3037,12 @@ struct CLR_RT_ExecutionEngine
     //--//
 
 #if defined(TINYCLR_JITTER)
-    const FLASH_SECTOR*                 m_jitter_firstSector;
-    int                                 m_jitter_numSectors;
-
-    FLASH_WORD*                         m_jitter_current;
-    FLASH_WORD*                         m_jitter_end;
+	// Sector ï™äÑÉPÅ[ÉX
+    // CLR_RT_HeapBlock_Array*                m_jitter_firstSector;
+    // int                                 m_jitter_numSectors;
+	// 
+    // FLASH_WORD*                         m_jitter_current;
+    // FLASH_WORD*                         m_jitter_end;
 #endif
 
     //--//

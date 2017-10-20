@@ -131,7 +131,8 @@ HRESULT CLR_RT_StackFrame::Push( CLR_RT_Thread* th, const CLR_RT_MethodDef_Insta
 #if defined(TINYCLR_JITTER)
         else if(assm->m_jittedCode && (impl = assm->m_jittedCode[ stack->m_call.Method() ]) != NULL)
         {
-            stack->m_nativeMethod = (CLR_RT_MethodHandler)(size_t)g_thunkTable.m_address__Internal_Initialize;
+            // stack->m_nativeMethod = (CLR_RT_MethodHandler)(size_t)g_thunkTable.m_address__Internal_Initialize;
+        	stack->m_nativeMethod = impl;
 
             stack->m_flags   = CLR_RT_StackFrame::c_MethodKind_Jitted;
             stack->m_IPstart = (CLR_PMETADATA)impl;
@@ -215,7 +216,7 @@ HRESULT CLR_RT_StackFrame::Push( CLR_RT_Thread* th, const CLR_RT_MethodDef_Insta
     {
         CLR_RT_ExecutionEngine::ExecutionConstraint_Suspend();
 
-        g_CLR_RT_ExecutionEngine.Compile( stack->m_call, CLR_RT_ExecutionEngine::c_Compile_ARM );
+        // g_CLR_RT_ExecutionEngine.Compile( stack->m_call, CLR_RT_ExecutionEngine::c_Compile_ARM );
 
         CLR_RT_ExecutionEngine::ExecutionConstraint_Resume();
 
@@ -225,7 +226,7 @@ HRESULT CLR_RT_StackFrame::Push( CLR_RT_Thread* th, const CLR_RT_MethodDef_Insta
 
             if(ipStart != NULL)
             {
-                stack->m_nativeMethod = (CLR_RT_MethodHandler)(size_t)g_thunkTable.m_address__Internal_Initialize;
+                // stack->m_nativeMethod = (CLR_RT_MethodHandler)(size_t)g_thunkTable.m_address__Internal_Initialize;
 
                 stack->m_IPstart = ipStart;
 

@@ -147,14 +147,19 @@ HRESULT CLR_RT_ExecutionEngine::ExecutionEngine_Initialize()
 
 #if defined(TINYCLR_JITTER)
     {
+    	// FLASH—Ìˆæ‚Ö JITTER ‚Ì€–Ú‚ð‘‚«ž‚ñ‚¾Û‚Ì—ÌˆæŽæ“¾
+    	// FLASH —Ìˆæ‚Ì Sector ‚ð•ªŠ„‚µ‚Ä‚¢‚éê‡‚Ìˆ—
+    	/*
         int                 numSectors;
         const FLASH_SECTOR* pSectors;
 
-        if(SUCCEEDED(::Flash_EnumerateSectors( numSectors, pSectors )))
+        // if(SUCCEEDED(::Flash_EnumerateSectors( numSectors, pSectors )))
+    	if(true)
         {
             while(numSectors--)
             {
-                if((pSectors->Usage & MEMORY_USAGE_MASK) == MEMORY_USAGE_JITTER)
+                // if((pSectors->Usage & MEMORY_USAGE_MASK) == MEMORY_USAGE_JITTER)
+            	if((pSectors->Usage & BlockRange::USAGE_MASK) == BlockUsage::JITTER)
                 {
                     FLASH_WORD* start =                                                            pSectors->Start;
                     FLASH_WORD* end   = CLR_RT_Persistence_Manager::Bank::IncrementPointer( start, pSectors->Length );
@@ -196,6 +201,7 @@ HRESULT CLR_RT_ExecutionEngine::ExecutionEngine_Initialize()
                 pSectors++;
             }
         }
+    	*/
     }
 #endif
 
@@ -947,6 +953,13 @@ void CLR_RT_ExecutionEngine::SpawnStaticConstructor( CLR_RT_Thread *&pCctorThrea
     pCctorThread->DestroyInstance();
 }
 #else //TINYCLR_APPDOMAINS
+
+#if defined(TINYCLR_JITTER)
+void CLR_RT_ExecutionEngine::Compile(const CLR_RT_MethodDef_Index& idx, CLR_UINT32 param)
+{
+	// TODO :
+}
+#endif
 
 bool CLR_RT_ExecutionEngine::SpawnStaticConstructorHelper( CLR_RT_Assembly* assembly, const CLR_RT_MethodDef_Index& idx )
 {
