@@ -5,11 +5,11 @@
         <Size>
         </Size>
         <ProjectGuid>{10E7C8AD-F98D-4ED2-A189-A08F6F65399A}</ProjectGuid>
-        <Description>ToppersASP_blinky OS</Description>
+        <Description>$(AssemblyName) on Toppers ASP OS</Description>
         <Level>HAL</Level>
-        <LibraryFile>ToppersASP_blinky.$(LIB_EXT)</LibraryFile>
+        <LibraryFile>$(AssemblyName).$(LIB_EXT)</LibraryFile>
         <ProjectPath>$(SPOCLIENT)/DeviceCode/Targets/OS/Toppers/asp/examples/blinky/dotNetMF.proj</ProjectPath>
-        <ManifestFile>ToppersASP_blinky.$(LIB_EXT).manifest</ManifestFile>
+        <ManifestFile>$(AssemblyName).$(LIB_EXT).manifest</ManifestFile>
         <Groups>OS/TOPPERS_ASP</Groups>
         <LibraryCategory>
             <MFComponent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="OS" Guid="{F0C31986-B463-437E-9814-EDAB2BE46109}" Conditional="" xmlns="">
@@ -190,8 +190,7 @@
         
         <!-- custom -->
         <!-- BUILD_Kernel -->
-        <!-- <Compile Include="kernel_cfg.c" /> -->
-        <!-- <HFiles Include="kernel_cfg.h" /> -->
+        <Compile Include="kernel_cfg.c" />
         
         <!-- <Compile Include="kernel_mem.c" /> -->
         <!-- <Compile Include="kernel_mem2.c" /> -->

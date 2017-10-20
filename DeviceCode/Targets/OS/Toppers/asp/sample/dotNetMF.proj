@@ -78,6 +78,8 @@
         <IncludePaths Include="DeviceCode\Targets\OS\Toppers\asp\extension\rstr_task\include" />
         <!-- Custom(End) -->
         
+        <IncludePaths Include="DeviceCode\Targets\OS\Toppers\asp\netmf" />
+        
         <!-- HFiles -->
         <HFiles Include="..\arch\arm_gcc\common\arm.h" />
         <HFiles Include="..\syssvc\logtask.h" />
@@ -189,6 +191,8 @@
         <Compile Include="sample1.c" />
         <Compile Include="sample1.cfg" />
         
+        <Compile Include="../netmf/netmf.c" />
+
         <!-- startPoint -->
         <Compile Include="GNU_S\startup_RZ1AH.S" />
         <Compile Include="GNU_S\IDelayLoop.s" />
