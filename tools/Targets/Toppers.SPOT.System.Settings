@@ -322,8 +322,11 @@
             <PropertyGroup>
                 <!-- Toppers ASP + GR-PEACH -->
                 <APPNAME>sample1</APPNAME>
-                <CFGINCLUDE             Condition="'$(CFGINCLUDE)'==''">-I$(SRCDIR) -I$(SRCDIR)/arch -I$(SRCDIR)/include -I$(KERNELDIR) -I$(SRCDIR)/arch/arm_gcc/rza1 -I$(SRCDIR)/arch/arm_gcc/common -I$(TARGETDIR)</CFGINCLUDE>
-                <CFG1COMPILEINCLUDE     Condition="'$(CFG1COMPILEINCLUDE)'==''">-I$(SRCDIR) -I$(SRCDIR)/arch -I$(SRCDIR)/include -I$(KERNELDIR) -I$(SRCDIR)/arch/arm_gcc/rza1 -I$(SRCDIR)/arch/arm_gcc/common -I$(TARGETDIR) -I$(SPOCLIENT)/$(Directory)</CFG1COMPILEINCLUDE>
+                <!-- <APPNAME>blinky</APPNAME> -->
+                <!-- <APPNAME>$(AssemblyName)</APPNAME> -->
+                <!-- <CFGINCLUDE             Condition="'$(CFGINCLUDE)'==''">-I$(SRCDIR) -I$(SRCDIR)/arch -I$(SRCDIR)/include -I$(KERNELDIR) -I$(SRCDIR)/arch/arm_gcc/rza1 -I$(SRCDIR)/arch/arm_gcc/common -I$(TARGETDIR)</CFGINCLUDE> -->
+                <CFGINCLUDE             Condition="'$(CFGINCLUDE)'==''">-I$(SRCDIR) -I$(SRCDIR)/arch -I$(SRCDIR)/include -I$(KERNELDIR) -I$(SRCDIR)/arch/arm_gcc/rza1 -I$(SRCDIR)/arch/arm_gcc/common -I$(SRCDIR)/netmf -I$(TARGETDIR)</CFGINCLUDE>
+                <CFG1COMPILEINCLUDE     Condition="'$(CFG1COMPILEINCLUDE)'==''">$(CFGINCLUDE) -I$(SPOCLIENT)/$(Directory)</CFG1COMPILEINCLUDE>
                 <APPLNAME               Condition="'$(APPLNAME)'==''">$(SPOCLIENT)/$(Directory)/$(APPNAME)</APPLNAME>
                 <APPL_CFG>$(APPLNAME).cfg</APPL_CFG>
                 <APPL_CDL>$(APPLNAME).cdl</APPL_CDL>
@@ -336,7 +339,7 @@
                 <!-- ld file set -->
                 <TOPPERS_START_OBJS>start.o</TOPPERS_START_OBJS>
                 <!-- helloev3 -->
-                <TOPPERS_APPL_OBJS>$(TOPPERS_APPL_OBJS) sample1.$(OBJEXT)</TOPPERS_APPL_OBJS>
+                <TOPPERS_APPL_OBJS>$(TOPPERS_APPL_OBJS) $(APPNAME).$(OBJEXT)</TOPPERS_APPL_OBJS>
                 <!-- appl objs -->
                 <TOPPERS_APPL_OBJS>$(TOPPERS_APPL_OBJS) log_output.$(OBJEXT) t_perror.$(OBJEXT) </TOPPERS_APPL_OBJS>
                 <!-- ev3 drivers -->
@@ -383,10 +386,16 @@
                 <CFG4_OUT_TARGETFILE></CFG4_OUT_TARGETFILE>
                 
                 <!-- rom -->
+                <!-- FALSH -->
                 <CFG1_OUT_LDSCRIPT>$(SRCDIR)/target/$(TARGETNAME)/gr_peach_rom.ld</CFG1_OUT_LDSCRIPT>
                 <CFG2_OUT_LDSCRIPT>$(SRCDIR)/target/$(TARGETNAME)/gr_peach_rom.ld</CFG2_OUT_LDSCRIPT>
                 <CFG3_OUT_LDSCRIPT>$(SRCDIR)/target/$(TARGETNAME)/gr_peach_rom.ld</CFG3_OUT_LDSCRIPT>
                 <LDSCRIPT>$(SRCDIR)/target/$(TARGETNAME)/gr_peach_rom.ld</LDSCRIPT>
+
+                <!-- <CFG1_OUT_LDSCRIPT>$(SRCDIR)/target/$(TARGETNAME)/gr_peach_ram.ld</CFG1_OUT_LDSCRIPT> -->
+                <!-- <CFG2_OUT_LDSCRIPT>$(SRCDIR)/target/$(TARGETNAME)/gr_peach_ram.ld</CFG2_OUT_LDSCRIPT> -->
+                <!-- <CFG3_OUT_LDSCRIPT>$(SRCDIR)/target/$(TARGETNAME)/gr_peach_ram.ld</CFG3_OUT_LDSCRIPT> -->
+                <!-- <LDSCRIPT>$(SRCDIR)/target/$(TARGETNAME)/gr_peach_ram.ld</LDSCRIPT> -->
                 
                 <!-- chip_support.$(OBJEXT) -->
                 <KERNEL_ASMOBJS>$(KERNEL_ASMOBJS) core_support.$(OBJEXT)</KERNEL_ASMOBJS>
@@ -430,7 +439,7 @@
                 <!-- ld file set -->
                 <TOPPERS_START_OBJS>start.o</TOPPERS_START_OBJS>
                 <!-- helloev3 -->
-                <TOPPERS_APPL_OBJS>$(TOPPERS_APPL_OBJS) sample1.$(OBJEXT)</TOPPERS_APPL_OBJS>
+                <TOPPERS_APPL_OBJS>$(TOPPERS_APPL_OBJS) $(APPNAME).$(OBJEXT)</TOPPERS_APPL_OBJS>
                 <!-- appl objs -->
                 <TOPPERS_APPL_OBJS>$(TOPPERS_APPL_OBJS) log_output.$(OBJEXT) t_perror.$(OBJEXT) </TOPPERS_APPL_OBJS>
                 <!-- ev3 drivers -->
