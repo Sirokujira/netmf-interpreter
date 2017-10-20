@@ -25,26 +25,15 @@
 
   <ItemGroup>
     <IncludePaths Include="DeviceCode\Cores\arm"/>
+
+
     <IncludePaths Include="DeviceCode\Cores\arm\Include"/>
+
 
     <IncludePaths Include="DeviceCode"/>
     <IncludePaths Include="DeviceCode\Include"/>
     <IncludePaths Include="CLR\Include"/>
-    <!-- Add GR-PEACH OS -->
-    <!--
-    <IncludePaths Include="DeviceCode\pal\lwip_1_4_1_os\LWIP\src\include" />
-    <IncludePaths Include="DeviceCode\pal\lwip_1_4_1_os\lwip\src\include\lwip" />
-    <IncludePaths Include="DeviceCode\pal\lwip_1_4_1_os\config" />
-    <IncludePaths Include="DeviceCode\pal\lwip_1_4_1_os\lwip\src\include\ipv4" />
-    <IncludePaths Include="DeviceCode\Targets\OS\CMSIS_RTOS\DeviceCode\lwip_1_4_1_os" />
-    -->
-    <!-- Add GR-PEACH Native -->
-    <!--
-    <IncludePaths Include="DeviceCode\pal\lwip\LWIP\src\include" />
-    <IncludePaths Include="DeviceCode\pal\lwip\LWIP\contrib\ports\arm" />
-    <IncludePaths Include="DeviceCode\pal\lwip\LWIP\src\include\ipv4" />
-    <IncludePaths Include="CMSIS\CMSIS\RTOS\RTX\INC" />
-    -->
+    
   </ItemGroup>
 
 </Project>
