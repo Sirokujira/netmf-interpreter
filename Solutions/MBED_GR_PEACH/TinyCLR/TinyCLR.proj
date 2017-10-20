@@ -199,10 +199,14 @@
   
   <!-- RTX -->
   <!-- CMSIS RTX Override ToppersASP -->
+  <!--
   <ItemGroup>
     <RequiredProjects Include="$(SPOCLIENT)/DeviceCode/Targets/OS/Toppers/RTOS/rtx/TARGET_CORTEX_A/dotNetMF.proj" />
     <DriverLibs Include="TOPPERS_RTX.$(LIB_EXT)" />
   </ItemGroup>
+  -->
+  <!-- config is cfg file -->
+  
   <!-- use CMSIS -->
   <!--
   <ItemGroup>
@@ -210,10 +214,12 @@
     <DriverLibs Include="CMSIS_RTX.$(LIB_EXT)" />
   </ItemGroup>
   <ItemGroup>
-    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH\DeviceCode\TOPPERS_RTX_Config\dotNetMF.proj" />
+    <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH\DeviceCode\CMSIS_RTX_Config\dotNetMF.proj" />
     <DriverLibs Include="CMSIS_RTX_CONFIG.$(LIB_EXT)" />
   </ItemGroup>
   -->
+  
+  <!-- use mbed libraries -->
   <ItemGroup>
     <DriverLibs Include="mbed_common.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\OS\mbed\libraries\mbed\common\dotNetMF.proj" />

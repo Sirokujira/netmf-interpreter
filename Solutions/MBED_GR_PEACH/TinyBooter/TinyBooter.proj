@@ -365,7 +365,7 @@
   </ItemGroup>
   <ItemGroup Condition="'$(EnableWatchdog)'!='true'">
     <DriverLibs Include="Watchdog_pal_stubs.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Pal\Watchdog\stubs\dotNetMF.proj" />MBED_HAL
+    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Pal\Watchdog\stubs\dotNetMF.proj" />
   </ItemGroup>
   <ItemGroup Condition="'$(EnableAnalog)'=='true'">
     <DriverLibs Include="MBED_ANALOG.$(LIB_EXT)" />

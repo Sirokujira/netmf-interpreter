@@ -18,7 +18,7 @@
     <TOPPERS_MODULES>gr-peach</TOPPERS_MODULES>
   </PropertyGroup>
   <PropertyGroup>
-    <OEMSystemInfoString>MBED_GR_PEACH by Kentaro Sekimoto</OEMSystemInfoString>
+    <OEMSystemInfoString>MBED_GR_PEACH by Tooru Oonuma</OEMSystemInfoString>
   </PropertyGroup>
   <ItemGroup>
     <IncludePaths Include="Solutions\MBED_GR_PEACH" />

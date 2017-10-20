@@ -64,9 +64,7 @@ PROVIDE(IRQNestLevel = _kernel_excpt_nest_count);
 
     <NamedGroup Name="MEMORY">
         <LoadRegion Name="ER_TTB" Base="%TTB_BaseAddress%" Size="%TTB_Size%"/>
-<!--
         <LoadRegion Name="LR_BOOT_LOADER" Base="%BL_BaseAddress%" Size="%BL_Size%"/>
--->
         <LoadRegion Name="LR_%TARGETLOCATION%" Base="%Code_BaseAddress%" Size="%Code_Size%"/>
         <IfDefined Name="Config_BaseAddress">
             <LoadRegion Name="LR_CONFIG" Base="%Config_BaseAddress%" Size="%Config_Size%"/>
@@ -87,15 +85,15 @@ PROVIDE(IRQNestLevel = _kernel_excpt_nest_count);
     <!-- <EntryPoint Name="Reset_Handler" /> -->
 
     <NamedGroup Name="SECTIONS">
-<!--
+        <!-- FLASH only -->
         <ExecRegion Name="ER_BOOT_LOADER" Options="&gt;LR_BOOT_LOADER">
             <FileMapping Name="KEEP(*(.boot_loader))" />
         </ExecRegion>
--->
+        
         <ExecRegion Name="ER_%TARGETLOCATION%" Options="&gt;LR_%TARGETLOCATION%">
             <FileMapping Name="*" Options="(i.EntryPoint)" />
             <FileMapping Name="*" Options="(SectionForBootstrapOperations)" />
-            <FileMapping Name="KEEP(*(.boot_loader))" />
+            
             <!-- libc thinks that it needs these routines, but they are never called -->
             <Include File="%SPOCLIENT%\Solutions\%PLATFORM%\scatterfile_gcc_missing_symbols.xml"/>
         </ExecRegion>
@@ -125,6 +123,24 @@ PROVIDE(IRQNestLevel = _kernel_excpt_nest_count);
             <FileMapping Name="*" Options="(rwdata)" />
             <FileMapping Name="*" Options="(.data*)" />
         </ExecRegion>
+
+        <!--
+        <ExecRegion Name=".text"  Options="&gt;LR_FLASH">
+            <FileMapping Name="__text = . ;" />
+            <FileMapping Name="__vector_start = .   ;" />
+            <FileMapping Name="PROVIDE (_vector_start = .);" />
+            <FileMapping Name="*(vector)" />
+            <FileMapping Name="start.o(.text*)" />
+            <FileMapping Name=". = 0x400;" />           // IVT table offset
+            <FileMapping Name="*(.ivt)" />
+            <FileMapping Name="*(.boot_data)" />
+            <FileMapping Name="*(.dcd)" />
+            <FileMapping Name=". = ALIGN(32);" />
+            <FileMapping Name="*(.text*)" />
+            <FileMapping Name="*(.glue_7t)" />
+            <FileMapping Name="*(.glue_7)" />
+        </ExecRegion>
+        -->
 
         <ExecRegion Name=".copy.table" Options="&gt;LR_FLASH">
             <FileMapping Name=". = ALIGN(4);" />
