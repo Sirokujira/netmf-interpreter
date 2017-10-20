@@ -172,7 +172,7 @@ function InstallBuildTools2()
 function main () 
 {
     # Version 4.4
-    InstallNETMFSDK
+    # InstallNETMFSDK
     # ToolChain
     # InstallGCCCompiler
     # InstallGCCCompiler2
