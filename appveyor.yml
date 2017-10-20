@@ -7,14 +7,14 @@ environment:
     - SPOROOT: 'C:\projects\netmf-interpreter\build-tools'
       GCC_VERSION: '4.9.3'
       GCC_TOOLS: 'C:\projects\gcc-arm-none-eabi'
-      SOLUTION_PATH : 'MBED_GR_PEACH_Native'
-      OUTPUT_BINARY : 'tinyclrnbl.bin'
+      SOLUTION_PATH : 'MBED_GR_PEACH'
+      OUTPUT_BINARY : 'tinyclr.bin'
 
     - SPOROOT: 'C:\projects\netmf-interpreter\build-tools'
       GCC_VERSION: '4.9.3'
       GCC_TOOLS: 'C:\projects\gcc-arm-none-eabi'
-      SOLUTION_PATH : 'MBED_GR_PEACH'
-      OUTPUT_BINARY : 'tinyclr.bin'
+      SOLUTION_PATH : 'MBED_GR_PEACH_Native'
+      OUTPUT_BINARY : 'tinyclrnbl.bin'
 
     # - SPOROOT: 'C:\projects\netmf-interpreter\build-tools'
     #   GCC_VERSION: '5.4.1'
@@ -90,7 +90,7 @@ build_script:
     
     dir .
     
-    timeout 30
+    timeout 45
     
     MSbuild DeviceCode\Targets\Native\Interop\ManagedCode\CQ_NETMF_CQ_FRK_FM3_Hardware\CQ_NETMF_CQ_FRK_FM3_Hardware.sln
     
