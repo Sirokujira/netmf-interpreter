@@ -2,6 +2,12 @@
 version: 1.0.{build}
 image: Visual Studio 2015
 
+branches:
+  only:
+  - dev
+  - grpeach_on_Toppers
+
+
 environment:
   matrix:
     - SPOROOT: 'C:\projects\netmf-interpreter\build-tools'
