@@ -79,7 +79,6 @@
   <ItemGroup>
     <!-- Defines -->
     <!-- <CC_CPP_Defines Include="__CMSIS_RTOS" /> -->
-    <CC_CPP_Defines Include="TINYCLR_JITTER" />
   </ItemGroup>
   <ItemGroup Condition="'$(EnableOpenSSL)'=='true'" >
     <IncludePaths Include="DeviceCode\PAL\OpenSSL" />

@@ -14,6 +14,10 @@
   </PropertyGroup>
   <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Settings" />
   <ItemGroup>
+    <CC_CPP_Defines Include="TINYCLR_JITTER" />
+    <CC_CPP_Defines Include="TINYCLR_OPCODE_PARSER" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Jitter.cpp" />
     <Compile Include="Jitter_ARM.cpp" />
     <Compile Include="Jitter_ARM_Emulation.cpp" />

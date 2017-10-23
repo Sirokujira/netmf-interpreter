@@ -427,7 +427,8 @@ CLR_PMETADATA MethodCompilerHelpers::Leave( CLR_RT_StackFrame* stack, CLR_PMETAD
 
     th->PopEH( stack, to );
 
-    if(th->FindEhBlock( stack, from, to, eh ))
+    // if(th->FindEhBlock( stack, from, to, eh ))
+	if(th->FindEhBlock( stack, from, to, eh, true))
     {
         CLR_RT_Thread::UnwindStack* us = th->PushEH();
         if(us)
@@ -435,7 +436,7 @@ CLR_PMETADATA MethodCompilerHelpers::Leave( CLR_RT_StackFrame* stack, CLR_PMETAD
             us->m_stack     = stack;
             us->m_exception = NULL;
             us->m_ip        = to;
-            us->m_eh        = eh;
+            // us->m_eh        = eh;
 
             return us->m_eh.m_handlerStart;
         }

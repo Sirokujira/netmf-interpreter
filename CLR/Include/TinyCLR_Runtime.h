@@ -19,7 +19,8 @@ struct CLR_RADIAN
 };
 
 
-#define TINYCLR_JITTER
+// #define TINYCLR_JITTER
+// #define TINYCLR_OPCODE_PARSER
 /*
 struct FLASH_SECTOR 
 {
@@ -2391,6 +2392,8 @@ struct CLR_RT_Thread : public CLR_RT_ObjectToEvent_Destination // EVENT HEAP - N
         CLR_RT_StackFrame*      m_stack;
         CLR_RT_HeapBlock*       m_exception;
         CLR_PMETADATA           m_ip;
+    	// Add(use arg?)
+    	CLR_RT_ExceptionHandler m_eh;
 
         CLR_PMETADATA           m_currentBlockStart;
         CLR_PMETADATA           m_currentBlockEnd;
@@ -3041,8 +3044,8 @@ struct CLR_RT_ExecutionEngine
     // CLR_RT_HeapBlock_Array*                m_jitter_firstSector;
     // int                                 m_jitter_numSectors;
 	// 
-    // FLASH_WORD*                         m_jitter_current;
-    // FLASH_WORD*                         m_jitter_end;
+    FLASH_WORD*                         m_jitter_current;
+    FLASH_WORD*                         m_jitter_end;
 #endif
 
     //--//

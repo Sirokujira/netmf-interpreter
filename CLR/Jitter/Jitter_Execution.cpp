@@ -148,15 +148,15 @@ HRESULT CLR_RT_ExecutionEngine::Compile( const CLR_RT_MethodDef_Index& md, CLR_U
 
             if(end < m_jitter_end)
             {
-                ::Flash_ChipReadOnly( FALSE );
+                // ::Flash_ChipReadOnly( FALSE );
 
                 while(dst < end)
                 {
-                    Flash_WriteToSector( Flash_FindSector(dst), dst++, sizeof(FLASH_WORD), (byte *)src );
+                    // Flash_WriteToSector( Flash_FindSector(dst), dst++, sizeof(FLASH_WORD), (byte *)src );
                     src ++;
                 }
 
-                ::Flash_ChipReadOnly( TRUE );
+                // ::Flash_ChipReadOnly( TRUE );
 
                 if(memcmp( m_jitter_current, &mc.m_Arm_Opcodes[ 0 ], len ) == 0)
                 {
@@ -218,6 +218,7 @@ HRESULT CLR_RT_ExecutionEngine::Compile( const CLR_RT_MethodDef_Index& md, CLR_U
 
         TINYCLR_CHECK_HRESULT(mc.GenerateCode());
 
+/*
 #if !defined(BUILD_RTM)
         if(s_CLR_RT_fJitter_Trace_Compile >= c_CLR_RT_Trace_Verbose)
         {
@@ -226,7 +227,8 @@ HRESULT CLR_RT_ExecutionEngine::Compile( const CLR_RT_MethodDef_Index& md, CLR_U
             CLR_Debug::Printf( "Compile time: %dmsec\r\n", milliSec );
         }
 #endif
-
+*/
+    	
         if(s_CLR_RT_fJitter_Enabled)
         {
             CLR_RT_Assembly* assm = mc.m_mdInst.m_assm;
@@ -249,15 +251,15 @@ HRESULT CLR_RT_ExecutionEngine::Compile( const CLR_RT_MethodDef_Index& md, CLR_U
 
                 if(end < m_jitter_end)
                 {
-                    ::Flash_ChipReadOnly( FALSE );
+                    // ::Flash_ChipReadOnly( FALSE );
 
                     while(dst < end)
                     {
-                        Flash_WriteToSector( Flash_FindSector(dst), dst++, sizeof(FLASH_WORD), (byte *)src );
+                        // Flash_WriteToSector( Flash_FindSector(dst), dst++, sizeof(FLASH_WORD), (byte *)src );
                         src ++;                        
                     }
 
-                    ::Flash_ChipReadOnly( TRUE );
+                    // ::Flash_ChipReadOnly( TRUE );
 
                     if(memcmp( m_jitter_current, &mc.m_Arm_Opcodes[ 0 ], len ) == 0)
                     {
