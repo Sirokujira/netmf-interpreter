@@ -141,6 +141,8 @@ build_script:
 
 after_build:
 - cmd: >-
+    cd %APPVEYOR_BUILD_FOLDER%
+
     echo %OUTPUT_BINARY_FOLDER%
 
     echo %APPVEYOR_BUILD_FOLDER%
