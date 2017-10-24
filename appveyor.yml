@@ -18,17 +18,19 @@ environment:
       OUTPUT_MODULE2 : 'GCC4.9\'
       MEMORY_TYPE    : 'FLASH'
       FLAVOR_TYPE    : 'Release'
-      OUTPUT_BINARY  : 'tinyclr.bin'
+      # OUTPUT_BINARY  : 'tinyclr.bin'
+      OUTPUT_BINARY_FOLDER  : 'BuildOutput\%OUTPUT_MODULE%\%OUTPUT_MODULE2%le\%MEMORY_TYPE%\%FLAVOR_TYPE%\MBED_GR_PEACH\bin'
 
-    - SPOROOT: 'C:\projects\netmf-interpreter\build-tools'
-      GCC_VERSION: '4.9.3'
-      GCC_TOOLS: 'C:\projects\gcc-arm-none-eabi'
-      SOLUTION_PATH  : 'MBED_GR_PEACH_Native'
-      OUTPUT_MODULE  : 'RZA1'
-      OUTPUT_MODULE2 : 'GCC4.9\'
-      MEMORY_TYPE    : 'FLASH'
-      FLAVOR_TYPE    : 'Release'
-      OUTPUT_BINARY  : 'tinyclrnbl.bin'
+#     - SPOROOT: 'C:\projects\netmf-interpreter\build-tools'
+#       GCC_VERSION: '4.9.3'
+#       GCC_TOOLS: 'C:\projects\gcc-arm-none-eabi'
+#       SOLUTION_PATH  : 'MBED_GR_PEACH_Native'
+#       OUTPUT_MODULE  : 'RZA1'
+#       OUTPUT_MODULE2 : 'GCC4.9\'
+#       MEMORY_TYPE    : 'FLASH'
+#       FLAVOR_TYPE    : 'Release'
+#       # OUTPUT_BINARY  : 'tinyclrnbl.bin'
+#       OUTPUT_BINARY_FOLDER  : 'BuildOutput\%OUTPUT_MODULE%\%OUTPUT_MODULE2%le\%MEMORY_TYPE%\%FLAVOR_TYPE%\MBED_GR_PEACH\bin'
 
     - SPOROOT: 'C:\projects\netmf-interpreter\build-tools'
       GCC_VERSION: '4.9.3'
@@ -38,8 +40,8 @@ environment:
       OUTPUT_MODULE2 : ''
       MEMORY_TYPE    : 'RAM'
       FLAVOR_TYPE    : 'Release'
-      OUTPUT_BINARY  : '..\..\..\..\ANY_MEDIA\Release\*'
-    
+      # OUTPUT_BINARY  : '..\..\..\..\ANY_MEDIA\Release\*'
+      OUTPUT_BINARY_FOLDER  : 'BuildOutput\%OUTPUT_MODULE%\%OUTPUT_MODULE2%le\ANY_MEDIA\%FLAVOR_TYPE%'
 
 # Tool Download
 # old
@@ -136,9 +138,15 @@ build_script:
     
     MSbuild dotnetmf.proj /t:rebuild /p:flavor=%FLAVOR_TYPE% /p:memory=%MEMORY_TYPE%
 
+
+after_build:
+    7z a deploy.zip %OUTPUT_BINARY_FOLDER%\*.*
+
+
 artifacts:
-- path: BuildOutput\%OUTPUT_MODULE%\%OUTPUT_MODULE2%le\%MEMORY_TYPE%\%FLAVOR_TYPE%\MBED_GR_PEACH\bin\%OUTPUT_BINARY%
+- path: deploy.zip
   name: Release
+# BuildOutput\%OUTPUT_MODULE%\%OUTPUT_MODULE2%le\%MEMORY_TYPE%\%FLAVOR_TYPE%\MBED_GR_PEACH\bin\%OUTPUT_BINARY%
 # - path: BuildOutput\RZA1\GCC4.9\le\FLASH\release\MBED_GR_PEACH\bin\tinyclr.bin
 #   name: Release
 
