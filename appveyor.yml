@@ -143,7 +143,9 @@ after_build:
 - cmd: >-
     echo %OUTPUT_BINARY_FOLDER%
 
-    7z a deploy.zip %OUTPUT_BINARY_FOLDER%\*.*
+    echo %APPVEYOR_BUILD_FOLDER%
+
+    7z a deploy.zip %APPVEYOR_BUILD_FOLDER%\%OUTPUT_BINARY_FOLDER%\*.*
 
 
 artifacts:
