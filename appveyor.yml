@@ -25,7 +25,7 @@ environment:
     # - SPOROOT: 'C:\projects\netmf-interpreter\build-tools'
     #   GCC_VERSION: '5.4.1'
     #   GCC_TOOLS: 'C:\projects\gcc-arm-none-eabi'
-
+    
 
 # Tool Download
 # old
@@ -97,6 +97,10 @@ build_script:
     dir "C:\Program Files (x86)\MSBuild\Microsoft"
     
     dir .
+    
+    cd Solutions\Windows\TinyCLR\ClrDependencies
+    
+    BuildDep "C:\projects\netmf-interpreter" Build Release
     
     MSbuild DeviceCode\Targets\Native\Interop\ManagedCode\CQ_NETMF_CQ_FRK_FM3_Hardware\CQ_NETMF_CQ_FRK_FM3_Hardware.sln
     
