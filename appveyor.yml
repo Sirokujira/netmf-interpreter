@@ -140,6 +140,9 @@ build_script:
 
 
 after_build:
+- cmd: >-
+    echo %OUTPUT_BINARY_FOLDER%
+
     7z a deploy.zip %OUTPUT_BINARY_FOLDER%\*.*
 
 
