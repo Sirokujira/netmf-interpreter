@@ -41,7 +41,7 @@ environment:
       MEMORY_TYPE    : 'RAM'
       FLAVOR_TYPE    : 'Release'
       # OUTPUT_BINARY  : '..\..\..\..\ANY_MEDIA\Release\*'
-      OUTPUT_BINARY_FOLDER  : 'BuildOutput\%OUTPUT_MODULE%\%OUTPUT_MODULE2%le\ANY_MEDIA\%FLAVOR_TYPE%'
+      OUTPUT_BINARY_FOLDER  : 'BuildOutput\%OUTPUT_MODULE%\%OUTPUT_MODULE2%le\ANY_MEDIA\%FLAVOR_TYPE%\lib'
 
 # Tool Download
 # old
