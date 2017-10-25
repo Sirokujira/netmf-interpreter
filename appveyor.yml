@@ -20,6 +20,8 @@ environment:
       FLAVOR_TYPE    : 'Release'
       # OUTPUT_BINARY  : 'tinyclr.bin'
       OUTPUT_BINARY_FOLDER  : 'BuildOutput\%OUTPUT_MODULE%\%OUTPUT_MODULE2%le\%MEMORY_TYPE%\%FLAVOR_TYPE%\MBED_GR_PEACH\bin'
+      # Dummy
+      OUTPUT_BINARY_FOLDER2 : 'BuildOutput'
 
 #     - SPOROOT: 'C:\projects\netmf-interpreter\build-tools'
 #       GCC_VERSION: '4.9.3'
@@ -31,6 +33,8 @@ environment:
 #       FLAVOR_TYPE    : 'Release'
 #       # OUTPUT_BINARY  : 'tinyclrnbl.bin'
 #       OUTPUT_BINARY_FOLDER  : 'BuildOutput\%OUTPUT_MODULE%\%OUTPUT_MODULE2%le\%MEMORY_TYPE%\%FLAVOR_TYPE%\MBED_GR_PEACH\bin'
+#       # Dummy
+#       OUTPUT_BINARY_FOLDER2 : 'BuildOutput'
 
     - SPOROOT: 'C:\projects\netmf-interpreter\build-tools'
       GCC_VERSION: '4.9.3'
@@ -42,6 +46,7 @@ environment:
       FLAVOR_TYPE    : 'Release'
       # OUTPUT_BINARY  : '..\..\..\..\ANY_MEDIA\Release\*'
       OUTPUT_BINARY_FOLDER  : 'BuildOutput\%OUTPUT_MODULE%\%OUTPUT_MODULE2%le\ANY_MEDIA\%FLAVOR_TYPE%\lib'
+      OUTPUT_BINARY_FOLDER2 : 'BuildOutput\%OUTPUT_MODULE%\%OUTPUT_MODULE2%le\RAM\%FLAVOR_TYPE%\%SOLUTION_PATH%\lib'
 
 # Tool Download
 # old
@@ -148,6 +153,8 @@ after_build:
     echo %APPVEYOR_BUILD_FOLDER%
 
     7z a deploy.zip %APPVEYOR_BUILD_FOLDER%\%OUTPUT_BINARY_FOLDER%\*.*
+
+    7z a deploy.zip %APPVEYOR_BUILD_FOLDER%\%OUTPUT_BINARY_FOLDER2%\*.*
 
 
 artifacts:
