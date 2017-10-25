@@ -46,7 +46,21 @@ environment:
       FLAVOR_TYPE    : 'Release'
       # OUTPUT_BINARY  : '..\..\..\..\ANY_MEDIA\Release\*'
       OUTPUT_BINARY_FOLDER  : 'BuildOutput\%OUTPUT_MODULE%\%OUTPUT_MODULE2%le\ANY_MEDIA\%FLAVOR_TYPE%\lib'
-      OUTPUT_BINARY_FOLDER2 : 'BuildOutput\%OUTPUT_MODULE%\%OUTPUT_MODULE2%le\RAM\%FLAVOR_TYPE%\%SOLUTION_PATH%\lib'
+      OUTPUT_BINARY_FOLDER2 : 'BuildOutput\%OUTPUT_MODULE%\%OUTPUT_MODULE2%le\RAM\%FLAVOR_TYPE%\Windows2\lib'
+
+
+    - SPOROOT: 'C:\projects\netmf-interpreter\build-tools'
+      GCC_VERSION: '4.9.3'
+      GCC_TOOLS: 'C:\projects\gcc-arm-none-eabi'
+      SOLUTION_PATH  : 'Windows'
+      OUTPUT_MODULE  : 'Windows'
+      OUTPUT_MODULE2 : ''
+      MEMORY_TYPE    : 'RAM'
+      FLAVOR_TYPE    : 'Release'
+      # OUTPUT_BINARY  : '..\..\..\..\ANY_MEDIA\Release\*'
+      OUTPUT_BINARY_FOLDER  : 'BuildOutput\%OUTPUT_MODULE%\%OUTPUT_MODULE2%le\ANY_MEDIA\%FLAVOR_TYPE%\lib'
+      OUTPUT_BINARY_FOLDER2 : 'BuildOutput\%OUTPUT_MODULE%\%OUTPUT_MODULE2%le\RAM\%FLAVOR_TYPE%\Win32\lib'
+
 
 # Tool Download
 # old
