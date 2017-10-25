@@ -23,6 +23,7 @@ environment:
       # Dummy
       OUTPUT_BINARY_FOLDER2 : 'BuildOutput'
 
+
 #     - SPOROOT: 'C:\projects\netmf-interpreter\build-tools'
 #       GCC_VERSION: '4.9.3'
 #       GCC_TOOLS: 'C:\projects\gcc-arm-none-eabi'
@@ -35,6 +36,7 @@ environment:
 #       OUTPUT_BINARY_FOLDER  : 'BuildOutput\%OUTPUT_MODULE%\%OUTPUT_MODULE2%le\%MEMORY_TYPE%\%FLAVOR_TYPE%\MBED_GR_PEACH\bin'
 #       # Dummy
 #       OUTPUT_BINARY_FOLDER2 : 'BuildOutput'
+
 
 #     - SPOROOT: 'C:\projects\netmf-interpreter\build-tools'
 #       GCC_VERSION: '4.9.3'
@@ -49,6 +51,21 @@ environment:
 #       OUTPUT_BINARY_FOLDER2 : 'BuildOutput\%OUTPUT_MODULE%\%OUTPUT_MODULE2%le\RAM\%FLAVOR_TYPE%\Windows2\lib'
 
 
+    # Debug
+    - SPOROOT: 'C:\projects\netmf-interpreter\build-tools'
+      GCC_VERSION: '4.9.3'
+      GCC_TOOLS: 'C:\projects\gcc-arm-none-eabi'
+      SOLUTION_PATH  : 'Windows'
+      OUTPUT_MODULE  : 'Windows'
+      OUTPUT_MODULE2 : ''
+      MEMORY_TYPE    : 'RAM'
+      FLAVOR_TYPE    : 'Debug'
+      # OUTPUT_BINARY  : '..\..\..\..\ANY_MEDIA\Debug\*'
+      OUTPUT_BINARY_FOLDER  : 'BuildOutput\%OUTPUT_MODULE%\%OUTPUT_MODULE2%le\ANY_MEDIA\%FLAVOR_TYPE%\lib'
+      OUTPUT_BINARY_FOLDER2 : 'BuildOutput\%OUTPUT_MODULE%\%OUTPUT_MODULE2%le\RAM\%FLAVOR_TYPE%\Win32\lib'
+
+
+    # Release
     - SPOROOT: 'C:\projects\netmf-interpreter\build-tools'
       GCC_VERSION: '4.9.3'
       GCC_TOOLS: 'C:\projects\gcc-arm-none-eabi'
