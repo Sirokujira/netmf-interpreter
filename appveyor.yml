@@ -142,9 +142,11 @@ install:
 #     "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\VSIXInstaller.exe" /q /a C:\projects\netmf-interpreter\NetMFVS14.vsix
 # sdk build ng
 # build_sdk.cmd
+# netmf install miss?
+# timeout 15
 build_script:
 - cmd: >-
-    timeout 15
+    timeout 20
     
     dir "C:\Program Files (x86)\MSBuild\Microsoft"
     
