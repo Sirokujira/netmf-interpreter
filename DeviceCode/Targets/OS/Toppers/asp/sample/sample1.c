@@ -371,7 +371,6 @@ void main_task(intptr_t exinf)
     SVC_PERROR(act_tsk(TASK1));
     SVC_PERROR(act_tsk(TASK2));
     SVC_PERROR(act_tsk(TASK3));
-	SVC_PERROR(act_tsk(NETMFTASK));
 
     /*
      *  メインループ

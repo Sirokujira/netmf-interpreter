@@ -555,7 +555,7 @@
     
     <Target Name="kernel_mem_nousePass3">
         <!-- kernel_mem.c: $(APPL_CFG) kernel_cfg.timestamp $(ALL2_OBJS) $(LIBS_DEP) -->
-        <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(CC) $(CFG2_OUT_LDFLAGS) -nostdlib -o $(CFG2_OUT) netmf.o $(KERNEL1_OUT).$(OBJ_EXT) $(KERNEL_LIB_OBJS) $(TOPPERS_APPL_OBJS) $(TOPPERS_DRIVER_OBJS) $(SYSSVC_OBJS) $(TOPPERS_KERNEL_LIBS)" />
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(CC) $(CFG2_OUT_LDFLAGS) -nostdlib -o $(CFG2_OUT) $(KERNEL1_OUT).$(OBJ_EXT) $(KERNEL_LIB_OBJS) $(TOPPERS_APPL_OBJS) $(TOPPERS_DRIVER_OBJS) $(SYSSVC_OBJS) $(TOPPERS_KERNEL_LIBS)" />
         <!-- NG -->
         <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(CC) $(CFG2_OUT_LDFLAGS) -nostdlib -o $(CFG2_OUT) $(KERNEL1_OUT).$(OBJ_EXT) @(ObjFiles->'%(FileName)%(Extension)',' ') $(TOPPERS_KERNEL_LIBS) " /> -->
         

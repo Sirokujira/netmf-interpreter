@@ -191,7 +191,7 @@
         <Compile Include="sample1.c" />
         <Compile Include="sample1.cfg" />
         
-        <Compile Include="../netmf/netmf.c" />
+        <!-- <Compile Include="../netmf/netmf.c" /> -->
 
         <!-- startPoint -->
         <Compile Include="GNU_S\startup_RZ1AH.S" />

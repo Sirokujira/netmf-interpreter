@@ -24,7 +24,7 @@ void ApplicationEntryPoint()
 
     hal_printf( "Erasing deployment...........\r\n" );
 
-    Flash_ChipReadOnly( FALSE );
+    // Flash_ChipReadOnly( FALSE );
     for(int i = 0; i < nSects; i++)
     {
         // if((sects[ i ].Usage & MEMORY_USAGE_MASK) == MEMORY_USAGE_DEPLOYMENT)
@@ -37,7 +37,7 @@ void ApplicationEntryPoint()
             }
         }
     } 
-    Flash_ChipReadOnly( TRUE );
+    // Flash_ChipReadOnly( TRUE );
 
     hal_printf( "Erasing deployment finished!\r\n" );
 

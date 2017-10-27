@@ -59,7 +59,6 @@ PROVIDE(IRQNestLevel = _kernel_excpt_nest_count);
 <FileMapping Name="PROVIDE(software_term_hook = 0);" />
 <FileMapping Name="PROVIDE(IRQTable = _kernel_inh_tbl);" />
 <FileMapping Name="PROVIDE(IRQNestLevel = _kernel_excpt_nest_count);" />
-<!-- <FileMapping Name="PROVIDE(_start = 0);"/> -->
 
 
     <NamedGroup Name="MEMORY">
