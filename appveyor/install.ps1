@@ -47,25 +47,15 @@ function InstallGCCCompiler()
     # Set-Location $basedir
 
     # ZIPファイル展開(GCC)
-    # $shell = New-Object -ComObject Shell.Application
-    # $archivePath = "C:\\projects\\netmf-interpreter"
-    # $unzipDirObj = $sh.NameSpace($archivePath)
-    # $zipFilePath = "C:\\projects\\netmf-interpreter\\gcc-arm-none-eabi-5_2-2015q4-20151219-win32.zip"
-    # $zipPathObj = $sh.NameSpace($zipFilePath)
-    # Write-Output "GCCCompiler : ArchiverDecompressStart $zipPath"
-    # $unzipDirObj.CopyHere($zipPathObj.Items())
-    
-    $archivePath = "C:\\projects\\gcc-arm-none-eabi"
-    $zipFilePath = "C:\\projects\\netmf-interpreter\\gcc-arm-none-eabi-5_2-2015q4-20151219-win32.zip"
+    $archivePath = "..\\gcc-arm-none-eabi"
+    $zipFilePath = ".\\gcc-arm-none-eabi-5_2-2015q4-20151219-win32.zip"
     New-ZipExtract -source $zipFilePath -destination $archivePath -force -verbose
 }
 
 function InstallGCCCompiler2()
 {
-    $archivePath = "C:\\projects\\gcc-arm-none-eabi"
-    # $zipFilePath = "C:\\projects\\netmf-interpreter\\gcc-arm-none-eabi-5_4-2016q2-20160622-win32.zip"
-    # $zipFilePath = "C:\\projects\\netmf-interpreter\\gcc-arm-none-eabi-4_9-2014q4-20141203-win32.zip"
-    $zipFilePath = "C:\\projects\\netmf-interpreter\\gcc-arm-none-eabi-4_9-2015q3-20150921-win32.zip"
+    $archivePath = "..\\gcc-arm-none-eabi"
+    $zipFilePath = ".\\gcc-arm-none-eabi-4_9-2015q3-20150921-win32.zip"
     New-ZipExtract -source $zipFilePath -destination $archivePath -force -verbose
 }
 
@@ -119,39 +109,17 @@ function InstallBuildTools()
     # Start-FileDownload "http://netmf.github.io/downloads/build-tools.zip"
 
     # ZIPファイル展開(SDK Tools)
-    # Appveyor - NG
-    # $shell = New-Object -ComObject Shell.Application
-    # $archivePath = "C:\\projects"
-    # $unzipDirObj = $shell.NameSpace($archivePath)
-    # $zipFilePath = "C:\\projects\\netmf-interpreter\\build-tools.zip"
-    # $zipPathObj = $sh.NameSpace($zipFilePath)
-    # Write-Output "BuildTools : ArchiveDecompressStart $zipPath"
-    # $unzipDirObj.CopyHere($zipPathObj.Items())
-    
-    # $archivePath = "C:\\projects\\build-tools"
-    $archivePath = "C:\\projects"
-    $zipFilePath = "C:\\projects\\netmf-interpreter\\build-tools.zip"
+    $archivePath = ".."
+    $zipFilePath = ".\\build-tools.zip"
     New-ZipExtract -source $zipFilePath -destination $archivePath -force -verbose
-    
-    # FolderMove
-    # $moveSrcFolderPath1 = "C:\\projects\\build-tools\bin"
-    # $moveDestFolderPath1 = "C:\\projects\\bin"
-    # Move-Item $moveSrcFolderPath1 $moveDestFolderPath1
-    # $moveSrcFolderPath2 = "C:\\projects\\build-tools\tools"
-    # $moveDestFolderPath2 = "C:\\projects\\tools"
-    # Move-Item $moveSrcFolderPath2 $moveDestFolderPath2
 }
 
 function InstallBuildTools2()
 {
-    $basePath = "C:\\projects"
+    $basePath = ".."
     $archivePath = $basePath + "\\netmf-interpreter\\build-tools"
     $zipFilePath = $basePath + "\\netmf-interpreter\\build-tools.zip"
     New-ZipExtract -source $zipFilePath -destination $archivePath -force -verbose
-    
-    # $moveSrcFolderAllPath = $archivePath
-    # $moveDestFolderAllPath = "C:\\projects\\tools"
-    # Copy-Item -Path $moveSrcFolderAllPath -Destination $moveDestFolderAllPath
     
     # FolderMove
     $moveSrcFolderPath1 = $archivePath + "\\bin"
@@ -163,10 +131,6 @@ function InstallBuildTools2()
     $moveDestFolderPath2 = $basePath + "\\tools"
     # Move-Item $moveSrcFolderPath2 $moveDestFolderPath2
     Copy-Item -Path $moveSrcFolderPath2 -Destination $moveDestFolderPath2 -Recurse
-    
-    # $moveSrcFolderPath3 = "C:\\projects\\build-tools"
-    # $moveDestFolderPath3 = "C:\\projects\\tools"
-    # Copy-Item -Path $moveSrcFolderPath3 -Destination $moveDestFolderPath3 -Recurse
 }
 
 function main () 
