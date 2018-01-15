@@ -19,9 +19,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Jitter.cpp" />
+    <!-- custom? -->
+    <!-- start -->
     <Compile Include="Jitter_ARM.cpp" />
     <Compile Include="Jitter_ARM_Emulation.cpp" />
     <Compile Include="Jitter_ARM_Opcodes.cpp" />
+    <!-- end -->
     <Compile Include="Jitter_EvalStack.cpp" />
     <Compile Include="Jitter_Execution.cpp" />
     <Compile Include="Jitter_Helper.cpp" />
