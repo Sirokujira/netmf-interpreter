@@ -152,23 +152,23 @@ build_script:
     
     dir .
     
-    MSbuild DeviceCode\Targets\Native\Interop\ManagedCode\CQ_NETMF_CQ_FRK_FM3_Hardware\CQ_NETMF_CQ_FRK_FM3_Hardware.sln
+    MSbuild DeviceCode\Targets\Native\Interop\ManagedCode\CQ_NETMF_CQ_FRK_FM3_Hardware\CQ_NETMF_CQ_FRK_FM3_Hardware.sln /p:Configuration=%FLAVOR_TYPE% /p:Platform="Win32" /filelogger
     
-    MSbuild DeviceCode\Targets\Native\Interop\ManagedCode\CQ_NETMF_CQFM3DUINO_Hardware\CQ_NETMF_CQ_FRK_FM3_Hardware.sln
+    MSbuild DeviceCode\Targets\Native\Interop\ManagedCode\CQ_NETMF_CQFM3DUINO_Hardware\CQ_NETMF_CQ_FRK_FM3_Hardware.sln /p:Configuration=%FLAVOR_TYPE% /p:Platform="Win32" /filelogger
     
-    MSbuild DeviceCode\Targets\Native\Interop\ManagedCode\CQ_NETMF_LCD\CQ_NETMF_LCD.sln
+    MSbuild DeviceCode\Targets\Native\Interop\ManagedCode\CQ_NETMF_LCD\CQ_NETMF_LCD.sln /p:Configuration=%FLAVOR_TYPE% /p:Platform="Win32" /filelogger
     
-    MSbuild DeviceCode\Targets\Native\Interop\ManagedCode\CQ_NETMF_LEDMATRIX\CQ_NETMF_LEDMATRIX.sln
+    MSbuild DeviceCode\Targets\Native\Interop\ManagedCode\CQ_NETMF_LEDMATRIX\CQ_NETMF_LEDMATRIX.sln /p:Configuration=%FLAVOR_TYPE% /p:Platform="Win32" /filelogger
     
-    MSbuild DeviceCode\Targets\Native\Interop\ManagedCode\CQ_NETMF_LEDMATRIXAF\CQ_NETMF_LEDMATRIXAF.sln
+    MSbuild DeviceCode\Targets\Native\Interop\ManagedCode\CQ_NETMF_LEDMATRIXAF\CQ_NETMF_LEDMATRIXAF.sln /p:Configuration=%FLAVOR_TYPE% /p:Platform="Win32" /filelogger
     
-    MSbuild DeviceCode\Targets\Native\Interop\ManagedCode\CQ_NETMF_MP3\CQ_NETMF_MP3.sln
+    MSbuild DeviceCode\Targets\Native\Interop\ManagedCode\CQ_NETMF_MP3\CQ_NETMF_MP3.sln /p:Configuration=%FLAVOR_TYPE% /p:Platform="Win32" /filelogger
     
-    MSbuild DeviceCode\Targets\Native\Interop\ManagedCode\CQ_NETMF_SD\CQ_NETMF_SD.sln
+    MSbuild DeviceCode\Targets\Native\Interop\ManagedCode\CQ_NETMF_SD\CQ_NETMF_SD.sln /p:Configuration=%FLAVOR_TYPE% /p:Platform="Win32" /filelogger
     
-    MSbuild DeviceCode\Targets\Native\Interop\ManagedCode\CQ_NETMF_UTIL\CQ_NETMF_UTIL.sln
+    MSbuild DeviceCode\Targets\Native\Interop\ManagedCode\CQ_NETMF_UTIL\CQ_NETMF_UTIL.sln /p:Configuration=%FLAVOR_TYPE% /p:Platform="Win32" /filelogger
     
-    MSbuild DeviceCode\Targets\Native\Interop\ManagedCode\Microsoft_SPOT_HAL\Microsoft_SPOT_HAL.sln
+    MSbuild DeviceCode\Targets\Native\Interop\ManagedCode\Microsoft_SPOT_HAL\Microsoft_SPOT_HAL.sln /p:Configuration=%FLAVOR_TYPE% /p:Platform="Win32" /filelogger
     
     setenv_gcc %GCC_VERSION% %GCC_TOOLS%
     
