@@ -116,9 +116,13 @@ function InstallBuildTools()
 
 function InstallBuildTools2()
 {
-    $basePath = ".."
-    $archivePath = $basePath + "\\netmf-interpreter\\build-tools"
-    $zipFilePath = $basePath + "\\netmf-interpreter\\build-tools.zip"
+    $scriptPath = $MyInvocation.MyCommand.Path
+    echo $scriptPath
+    $scriptFolderPath = Split-Path -Parent $scriptPath
+
+    $basePath = $scriptFolderPath + "..\\..\\"
+    $archivePath = $basePath + "build-tools"
+    $zipFilePath = $basePath + "build-tools.zip"
     New-ZipExtract -source $zipFilePath -destination $archivePath -force -verbose
     
     # FolderMove
