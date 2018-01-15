@@ -114,23 +114,25 @@ function InstallBuildTools()
     New-ZipExtract -source $zipFilePath -destination $archivePath -force -verbose
 }
 
-function InstallBuildTools2()
+function InstallBuildTools2($base_folder)
 {
-    $scriptPath = $MyInvocation.MyCommand.Path
-    echo $scriptPath
-    $scriptFolderPath = Split-Path -Parent $scriptPath
+    # ng
+    # $scriptPath = $MyInvocation.MyCommand.Path
+    # echo $scriptPath
+    # "$(Split-Path $pwd -Leaf).zip"
+    # $scriptFolderPath = Split-Path -Parent $scriptPath
 
-    $basePath = $scriptFolderPath + "..\\..\\"
-    $archivePath = $basePath + "build-tools"
-    $zipFilePath = $basePath + "build-tools.zip"
+    $basePath = $base_folder + "\\.."
+    $archivePath = $base_folder + "\\build-tools"
+    $zipFilePath = $base_folder + "\\build-tools.zip"
     New-ZipExtract -source $zipFilePath -destination $archivePath -force -verbose
-    
+
     # FolderMove
     $moveSrcFolderPath1 = $archivePath + "\\bin"
     $moveDestFolderPath1 = $basePath + "\\bin"
     # Move-Item $moveSrcFolderPath1 $moveDestFolderPath1
     Copy-Item -Path $moveSrcFolderPath1 -Destination $moveDestFolderPath1 -Recurse
-    
+
     $moveSrcFolderPath2 = $archivePath + "\\tools"
     $moveDestFolderPath2 = $basePath + "\\tools"
     # Move-Item $moveSrcFolderPath2 $moveDestFolderPath2
@@ -147,7 +149,7 @@ function main ()
     InstallGCCCompiler3 $env:GCC_VERSION $env:APPVEYOR_BUILD_FOLDER $env:GCC_TOOLS
     # Wait Process
     # InstallBuildTools
-    InstallBuildTools2
+    InstallBuildTools2 $env:APPVEYOR_BUILD_FOLDER
 }
 
 main
