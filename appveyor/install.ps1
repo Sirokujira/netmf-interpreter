@@ -109,7 +109,7 @@ function InstallBuildTools()
     # Start-FileDownload "http://netmf.github.io/downloads/build-tools.zip"
 
     # ZIPファイル展開(SDK Tools)
-    $archivePath = "..\\build-tools"
+    $archivePath = ".."
     $zipFilePath = ".\\build-tools.zip"
     New-ZipExtract -source $zipFilePath -destination $archivePath -force -verbose
 }
@@ -117,8 +117,8 @@ function InstallBuildTools()
 function InstallBuildTools2()
 {
     $basePath = ".."
-    $archivePath = $basePath + "\\build-tools"
-    $zipFilePath = $basePath + "\\build-tools.zip"
+    $archivePath = $basePath + "\\netmf-interpreter\\build-tools"
+    $zipFilePath = $basePath + "\\netmf-interpreter\\build-tools.zip"
     New-ZipExtract -source $zipFilePath -destination $archivePath -force -verbose
     
     # FolderMove
