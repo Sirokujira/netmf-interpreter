@@ -9,8 +9,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ClrDependencies", "ClrDepen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DebuggerPortConsole", "DebuggerPortConsole\DebuggerPortConsole.csproj", "{889B2B51-8669-4E41-8C54-2F6204E12F5C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lwIP", "..\..\..\DeviceCode\pal\lwip_1_4_1_os\lwip\lwIP.vcxproj", "{2CC276FA-B226-49C9-8F82-7FCD5A228E28}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lwip_1_4_1_os", "..\..\..\DeviceCode\Targets\OS\Win32\lwip_1_4_1_os\lwip_1_4_1_os.vcxproj", "{4407B0E4-DBDA-4D73-A8D2-5C14F11AC6BB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Desktop", "Desktop", "{3ACC9618-8ED3-4D59-A529-48F546B17DF4}"
@@ -57,13 +55,6 @@ Global
 		{889B2B51-8669-4E41-8C54-2F6204E12F5C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{889B2B51-8669-4E41-8C54-2F6204E12F5C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{889B2B51-8669-4E41-8C54-2F6204E12F5C}.Release|Win32.ActiveCfg = Release|Any CPU
-		{2CC276FA-B226-49C9-8F82-7FCD5A228E28}.Debug|Any CPU.ActiveCfg = Debug|Win32
-		{2CC276FA-B226-49C9-8F82-7FCD5A228E28}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
-		{2CC276FA-B226-49C9-8F82-7FCD5A228E28}.Debug|Win32.ActiveCfg = Debug|Win32
-		{2CC276FA-B226-49C9-8F82-7FCD5A228E28}.Release|Any CPU.ActiveCfg = Release|Win32
-		{2CC276FA-B226-49C9-8F82-7FCD5A228E28}.Release|Mixed Platforms.ActiveCfg = Release|Win32
-		{2CC276FA-B226-49C9-8F82-7FCD5A228E28}.Release|Win32.ActiveCfg = Release|Win32
-		{2CC276FA-B226-49C9-8F82-7FCD5A228E28}.Release|Win32.Build.0 = Release|Win32
 		{4407B0E4-DBDA-4D73-A8D2-5C14F11AC6BB}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{4407B0E4-DBDA-4D73-A8D2-5C14F11AC6BB}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
 		{4407B0E4-DBDA-4D73-A8D2-5C14F11AC6BB}.Debug|Win32.ActiveCfg = Debug|Win32
