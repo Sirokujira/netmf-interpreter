@@ -1,0 +1,835 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project  xmlns="http://schemas.microsoft.com/developer/msbuild/2003"  ToolsVersion="4.0">
+
+    <PropertyGroup>
+        <BuildToolName>GCC</BuildToolName>
+        <BuildToolGuid>{722B0D5D-1243-4557-913F-61FAB04E9209}</BuildToolGuid>
+        <Documentation></Documentation>
+        <ProcessorTypes>XScale;ARM7TDMI;ARM7TDMI-S;arm920t;arm926EJ-S;RZA1</ProcessorTypes>
+        <ISAs>arm;thumb;thumb2</ISAs>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(COMPILER_TOOL)'=='GCC'" >
+        <TARGETCURRENT>$(SPO_BUILD)\$(INSTRUCTION_SET)\$(TARGETLOCATION)\$(OLD_FLAVOR)\$(TARGETPLATFORM)\bin</TARGETCURRENT>
+        
+        <!-- GNU Tools - Assumes that the Path is already set up to these tools (the default) -->
+        <CC>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-gcc.exe"</CC>
+        <TCC>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-gcc.exe"</TCC>
+        <CPP>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-gcc.exe"</CPP>
+        <CXX>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-g++.exe"</CXX>
+        <TCPP>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-gcc.exe"</TCPP>
+        <AS>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-as.exe"</AS>
+        <LINK>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-g++.exe"</LINK>
+        <AR>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-ar.exe"</AR>
+        <NM>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-nm.exe"</NM>
+        <FROMELF>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-objcopy.exe"</FROMELF>
+        <OBJDUMP>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-objdump.exe"</OBJDUMP>
+        <RANLIB>"$(GNU_TOOLS_BIN)\$(GNU_TARGET)-ranlib.exe"</RANLIB>
+        <CREATESYMDEF>$(TOOLS_DIR)\CreateSymdef.exe</CREATESYMDEF>
+    </PropertyGroup>
+
+    <!-- based on cpu type, setup compiler-->
+    <PropertyGroup>
+        <!-- We need to convert the RVDS CPU type to its GCC equivalent if needed -->
+        <ARCH_TYPE_FLAGS Condition="'$(DEVICE_TYPE)' == 'arm926EJ-S'">-mcpu=arm926ej-s</ARCH_TYPE_FLAGS>
+        <ARCH_TYPE_FLAGS Condition="'$(DEVICE_TYPE)' == 'ARM7TDMI'">-mcpu=arm7tdmi</ARCH_TYPE_FLAGS>
+        <ARCH_TYPE_FLAGS Condition="'$(DEVICE_TYPE)' == 'cortex-m4'">-mcpu=cortex-m4 -mthumb</ARCH_TYPE_FLAGS>
+        <ARCH_TYPE_FLAGS Condition="'$(DEVICE_TYPE)' == 'cortex-m3'">-mcpu=cortex-m3 -mthumb</ARCH_TYPE_FLAGS>
+        <ARCH_TYPE_FLAGS Condition="'$(DEVICE_TYPE)' == 'rza1'">-mcpu=cortex-a9</ARCH_TYPE_FLAGS>
+        <!-- <ARCH_TYPE_FLAGS Condition="'$(ARCH_TYPE_FLAGS)'==''">-mcpu=$(DEVICE_TYPE)</ARCH_TYPE_FLAGS> -->
+        <ARCH_TYPE_FLAGS Condition="'$(DEVICE_TYPE)' == ''"></ARCH_TYPE_FLAGS>
+        
+        <!-- GCC_ARCH_DIR specifies the CPU architecture portion of the path to the appropriate libraries for a given device -->
+        <GCC_ARCH_DIR Condition="'$(DEVICE_TYPE)' == 'arm926EJ-S'"></GCC_ARCH_DIR>
+        <GCC_ARCH_DIR Condition="'$(DEVICE_TYPE)' == 'ARM7TDMI'"></GCC_ARCH_DIR>
+        <GCC_ARCH_DIR Condition="'$(DEVICE_TYPE)' == 'cortex-m4' AND '$(PLATFORM_EMULATED_FLOATINGPOINT)'=='true'">armv7e-m\softfp</GCC_ARCH_DIR>
+        <GCC_ARCH_DIR Condition="'$(DEVICE_TYPE)' == 'cortex-m4' AND '$(PLATFORM_EMULATED_FLOATINGPOINT)'!='true'">armv7e-m\fpu</GCC_ARCH_DIR>
+        <GCC_ARCH_DIR Condition="'$(DEVICE_TYPE)' == 'cortex-m3'">armv7-m</GCC_ARCH_DIR>
+        <!-- armv7-a? -->
+        <GCC_ARCH_DIR Condition="'$(DEVICE_TYPE)' == 'rza1'"></GCC_ARCH_DIR>
+        
+        <POS_DEPENDENT></POS_DEPENDENT>
+        <POS_INDEPENDENT>-fpic</POS_INDEPENDENT>
+        <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'!='rza1'"     >$(CC_CPP_COMMON_FLAGS) -mabi=aapcs -ffunction-sections -fdata-sections -fomit-frame-pointer -mlong-calls -fdollars-in-identifiers -fshort-wchar -fno-exceptions -funsigned-char -mstructure-size-boundary=8</CC_CPP_COMMON_FLAGS>
+        <!-- <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='rza1'"     >$(CC_CPP_COMMON_FLAGS) -fdollars-in-identifiers -fshort-wchar -fno-exceptions  -funsigned-char -fpermissive</CC_CPP_COMMON_FLAGS> -->
+        <!-- fpermissive not use C++/ObjC -->
+        <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='rza1'"     >$(CC_CPP_COMMON_FLAGS) -fdollars-in-identifiers -fshort-wchar -fno-exceptions  -funsigned-char</CC_CPP_COMMON_FLAGS>
+        <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='rza1'"     >$(CC_CPP_COMMON_FLAGS) -fno-strict-aliasing -fno-exceptions -fno-delete-null-pointer-checks -fmessage-length=0 -fno-builtin -mno-unaligned-access</CC_CPP_COMMON_FLAGS>
+        
+        <CC_CPP_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='RTM'"          >$(CC_CPP_TARGETTYPE_FLAGS) -O3</CC_CPP_TARGETTYPE_FLAGS>
+        <CC_CPP_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Debug'"        >$(CC_CPP_TARGETTYPE_FLAGS) -Og -femit-class-debug-always -g3 -ggdb</CC_CPP_TARGETTYPE_FLAGS>
+        <CC_CPP_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Instrumented'" >$(CC_CPP_TARGETTYPE_FLAGS) -O0</CC_CPP_TARGETTYPE_FLAGS>
+        <CC_CPP_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Release'"      >$(CC_CPP_TARGETTYPE_FLAGS) -Os</CC_CPP_TARGETTYPE_FLAGS>
+        
+        <ARCH_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='RTM'"          >-O3</ARCH_TARGETTYPE_FLAGS>
+        <ARCH_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Debug'"        >-Og -femit-class-debug-always -g3 -ggdb</ARCH_TARGETTYPE_FLAGS>
+        <ARCH_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Instrumented'" >-O0</ARCH_TARGETTYPE_FLAGS>
+        <ARCH_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Release'"      >-Os</ARCH_TARGETTYPE_FLAGS>
+        
+        <!-- add -->
+        <!-- <CFLAGS>-fPIC -mno-pic-data-is-text-relative -nostdlib -std=gnu99 -fno-strict-aliasing -mcpu=$(ARM_TYPE_FLAGS) -mlittle-endian -D__TARGET_ARCH_ARM=5</CFLAGS> -->
+        <!-- <CXXFLAGS>-fPIC -mno-pic-data-is-text-relative -nostdlib -std=gnu11 -fno-strict-aliasing -mcpu=$(DEVICE_TYPE) -mlittle-endian -D__TARGET_ARCH_ARM=5 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM</CXXFLAGS> -->
+        <CFLAGS>-fPIC -mno-pic-data-is-text-relative -nostdlib -std=gnu99 -fno-strict-aliasing -mcpu=$(DEVICE_TYPE) -mlittle-endian -D__TARGET_ARCH_ARM=7 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM</CFLAGS>
+        <CXXFLAGS>-fPIC -mno-pic-data-is-text-relative -nostdlib -std=gnu11 -fno-strict-aliasing -mcpu=$(DEVICE_TYPE) -mlittle-endian -D__TARGET_ARCH_ARM=7 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM</CXXFLAGS>
+        
+        <!--
+            <FLOATING_POINT_FLAG Condition="'$(INSTRUCTION_SET)'=='thumb'  and'$(PLATFORM_EMULATED_FLOATINGPOINT)'!='true'">-mfloat-abi=soft</FLOATING_POINT_FLAG>
+            <FLOATING_POINT_FLAG Condition="'$(INSTRUCTION_SET)'=='thumb2' and'$(PLATFORM_EMULATED_FLOATINGPOINT)'!='true'">-mfloat-abi=soft</FLOATING_POINT_FLAG>
+            <FLOATING_POINT_FLAG Condition="('$(PLATFORM_EMULATED_FLOATINGPOINT)'!='true' and '$(DEVICE_TYPE)' == 'cortex-m4') or '$(INSTRUCTION_SET)'=='thumb2fp'">-mfloat-abi=hard -mfpu=fpv4-sp-d16</FLOATING_POINT_FLAG>
+            <FLOATING_POINT_FLAG Condition="'$(PLATFORM_EMULATED_FLOATINGPOINT)'=='true'">-mfloat-abi=softfp -mfpu=fpv4-sp-d16</FLOATING_POINT_FLAG>
+        -->
+        
+        <FLOATING_POINT_FLAG Condition="'$(INSTRUCTION_SET)'=='arm'    and'$(PLATFORM_EMULATED_FLOATINGPOINT)'!='true'">-mfloat-abi=soft</FLOATING_POINT_FLAG>
+        <FLOATING_POINT_FLAG Condition="('$(PLATFORM_EMULATED_FLOATINGPOINT)'!='true' and '$(DEVICE_TYPE)' == 'cortex-m4') or '$(INSTRUCTION_SET)'=='thumb2fp'">-mfloat-abi=hard -mfpu=fpv4-sp-d16</FLOATING_POINT_FLAG>
+        <FLOATING_POINT_FLAG Condition="'$(PLATFORM_EMULATED_FLOATINGPOINT)'=='true'">-mfloat-abi=softfp -mfpu=fpv4-sp-d16</FLOATING_POINT_FLAG>
+        <FLOATING_POINT_FLAG Condition="'$(INSTRUCTION_SET)'=='rza1' and '$(PLATFORM_EMULATED_FLOATINGPOINT)'!='true'"> -mfloat-abi=softfp -march=armv7-a -mfpu=neon </FLOATING_POINT_FLAG>
+
+        <AS_CC_CPP_COMMON_FLAGS>$(AS_CC_CPP_COMMON_FLAGS) $(FLOATING_POINT_FLAG) </AS_CC_CPP_COMMON_FLAGS>
+        <AS_CC_CPP_COMMON_FLAGS>$(AS_CC_CPP_COMMON_FLAGS) $(ARCH_TYPE_FLAGS)</AS_CC_CPP_COMMON_FLAGS>
+        <AS_CC_CPP_COMMON_FLAGS Condition="'$(ENDIANNESS)'=='le'">$(AS_CC_CPP_COMMON_FLAGS) -mlittle-endian</AS_CC_CPP_COMMON_FLAGS>
+        <AS_CC_CPP_COMMON_FLAGS Condition="'$(ENDIANNESS)'=='be'">$(AS_CC_CPP_COMMON_FLAGS) -mbig-endian</AS_CC_CPP_COMMON_FLAGS>
+
+        <!-- __TARGET_ARCH_ARM parameter -->
+        <!-- http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0472lj/chr1359125007083_00018.html -->
+        <CTOPPERS_CUSTOM_FLAGS>$(CTOPPERS_CUSTOM_FLAGS) $(AS_CC_CPP_COMMON_FLAGS)</CTOPPERS_CUSTOM_FLAGS>
+        <CXXTOPPERS_CUSTOM_FLAGS>$(CC_CPP_COMMON_FLAGS) $(AS_CC_CPP_COMMON_FLAGS) -fpermissive $(CXXTOPPERS_CUSTOM_FLAGS)</CXXTOPPERS_CUSTOM_FLAGS>
+
+        <!-- Toppers Add -->
+        <CC_FLAGS>$(CC_FLAGS) -xc $(CTOPPERS_CUSTOM_FLAGS)</CC_FLAGS>
+        <CPP_FLAGS>$(CPP_FLAGS) -xc++ -Wno-invalid-offsetof -fcheck-new $(CXXTOPPERS_CUSTOM_FLAGS)</CPP_FLAGS>
+    </PropertyGroup>
+    
+    <!-- Assembler flags -->
+    <PropertyGroup>
+        <AS_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='RTM'"         >$(AS_TARGETTYPE_FLAGS) --defsym BUILD_RTM=1</AS_TARGETTYPE_FLAGS>
+        <AS_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Release'"     >$(AS_TARGETTYPE_FLAGS) --defsym BUILD_RTM=0</AS_TARGETTYPE_FLAGS>
+        <AS_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Debug'"       >$(AS_TARGETTYPE_FLAGS) --defsym BUILD_RTM=0 -g</AS_TARGETTYPE_FLAGS>
+        <AS_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Instrumented'">$(AS_TARGETTYPE_FLAGS) --defsym BUILD_RTM=0 -g</AS_TARGETTYPE_FLAGS>
+        
+        <!-- Adjust the compiler/assembler flags according to the settings -->
+        <AS_FLAGS Condition="'$(sampleprof)'=='true'" >$(AS_FLAGS) --defsym FIQ_SAMPLING_PROFILER=1</AS_FLAGS>
+        <AS_FLAGS Condition="'$(latencyprof)'=='true'">$(AS_FLAGS) --defsym FIQ_LATENCY_PROFILER=1</AS_FLAGS>
+        <AS_FLAGS Condition="'$(INSTRUCTION_SET)'=='arm'"     >$(AS_FLAGS) --defsym COMPILE_ARM=1</AS_FLAGS>
+        <AS_FLAGS Condition="'$(INSTRUCTION_SET)'=='thumb2'"  >$(AS_FLAGS) --defsym COMPILE_THUMB2=1</AS_FLAGS>
+        <AS_FLAGS Condition="'$(INSTRUCTION_SET)'=='thumb2fp'">$(AS_FLAGS) --defsym COMPILE_THUMB2=1</AS_FLAGS>
+        <AS_FLAGS Condition="'$(INSTRUCTION_SET)'=='rza1'">$(AS_FLAGS) -mimplicit-it=thumb </AS_FLAGS>
+        
+        <!-- Assembler flags -->
+        <!-- TODO: There are no string macros in the GDD assembler, so this must be done another way
+          TargetLocation     SETS $(TARGETLOCATION)
+          // pedantic matching of letter case with old makefiles
+          TargetType         SETS $(OLD_FLAVOR)
+          TargetModel        SETS $(TARGETPLATFORM)
+          TargetPlatformName SETS PLATFORM_ARM_$(TARGETPLATFORM)
+          CompilerVersion    SETS $(COMPILER_TOOL_VERSION)
+          TargetPlatformProcessor SETS PLATFORM_ARM_$(TARGETPROCESSOR)
+        -->
+        <!-- Used by FirstEntry.s in liu of defining TargetPlatformProcessor & TargetPlatformName -->
+        <AS_FLAGS>$(AS_FLAGS) --defsym PLATFORM_ARM_$(TARGETPROCESSOR)=1</AS_FLAGS>
+        <AS_FLAGS>$(AS_FLAGS) --defsym PLATFORM_ARM_$(TARGETPLATFORM)=1</AS_FLAGS>
+        
+        <AS_FLAGS Condition="'$(reducesize)'=='true'">$(AS_FLAGS) --defsym HAL_REDUCESIZE=1</AS_FLAGS>
+        <AS_FLAGS>$(AS_FLAGS) --defsym TARGETLOCATION_$(TARGETLOCATION)=1 $(AS_CC_CPP_COMMON_FLAGS) $(AS_TARGETTYPE_FLAGS) $(AS_INCS)</AS_FLAGS>
+        <AS_FLAGS>$(AS_FLAGS) @(AS_Defines->'--defsym %(filename)',' ')</AS_FLAGS>
+        
+        <AS_SUBDIR>GNU_S</AS_SUBDIR>
+    </PropertyGroup>
+    
+    <!-- common cc/cpp flags -->
+    <PropertyGroup>
+        <!-- CPP/CC flags depands on the target build -->
+        <CC_CPP_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='RTM'"          >$(CC_CPP_TARGETTYPE_FLAGS) -DBUILD_RTM -finline-functions</CC_CPP_TARGETTYPE_FLAGS>
+        <CC_CPP_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Debug'"        >$(CC_CPP_TARGETTYPE_FLAGS) -DDEBUG  -D_DEBUG </CC_CPP_TARGETTYPE_FLAGS>
+        <CC_CPP_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Instrumented'" >$(CC_CPP_TARGETTYPE_FLAGS) -DDEBUG  -D_DEBUG </CC_CPP_TARGETTYPE_FLAGS>
+        <CC_CPP_TARGETTYPE_FLAGS Condition="'$(FLAVOR)'=='Release'"      >$(CC_CPP_TARGETTYPE_FLAGS) -DNDEBUG</CC_CPP_TARGETTYPE_FLAGS>
+        
+        <CPP_FLAGS Condition="'$(FLAVOR)'=='Release'">$(CPP_FLAGS) -fno-default-inline</CPP_FLAGS>
+        <CPP_FLAGS Condition="'$(GCC_VERNUM)'!='' and $(GCC_VERNUM)&gt;=40400">$(CPP_FLAGS) -Wno-psabi </CPP_FLAGS>
+        
+        <CC_CPP_COMMON_FLAGS Condition="'$(TCP_IP_STACK)'=='LWIP_1_4_1_OS'">$(CC_CPP_COMMON_FLAGS) -DTCPIP_LWIP_OS</CC_CPP_COMMON_FLAGS>
+        
+        <CC_CPP_COMMON_FLAGS Condition="'$(reducesize)'=='true'" >$(CC_CPP_COMMON_FLAGS) -DHAL_REDUCESIZE</CC_CPP_COMMON_FLAGS>
+        <CC_CPP_COMMON_FLAGS Condition="'$(timewarp)'=='true'"   >$(CC_CPP_COMMON_FLAGS) -DHAL_TIMEWARP</CC_CPP_COMMON_FLAGS>
+        <CC_CPP_COMMON_FLAGS Condition="'$(profile)'=='true'"    >$(CC_CPP_COMMON_FLAGS) -DARM_PROFILE_ACTIVE</CC_CPP_COMMON_FLAGS>
+        <CC_CPP_COMMON_FLAGS Condition="'$(FLAVOR)'!='RTM'"      >$(CC_CPP_COMMON_FLAGS) -DTINYCLR_ENABLE_SOURCELEVELDEBUGGING </CC_CPP_COMMON_FLAGS>
+        <CC_CPP_COMMON_FLAGS Condition="'$(FLAVOR)'=='Instrumented'">$(CC_CPP_COMMON_FLAGS) -DTINYCLR_PROFILE_NEW -DTINYCLR_PROFILE_NEW_CALLS -DTINYCLR_PROFILE_NEW_ALLOCATIONS -DTINYCLR_PROFILE_HANDLER -DPROFILE_BUILD</CC_CPP_COMMON_FLAGS>
+        <CC_CPP_COMMON_FLAGS Condition="'$(sampleprof)'=='true'" >$(CC_CPP_COMMON_FLAGS) -DFIQ_SAMPLING_PROFILER </CC_CPP_COMMON_FLAGS>
+        <CC_CPP_COMMON_FLAGS Condition="'$(latencyprof)'=='true'">$(CC_CPP_COMMON_FLAGS) -DFIQ_LATENCY_PROFILER </CC_CPP_COMMON_FLAGS>
+        <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='arm'"     >$(CC_CPP_COMMON_FLAGS) -DCOMPILE_ARM </CC_CPP_COMMON_FLAGS>
+        <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='thumb'">$(CC_CPP_COMMON_FLAGS) -mthumb-interwork -DCOMPILE_THUMB </CC_CPP_COMMON_FLAGS>
+        <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='thumb2'"  >$(CC_CPP_COMMON_FLAGS) -DCOMPILE_THUMB2 -mthumb</CC_CPP_COMMON_FLAGS>
+        <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='thumb2fp'">$(CC_CPP_COMMON_FLAGS) -DCOMPILE_THUMB2 -mthumb</CC_CPP_COMMON_FLAGS>
+        <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='thumb' and '$(ARMBUILD_ONLY)'!='true' "   >$(CC_CPP_COMMON_FLAGS) -mthumb </CC_CPP_COMMON_FLAGS>
+        <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='rza1'"    >$(CC_CPP_COMMON_FLAGS) -DCOMPILE_ARM </CC_CPP_COMMON_FLAGS>
+        
+        <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='rza1'"     >$(CC_CPP_COMMON_FLAGS) -fdollars-in-identifiers -fshort-wchar -fno-exceptions  -funsigned-char</CC_CPP_COMMON_FLAGS>
+        <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='rza1'"     >$(CC_CPP_COMMON_FLAGS) -fno-strict-aliasing -fno-exceptions -fno-delete-null-pointer-checks -fmessage-length=0 -fno-builtin -mno-unaligned-access</CC_CPP_COMMON_FLAGS>
+
+        <CC_CPP_COMMON_FLAGS Condition="'$(FLAVOR)'=='Instrumented' and '$(NATIVE_PROFILE_CLR)'!=''">$(CC_CPP_COMMON_FLAGS) -DNATIVE_PROFILE_CLR=$(NATIVE_PROFILE_CLR)</CC_CPP_COMMON_FLAGS>
+        <CC_CPP_COMMON_FLAGS Condition="'$(FLAVOR)'=='Instrumented' and '$(NATIVE_PROFILE_PAL)'!=''">$(CC_CPP_COMMON_FLAGS) -DNATIVE_PROFILE_PAL=$(NATIVE_PROFILE_PAL)</CC_CPP_COMMON_FLAGS>
+        <CC_CPP_COMMON_FLAGS Condition="'$(FLAVOR)'=='Instrumented' and '$(NATIVE_PROFILE_HAL)'!=''">$(CC_CPP_COMMON_FLAGS) -DNATIVE_PROFILE_HAL=$(NATIVE_PROFILE_HAL)</CC_CPP_COMMON_FLAGS>
+        
+        <!-- BUILD VERSIONS -->
+        <CC_CPP_COMMON_FLAGS>$(CC_CPP_COMMON_FLAGS) -DVERSION_MAJOR=$(MajorVersion) -DVERSION_MINOR=$(MinorVersion) -DVERSION_BUILD=$(BuildNumber) -DVERSION_REVISION=$(RevisionNumber) -DOEMSYSTEMINFOSTRING="\"$(OemSystemInfoString)\""</CC_CPP_COMMON_FLAGS>
+        <CC_CPP_COMMON_FLAGS>$(CC_CPP_COMMON_FLAGS) -DPLATFORM_ARM_$(TARGETPROCESSOR) -DPLATFORM_ARM_$(TARGETPLATFORM) -DTARGETLOCATION_$(TARGETLOCATION)</CC_CPP_COMMON_FLAGS>
+
+        <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'!='rza1'">$(CC_CPP_COMMON_FLAGS) -DPLATFORM_ARM_$(TARGETPROCESSOR) -DPLATFORM_ARM_$(TARGETPLATFORM) -DTARGETLOCATION_$(TARGETLOCATION)</CC_CPP_COMMON_FLAGS>
+        <CC_CPP_COMMON_FLAGS Condition="'$(INSTRUCTION_SET)'=='rza1'">$(CC_CPP_COMMON_FLAGS) -DPLATFORM_RZA1_$(TARGETPROCESSOR) -DPLATFORM_RZA1_$(TARGETPLATFORM) -DTARGETLOCATION_$(TARGETLOCATION) -DRZA1 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM</CC_CPP_COMMON_FLAGS>
+
+        <CC_CPP_COMMON_FLAGS Condition="'$(ENDIANNESS)'=='le'">$(CC_CPP_COMMON_FLAGS) -DNETMF_TARGET_LITTLE_ENDIAN</CC_CPP_COMMON_FLAGS>
+        <CC_CPP_COMMON_FLAGS Condition="'$(ENDIANNESS)'=='be'">$(CC_CPP_COMMON_FLAGS) -DNETMF_TARGET_BIG_ENDIAN</CC_CPP_COMMON_FLAGS>
+
+        <CC_CPP_COMMON_FLAGS Condition="'$(PATCH_BUILD)'=='Active'">$(CC_CPP_COMMON_FLAGS) -DPATCH_BUILD</CC_CPP_COMMON_FLAGS>
+        <CC_CPP_COMMON_FLAGS Condition="'$(OS_PLATFORM)'=='true'">$(CC_CPP_COMMON_FLAGS) -DPLATFORM_ARM_OS_PORT</CC_CPP_COMMON_FLAGS>
+        
+        <CC_CPP_COMMON_FLAGS Condition="'$(COMPILER_TOOL)'=='GCC'"   >$(CC_CPP_COMMON_FLAGS) -DGCC </CC_CPP_COMMON_FLAGS>
+        <CC_CPP_COMMON_FLAGS Condition="'$(COMPILER_TOOL_VERSION_NUM)'&lt;'4.4'"   >$(CC_CPP_COMMON_FLAGS) -DGCC_OLD_ARG_LIST </CC_CPP_COMMON_FLAGS>
+        
+        <CC_CPP_COMMON_FLAGS>$(CC_CPP_COMMON_FLAGS) @(TinyCLR_Defines->'-D%(filename)',' ')</CC_CPP_COMMON_FLAGS>
+        
+        <CC_CPP_COMMON_FLAGS>$(CC_CPP_COMMON_FLAGS) @(CC_CPP_Defines->'-D%(filename)',' ')</CC_CPP_COMMON_FLAGS>
+        
+        <!-- custom(GR-PEACH) -->
+        <OBJ_DIR2>$(DST_DIR)/$(OBJEXT)/DeviceCode/Targets/OS/Toppers/$(TOPPERS_OSTYPE)/$(APPNAME)</OBJ_DIR2>
+
+        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(CLRROOT)/$(Directory)</CC_CPP_INCS>
+        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)/DeviceCode/include</CC_CPP_INCS>
+        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)/DeviceCode/Cores/arm</CC_CPP_INCS>
+        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)/Support/Include  </CC_CPP_INCS>
+        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)/crypto/inc </CC_CPP_INCS>
+        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)/CLR/Include</CC_CPP_INCS>
+        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)/CLR/Libraries/CorLib</CC_CPP_INCS>
+        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)/CLR/Libraries/SPOT</CC_CPP_INCS>
+        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)/CLR/Libraries/SPOT_Hardware</CC_CPP_INCS>
+        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)/CLR/Libraries/SPOT_Graphics</CC_CPP_INCS>
+        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(SPO_SDK)/CLR/Libraries/SPOT_Net</CC_CPP_INCS>
+        <!-- add cfg output files -->
+        <CC_CPP_INCS>$(CC_CPP_INCS) -I$(OBJ_DIR2)</CC_CPP_INCS>
+        <CC_CPP_INCS>$(CC_CPP_INCS) -I"$(ARMINC)"</CC_CPP_INCS>
+        <CC_CPP_INCS>$(CC_CPP_INCS) @(IncludePaths->'-I$(CLRROOT)\%(relativedir)%(filename)',' ')</CC_CPP_INCS>
+        <CC_CPP_INCS>$(CC_CPP_INCS) @(DirectIncludePaths->'-I%(FullPath)',' ')</CC_CPP_INCS>
+        
+        <CC_CPP_COMMON_FLAGS>$(CC_CPP_COMMON_FLAGS) $(AS_CC_CPP_COMMON_FLAGS) $(CC_CPP_TARGETTYPE_FLAGS) $(CC_CPP_INCS) $(ExtraFlags)</CC_CPP_COMMON_FLAGS>
+    </PropertyGroup>
+    
+    <!-- AS flags -->
+    <PropertyGroup>
+        <AS_FLAGS>$(AS_FLAGS) $(AS_CC_CPP_COMMON_FLAGS) $(ExtraASFlags)</AS_FLAGS>
+    </PropertyGroup>
+    
+    <!-- CC flags -->
+    <PropertyGroup>
+        <CC_FLAGS>$(CC_FLAGS) $(CC_CPP_COMMON_FLAGS) $(ExtraCCFlags)</CC_FLAGS>
+    </PropertyGroup>
+    
+    <!-- CPP flags -->
+    <PropertyGroup>
+        <!-- <CPP_FLAGS>$(CPP_FLAGS) $(CC_CPP_COMMON_FLAGS) $(ExtraCPPFlags) -Wabi -fpermissive -fno-rtti</CPP_FLAGS> -->
+        <CPP_FLAGS>$(CPP_FLAGS) $(CC_CPP_COMMON_FLAGS) $(ExtraCPPFlags) -Wabi -fpermissive</CPP_FLAGS>
+        <CPP_FLAGS Condition="'$(FLAVOR)'=='Debug'">$(CPP_FLAGS) -fno-default-inline</CPP_FLAGS>
+    </PropertyGroup>
+    
+    <!-- other flags -->
+    <PropertyGroup>
+        <ARFLAGS>$(ARFLAGS) -rcs</ARFLAGS>
+        <!-- <LINK_FLAGS>$(LINK_FLAGS),-static,-gc-sections,-no-wchar-size-warning</LINK_FLAGS> -->
+        <LINK_FLAGS>$(LINK_FLAGS) -static --gc-sections --no-wchar-size-warning</LINK_FLAGS>
+    
+        <LINK_FLAGS Condition="'$(INSTRUCTION_SET)'=='thumb'">$(LINK_FLAGS) --allow-multiple-definition</LINK_FLAGS>
+        <LINK_FLAGS Condition="'$(INSTRUCTION_SET)'=='thumb2'">$(LINK_FLAGS) --allow-multiple-definition</LINK_FLAGS>
+        <LINK_FLAGS Condition="'$(INSTRUCTION_SET)'=='thumb2fp'">$(LINK_FLAGS) --allow-multiple-definition</LINK_FLAGS>
+    </PropertyGroup>
+    
+    <PropertyGroup>
+        <EXEName>$(BIN_DIR)\$(AssemblyName)</EXEName>
+        
+        <!-- Common Build -->
+        <!-- <TargetRule Condition="'$(OutputType)'=='Library'">ArmBuildLib</TargetRule> -->
+        <TargetRule Condition="'$(OutputType)'=='Library' and '$(AssemblyName)'!='ToppersASP_Sample'">ArmBuildLib</TargetRule>
+        <!-- Toppers OS Build -->
+        <TargetRule Condition="'$(OutputType)'=='Library' and '$(AssemblyName)'=='ToppersASP_Sample'">ArmBuildLib4</TargetRule>
+        
+        <TargetRule Condition="'$(OutputType)'=='Executable'">BuildAXF</TargetRule>
+        <TargetRule Condition="'$(OutputType)'=='Configure'">BuildAXF</TargetRule>
+        
+        <!-- AddRule -->
+        <!-- EV3 only -->
+        <TargetRule Condition="'$(OutputType)'=='DynamicLoading'">ArmBuildLib2</TargetRule>
+        <!-- no use netmf -->
+        <TargetRule Condition="'$(OutputType)'=='Kernel'">ArmBuildLib3</TargetRule>
+        
+        <TargetRule Condition="'$(OutputType)'=='OSLibrary'">ArmBuildLib4</TargetRule>
+    </PropertyGroup>
+    
+    <PropertyGroup Condition="'$(COMPILER_TOOL)'=='GCC'" >
+        <GNU_LIB_DIR   >$(GNU_TOOLS)\$(GNU_TARGET)\lib</GNU_LIB_DIR>
+        <!-- use nano.spec -->
+        <GNU_LIBGCC_DIR>$(GNU_LIB_DIR)\$(GCC_ARCH_DIR)</GNU_LIBGCC_DIR>
+        <!-- <GNU_LIBGCC_DIR>$(GNU_TOOLS)\lib\gcc\$(GNU_TARGET)\$(GNU_VERSION)\$(GCC_ARCH_DIR)</GNU_LIBGCC_DIR> -->
+        <ExtraLibs       Condition="'$(INSTRUCTION_SET)'=='arm'"></ExtraLibs>
+        
+        <!-- instead include the Thumb libc.a and libgcc.a... we include the ARM mode one, if include the THUMB libs, the linker failed to resolve the branch function address and function branch to unknown address-->
+        <!-- this is happened at the libgcc.a, e.g ldivmod function, helper function address are not found -->
+        <!-- <GNU_LIB_DIR     Condition="'$(INSTRUCTION_SET)'=='thumb'">$(GNU_TOOLS)\$(GNU_TARGET)\lib\thumb</GNU_LIB_DIR> -->
+        <!-- <GNU_LIBGCC_DIR  Condition="'$(INSTRUCTION_SET)'=='thumb'">$(GNU_TOOLS)\lib\gcc\$(GNU_TARGET)\$(GNU_VERSION)\thumb</GNU_LIBGCC_DIR> -->
+        <!-- adding the extra lib if the CLR is compiled in RVDS, whenever we have libs from RVDS, we need this -->
+        <ExtraLibs       Condition="'$(INSTRUCTION_SET)'=='thumb' and '$(ENDIANNESS)'=='be'">$(SPOCLIENT)\tools\ads_v3_1\Lib\armlib\h_t.b $(SPOCLIENT)\tools\ads_v3_1\Lib\armlib\c_t.b</ExtraLibs>
+        <ExtraLibs       Condition="'$(INSTRUCTION_SET)'=='thumb' and '$(ENDIANNESS)'=='le'">$(SPOCLIENT)\tools\ads_v3_1\Lib\armlib\h_t.l $(SPOCLIENT)\tools\ads_v3_1\Lib\armlib\c_t.l</ExtraLibs>
+        
+        <LIBGCC >libgcc.a</LIBGCC>
+        <LIBCGCC>libc.a</LIBCGCC>
+    </PropertyGroup>
+    
+    <!-- item group  -->
+    <ItemGroup>
+        <MakeAXFInputs Include="$(MakeAXFInputs)"/>
+        <FastCompileFile Condition="'$(ENABLE_FASTCOMPILE)'=='true'" Include="@(FastCompileCFile)"/>
+        <FastCompileFile Condition="'$(ENABLE_FASTCOMPILE)'=='true'" Include="@(FastCompileCPPFile)"/>
+    </ItemGroup>
+    
+    <ItemGroup Condition="'$(OutputType)'=='Executable'">
+        <!-- use the tools\make\scatterfile_definition.xml, otherwise has to state the scatterfile at the dotNetMF.proj-->
+        <EXEScatterFileDefinition Condition="'$(EXEScatterFileDefinition)'==''" Include="$(SPO_SDK)\tools\make\scatterfile_definition.xml"/>
+        <EXEScatterFileDefinition Condition="'$(EXEScatterFileDefinition)'!=''" Include="$(EXEScatterFileDefinition)"/>
+        
+        <EXEScatterFile Include="$(BIN_DIR)\$(AssemblyName)_scatterfile.ldf"/>
+        <EXEIncludePaths Include="$(ARMINC)"/>
+    </ItemGroup>
+
+    <!-- target group for compile,assembler,linker, librarian, loader -->
+    <Target Name="ArmCompileCPP" Condition="'@(CPPFiles)'!='' or '@(FastCompileCPPFile)'!=''" Inputs="@(FastCompileCPPFile);@(CPPFiles);@(HFiles)" Outputs="@(ObjFiles)">
+        <Exec Condition="Exists('%(FastCompileCPPFile.FullPath)') and '@(FastCompileCPPFile)'!='' and '$(ENABLE_FASTCOMPILE)'=='true'" Command="$(ADS_WRAPPER) $(CPP) $(CPP_FLAGS) $(POS_DEPENDENT) -o $(OBJ_DIR)\%(FastCompileCPPFile.Filename).$(OBJ_EXT) -c %(FastCompileCPPFile.FullPath) "/>
+        <Exec Condition="Exists('%(CPPFiles.FullPath)')           and '@(CPPFiles)'!=''and ('$(ENABLE_FASTCOMPILE)'!='true' or '@(FastCompileCPPFile)'=='')" Command="$(ADS_WRAPPER) $(CPP) $(CPP_FLAGS) $(POS_DEPENDENT) -o $(OBJ_DIR)\%(CPPFiles.Filename).$(OBJ_EXT) -c %(CPPFiles.FullPath)  "/>
+    </Target>
+    
+    <Target Name="ArmCompileC" Condition="'@(CFiles)'!='' or '@(FastCompileCFile)'==''" Inputs="@(FastCompileCFile);@(CFiles)" Outputs="@(ObjFiles)">
+        <Exec Condition="Exists('%(FastCompileCFile.FullPath)') and  '@(FastCompileCFile)'!='' and '$(ENABLE_FASTCOMPILE)'=='true'" Command="$(ADS_WRAPPER) $(CC) $(CC_FLAGS) $(POS_DEPENDENT) -o$(OBJ_DIR)\%(FastCompileCFile.Filename).$(OBJ_EXT) -c %(FastCompileCFile.FullPath) "/>
+        <Exec Condition="Exists('%(CFiles.FullPath)')           and  '@(CFiles)'!=''and ('$(ENABLE_FASTCOMPILE)'!='true' or '@(FastCompileCFile)'=='')" Command="$(ADS_WRAPPER) $(CC) $(CC_FLAGS) $(POS_DEPENDENT) -o$(OBJ_DIR)\%(CFiles.Filename).$(OBJ_EXT) -c %(CFiles.FullPath) "/>
+    </Target>
+    
+    <!-- Toppers Source Code build -->
+    <Target Name="ArmCompileC2" Condition="'@(CFiles)'!='' or '@(FastCompileCFile)'==''" Inputs="@(FastCompileCFile);@(CFiles)" Outputs="@(ObjFiles)">
+        <Exec Condition="Exists('%(FastCompileCFile.FullPath)') and  '@(FastCompileCFile)'!='' and '$(ENABLE_FASTCOMPILE)'=='true'" Command="$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) $(CC_CPP_INCS) $(POS_DEPENDENT) -o$(OBJ_DIR)\%(FastCompileCFile.Filename).$(OBJ_EXT) -c %(FastCompileCFile.FullPath) "/>
+        <!-- <Exec Condition="Exists('%(CFiles.FullPath)')           and  '@(CFiles)'!=''and ('$(ENABLE_FASTCOMPILE)'!='true' or '@(FastCompileCFile)'=='')" Command="$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) $(CC_CPP_INCS) -o$(OBJ_DIR)\%(CFiles.Filename).$(OBJ_EXT) -c %(CFiles.FullPath) "/> -->
+        <Exec Condition="Exists('%(CFiles.FullPath)')           and  '@(CFiles)'!=''and ('$(ENABLE_FASTCOMPILE)'!='true' or '@(FastCompileCFile)'=='')" Command="$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) $(CC_CPP_INCS) -o$(OBJ_DIR)\%(CFiles.Filename).o -c %(CFiles.FullPath) "/>
+    </Target>
+    
+    <Target Name="ArmAssemble" Condition="'@(AssemblyFiles)'!=''" Inputs="@(AssemblyFiles)" Outputs="@(AssemblyFiles->'$(OBJ_DIR)\%(FileName).$(OBJ_EXT)')">
+        <Delete Condition="Exists('$(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT)')" Files="$(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT)" ContinueOnError="true" />
+        <!-- <Exec Condition="Exists('%(AssemblyFiles.FullPath)')" Command="$(AS) $(AS_FLAGS) -a=$(OBJ_DIR)\%(AssemblyFiles.Filename).txt -o $(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT) %(AssemblyFiles.FullPath)"/> -->
+        <!-- share -->
+        <Exec Condition="Exists('%(AssemblyFiles.FullPath)')" Command="$(CC) -c $(ARCH_TYPE_FLAGS) $(FLOATING_POINT_FLAG) $(CC_CPP_INCS) $(ASMTOPPERS_CUSTOM_FLAGS) -o$(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT) %(AssemblyFiles.FullPath)"/>
+    </Target>
+    
+    <!-- Toppers Assemble Code build -->
+    <!-- $(CC) -c $(CFLAGS) $(KERNEL_CFLAGS) $(KERNEL_ASMOBJS).o $(KERNEL_ASMOBJS).S -->
+    <Target Name="ArmAssemble2" Condition="'@(AssemblyFiles)'!=''" Inputs="@(AssemblyFiles)" Outputs="@(AssemblyFiles->'$(OBJ_DIR)\%(FileName).$(OBJ_EXT)')">
+        <!-- <Exec Condition="Exists('%(AssemblyFiles.FullPath)')" Command="$(CC) $(CTOPPERS_CUSTOM_FLAGS) $(CC_CPP_INCS) -I$(SRCDIR)/kernel -o$(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT) %(AssemblyFiles.FullPath)"/> -->
+        <!-- http://researchmap.jp/joak1kvz7-1778110/?lang=japanese -->
+        <!-- http://researchmap.jp/jo5arkly7-1778110/#_1778110 -->
+        <!-- <Exec Condition="Exists('%(AssemblyFiles.FullPath)')" Command="$(CC) -c -mcpu=arm926ej-s -g -mlittle-endian -nostartfiles -O2 -Wall -DTOPPERS_LABEL_ASM -I. -I../include -I../arch -I..  -I../target/raspberry_pi_gcc -I../kernel -I../arch/arm_gcc/ -DALLFUNC -fno-strict-aliasing -o$(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT) %(AssemblyFiles.FullPath)"/> -->
+        <!-- EV3 -->
+        <!-- <Exec Condition="Exists('%(AssemblyFiles.FullPath)')" Command="$(CC) -c $(ARCH_TYPE_FLAGS) -g -mlittle-endian -nostartfiles -O2 -Wall -DTOPPERS_LABEL_ASM -D__TARGET_ARCH_ARM=5 $(CC_CPP_INCS) -I$(SRCDIR)/kernel -DALLFUNC -fno-strict-aliasing -o$(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT) %(AssemblyFiles.FullPath)"/> -->
+        <!-- GR-PEACH -->
+        <!-- <Exec Condition="Exists('%(AssemblyFiles.FullPath)')" Command="$(CC) -c $(ARCH_TYPE_FLAGS) -g -mlittle-endian -nostdlib -O2 -Wall -DTOPPERS_LABEL_ASM -D__TARGET_ARCH_ARM=7 -DTOPPERS_OMIT_BSS_INIT -DTOPPERS_OMIT_DATA_INIT -DTOPPERS_RZA1H -DTOPPERS_EXECUTE_ON_ROM $(CC_CPP_INCS) -I$(SRCDIR)/kernel -DALLFUNC -fno-strict-aliasing -o$(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT) %(AssemblyFiles.FullPath)"/> -->
+        <!-- share -->
+        <Exec Condition="Exists('%(AssemblyFiles.FullPath)')" Command="$(CC) -c $(ARCH_TYPE_FLAGS) $(FLOATING_POINT_FLAG) $(CC_CPP_INCS) $(ASMTOPPERS_CUSTOM_FLAGS) -o$(OBJ_DIR)\%(AssemblyFiles.Filename).$(OBJ_EXT) %(AssemblyFiles.FullPath)"/>
+    </Target>
+
+    <!-- Toppers Config -->
+    <!-- cfg1 -->
+    <Target Name="ArmCompileCFG" Condition="'@(ConfigFiles)'!=''" Inputs="@(ConfigFiles)" Outputs="@(ConfigFiles->'$(OBJ_DIR)\$(CFG1_OUT).$(OBJ_EXT)')">
+        <Exec Condition="Exists('%(ConfigFiles.FullPath)')" WorkingDirectory="$(OBJ_DIR)" Command="@$(CFG) %(ConfigFiles.FullPath) --pass=1 --kernel=$(TOPPERS_OSTYPE) $(CFGINCLUDE) $(CFG_KERNEL_TABS)" />
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) $(CFG1_OUT_LDFLAGS) -o $(CFG1_OUT).$(OBJ_EXT) -c %(CFG1_OUT).c $(CFG1COMPILEINCLUDE)" /> -->
+    </Target>
+    
+    <!-- cfg2 -->
+    <Target Name="ArmCompileCFG2" Condition="'@(ConfigFiles)'!=''" Inputs="@(ConfigFiles)" Outputs="@(ConfigFiles->'$(OBJ_DIR)\$(CFG1_OUT).$(OBJ_EXT)')">
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) -nostdlib $(CFG1_OUT_LDFLAGS) -o $(CFG1_OUT) $(CFG1_OUT).$(OBJ_EXT)"/>
+        
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(NM) -n $(CFG1_OUT) > $(CFG1_OUT).syms "/>
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(FROMELF) -O srec -S $(CFG1_OUT) $(CFG1_OUT).srec "/>
+        <!-- template-file target.tf to kernel/kernel.tf -->
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(CFG) %(ConfigFiles.FullPath) --pass=2 --kernel=$(TOPPERS_OSTYPE) --template-file=$(CFG2_OUT_TARGETFILE) $(CFG_KERNEL_TABS) -I$(TARGETDIR)/api -I$(LOADERDIR)/app/common $(CFGINCLUDE)"/>
+    </Target>
+    
+    <!-- cfg3 -->
+    <Target Name="ArmCompileCFG3" Condition="'@(ConfigFiles)'!=''" Inputs="@(ConfigFiles)" Outputs="@(ConfigFiles->'$(OBJ_DIR)\$(CFG1_OUT).$(OBJ_EXT)')">
+        <!-- kernel_mem.c: $(APPL_CFG) kernel_cfg.timestamp $(ALL2_OBJS) $(LIBS_DEP) -->
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(CC) $(CFG2_OUT_LDFLAGS) -nostdlib -o $(CFG2_OUT) $(KERNEL1_OUT).$(OBJ_EXT) $(KERNEL_LIB_OBJS) $(TOPPERS_APPL_OBJS) $(TOPPERS_DRIVER_OBJS) $(SYSSVC_OBJS) $(TOPPERS_KERNEL_LIBS)" />
+        <!-- NG -->
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(CC) $(CFG2_OUT_LDFLAGS) -nostdlib -o $(CFG2_OUT) $(KERNEL1_OUT).$(OBJ_EXT) @(ObjFiles->'%(FileName)%(Extension)',' ') $(TOPPERS_KERNEL_LIBS) " /> -->
+        
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(NM) -n $(CFG2_OUT) > $(CFG2_OUT).syms" />
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(FROMELF) -O srec -S $(CFG2_OUT) $(CFG2_OUT).srec" />
+        <Delete Condition="Exists('$(OBJ_DIR)\$(LDSCRIPT)')" Files="$(OBJ_DIR)\$(LDSCRIPT)" ContinueOnError="true" />
+        
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(CFG) $(APPL_CFG) --pass=3 --kernel=$(TOPPERS_OSTYPE) $(CFGINCLUDE) --rom-image=$(CFG2_OUT).srec --symbol-table=$(CFG2_OUT).syms --template-file=$(CFG3_OUT_TARGETFILE) $(CFG_KERNEL_TABS)" />
+        
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="if ! [ -f $(LDSCRIPT) ]; then sed s/kernel_mem2\.o/kernel_mem\.o/g &lt; $(CFG2_OUT_LDSCRIPT) > $(LDSCRIPT); fi" /> -->
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="sed s/kernel_mem2.o/kernel_mem.o/g &lt; $(CFG2_OUT_LDSCRIPT) > $(LDSCRIPT)" /> -->
+        <!-- use powershell script -->
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="powershell -NonInteractive -executionpolicy Unrestricted -command &quot;Get-content $(CFG2_OUT_LDSCRIPT) | Foreach-Object {$_ -replace \&quot;kernel_mem2.o&quot;, \&quot;kernel_mem.o\&quot;} | Set-Content $(LDSCRIPT)&quot;"/>
+        
+        <!-- kernel_mem.c compile -->
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) $(CFG1_OUT_LDFLAGS) -o kernel_mem.o -c kernel_mem.c $(CFG1COMPILEINCLUDE)" /> -->
+    </Target>
+    
+    <Target Name="DelBuildLib" Condition="'$(OutputType)'=='Library'" Inputs="@(FastCompileCPPFile);@(CPPFiles);@(FastCompileCFile);@(CFiles);@(AssemblyFiles);@(HFiles)" Outputs="@(TargetLib)">
+        <Delete Condition="EXISTS(@(TargetLib->'%(FullPath)', ' '))" Files="@(TargetLib->'%(FullPath)', ' ')" ContinueOnError="true" />
+        <Delete Condition="EXISTS(@(TargetLib->'%(FullPath).manifest', ' '))" Files="@(TargetLib->'%(FullPath).manifest', ' ')" ContinueOnError="true" />
+    </Target>
+    
+    <!-- org -->
+    <Target Name="ArmBuildLib" Condition="'$(OutputType)'=='Library'" DependsOnTargets="FindCompileFilesExistence;FindFastCompileFilesExistence;DelBuildLib;ArmCompileC;ArmCompileCPP;ArmAssemble;CreateLibManifest;$(ExtraTargets);" Inputs="@(ObjFiles)" Outputs="@(TargetLib);@(TargetLib->'%(FullPath).manifest')">
+        <Exec WorkingDirectory="$(OBJ_DIR)" Condition="'@(FilesExist)'!=''" Command="$(AR) $(ARFLAGS) @(TargetLib) @(ObjFiles->'%(FileName)%(Extension)',' ') "/>
+        <!-- <Exec Condition="'@(FilesExist)'!=''" Command="$(AR) $(ARFLAGS) @(TargetLib) @(ObjFiles->'%(FileName)%(Extension)',' ') "/> -->
+    </Target>
+    
+    <!-- DynamicLoading(HRP2 - EV3 Only?) -->
+    <!-- <Target Name="ArmBuildLib2" Condition="'$(OutputType)'=='DynamicLoading'" DependsOnTargets="FindCompileFilesExistence;FindFastCompileFilesExistence;DelBuildLib2;ArmCompileC;ArmCompileCPP;ArmAssemble;CreateLibManifest;$(ExtraTargets);" Inputs="@(ObjFiles)" Outputs="@(TargetModule);@(TargetModule->'%(FullPath).manifest')"> -->
+    <Target Name="ArmBuildLib2" Condition="'$(OutputType)'=='DynamicLoading'" DependsOnTargets="module_cfg1;ArmAssemble2;module_cfg2;FindCompileFilesExistence;FindFastCompileFilesExistence;DelBuildLib2;ArmCompileC;ArmCompileCPP;ArmAssemble;CreateLibManifest;module_cfg1;module_cfg2;$(ExtraTargets);">
+        <!-- base hello ev3 -->
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(LINK) -o app module_cfg.o ..\..\DeviceCode\uItron4API.o ..\..\DeviceCode\configuration.o ..\..\DeviceCode\cpu.o ..\..\DeviceCode\GlobalLock.o ..\..\DeviceCode\Various_uIron4.o app.o cli_main.o cli_motor.o cli_sensor.o ev3api.o ev3api_battery.o ev3api_brick.o ev3api_cfg.o ev3api_fs.o ev3api_lcd.o ev3api_motor.o ev3api_newlib.o ev3api_sensor.o ev3api_speaker.o strerror.o t_perror.o tlsf.o vasyslog.o $(GNU_TOOLS_BIN)\..\arm-none-eabi\lib\libm.a $(GNU_TOOLS_BIN)\..\arm-none-eabi\lib\libc.a $(GNU_TOOLS_BIN)\..\lib\gcc\arm-none-eabi\$(GCC_VER)\libgcc.a" />
+        
+        <!-- module_cfg.o app.o ev3api.o ev3api_battery.o ev3api_brick.o ev3api_cfg.o ev3api_fs.o ev3api_lcd.o ev3api_motor.o ev3api_newlib.o ev3api_sensor.o ev3api_speaker.o strerror.o t_perror.o tlsf.o vasyslog.o -->
+        <!-- #arm-none-eabi-strip -K _module_cfg_entry_num -K _module_cfg_tab -K _module_pil_version -strip-all app -->
+    </Target>
+    
+    <Target Name="DelBuildLib2" Condition="'$(OutputType)'=='DynamicLoading'" Inputs="@(FastCompileCPPFile);@(CPPFiles);@(FastCompileCFile);@(CFiles);@(AssemblyFiles);@(HFiles)" Outputs="@(TargetModule)">
+        <Exec Condition="'@(FilesExist)'!='' " Command="del /q  @(TargetModule)" ContinueOnError="true" />
+        <Exec Condition="'@(FilesExist)'!='' " Command="del /q  @(TargetModule->'%(FullPath).manifest', ' ')" ContinueOnError="true" />
+    </Target>
+    
+    <!-- Kernel build(no use netmf) -->
+    <!-- kernel_cfg1, 2 start compile kernel_cfg.h use -->
+    <Target Name="ArmBuildLib3" Condition="'$(OutputType)'=='Kernel'" DependsOnTargets="kernel_cfg1;ArmAssemble2;kernel_cfg2;FindCompileFilesExistence;FindFastCompileFilesExistence;DelBuildLib2;ArmCompileC2;ArmCompileCPP;CreateLibManifest;libkernel;kernel_cfg3;$(ExtraTargets);">
+    <!-- <Target Name="ArmBuildLib3" Condition="'$(OutputType)'=='Kernel'" DependsOnTargets="FindCompileFilesExistence;FindFastCompileFilesExistence;DelBuildLib2;ArmCompileC;ArmCompileCPP;ArmAssemble;CreateLibManifest;$(ExtraTargets);"> -->
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(CC) $(CTOPPERS_CUSTOM_FLAGS) -nostdlib $(LDFLAGS) -o $(TOPPERS_OSTYPE) kernel_cfg.o $(TOPPERS_START_OBJS) $(TOPPERS_APPL_OBJS) $(TOPPERS_DRIVER_OBJS) $(SYSSVC_OBJS) $(KERNEL_LIB_OBJS) $(TOPPERS_KERNEL_LIBS)" />
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(NM) -n $(TOPPERS_OSTYPE) > $(TOPPERS_OSTYPE).syms "/>
+        
+        <!-- GR_PEACH ROM/RAM -->
+        
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="diff cfg3_out.syms $(TOPPERS_OSTYPE).syms" /> -->
+        <!-- use PowerShell(Error) -->
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="powershell -NonInteractive -executionpolicy Unrestricted -command &quot;Compare-Object $(cat cfg3_out.syms) $(cat $(TOPPERS_OSTYPE).syms)&quot;"/> -->
+        
+        <!-- not use USE_CFG_PASS3 -->
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="diff cfg2_out.syms $(TOPPERS_OSTYPE).syms" /> -->
+        <!-- use PowerShell(Error) -->
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="powershell -NonInteractive -executionpolicy Unrestricted -command &quot;Compare-Object $(cat cfg2_out.syms) $(cat $(TOPPERS_OSTYPE).syms)&quot;"/> -->
+    </Target>
+    
+    <!-- os(lib) -->
+    <Target Name="ArmBuildLib4" Condition="'$(OutputType)'=='Library'" DependsOnTargets="kernel_cfg1;ArmAssemble2;kernel_cfg2;FindCompileFilesExistence;FindFastCompileFilesExistence;DelBuildLib;ArmCompileC2;ArmCompileCPP;CreateLibManifest;libkernel;kernel_cfg3;$(ExtraTargets);" Inputs="@(ObjFiles)" Outputs="@(TargetLib);@(TargetLib->'%(FullPath).manifest')">
+    <!-- <Target Name="ArmBuildLib4" Condition="'$(OutputType)'=='OSLibrary'" DependsOnTargets="kernel_cfg1;ArmAssemble2;kernel_cfg2;FindCompileFilesExistence;FindFastCompileFilesExistence;DelBuildLib;ArmCompileC2;ArmCompileCPP;CreateLibManifest;libkernel;kernel_cfg3;$(ExtraTargets);" Inputs="@(ObjFiles)" Outputs="@(TargetLib);@(TargetLib->'%(FullPath).manifest')"> -->
+        <Exec WorkingDirectory="$(OBJ_DIR)" Condition="'@(FilesExist)'!=''" Command="$(AR) $(ARFLAGS) @(TargetLib) @(ObjFiles->'%(FileName)%(Extension)',' ') "/>
+        <!-- <Exec Condition="'@(FilesExist)'!=''" Command="$(AR) $(ARFLAGS) @(TargetLib) @(ObjFiles->'%(FileName)%(Extension)',' ') "/> -->
+    </Target>
+    <Target Name="DelBuildLib4" Condition="'$(OutputType)'=='OSLibrary'" Inputs="@(FastCompileCPPFile);@(CPPFiles);@(FastCompileCFile);@(CFiles);@(AssemblyFiles);@(HFiles)" Outputs="@(TargetLib)">
+        <Delete Condition="EXISTS(@(TargetLib->'%(FullPath)', ' '))" Files="@(TargetLib->'%(FullPath)', ' ')" ContinueOnError="true" />
+        <Delete Condition="EXISTS(@(TargetLib->'%(FullPath).manifest', ' '))" Files="@(TargetLib->'%(FullPath).manifest', ' ')" ContinueOnError="true" />
+    </Target>
+    
+    <!-- EV3 only -->
+    <!-- start -->
+    <!--
+    <Target Name="module_cfg1">
+        <Exec Command="@$(CFG) !-pass=1 !-kernel=$(TOPPERS_OSTYPE) $(CFGINCLUDE) $(CFG_MODULE_TABS) $(APPL_CFG)" />
+        
+        <!!- warning : cannot find entry symbol _start; !->
+        <!!- http://www.embedded.jp/pipermail/linux/2003-December/000018.html !->
+        <Exec Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) -Wl,-Ttext,$(TEXT_START_ADDRESS) -Wl,-e,0 -o $(CFG1_OUT).o -c $(CFG1_OUT).c $(CFG1COMPILEINCLUDE)" />
+    </Target>
+    -->
+    <Target Name="module_cfg1" DependsOnTargets="ArmCompileCFG;$(ExtraTargets);">
+    </Target>
+    
+    <!-- dynamicLoader no use? -->
+    <Target Name="module_cfg2">
+        <!-- module build -->
+        <Exec Command="@$(ADS_WRAPPER) $(CC) -nostartfiles -O2 $(CTOPPERS_CUSTOM_FLAGS) $(CFG1COMPILEINCLUDE) -DBUILD_MODULE -Wl,-Ttext,0x00000000 -Wl,-e,0 -o cfg1_out.o cfg1_out.c" />
+        
+        <!-- ok -->
+        <Exec Command="@$(ADS_WRAPPER) $(CC) -nostartfiles $(CTOPPERS_CUSTOM_FLAGS) $(CFG1_OUT_LDFLAGS) -Wl,-e,0 -o $(CFG1_OUT) cfg1_out.o" />
+        <Exec Command="@$(NM) -n $(CFG1_OUT) > cfg1_out.syms" />
+        <Exec Command="@$(FROMELF) -O srec -S $(CFG1_OUT) cfg1_out.srec" />
+        
+        <!-- $(call print_cmd, "CFG[2]", $@) -->
+        <Exec Command="@$(CFG) $(APPL_CFG) --pass=2 --kernel=$(TOPPERS_OSTYPE) --template-file=$(MODULE_CFG2_OUT_TARGETFILE) $(CFG_MODULE_TABS) -I$(TARGETDIR)/api -I$(LOADERDIR)/app/common $(CFGINCLUDE)" />
+    </Target>
+    <!-- end -->
+    
+    <!-- 
+    <Target Name="kernel_cfg1" DependsOnTargets="ArmCompileCFG;$(ExtraTargets);">
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(CFG) $(APPL_CFG) !-pass=1 !-kernel=$(TOPPERS_OSTYPE) $(CFGINCLUDE) $(CFG_KERNEL_TABS)" />
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) $(CFG1_OUT_LDFLAGS) -o $(CFG1_OUT).$(OBJ_EXT) -c $(CFG1_OUT).c $(CFG1COMPILEINCLUDE)" />
+    </Target>
+    -->
+    <Target Name="kernel_cfg1" DependsOnTargets="ArmCompileCFG;$(ExtraTargets);">
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) $(CFG1_OUT_LDFLAGS) -o $(CFG1_OUT).$(OBJ_EXT) -c $(CFG1_OUT).c $(CFG1COMPILEINCLUDE)" />
+    </Target>
+    
+    <Target Name="kernel_cfg2">
+        <!-- Build ok. execute NG? -->
+        <!-- multiple definition of `_start' -->
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) -nostdlib $(CFG1_OUT_LDFLAGS) -o $(CFG1_OUT) $(CFG1_OUT).$(OBJ_EXT)"/>
+        
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(NM) -n $(CFG1_OUT) > $(CFG1_OUT).syms "/>
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(FROMELF) -O srec -S $(CFG1_OUT) $(CFG1_OUT).srec "/>
+        <!-- template-file target.tf to kernel/kernel.tf -->
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(CFG) $(APPL_CFG) --pass=2 --kernel=$(TOPPERS_OSTYPE) --template-file=$(CFG2_OUT_TARGETFILE) $(CFG_KERNEL_TABS) -I$(TARGETDIR)/api -I$(LOADERDIR)/app/common $(CFGINCLUDE)"/>
+        
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="touch -r kernel_cfg.c kernel_cfg.timestamp" /> -->
+        
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) $(CFG1_OUT_LDFLAGS) -o $(KERNEL1_OUT).$(OBJ_EXT) -c $(KERNEL1_OUT).c $(CFG1COMPILEINCLUDE)" />
+        <!-- EV3 only? -->
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) $(CFG1_OUT_LDFLAGS) -o $(KERNEL2_MEMOUT).$(OBJ_EXT) -c $(KERNEL2_MEMOUT).c $(CFG1COMPILEINCLUDE)" /> -->
+        <Exec WorkingDirectory="$(OBJ_DIR)" Condition="Exists('$(OBJ_DIR)\$(KERNEL2_MEMOUT).c')" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) $(CFG1_OUT_LDFLAGS) -o $(KERNEL2_MEMOUT).$(OBJ_EXT) -c $(KERNEL2_MEMOUT).c $(CFG1COMPILEINCLUDE)" ContinueOnError="true" />
+        
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="copy /y kernel_cfg.c &quot;$(SPOCLIENT)\$(Directory)\kernel_cfg.c&quot;" />
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="copy /y kernel_cfg.h &quot;$(SPOCLIENT)\$(Directory)\kernel_cfg.h&quot;" />
+    </Target>
+
+    <!-- same name override target parameters -->
+    <!-- EV3 use -->
+    <!-- <Target Name="kernel_cfg3_use_Mem" Condition="'$(USE_CFG_PASS3)'=='true'" DependsOnTargets="kernel_mem_usePass3;kernel_mem_usePass4;"> -->
+    <!--
+    <Target Name="kernel_cfg3" Condition="'$(USE_CFG_PASS3)'=='true'" DependsOnTargets="kernel_mem_usePass3;kernel_mem_usePass4;">
+    </Target>
+    -->
+    
+    <!-- GR-PEACH use -->
+    <!-- <Target Name="kernel_cfg3_no_use_Mem" Condition="'$(USE_CFG_PASS3)'=='true'" DependsOnTargets="kernel_mem_nousePass3;"> -->
+    <Target Name="kernel_cfg3" Condition="'$(USE_CFG_PASS3)'!='true'" DependsOnTargets="kernel_mem_nousePass3;">
+    </Target>
+    
+    <Target Name="kernel_offset">
+        <!-- offset.h: $(APPL_CFG) kernel_cfg.timestamp -->
+        <!-- $(CFGINCLUDE) module base -->
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(CFG) --pass=3 --kernel=$(TOPPERS_OSTYPE) $(CFGINCLUDE) --rom-image=$(CFG1_OUT).srec --symbol-table=$(CFG1_OUT).syms -T=$(TARGETDIR)/common/core_offset.tf $(CFG_KERNEL_TABS)" />
+    </Target>
+    
+    <Target Name="kernel_mem_usePass3">
+        <!-- Add library (must : libkernel.a) -->
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(CC) $(CFG2_OUT_LDFLAGS) -nostdlib -o $(CFG2_OUT) $(TOPPERS_APPL_OBJS) $(TOPPERS_DRIVER_OBJS) $(SYSSVC_OBJS) $(TOPPERS_KERNEL_LIBS)" />
+        
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(NM) -n $(CFG2_OUT) > $(CFG2_OUT).syms" />
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(FROMELF) -O srec -S $(CFG2_OUT) $(CFG2_OUT).srec" />
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="rm -f $(CFG3_OUT_LDSCRIPT)" /> -->
+        <Delete Condition="Exists('$(OBJ_DIR)\$(CFG3_OUT_LDSCRIPT)')" Files="$(OBJ_DIR)\$(CFG3_OUT_LDSCRIPT)" ContinueOnError="true" />
+        
+        <!-- EV3 -->
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(CFG) $(APPL_CFG) ?-pass=3 ?-kernel=$(TOPPERS_OSTYPE) -I$(TARGETDIR)/api -I$(LOADERDIR)/app/common $(CFGINCLUDE) ?-rom-image cfg2_out.srec ?-symbol-table cfg2_out.syms ?-template-file=$(TARGETDIR)/target_opt.tf $(CFG_KERNEL_TABS)" /> -->
+        <!-- GR_PEACH -->
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(CFG) $(APPL_CFG) ?-pass=3 ?-kernel=$(TOPPERS_OSTYPE) -I$(TARGETDIR)/api -I$(LOADERDIR)/app/common $(CFGINCLUDE) ?-rom-image $(CFG2_OUT).srec ?-symbol-table $(CFG2_OUT).syms ?-template-file=$(CFG3_OUT_TARGETFILE) $(CFG_KERNEL_TABS)" /> -->
+        
+        <!-- <Exec Command= "if ! [ -f $(CFG3_OUT_LDSCRIPT) ]; then sed s/kernel_mem2\.o/kernel_mem3\.o/g &lt; $(CFG2_OUT_LDSCRIPT) > $(CFG3_OUT_LDSCRIPT); fi" /> -->
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="sed s/kernel_mem2.o/kernel_mem3.o/g &lt; $(CFG2_OUT_LDSCRIPT) > $(CFG3_OUT_LDSCRIPT)" /> -->
+        <!-- use PowerShell -->
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(PowerShellExe) -NonInteractive -executionpolicy Unrestricted -command &quot;(Get-content $(CFG2_OUT_LDSCRIPT)) | Foreach-Object {$_ -replace &quot;kernel_mem2.o&quot;, &quot;kernel_mem3.o&quot;} | Set-Content $(CFG3_OUT_LDSCRIPT)&quot;"/> -->
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="powershell -NonInteractive -executionpolicy Unrestricted -command &quot;Get-content $(CFG2_OUT_LDSCRIPT) | Foreach-Object {$_ -replace \&quot;kernel_mem2.o&quot;, \&quot;kernel_mem3.o\&quot;} | Set-Content $(CFG3_OUT_LDSCRIPT)&quot;"/>
+        
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) $(CFG1_OUT_LDFLAGS) -o $(KERNEL3_MEMOUT).$(OBJ_EXT) -c $(KERNEL3_MEMOUT).c $(CFG1COMPILEINCLUDE)" />
+    </Target>
+    
+    <Target Name="kernel_mem_usePass4">
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(CC) $(CFG3_OUT_LDFLAGS) -nostdlib -o $(CFG3_OUT) $(TOPPERS_APPL_OBJS) $(TOPPERS_DRIVER_OBJS) $(SYSSVC_OBJS) $(TOPPERS_KERNEL_LIBS)" />
+        
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(NM) -n $(CFG3_OUT) > $(CFG3_OUT).syms" />
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(FROMELF) -O srec -S $(CFG3_OUT) $(CFG3_OUT).srec" />
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="rm -f $(LDSCRIPT)" /> -->
+        <Delete Condition="Exists('$(OBJ_DIR)\$(LDSCRIPT)')" Files="$(OBJ_DIR)\$(LDSCRIPT)" ContinueOnError="true" />
+        
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(CFG) $(APPL_CFG) --pass=4 --kernel=$(TOPPERS_OSTYPE) $(CFGINCLUDE) --rom-image=$(CFG3_OUT).srec --symbol-table=$(CFG3_OUT).syms --template-file=$(CFG4_OUT_TARGETFILE) $(CFG_KERNEL_TABS)" />
+        
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="if ! [ -f $(LDSCRIPT) ]; then sed s/kernel_mem3\.o/kernel_mem\.o/g &lt; $(CFG3_OUT_LDSCRIPT) > $(LDSCRIPT); fi" /> -->
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="sed s/kernel_mem3.o/kernel_mem.o/g &lt; $(CFG3_OUT_LDSCRIPT) > $(LDSCRIPT)" /> -->
+        <!-- use PowerShell -->
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(PowerShellExe) -NonInteractive -executionpolicy Unrestricted -command &quot;(Get-content $(CFG3_OUT_LDSCRIPT)) | Foreach-Object {$_ -replace &quot;kernel_mem2.o&quot;, &quot;kernel_mem.o&quot;} | Set-Content $(LDSCRIPT)&quot;"/> -->
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="powershell -NonInteractive -executionpolicy Unrestricted -command &quot;Get-content $(CFG3_OUT_LDSCRIPT) | Foreach-Object {$_ -replace \&quot;kernel_mem2.o&quot;, \&quot;kernel_mem.o\&quot;} | Set-Content $(LDSCRIPT)&quot;"/>
+        
+        <!-- kernel_mem.c compile -->
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) $(CFG1_OUT_LDFLAGS) -o $(KERNEL1_MEMOUT).$(OBJ_EXT) -c $(KERNEL1_MEMOUT).c $(CFG1COMPILEINCLUDE)" />
+    </Target>
+    
+    <Target Name="kernel_mem_nousePass3">
+        <!-- kernel_mem.c: $(APPL_CFG) kernel_cfg.timestamp $(ALL2_OBJS) $(LIBS_DEP) -->
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(CC) $(CFG2_OUT_LDFLAGS) -nostdlib -o $(CFG2_OUT) $(KERNEL1_OUT).$(OBJ_EXT) $(KERNEL_LIB_OBJS) $(TOPPERS_APPL_OBJS) $(TOPPERS_DRIVER_OBJS) $(SYSSVC_OBJS) $(TOPPERS_KERNEL_LIBS)" />
+        <!-- NG -->
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(CC) $(CFG2_OUT_LDFLAGS) -nostdlib -o $(CFG2_OUT) $(KERNEL1_OUT).$(OBJ_EXT) @(ObjFiles->'%(FileName)%(Extension)',' ') $(TOPPERS_KERNEL_LIBS) " /> -->
+        
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(NM) -n $(CFG2_OUT) > $(CFG2_OUT).syms" />
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(FROMELF) -O srec -S $(CFG2_OUT) $(CFG2_OUT).srec" />
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="rm -f $(LDSCRIPT)" /> -->
+        <Delete Condition="Exists('$(OBJ_DIR)\$(LDSCRIPT)')" Files="$(OBJ_DIR)\$(LDSCRIPT)" ContinueOnError="true" />
+        
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(CFG) $(APPL_CFG) --pass=3 --kernel=$(TOPPERS_OSTYPE) $(CFGINCLUDE) --rom-image=$(CFG2_OUT).srec --symbol-table=$(CFG2_OUT).syms --template-file=$(CFG3_OUT_TARGETFILE) $(CFG_KERNEL_TABS)" />
+        
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="if ! [ -f $(LDSCRIPT) ]; then sed s/kernel_mem2\.o/kernel_mem\.o/g &lt; $(CFG2_OUT_LDSCRIPT) > $(LDSCRIPT); fi" /> -->
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="sed s/kernel_mem2.o/kernel_mem.o/g &lt; $(CFG2_OUT_LDSCRIPT) > $(LDSCRIPT)" /> -->
+        <!-- EV3 only -->
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="powershell -NonInteractive -executionpolicy Unrestricted -command &quot;Get-content $(CFG2_OUT_LDSCRIPT) | Foreach-Object {$_ -replace \&quot;kernel_mem2.o&quot;, \&quot;kernel_mem.o\&quot;} | Set-Content $(LDSCRIPT)&quot;"/> -->
+        
+        <!-- kernel_mem.c compile -->
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="@$(ADS_WRAPPER) $(CC) $(CTOPPERS_CUSTOM_FLAGS) $(CFG1_OUT_LDFLAGS) -o kernel_mem.o -c kernel_mem.c $(CFG1COMPILEINCLUDE)" /> -->
+    </Target>
+    
+    <!-- Kernel Library File Create -->
+    <!-- <Target Name="libkernel" DependsOnTargets="kernel_offset"> -->
+    <Target Name="libkernel">
+        <!-- libkernel.a: $(OFFSET_H) $(KERNEL_LIB_OBJS) -->
+        <!-- <Exec WorkingDirectory="$(OBJ_DIR)" Command="rm -f libkernel.a" /> -->
+        <!-- <Delete Condition="Exists('$(OBJ_DIR)\libkernel.a')" Files="$(OBJ_DIR)\libkernel.a" ContinueOnError="true" /> -->
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(AR) -rcs libkernel.a $(KERNEL_LIB_OBJS)" />
+        <!-- <Exec Command="$(AR) -rcs libkernel.a $(TOPPERS_KERNEL_OBJS)" /> -->
+        
+        <Exec WorkingDirectory="$(OBJ_DIR)" Command="$(RANLIB) libkernel.a" />
+    </Target>
+    
+    <!-- $(CFG2_OUT_SRCS): kernel_cfg.timestamp -->
+    <Target Name="kernel_cfg_timestamp">
+        <Exec Command="@$(LINK) $(CFG1_OUT) $(CTOPPERS_CUSTOM_FLAGS) $(CFG1_OUT_LDFLAGS) -o $(CFG1_OUT) $(START_OBJS) $(CFG1_OUT).$(OBJ_EXT) $(END_OBJS)" />
+        <!-- $(call print_cmd, "NM", cfg1_out.syms) -->
+        <Exec Command="@$(NM) $(CFG1_OUT).syms -n $(CFG1_OUT) > $(CFG1_OUT).syms" />
+        <!--$(call print_cmd, "OBJCOPY", $(CFG1_OUT).srec) -->
+        <Exec Command="@$(FROMELF) $(CFG1_OUT).srec -O srec -S $(CFG1_OUT) $(CFG1_OUT).srec" />
+        <!-- $(call print_cmd, "CFG[2]", $@) -->
+        <Exec Command="@$(CFG) --pass=2 --kernel=$(TOPPERS_OSTYPE) $(CFGINCLUDE) -T $(CFG2_OUT_TARGETFILE) $(CFG_KERNEL_TABS)" />
+        <!-- <Exec Command="touch -r kernel_cfg.c kernel_cfg.timestamp" /> -->
+    </Target>
+    
+    <!-- BinaryFile Create -->
+    <Target Name="objnameToBinary" Inputs="$(OBJFILE);$(OBJNAME)">
+        <Exec Command="$(OBJCOPY) -O binary -S $(OBJFILE) $(OBJNAME).bin" />
+    </Target>
+    
+    <Target Name="uImage" DependsOnTargets="@(OBJNAME).bin">
+        <Exec Command="@(MKIMAGE) -A arm -O linux -T kernel -C none -a $(TEXT_START_ADDRESS) -e $(TEXT_START_ADDRESS) -n $(TOPPERS_OSTYPE) kernel -d $(TOPPERS_OSTYPE).bin uImage" />
+        <Exec Command="chmod +x uImage" />
+        <Exec Command="cp uImage @(SD_DIR)" />
+    </Target>
+    
+    <!-- #  S RecordFile Create -->
+    <!-- $(objnameToBinary).srec: $(OBJFILE) -->
+    <Target Name="ObjnameToSrec" Inputs="@(OBJFILE);@(OBJNAME)">
+        <Exec Command="$(OBJCOPY) -O srec -S $(OBJFILE) $(OBJNAME).srec" />
+
+    </Target>
+    
+    <!-- Compile Result Clear -->
+    <Target Name="clean">
+        <!-- <Exec Command="rm -f \#* *~ *.o $(CLEAN_FILES)" /> -->
+        <Exec Command="rm -f \#* *~ *.o $(CLEAN_FILES)" />
+        <Exec Command="rm -f $(OBJFILE) $(OBJNAME).syms $(OBJNAME).srec $(OBJNAME).bin" />
+        <Exec Command="rm -f kernel_mem.c $(CFG2_OUT) cfg2_out.tf cfg2_out.syms cfg2_out.srec" />
+        <Exec Command="rm -f $(CFG3_OUT) cfg3_out.tf cfg3_out.syms cfg3_out.srec" />
+        <Exec Command="rm -f kernel_cfg.timestamp $(CFG2_OUT_SRCS) $(CFG3_OUT_SRCS)" />
+        <Exec Command="rm -f $(CFG1_OUT).c $(CFG1_OUT) $(CFG1_OUT).syms $(CFG1_OUT).srec" />
+        <Exec Command="rm -f ev3api_cfg.c ev3api_cfg.h omit_svc.h" />
+        <!--
+        <Choose>
+            <When Condition=" '$(KERNEL_LIB)'!='' ">
+                <Exec Command="rm -f libkernel.a" />
+            </When>
+            <When Condition=" '$(KERNEL_LIB)'=='' ">
+            </When>
+        </Choose>
+        -->
+        <Delete Condition="Exists('makeoffset.s')" Files="makeoffset.s" ContinueOnError="true" />
+        <Delete Condition="Exists('offset.h')" Files="offset.h" ContinueOnError="true" />
+        <Exec Command="rm -f $(MLIB) $(CLIB) $(RLIB) $(DLIB) $(DEPLIB)" />
+    </Target>
+    
+    <Target Name="cleankernel">
+        <Exec Command="rm -rf $(KERNEL_LIB_OBJS)" />
+        <Delete Condition="Exists('makeoffset.s')" Files="makeoffset.s" ContinueOnError="true" />
+        <Delete Condition="Exists('offset.h')" Files="offset.h" ContinueOnError="true" />
+    </Target>
+    
+    <Target Name="cleandep">
+        <Exec Command="if ! [ -f Makefile.depend ]; then rm -f kernel_cfg.timestamp $(CFG2_OUT_SRCS); rm -f $(CFG1_OUT).c $(CFG1_OUT).o $(CFG1_OUT) $(CFG1_OUT).syms $(CFG1_OUT).srec; rm -f makeoffset.s offset.h; fi"/>
+        <Exec Command="rm -f Makefile.depend"/>
+    </Target>
+    
+    <Target Name="cleantecs">
+        <Exec Command="rm -rf gen" />
+        <Exec Command="rm -f tecs.timestamp" />
+    </Target>
+    
+    <Target Name="clean_mrb_c">
+    </Target>
+    
+    <Target Name="realclean" DependsOnTargets="cleantecs;cleandep;clean;clean_mrb_c">
+        <Exec Command="rm -f $(REALCLEAN_FILES)" />
+    </Target>
+    
+    <!-- TECS Interface Generator Execute -->
+    <Target Name="tecs_timestamp">
+        <Exec Command="$(APPL_CDL) $(TECS_IMPORTS)" />
+        <!-- <Exec Command="$(call print_cmd, "TECSGEN", $<)" /> -->
+        <Exec Command="$(TECSGEN) -R -D TECS -D TECS_CPP -I$(SRCDIR)/tecs_plugin $(INCLUDES) $(APPL_CDL)" />
+        <Exec Command="touch tecs.timestamp" />
+    </Target>
+    
+    <Target Name="tecs" DependsOnTargets="tecs_timestamp">
+    </Target>
+    
+    <!-- Dependencies Files Create -->
+    <Target Name="gendepend">
+        <Message Text="Generating Makefile.depend."/>
+    </Target>
+    
+    <Target Name="depend">
+    <!--
+      <Choose>
+        <When Condition=" '$(KERNEL_LIB)'!='' ">
+            cleandep kernel_cfg.timestamp gendepend \
+                        $(CFG1_OUT).depend $(CFG1_OUT).d \
+                        $(ALL2_OBJS:.o=.d)
+        </When>
+        <When Condition=" '$(KERNEL_LIB)'=='' ">
+            cleandep $(OFFSET_H) kernel_cfg.timestamp gendepend \
+                $(CFG1_OUT).depend $(CFG1_OUT).d \
+                $(KERNEL_AUX_COBJS:.o=.d) $(KERNEL_ASMOBJS:.o=.d) \
+                $(KERNEL_COBJS:.o=.d) $(KERNEL_LCSRCS:.c=.d) $(ALL2_OBJS:.o=.d)
+        </When>
+      <Message Text="Generating Makefile.depend."/>
+      </Choose>
+    -->
+    </Target>
+    
+  <!-- End(Toppers Setting) -->
+
+
+
+  <!-- target group for compile,assembler,linker, librarian, loader -->
+
+  <Target Name="BuildAXF" Condition="'$(OutputType)'=='Executable'" DependsOnTargets="ArmCompileCPP;ArmCompileC;ArmAssemble;$(ExtraEXETargets);BuildScatterfile" Inputs="@(EXEInputs);@(InputLibs);@(PlatformIndependentLibs->'$(PLATFORM_INDEPENDENT_RELATIVE_LIB_DIR)\%(FileName)%(Extension)');@(DriverLibs->'%(FileName)%(Extension)');@(EXEScatterFile)" Outputs="@(EXEOutput)">
+    <!-- NOTE:
+         This forces the working directory to LIB_DIR in order to work around issues with long command lines.
+         (GNU Embedded for ARM 4.9.3 at least has a bug where long command lines will drop a character and thus generate an error)
+         This also deals with the fact that lib files listed explicitly on the command line don't use search paths. (any -lxxx
+         libraries use search paths but the search is for libxxx.a rather than xxx) So, this uses the common lib directory for
+         the majority of libs (platform dependent) and provides the explicit full path for the smaller percentage
+         (platform independent). Thus the linker looks in the current working directory and finds the specified library without
+         needing to list the full path for each one. 
+    -->
+    <Exec WorkingDirectory="$(LIB_DIR)" Command="$(LINK) $(ARCH_TYPE_FLAGS) $(FLOATING_POINT_FLAG) -ffunction-sections -fdata-sections -Xlinker $(ARCH_TARGETTYPE_FLAGS) -L&quot;$(GNU_LIBGCC_DIR)&quot; -specs=$(MsBuildThisFileDirectory)startfile.specs -Wl$(LINK_FLAGS),-Map=$(EXEName).map $(LINK_NANO_SPECS) -T@(EXEScatterFile,' ') @(EXEInputs,' ') -Wl,-( @(PlatformIndependentLibs->'$(PLATFORM_INDEPENDENT_RELATIVE_LIB_DIR)%(FileName)%(Extension)',' ') @(DriverLibs->'%(FileName)%(Extension)',' ') @(InputLibs,' ') -Wl,-) -Wl,-no-whole-archive -Wl,-( $(GCCSTDLIBS) -Wl,-) $(ExtraLibs) -o@(EXEOutput)" />
+
+    <Exec Command="$(OBJDUMP) -d -EL -S @(EXEOutput) > $(EXEName).axfdump" />
+
+    <MakeDir Directories="$(EXEName).bin" Condition="'$(MultipleOutputSections)'=='true' and !Exists('$(EXEName).bin')" />
+    <MakeDir Directories="$(EXEName).hex" Condition="'$(MultipleOutputSections)'=='true' and !Exists('$(EXEName).hex')" />
+
+    <Exec Command="$(FROMELF) -S -O binary @(EXEOutput) $(EXEName).bin"                      Condition="'$(MultipleOutputSections)'!='true'" />
+    <Exec Command="$(FROMELF) -S -R ER_DAT -R ER_CONFIG -O binary @(EXEOutput) $(EXEName).bin\ER_$(TARGETLOCATION)" Condition="'$(MultipleOutputSections)'=='true'" />
+    <Exec Command="$(FROMELF) -S -j ER_DAT              -O binary @(EXEOutput) $(EXEName).bin\ER_DAT"               Condition="'$(MultipleOutputSections)'=='true' and '$(ExcludeDatRegion)'!='true' and ('$(FLAVOR)'!='RTM')" />
+    <Exec Command="$(FROMELF) -S -j ER_CONFIG           -O binary @(EXEOutput) $(EXEName).bin\ER_CONFIG"            Condition="'$(MultipleOutputSections)'=='true'" />
+
+    <Exec Command="$(FROMELF) -S -O srec --gap-fill 0 --srec-forceS3  @(EXEOutput) $(EXEName).hex"                  Condition="'$(MultipleOutputSections)'!='true'" />
+
+    <Exec Command="$(FROMELF) -S -R ER_DAT -R ER_CONFIG -O srec --gap-fill 0 --srec-forceS3  @(EXEOutput) $(EXEName).hex\ER_$(TARGETLOCATION)" Condition="'$(MultipleOutputSections)'=='true'" />
+    <Exec Command="$(FROMELF) -S -j ER_DAT              -O srec              --srec-forceS3  @(EXEOutput) $(EXEName).hex\ER_DAT"               Condition="'$(MultipleOutputSections)'=='true' and '$(ExcludeDatRegion)'!='true' and ('$(FLAVOR)'!='RTM')" />
+    <Exec Command="$(FROMELF) -S -j ER_CONFIG           -O srec              --srec-forceS3  @(EXEOutput) $(EXEName).hex\ER_CONFIG"            Condition="'$(MultipleOutputSections)'=='true'" />
+
+    <Exec Command="$(NM) $(EXEName).axf >> $(EXEName).dump"/>
+    <Exec Command="$(CREATESYMDEF) $(EXEName).dump $(EXEName).symdefs" Condition="EXISTS('$(CREATESYMDEF)')" />
+
+    <!--     echo adding LOAD_IMAGE_CRC value to $*.symdefs -->
+    <Exec Condition="'$(ADD_LOAD_IMAGE_CRC)'=='true'" Command="$(TOOLS_DIR)\BuildHelper -hashBuild $(EXEName).bin$(ImageLocation) $(EXEName).symdefs" />
+  </Target>
+
+  <Target Name="FindBinFilesForSig" >
+    <!-- create signature files-->
+    <CreateItem
+            Include="$(EXEName).bin\*"
+            AdditionalMetadata="OutputDir=$(EXEName).hex\" >
+      <Output
+          TaskParameter="Include"
+          ItemName="SigFilesInHexDir"/>
+    </CreateItem>
+
+    <CreateItem
+            Include="$(EXEName).bin"
+            Condition="'@(SigFilesInHexDir)'==''"
+            AdditionalMetadata="OutputDir=$(BIN_DIR)\" >
+      <Output
+          TaskParameter="Include"
+          ItemName="SigFiles"/>
+    </CreateItem>
+
+    <CreateItem
+            Include="@(SigFilesInHexDir);@(SigFiles)">
+      <Output
+          TaskParameter="Include"
+          ItemName="AllSigFiles"/>
+    </CreateItem>
+
+    <Exec Command="del /q $(EXEName).sig" Condition="Exists('$(EXEName).sig')" ContinueOnError="true"/>
+    <Exec Command="del /q $(EXEName).hex\*.sig" Condition="'@(SigFilesInHexDir)'!=''"   ContinueOnError="true"/>
+
+    <Message Text="file selected @(SigFilesInHexDir)"/>
+    <Message Text="file selected @(SigFiles)"/>
+    <Message Text="file selected @(AllSigFiles)"/>
+  </Target>
+
+  <Target Name="CompressBin" Inputs="@(CompressBinFile);@(CompressBinFile->'%(RootDir)%(Directory)%(FileName).symdefs')" Outputs="@(CompressBinOutput);@(CompressBinComp)" >
+    <Exec Command="$(NM) @(CompressBinFile->'%(RootDir)%(Directory)%(FileName).axf') >> @(CompressBinFile->'%(RootDir)%(Directory)%(FileName).dump')"/>
+    <Exec Command="$(CREATESYMDEF)     @(CompressBinFile->'%(RootDir)%(Directory)%(FileName).dump') @(CompressBinFile->'%(RootDir)%(Directory)%(FileName).symdefs')" Condition="EXISTS('$(CREATESYMDEF)')"/>
+    <Exec Command="$(CREATESYMDEF_ALT) @(CompressBinFile->'%(RootDir)%(Directory)%(FileName).dump') @(CompressBinFile->'%(RootDir)%(Directory)%(FileName).symdefs')" Condition="!EXISTS('$(CREATESYMDEF)')"/>
+    <Exec Command="$(TOOLS_DIR)\buildhelper -symdef @(CompressBinFile->'%(RootDir)%(Directory)%(FileName).symdefs') EntryPoint -compress @(CompressBinFile) @(CompressBinComp)"/>
+    <Exec Command="$(AS) $(AS_FLAGS) -I$(OBJ_DIR) -a=@(CompressBinOutput->'%(RootDir)%(Directory)%(FileName).txt') -o @(CompressBinOutput) @(CompressBinAsm)"/>
+    <Exec Command="del /q @(CompressBinFile->'%(RootDir)%(Directory)%(FileName).hex')" ContinueOnError="true"/>
+  </Target>
+
+  <Target Name="BuildSigFiles"
+            Inputs="@(AllSigFiles)"
+            Outputs="@(AllSigFiles->'%(OutputDir)%(FileName).sig')"
+            DependsOnTargets="FindBinFilesForSig"
+            Condition="EXISTS('$(SPO_SDK)\crypto\lib\x86\dll\crypto.dll')" >
+
+    <Message Text="Create Signature files for @(AllSigFiles)"/>
+    <Exec Condition="EXISTS('%(RelativeDir)%(AllSigFiles.Filename)%(Extension)')" Command="$(PRG_MMP) -sign_file %(RelativeDir)%(AllSigFiles.Filename)%(Extension) $(SPO_SDK)\tools\bin\tinybooter_private_key.bin %(AllSigFiles.Outputdir)%(AllSigFiles.Filename).sig"/>
+  </Target>
+
+  <ItemGroup>
+    <BuildScatterFileProperties Include="SPOCLIENT=$(SPOCLIENT)" />
+    <BuildScatterFileProperties Include="PROFILE_BUILD=$(TRUE)" Condition="'$(sampleprof)'=='true'" />
+    <BuildScatterFileProperties Include="PLATFORM=$(PLATFORM)" />
+    <BuildScatterFileProperties Include="TARGETCODEBASE=$(TARGETCODEBASE)" />
+    <BuildScatterFileProperties Include="TARGETCODEBASETYPE=$(TARGETCODEBASETYPE)" />
+    <BuildScatterFileProperties Include="TARGETPLATFORM=$(TARGETPLATFORM)" />
+    <BuildScatterFileProperties Include="TARGETLOCATION=$(TARGETLOCATION)" />
+    <BuildScatterFileProperties Include="TARGETTYPE=$(FLAVOR)" />
+    <BuildScatterFileProperties Include="TARGETPROCESSOR=$(TARGETPROCESSOR)" />
+    <BuildScatterFileProperties Include="ALTERNATEFLASHLOCATION=$(ALTERNATEFLASHLOCATION)" />
+    <BuildScatterFileProperties Include="COMPILER_TOOL_VERSION=$(COMPILER_TOOL_VERSION)" />
+    <BuildScatterFileProperties Include="COMPILER_TOOL=$(COMPILER_TOOL)" />
+    <BuildScatterFileProperties Include="PROFILE_BUILD=$TRUE" Condition="'$(FLAVOR)'=='Instrumented'" />
+  </ItemGroup>
+  
+  <Target Name="BuildScatterfile" Condition="'$(DEPEND)'!='ACTIVE'" Inputs="@(EXEScatterFileDefinition);@(ScatterFileReferences)" Outputs="@(EXEScatterFile)">
+    <Message Text="..."/>    
+    <ProcessScatterFile
+        Properties="@(BuildScatterFileProperties)"
+          DefinitionFile="@(EXEScatterfileDefinition)"
+          OutputFile="@(EXEScatterFile)"
+     />
+  </Target>
+
+  <Target Name="TinyClrDat" Inputs="$(BIN_DIR)\$(AssemblyName).dat;$(AS_SUBDIR)\$(AssemblyName)_dat.s" Outputs="$(OBJ_DIR)\$(AssemblyName)_dat.$(OBJ_EXT)">
+    <Message                               Text="***************************************************************************************************"/>
+    <Message Text="Target: TinyClrDat with outputs $(OBJ_DIR)\$(AssemblyName)_dat.$(OBJ_EXT)"/>
+    <Message Condition="'$(FORCEDAT)'!=''" Text="Building $(AssemblyName).dat from $(BUILD_TREE_CLIENT)\dat\$(ENDIANNESS)\$(AssemblyName)_$(FORCEDAT).dat"/>
+    <Message Condition="'$(FORCEDAT)'==''" Text="Building $(AssemblyName).dat from the features specified in the $(AssemblyName).proj file"/>
+    <Exec Condition="'$(FORCEDAT)'!='' AND EXISTS('$(BUILD_TREE_CLIENT)\dat\$(ENDIANNESS)\$(AssemblyName)_$(FORCEDAT).dat')" Command="copy /y $(BUILD_TREE_CLIENT)\dat\$(ENDIANNESS)\$(AssemblyName)_$(FORCEDAT).dat $(BIN_DIR)\$(AssemblyName).dat" />
+    <Exec Command="$(AS) -I$(BIN_DIR) $(AS_FLAGS) -a=$(OBJ_DIR)\$(AssemblyName)_dat.txt -o $(OBJ_DIR)\$(AssemblyName)_dat.$(OBJ_EXT) $(AS_SUBDIR)\$(AssemblyName)_dat.s"/>
+    <Message                               Text="========== Database file content:"/>    
+    <Exec Command="$(PRG_MMP) -dump_dat $(BIN_DIR)\$(AssemblyName).dat" />
+    <Message                               Text="========== End of Database file content"/>    
+    <Message                               Text="***************************************************************************************************"/>
+    <Exec Command="copy /BVY $(BIN_DIR)\$(AssemblyName).dat $(BIN_DIR)\$(AssemblyName).dat.fromlastbuildrun" />
+    <Exec Command="del  /Q /F $(BIN_DIR)\$(AssemblyName).dat"/>
+  </Target>
+</Project>
