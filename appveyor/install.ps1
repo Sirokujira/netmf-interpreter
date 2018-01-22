@@ -139,6 +139,23 @@ function InstallBuildTools2($base_folder)
     Copy-Item -Path $moveSrcFolderPath2 -Destination $moveDestFolderPath2 -Recurse
 }
 
+function InstallBuildTools3($sporoot_folder)
+{
+    $basePath = $sporoot_folder + "\\..\\.."
+    $archivePath = $sporoot_folder
+    $zipFilePath = $sporoot_folder + ".zip"
+    New-ZipExtract -source $zipFilePath -destination $archivePath -force -verbose
+
+    # FolderMove
+    $moveSrcFolderPath1 = $archivePath + "\\bin"
+    $moveDestFolderPath1 = $basePath + "\\bin"
+    Copy-Item -Path $moveSrcFolderPath1 -Destination $moveDestFolderPath1 -Recurse
+
+    $moveSrcFolderPath2 = $archivePath + "\\tools"
+    $moveDestFolderPath2 = $basePath + "\\tools"
+    Copy-Item -Path $moveSrcFolderPath2 -Destination $moveDestFolderPath2 -Recurse
+}
+
 function main () 
 {
     # Version 4.4
@@ -149,7 +166,8 @@ function main ()
     InstallGCCCompiler3 $env:GCC_VERSION $env:APPVEYOR_BUILD_FOLDER $env:GCC_TOOLS
     # Wait Process
     # InstallBuildTools
-    InstallBuildTools2 $env:APPVEYOR_BUILD_FOLDER
+    # InstallBuildTools2 $env:APPVEYOR_BUILD_FOLDER
+    InstallBuildTools3 $env:SPOROOT
 }
 
 main
