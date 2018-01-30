@@ -106,6 +106,42 @@ function InstallGCCCompiler3($gcc_version, $base_folder, $gcc_compiler_home)
     New-ZipExtract -source $zipFilePath -destination $archivePath -force -verbose
 }
 
+function InstallGCCCompiler4($gcc_version, $gcc_compiler_home)
+{
+    $major, $minor, $micro = ParseGCCVersion $gcc_version
+
+    $base_folder = (Convert-Path .)
+
+    $archivePath = $gcc_compiler_home
+    if ($major -le 4 -and $minor -eq 9)
+    {
+        # if (micro -eq 3)
+        Start-FileDownload "https://launchpad.net/gcc-arm-embedded/4.9/4.9-2015-q3-update/+download/gcc-arm-none-eabi-4_9-2015q3-20150921-win32.zip"
+
+        $zipFilePath = $base_folder + "\\gcc-arm-none-eabi-4_9-2015q3-20150921-win32.zip"
+    }
+    elseif ($major -le 5 -and $minor -eq 4)
+    {
+        Start-FileDownload "https://launchpad.net/gcc-arm-embedded/5.0/5-2016-q3-update/+download/gcc-arm-none-eabi-5_4-2016q3-20160926-win32.zip"
+
+        $zipFilePath = $base_folder + "\\gcc-arm-none-eabi-5_4-2016q3-20160926-win32.zip"
+    }
+    elseif ($major -le 6 -and $minor -eq 0)
+    {
+        Start-FileDownload "https://launchpad.net/gcc-arm-embedded/4.9/4.9-2015-q3-update/+download/gcc-arm-none-eabi-4_9-2015q3-20150921-win32.zip"
+
+        $zipFilePath = $base_folder + "\\gcc-arm-none-eabi-4_9-2015q3-20150921-win32.zip"
+    }
+    else
+    {
+        Start-FileDownload "https://launchpad.net/gcc-arm-embedded/4.9/4.9-2015-q3-update/+download/gcc-arm-none-eabi-4_9-2015q3-20150921-win32.zip"
+
+        $zipFilePath = $base_folder + "\\gcc-arm-none-eabi-4_9-2015q3-20150921-win32.zip"
+    }
+
+    New-ZipExtract -source $zipFilePath -destination $archivePath -force -verbose
+}
+
 
 function InstallBuildTools()
 {
@@ -167,8 +203,8 @@ function main ()
     # ToolChain
     # InstallGCCCompiler
     # InstallGCCCompiler2
-    InstallGCCCompiler3 $env:GCC_VERSION $env:APPVEYOR_BUILD_FOLDER $env:GCC_TOOLS
-    # InstallGCCCompiler3 $env:GCC_VERSION $env:GCC_TOOLS
+    # InstallGCCCompiler3 $env:GCC_VERSION $env:APPVEYOR_BUILD_FOLDER $env:GCC_TOOLS
+    InstallGCCCompiler4 $env:GCC_VERSION $env:GCC_TOOLS
     # Wait Process
     # InstallBuildTools
     # InstallBuildTools2 $env:APPVEYOR_BUILD_FOLDER
