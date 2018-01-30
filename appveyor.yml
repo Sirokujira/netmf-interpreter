@@ -123,27 +123,6 @@ install:
     .\appveyor\install.ps1
 
 
-# NG : 
-# MSbuild dotnetmf.proj /t:GenerateCLRDefines
-# netmfvs2015.msi /VERYSILENT /NORESTART
-# old
-# setenv_gcc 5.2.1 C:\projects\gcc-arm-none-eabi
-# new
-# setenv_gcc 5.4.1 C:\projects\gcc-arm-none-eabi
-# current?
-# setenv_gcc 4.9.3 C:\projects\gcc-arm-none-eabi
-# build_sdk.cmd
-# cd Solutions\ToppersHRP2onEV3
-# cd Solutions\MBED_GR_PEACH_Native
-# dir "C:\projects"
-# dir "C:\projects\gcc-arm-none-eabi"
-# dir "C:\projects\netmf-interpreter"
-# cd Solutions\MBED_GR_PEACH_Native
-#     "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\VSIXInstaller.exe" /q /a C:\projects\netmf-interpreter\NetMFVS14.vsix
-# sdk build ng
-# build_sdk.cmd
-# netmf install miss?
-# timeout 15
 build_script:
 - cmd: >-
     timeout 60
