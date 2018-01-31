@@ -189,11 +189,11 @@ function InstallBuildTools3($sporoot_folder)
     # FolderMove
     $moveSrcFolderPath1 = $archivePath + "\\bin"
     $moveDestFolderPath1 = $basePath + "\\bin"
-    Copy-Item -Path $moveSrcFolderPath1 -Destination $moveDestFolderPath1 -Recurse
+    Copy-Item -Path $moveSrcFolderPath1 -Destination $moveDestFolderPath1 -Recurse -force
 
     $moveSrcFolderPath2 = $archivePath + "\\tools"
     $moveDestFolderPath2 = $basePath + "\\tools"
-    Copy-Item -Path $moveSrcFolderPath2 -Destination $moveDestFolderPath2 -Recurse
+    Copy-Item -Path $moveSrcFolderPath2 -Destination $moveDestFolderPath2 -Recurse -force
 }
 
 function main () 
