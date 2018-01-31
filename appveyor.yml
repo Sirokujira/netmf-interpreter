@@ -79,29 +79,6 @@ environment:
       OUTPUT_BINARY_FOLDER2 : 'BuildOutput\%OUTPUT_MODULE%\%OUTPUT_MODULE2%le\RAM\%FLAVOR_TYPE%\Win32\lib'
 
 
-# Tool Download
-# old
-# Start-FileDownload "http://netmf.github.io/downloads/build-tools.zip"
-# Import-Module ".\appveyor\PS-Zip\PS-Zip.psm1" -Force
-# .\appveyor\install.ps1
-# new
-# Import-Module .\tools\scripts\Build-netmf.psm1
-# Invoke-WebRequest -UseBasicParsing -Uri "http://netmf.github.io/downloads/build-tools.zip" | Expand-Stream -Destination $SPOROOT
-# CLR Build
-# https://github.com/NETMF/netmf-interpreter/issues/378
-# https://github.com/NETMF/netmf-interpreter/blob/34a92c3d79d3d1c48440dc32f88d5b81095311a4/Framework/Tools/CreateCLRDefines.proj
-# MSbuild dotnetmf.proj /t:GenerateCLRDefines
-# MMU use?(ARM7/9)
-# https://github.com/NETMF/netmf-interpreter/wiki/Hardware%20Layer
-# Import-Module ".\appveyor\PS-Zip\PS-Zip.psm1" -Force
-# .\appveyor\install.ps1
-# gcc toolchain
-# old (2015)
-# Start-FileDownload "https://launchpad.net/gcc-arm-embedded/5.0/5-2015-q4-major/+download/gcc-arm-none-eabi-5_2-2015q4-20151219-win32.zip"
-# new (2016)
-# Start-FileDownload "https://launchpad.net/gcc-arm-embedded/5.0/5-2016-q2-update/+download/gcc-arm-none-eabi-5_4-2016q2-20160622-win32.zip"
-# CMSIS Set?
-# Start-FileDownload "https://codeload.github.com/ARM-software/CMSIS/zip/master"
 install:
 - ps: >-
     Start-FileDownload "https://github.com/NETMF/netmf-interpreter/releases/download/NETMFCryptoLibraries/NetMFCryptoLibs.msi"
@@ -126,11 +103,7 @@ install:
 build_script:
 - cmd: >-
     timeout 60
-    
-    dir "C:\Program Files (x86)\MSBuild\Microsoft"
-    
-    dir .
-    
+  
     MSbuild DeviceCode\Targets\Native\Interop\ManagedCode\CQ_NETMF_CQ_FRK_FM3_Hardware\CQ_NETMF_CQ_FRK_FM3_Hardware.sln /p:Configuration=%FLAVOR_TYPE% 
     
     MSbuild DeviceCode\Targets\Native\Interop\ManagedCode\CQ_NETMF_CQFM3DUINO_Hardware\CQ_NETMF_CQ_FRK_FM3_Hardware.sln /p:Configuration=%FLAVOR_TYPE% 
