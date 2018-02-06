@@ -375,7 +375,7 @@
         </CreateItem>
 
         <Message Condition="'$(MSBUILD_DEBUG)'=='true' and '@(CFiles)'!=''"        Text="split c file : @(CFiles)"/>
-        <Message Condition="'$(MSBUILD_DEBUG)'=='true' and '@(CPPFiles)'!=''"      Text="split cPP file : @(CPPFiles)"/>
+        <Message Condition="'$(MSBUILD_DEBUG)'=='true' and '@(CPPFiles)'!=''"      Text="split cpp file : @(CPPFiles)"/>
         <Message Condition="'$(MSBUILD_DEBUG)'=='true' and '@(AssemblyFiles)'!=''" Text="split asm file  : @(AssemblyFiles)"/>
 
     </Target>

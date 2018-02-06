@@ -461,6 +461,8 @@
         <Message Text="  platform          imxs|mote2|etc.    target platform to compile"/>
         <Message Text="  memory            flash|ram          target memory device for the binaries"/>
         <Message Text="  flavor            debug|release|rtm  target build flavor"/>
+        <Message Text=" "/>
+        <Message Text="Targets used by the MF Build System:" Importance="high"/>
         <Message Text="  build             Invoke the build target, which builds the platform specified." />
         <Message Text="                    This is the default target if no target is specified on the"/>
         <Message Text="                    command line."/>
@@ -472,4 +474,5 @@
         <Message Text="  help              Display this helpful usage text."/>
         <Message Text=" "/>
     </Target>
+
 </Project>

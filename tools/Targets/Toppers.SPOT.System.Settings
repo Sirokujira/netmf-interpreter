@@ -754,6 +754,7 @@
 
     Set the defaults for these if they haven't been explicitly set:
     -->
+
         <timewarp Condition="'$(timewarp)'==''"         >false</timewarp>
         <profile Condition="'$(profile)'==''"           >false</profile>
         <sampleprof Condition="'$(sampleprof)'==''"     >false</sampleprof>
@@ -771,7 +772,7 @@
 
     <!-- set up platform dependant properties, also setup the TARGETPLATFORM as capitals for set up PLATFORM_ARM_XXX flag -->
 
-    <!--  platform dependent properties are included here, based on teh path right above -->
+    <!--  platform dependent properties are included here, based on the path right above -->
     <!--  the settigns file is required to be have a specifc name ! -->
     <Import Project="$(MFSettingsFile)"                                       Condition=" EXISTS('$(MFSettingsFile)')"/>
     <!-- -->
