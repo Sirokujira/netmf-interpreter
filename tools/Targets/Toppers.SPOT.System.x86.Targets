@@ -36,7 +36,7 @@
     <CommonAssemblyInfoFile Condition="'$(CommonAssemblyInfoFile)'==''"
         >$(SPOCLIENT)\tools\targets\Microsoft.SPOT.CommonAssemblyInfo.Targets</CommonAssemblyInfoFile>
   </PropertyGroup>
-  <Import Project="$(CommonAssemblyInfoFile)" />
+  <Import Condition="'$(Microsoft_SPOT_CommonAssemblyInfo_Targets)'!='true'" Project="$(CommonAssemblyInfoFile)" />
 
   <ItemGroup Condition="'$(IgnoreNetMFStandardLibs)' != 'true'">
     <ExtraLibs       Include="dbghelp.lib" />
@@ -47,8 +47,7 @@
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
-    <DebugFlags>/Od /D "_DEBUG"</DebugFlags>
-    <DebugFlags Condition="'$(ManagedCode)'!='true'">$(DebugFlags) /ZI</DebugFlags>
+    <DebugFlags>/Od /D "_DEBUG" /Zi</DebugFlags>
     <MiscFlags Condition="'$(ManagedCode)'!='true'">$(MiscFlags) /Gm /RTC1</MiscFlags>
   </PropertyGroup>
 
@@ -118,6 +117,8 @@
     <CFlags Condition="'$(ManagedCode)'=='true' and '$(OldSyntax)'=='true'">$(CFLAGS) /clr:oldsyntax</CFlags>
     <CFlags Condition="'$(ManagedCode)'=='true' and '$(OldSyntax)'!='true'">$(CFLAGS) /clr</CFlags>
     <CFlags Condition="'$(ManagedCode)'!='true'">$(CFLAGS) /EHsc</CFlags>
+    <CFlags Condition="'$(TCP_IP_STACK)'=='LWIP_1_4_1_OS'">$(CFLAGS) /D TCPIP_LWIP_OS  /D ERRNO /D _WINSOCKAPI_</CFlags>
+    <CFlags Condition="'$(TCP_IP_STACK)'=='LWIP'">$(CFLAGS) /D TCPIP_LWIP  /D ERRNO /D _WINSOCKAPI_</CFlags>
 
     <NoOptForParserTarget Condition="'$(NoOptForParserTarget)'==''">None</NoOptForParserTarget>
     <NoOptForParserOptimization Condition="'$(NoOptForParserOptimization)'==''">true</NoOptForParserOptimization>
@@ -183,6 +184,7 @@
           MANIFESTFILE="$(EmbeddedManifestFile)"
           DELAYSIGN="$(DelaySign)"
           KEYFILE="$(SIGNING_KEY_FILE)"
+          IGNORE="$(LinkIgnore)"
           />
     <Exec Condition="'$(EmbedManifest)'=='true'" Command="mt /outputresource:&quot;$(TargetFile);#1&quot; /manifest $(EmbeddedManifestFile) /nologo $(ManifestFlag)"/>
     <Exec Condition="'$(ManagedCode)'=='true' And '$(SIGNING_KEY_FILE)'!=''" Command="sn /R &quot;$(TargetFile)&quot; $(SPOCLIENT)\Framework\key.snk"/>
@@ -198,6 +200,7 @@
           OUT="$(TargetFile)"
           OBJFILES="@(ObjFiles);@(DriverLibs->'$(LIB_DIR)\%(FileName)%(Extension)', ' ')"
           DEBUG="false"
+          IGNORE="$(LinkIgnore)"
           />
   </Target>
 
@@ -221,6 +224,7 @@
           DELAYSIGN="$(DelaySign)"
           KEYFILE="$(SIGNING_KEY_FILE)"
           ModuleDefinitionFile="@(ModuleDefinitionFile)"
+          IGNORE="$(LinkIgnore)"
           />
     <Exec Condition="'$(EmbedManifest)'=='true'" Command="mt /outputresource:&quot;$(TargetFile);#2&quot; /manifest $(EmbeddedManifestFile) /nologo $(ManifestFlag)"/>
     <Exec Condition="'$(ManagedCode)'=='true' And '$(SIGNING_KEY_FILE)'!=''" Command="sn /R &quot;$(TargetFile)&quot; $(SPOCLIENT)\Framework\key.snk"/>
@@ -232,7 +236,7 @@
     Inputs="@(RCFile)"
     Outputs="@(RCFile->'$(OBJ_DIR)\%(filename).res')"
     >
-    <Exec Command="rc.exe $(CharSetFlags) /fo&quot;@(RCFile->'$(OBJ_DIR)\%(filename).res')&quot; %(RCFile.Identity)"/>
+    <Exec Command="rc.exe /nologo $(CharSetFlags) /fo&quot;@(RCFile->'$(OBJ_DIR)\%(filename).res')&quot; %(RCFile.Identity)"/>
   </Target>
 
 </Project>
