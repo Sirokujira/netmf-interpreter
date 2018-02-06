@@ -35,7 +35,7 @@
         <PlatformIndependentBuild>false</PlatformIndependentBuild>
         <Version>4.0.0.0</Version>
     </PropertyGroup>
-    <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Settings" />
+    <Import Project="$(SPOCLIENT)\tools\targets\Toppers.SPOT.System.Settings" />
     <Import Project="$(SPOCLIENT)\Framework\Features\BlockStorage_PAL.libcatproj" />
     <Import Project="$(SPOCLIENT)\Framework\Features\BlockStorageAddDevices_HAL.libcatproj" />
     <Import Project="$(SPOCLIENT)\Framework\Features\Buttons_PAL.libcatproj" />
@@ -64,5 +64,5 @@
         <Compile Include="main.cpp" />
         <HFile Include="MasterConfig.h" />
     </ItemGroup>
-    <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Targets" />
+    <Import Project="$(SPOCLIENT)\tools\targets\Toppers.SPOT.System.Targets" />
 </Project>

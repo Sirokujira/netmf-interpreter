@@ -52,11 +52,11 @@
     <PlatformIndependentBuild>false</PlatformIndependentBuild>
     <Version>4.0.0.0</Version>
   </PropertyGroup>
-  <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Settings" />
+  <Import Project="$(SPOCLIENT)\tools\targets\Toppers.SPOT.System.Settings" />
   <PropertyGroup />
   <ItemGroup>
     <Compile Include="InternalFlash_bl_config_SSL.cpp" />
   </ItemGroup>
   <ItemGroup />
-  <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Targets" />
+  <Import Project="$(SPOCLIENT)\tools\targets\Toppers.SPOT.System.Targets" />
 </Project>

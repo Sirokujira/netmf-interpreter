@@ -77,7 +77,7 @@
     <PlatformIndependentBuild>false</PlatformIndependentBuild>
     <Version>4.0.0.0</Version>
   </PropertyGroup>
-  <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Settings" />
+  <Import Project="$(SPOCLIENT)\tools\targets\Toppers.SPOT.System.Settings" />
   <Import Project="$(SPOCLIENT)\Framework\Features\PreStackInit_HAL.libcatproj" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
@@ -95,5 +95,5 @@
     <LIB_FIRSTENTRY_OBJ Include="$(OBJ_DIR)\FirstEntry.$(OBJ_EXT)" />
   </ItemGroup>
 
-  <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Targets" />
+  <Import Project="$(SPOCLIENT)\tools\targets\Toppers.SPOT.System.Targets" />
 </Project>

@@ -34,12 +34,12 @@
     <PlatformIndependentBuild>false</PlatformIndependentBuild>
     <Version>4.0.0.0</Version>
   </PropertyGroup>
-  <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Settings" />
+  <Import Project="$(SPOCLIENT)\tools\targets\Toppers.SPOT.System.Settings" />
   <PropertyGroup />
   <ItemGroup>
     <Compile Include="Display_nokia6100_config.cpp" />
     <Compile Include="RZA1_SPISW_functions.cpp" />
     <IncludePaths Include="DeviceCode\include" />
   </ItemGroup>
-  <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Targets" />
+  <Import Project="$(SPOCLIENT)\tools\targets\Toppers.SPOT.System.Targets" />
 </Project>

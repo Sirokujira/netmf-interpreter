@@ -34,11 +34,11 @@
     <PlatformIndependentBuild>false</PlatformIndependentBuild>
     <Version>4.0.0.0</Version>
   </PropertyGroup>
-  <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Settings" />
+  <Import Project="$(SPOCLIENT)\tools\targets\Toppers.SPOT.System.Settings" />
   <PropertyGroup />
   <ItemGroup>
     <Compile Include="Display_DST2401PH_config.cpp" />
     <Compile Include="Display_DST2401PH_functions.cpp" />
   </ItemGroup>
-  <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Targets" />
+  <Import Project="$(SPOCLIENT)\tools\targets\Toppers.SPOT.System.Targets" />
 </Project>

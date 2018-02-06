@@ -54,7 +54,7 @@
     <LCDController0>ILI9325_P8</LCDController0>
     <LCDController0>NOKIA6100</LCDController0>
   </PropertyGroup>
-  <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Settings" />
+  <Import Project="$(SPOCLIENT)\tools\targets\Toppers.SPOT.System.Settings" />
   <Import Project="$(SPOCLIENT)\tools\Targets\Microsoft.SPOT.Build.Targets" />
   <PropertyGroup>
     <OutputType>Executable</OutputType>
@@ -1005,5 +1005,5 @@
     <DriverLibs Include="MBED_GR_PEACH_tinyhal.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\Solutions\MBED_GR_PEACH\DeviceCode\TinyHal\dotNetMF.proj" />
   </ItemGroup>
-  <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Targets" />
+  <Import Project="$(SPOCLIENT)\tools\targets\Toppers.SPOT.System.Targets" />
 </Project>
