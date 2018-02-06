@@ -53,12 +53,12 @@
     <PlatformIndependentBuild>false</PlatformIndependentBuild>
     <Version>4.0.0.0</Version>
   </PropertyGroup>
-  <Import Project="$(SPOCLIENT)\tools\targets\Toppers.SPOT.System.Settings" />
+  <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Settings" />
   <PropertyGroup />
   <ItemGroup>
     <Compile Include="Network_config.cpp" />
     <IncludePaths Include="DeviceCode\include" />
   </ItemGroup>
   <ItemGroup />
-  <Import Project="$(SPOCLIENT)\tools\targets\Toppers.SPOT.System.Targets" />
+  <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Targets" />
 </Project>

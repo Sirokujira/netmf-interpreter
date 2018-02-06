@@ -60,7 +60,7 @@
   <Import Project="$(SPOCLIENT)\Framework\Features\TimeService_PAL.libcatproj" />
   <Import Project="$(SPOCLIENT)\Framework\Features\Heap_PAL.libcatproj" />
 
-  <Import Project="$(SPOCLIENT)\tools\targets\Toppers.SPOT.System.Settings" />
+  <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Settings" />
   <PropertyGroup>
     <OutputType>Library</OutputType>
   </PropertyGroup>
@@ -69,5 +69,5 @@
     <Compile Include="tinyhal.cpp" />
   </ItemGroup>
   <ItemGroup />
-  <Import Project="$(SPOCLIENT)\tools\targets\Toppers.SPOT.System.Targets" />
+  <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Targets" />
 </Project>
