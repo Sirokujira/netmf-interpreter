@@ -384,7 +384,7 @@
                 <CFG2_OUT_TARGETFILE>$(TARGETDIR)/target.tf</CFG2_OUT_TARGETFILE>
                 <CFG3_OUT_TARGETFILE>$(TARGETDIR)/target_check.tf</CFG3_OUT_TARGETFILE>
                 <CFG4_OUT_TARGETFILE></CFG4_OUT_TARGETFILE>
-                
+
                 <!-- rom -->
                 <!-- FALSH -->
                 <CFG1_OUT_LDSCRIPT>$(SRCDIR)/target/$(TARGETNAME)/gr_peach_rom.ld</CFG1_OUT_LDSCRIPT>
@@ -396,12 +396,12 @@
                 <!-- <CFG2_OUT_LDSCRIPT>$(SRCDIR)/target/$(TARGETNAME)/gr_peach_ram.ld</CFG2_OUT_LDSCRIPT> -->
                 <!-- <CFG3_OUT_LDSCRIPT>$(SRCDIR)/target/$(TARGETNAME)/gr_peach_ram.ld</CFG3_OUT_LDSCRIPT> -->
                 <!-- <LDSCRIPT>$(SRCDIR)/target/$(TARGETNAME)/gr_peach_ram.ld</LDSCRIPT> -->
-                
+
                 <!-- chip_support.$(OBJEXT) -->
                 <KERNEL_ASMOBJS>$(KERNEL_ASMOBJS) core_support.$(OBJEXT)</KERNEL_ASMOBJS>
                 <KERNEL_ASMOBJS>$(KERNEL_ASMOBJS) gic_support.$(OBJEXT)</KERNEL_ASMOBJS>
                 <KERNEL_ASMOBJS>$(KERNEL_ASMOBJS) target_support.$(OBJEXT)</KERNEL_ASMOBJS>
-                
+
                 <!-- kernel common -->
                 <KERNEL_COBJS>alarm.$(OBJEXT) cyclic.$(OBJEXT) dataqueue.$(OBJEXT) eventflag.$(OBJEXT) exception.$(OBJEXT) interrupt.$(OBJEXT) mempfix.$(OBJEXT) pridataq.$(OBJEXT) semaphore.$(OBJEXT) startup.$(OBJEXT) sys_manage.$(OBJEXT) task.$(OBJEXT) task_except.$(OBJEXT) task_manage.$(OBJEXT) task_refer.$(OBJEXT) task_sync.$(OBJEXT) time_event.$(OBJEXT) time_manage.$(OBJEXT) wait.$(OBJEXT)</KERNEL_COBJS>
                 <!-- kernel target(rza1)[chip_serial.$(OBJEXT)] -->
@@ -410,12 +410,12 @@
                 <APPL_COBJS>$(APPL_COBJS) log_output.$(OBJEXT) t_perror.$(OBJEXT)</APPL_COBJS>
                 <APPL_CFLAGS />
                 <APPL_LIBS>$(APPL_LIBS)</APPL_LIBS>
-                
+
                 <!-- Compiler Various Defines -->
                 <KERNEL_LIB_OBJS>$(KERNEL_ASMOBJS) $(KERNEL_COBJS)</KERNEL_LIB_OBJS>
-                
+
                 <USE_CFG_PASS3>false</USE_CFG_PASS3>
-                
+
                 <!-- ASP + GR_PEACH -->
                 <CFG_KERNEL_TABS>--api-table=$(KERNELDIR)/kernel_api.csv --cfg1-def-table=$(KERNELDIR)/kernel_def.csv --cfg1-def-table=$(SRCDIR)/arch/arm_gcc/common/core_def.csv </CFG_KERNEL_TABS>
             </PropertyGroup>
