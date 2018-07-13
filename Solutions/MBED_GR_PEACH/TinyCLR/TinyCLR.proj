@@ -47,7 +47,6 @@
     <EnableXML>true</EnableXML>
     <EnableWatchdog>false</EnableWatchdog>
     <EnableTinylib>false</EnableTinylib>
-    <EnableCQLCD>true</EnableCQLCD>
     <LCDController>ILI9325_P8</LCDController>
     <LCDController0>TS8026Y</LCDController0>
     <LCDController0>T18SPI</LCDController0>
@@ -134,11 +133,6 @@
   <Import Project="$(SPOCLIENT)\Framework\Features\Usb.featureproj" Condition="'$(EnableUSB)'=='true'" />
   <!-- <Import Project="$(SPOCLIENT)\Framework\Features\USB_Port.featureproj" Condition="'$(EnableUSB)'=='true'" /> -->
   <Import Project="$(SPOCLIENT)\Framework\Features\Xml.featureproj" Condition="'$(EnableXML)'=='true'" />
-  <Import Project="$(SPOCLIENT)\DeviceCode\Targets\Native\Interop\DeviceCode\CQ_NETMF_SD\CQ_NETMF_SD.featureproj" Condition="'$(EnableSD)'=='true'" />
-  <Import Project="$(SPOCLIENT)\DeviceCode\Targets\Native\Interop\DeviceCode\CQ_NETMF_LEDMATRIX\CQ_NETMF_LEDMATRIX.featureproj" Condition="'$(EnableLEDMATRIX)'=='true'" />
-  <Import Project="$(SPOCLIENT)\DeviceCode\Targets\Native\Interop\DeviceCode\CQ_NETMF_LEDMATRIXAF\CQ_NETMF_LEDMATRIXAF.featureproj" Condition="'$(EnableLEDMATRIXAF)'=='true'" />
-  <Import Project="$(SPOCLIENT)\DeviceCode\Targets\Native\Interop\DeviceCode\CQ_NETMF_LCD\CQ_NETMF_LCD.featureproj" Condition="'$(EnableCQLCD)'=='true'" />
-  <Import Project="$(SPOCLIENT)\DeviceCode\Targets\Native\Interop\DeviceCode\CQ_NETMF_MP3\CQ_NETMF_MP3.featureproj" Condition="'$(EnableMP3)'=='true'" />
   <Import Project="$(SPOCLIENT)\tools\targets\Microsoft.SPOT.System.Interop.Settings" />
   <ItemGroup Condition="'$(EnableSecurity)'=='true'">
     <DriverLibs Include="aes_openssl.$(LIB_EXT)" />
@@ -894,18 +888,6 @@
   <ItemGroup Condition="'$(EnableUSB)'!='true'">
     <DriverLibs Include="MBED_USB_stub.$(LIB_EXT)" />
     <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\Native\MBED\DeviceCode\MBED_USB\stub\dotNetMF.proj" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(EnableSD)'=='true'">
-    <DriverLibs Include="CQ_NETMF_SD.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\Native\Interop\DeviceCode\CQ_NETMF_SD\dotNetMF.proj" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(EnableCQLCD)'=='true'">
-    <DriverLibs Include="CQ_NETMF_LCD.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\Native\Interop\DeviceCode\CQ_NETMF_LCD\dotNetMF.proj" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(EnableMP3)'=='true'">
-    <DriverLibs Include="CQ_NETMF_MP3.$(LIB_EXT)" />
-    <RequiredProjects Include="$(SPOCLIENT)\DeviceCode\Targets\Native\Interop\DeviceCode\CQ_NETMF_MP3\dotNetMF.proj" />
   </ItemGroup>
   <ItemGroup>
     <DriverLibs Include="BlockStorage_AddDevices.$(LIB_EXT)" />
