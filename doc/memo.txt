@@ -1,2 +1,0 @@
-opcode Žü‚è‚Ì˜b
-Beachhead implements new opcode on CLR JIT
